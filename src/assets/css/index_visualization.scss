@@ -1,0 +1,436 @@
+
+.loginDialog{
+  background-color: rgba(255,255,255,0) !important;
+  background-position: 48% 30px;
+  background-repeat: no-repeat;
+  color: #fff;
+  box-shadow:none !important;
+}
+
+.loginLogo{
+  width: 300px;
+  height: 128px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.loginBtn{
+  border-radius: 0 !important;
+  background-color:rgba(0.0.0.0) !important;
+  border-color: rgba(0.0.0.0) !important;
+  width: 150px;
+  height: 44px;
+}
+
+.loginDialog-bak{
+  background-color: rgba(255,255,255,0) !important;
+  background-image: url("../imgs/logo-w.png");
+  background-position: 48% 30px;
+  background-repeat: no-repeat;
+  color: #fff;
+  box-shadow:none !important;
+}
+
+.loginDialog h1{
+  padding-top: 60px;
+  color: #fff;
+  font-size: 32px;
+  padding-bottom: 50px;
+  text-align: center;
+  line-height: 48px;
+}
+
+.loginDialog h1 span{
+  font-size: 22px;
+}
+
+.loginDialog-bak h1{
+  padding-top: 60px;
+  color: #fff;
+  font-size: 38px;
+  padding-bottom: 50px;
+  text-align: center;
+}
+
+
+.loginDialog input.el-input__inner{
+  //background-color:rgba(255,255,255,0.2) !important;
+  //background-image:url("..images/input_userNameBg.png") !important;
+
+}
+.loginDialog button{
+  width: 150px;
+  //border-radius: 100px;
+  font-size: 20px;
+  color: white;
+  //background:transparent;
+  border-radius:4px;
+  border: 1px solid #4cf0ff;
+}
+.loginDialog button:hover,  .loginDialog button:focus{
+  color: white;
+  font-size: 20px;
+  width: 150px;
+  background:rgba(0,0,0,0.3);
+  border-radius:4px;
+  border: 1px solid #4cf0ff;
+}
+
+.search{
+  position: absolute;
+  top: 75px;
+  left: 10px;
+}
+.search input[type=text]{
+   width: 210px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 14px;
+    text-indent: 8px;
+    outline: none;
+    float: left;
+    border: none;
+     /* box-shadow: 0px 0px 0px #3a3c42;  */
+	 list-style-type: none;
+    opacity: 0.7;
+  background: url('../imgs/搜索框-2.png') no-repeat;
+  color: #fff;
+}
+.searchResultsConent{
+  margin: 0 ;
+  margin-top: 80px !important;
+  margin-left: 30px;
+}
+.search .el-button--primary{
+  /*background-color: #409EFF !important;
+  border-color:#409EFF !important;*/
+background: #3DC5CF;
+}
+.search .el-input-group__append{
+  background-color: #3DC5CF !important;
+  border:1px #3DC5CF solid !important;
+  color: #fff;
+}
+.userIcon{
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: url("../imgs/userIcon.jpg");
+  background-size: 100% 100%;
+}
+.userIcon:hover{
+  cursor:pointer;
+}
+.welcome{
+  display: inline-block;
+  color: #fff;
+  text-align: left;
+  padding-bottom: 0;
+  margin-top: 25px;
+  margin-bottom: 0;
+}
+.userSubInfo{
+  font-size: 14px;
+  color: #fff;
+}
+.userInfo-icon{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: url("../imgs/userIcon.jpg");
+  background-size: 100% 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.userInfo-box{
+  position: absolute;
+  right: 10px;
+  top: 125px;
+  width: 300px;
+  background: rgba(0,58,95,.8);
+}
+.userInfo-box .userInfo{
+  width: 100%;
+  height: 100px;
+  //background:#3385ff ;
+  background: none;
+}
+.userInfo-box .userInfo .el-col {
+  text-align: left;
+}
+.userInfo-box .arrow{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 7px 8px;
+  border-color: transparent transparent rgba(0,58,95,.8);
+  top: -8px;
+  right: 17px;
+  position: absolute;
+}
+.userAdressConent{
+
+}
+.userAdressTil{
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 12px;
+  border-bottom: 1px solid #3a84ab;
+  text-align: left;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#fff;
+}
+.userAdressTil:hover{
+  cursor: pointer;
+}
+.userAdressTil i {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+.userAdressList li{
+  height: 40px;
+  line-height: 40px;
+  font-size: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.userAdressList li span{
+  padding-left: 30px;
+}
+.userAdressList li:hover{
+  cursor:pointer;
+}
+.placeList{
+  width:100%;
+  height: 400px;
+  margin-top: 10px;
+  background: rgba(0,58,95,.8);
+  overflow: auto;
+}
+.placeList .placeItem{
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px #eee solid;
+}
+.placeList .placeItem:hover{
+  cursor: pointer;
+  background: #ebf4fe;
+}
+.placeList .placeItem i {
+  color: red;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.placeList .placeItem span{
+  color: #3a8ee6;
+}
+
+.el-select .el-input {
+  width: 130px;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+.el-button-group .el-button{
+  float: left;
+  margin-top: 10px;
+}
+.tools-style{
+  position: absolute;
+  top: 0px;
+  right: 350px;
+  display: none;
+}
+.gisSystem .dialog_foot{
+  text-align: center;
+  padding: 30px 0;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.gisSystem .dialog_foot button{
+  float: none;
+}
+.tools{
+  position: absolute;
+  top: 20px;
+  text-align: right;
+  right: 100px;
+  width: 200px;
+}
+.utilBox{
+  position: absolute;
+  top: 80px;
+  left: 48.2%;
+}
+.el-input-group_append .el-button--primary{
+  color: #fff !important;
+  background-color: #409EFF !important;
+  border-color: #409EFF !important;
+}
+
+.search-style .el-dialog__wrapper,.tools-style .el-dialog__wrapper{
+  z-index: 0 !important;
+}
+.searchResults-item{
+  font-size: 12px;
+  border-bottom: 1px #ebeef5 dashed;
+}
+.searchResults-item:hover{
+  background: aliceblue;
+}
+.searchResults-item:last-child{
+  border: 0;
+}
+.searchResults-item:hover{
+  cursor: pointer;
+}
+.searchResults-item .til{
+  color: #3385ff;
+  font-size: 14px;
+}
+.mainBtnGroup{
+  position: absolute;
+}
+.gisSystem .el-collapse-item__header .el-collapse-item__arrow{
+  margin: 0;
+  margin-right: 10px;
+}
+.gisSystem .el-collapse-item__header .header-icon{
+  margin-right: 5px;
+}
+.loginInput{
+  margin-bottom: 20px;
+}
+.menu .mainDialogLarge{
+  background: none;
+  background-image: url("../imgs/large-dialogBg.png");
+  background-size: 100% 100%;
+}
+
+.menu .mainDialog,.watchView .mainDialog,.panoramaView .mainDialog{
+  //width: 1280px;
+  //height: 600px;
+  //background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  position: absolute;
+  overflow: hidden;
+  background: url("../imgs/dialogBg.png") no-repeat;
+}
+.menu .mainDialog .el-dialog__header,.menu .mainDialogLarge .el-dialog__header,.watchView .mainDialog .el-dialog__header,.panoramaView .mainDialog .el-dialog__header{
+  padding-top: 15px;
+}
+.menu .mainDialog .el-dialog__headerbtn,.menu .mainDialogLarge .el-dialog__headerbtn,.watchView .mainDialog .el-dialog__headerbtn,.panoramaView .mainDialog .el-dialog__headerbtn{
+  top: 40px;
+  right: 40px;
+}
+.menu .mainDialog .el-dialog__headerbtn i,.menu .mainDialogLarge .el-dialog__headerbtn i,.watchView .mainDialog .el-dialog__headerbtn i,.panoramaView .mainDialog .el-dialog__headerbtn i{
+  color: #fff;
+}
+.menu .mainDialog .el-dialog__title,.menu .mainDialogLarge .el-dialog__title,.watchView .mainDialog .el-dialog__title,.panoramaView .mainDialog .el-dialog__title{
+  color: #fff;
+}
+.menu .mainDialog .videoConent{
+  margin: 0 auto;
+  margin-top: 20px;
+  //width: 950px;
+  height: 480px;
+  border: 1px #0b318f solid;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.menu .mainDialog .videoConent .videoBox{
+  width: 530px;
+  height: 310px;
+  float: left;
+}
+.menu .mainDialog .videoConent .textConent{
+  width: 370px;
+  height: 310px;
+  float: right;
+
+}
+.menu .mainDialog .videoConent .textConent .til{
+  width: 100%;
+  height: 35px;
+  margin-bottom: 20px;
+  color: #59baf2;
+  font-size: 16px;
+  text-align: center;
+  background: url("../imgs/dialogTilBg2.png") no-repeat;
+  background-size: 100% 100%;
+  line-height: 35px;
+}
+.menu .mainDialog .videoConent .textConent p{
+  width: 95%;
+  height: 235px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: #59baf2;
+  font-size: 14px;
+  text-indent:2em;
+  line-height: 2em;
+  border: 1px #0b318f solid;
+  padding: 10px;
+}
+
+.cp .mainDialogLarge,.bimP .mainDialogLarge{
+  background: none;
+  background-image: url("../imgs/subBg.png");
+  background-size: 100% 100%;
+}
+.bimP .mainDialogLarge{
+  overflow-y: hidden;
+}
+.cp .el-dialog__title,.bimP .el-dialog__title{
+  color: #fff;
+}
+.surveillanceHome{
+  width: 100%;
+  background: none;
+  background-image: url("../imgs/subBg.png");
+  background-size: 100% 100%;
+}
+.surveillanceHome .el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: #012037 !important;
+}
+.chartBox .md .el-row{
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+.chartBox .design .el-row{
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.chartBox .design .el-row p{
+  color: #fff;
+  text-align: center;
+  padding-top: 30px;
+}
+.siteLabelTil{
+  position: absolute;top: -75px;left: -75px;width: 150px;height: 20px;text-align: center;border-radius: 100px;background: none;color:#fff;line-height:20px
+}
+.siteLabelIcon{
+  position:absolute;
+  width: 40px;
+  height: 40px;
+  left: 58px;
+  top: 30px;
+  background: url("../imgs/mark20.png");
+  background-size: 100% 100%;
+}
+
+
