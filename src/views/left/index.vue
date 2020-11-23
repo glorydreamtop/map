@@ -21,11 +21,11 @@
             <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
             <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
           </el-collapse-item>
-          <el-collapse-item title="专项项目" name="5">
+          <el-collapse-item title="专项项目调查表" name="5">
             <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
             <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
           </el-collapse-item>
-          <el-collapse-item title="工业企业" name="6">
+          <el-collapse-item title="工业企业调查表" name="6">
             <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
             <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
           </el-collapse-item>
@@ -67,10 +67,6 @@ export default {
   width: 50%;
   padding: 0;
 }
-::v-deep .el-tabs__item.is-active,
-::v-deep .el-tabs__item:hover {
-  color: $light;
-}
 ::v-deep .el-tabs__nav {
   width: 100%;
   display: flex;
@@ -78,9 +74,6 @@ export default {
 }
 .el-collapse{
   border-top: none;
-}
-::v-deep .el-tabs__active-bar {
-  background-color: $light;
 }
 ::v-deep .el-collapse-item__header{
   background-color: $primary;

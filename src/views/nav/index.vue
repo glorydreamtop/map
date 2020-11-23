@@ -145,7 +145,6 @@ export default {
     color: $white;
     [class*="icon"] {
       margin-right: 2px;
-      color: $light;
     }
   }
   ::v-deep .popper__arrow {
