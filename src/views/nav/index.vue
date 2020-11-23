@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <img class="title" src="@/assets/imgs/title.png" alt=""> -->
+    <img class="title" src="@/assets/imgs/title.png" alt="">
     <div
-      class="flex justify-between nav bg-primary border-bottom padding-right-l padding-tb-l"
+      class="flex justify-end nav bg-primary border-bottom padding-right-l padding-tb-l"
     >
       <div class="text-l">
         <i class="el-icon-notebook-1 text-light"></i>
@@ -127,7 +127,9 @@ export default {
 }
 .nav {
   height: 60px;
-  padding-left: 45%;
+  >.text-l{
+    margin-right:15px;
+  }
 }
 [class*="icon"] {
   margin-right: 5px;

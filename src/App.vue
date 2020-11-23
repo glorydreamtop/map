@@ -2,17 +2,21 @@
   <div id="app">
     <navigation></navigation>
     <ce-map></ce-map>
+    <left></left>
+    <right></right>  
   </div>
 </template>
 
 <script>
 import navigation from "@/views/nav";
-import ceMap from '@/views/map'
+import ceMap from '@/views/map';
+import left from '@/views/left'
 export default {
   name: "app",
   components: {
     navigation,
-    ceMap
+    ceMap,
+    left
   },
 };
 </script>
