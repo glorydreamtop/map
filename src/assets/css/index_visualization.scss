@@ -24,7 +24,7 @@
 
 .loginDialog-bak{
   background-color: rgba(255,255,255,0) !important;
-  background-image: url("../imgs/logo-w.png");
+  background-image: url("@/assets/imgs/logo-w.png");
   background-position: 48% 30px;
   background-repeat: no-repeat;
   color: #fff;
@@ -93,7 +93,7 @@
      /* box-shadow: 0px 0px 0px #3a3c42;  */
 	 list-style-type: none;
     opacity: 0.7;
-  background: url('../imgs/搜索框-2.png') no-repeat;
+  background: url('@/assets/imgs/搜索框-2.png') no-repeat;
   color: #fff;
 }
 .searchResultsConent{
@@ -118,7 +118,7 @@ background: #3DC5CF;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: url("../imgs/userIcon.jpg");
+  background: url("@/assets/imgs/userIcon.jpg");
   background-size: 100% 100%;
 }
 .userIcon:hover{
@@ -140,7 +140,7 @@ background: #3DC5CF;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: url("../imgs/userIcon.jpg");
+  background: url("@/assets/imgs/userIcon.jpg");
   background-size: 100% 100%;
   margin: 0 auto;
   margin-top: 20px;
@@ -312,7 +312,7 @@ background: #3DC5CF;
 }
 .menu .mainDialogLarge{
   background: none;
-  background-image: url("../imgs/large-dialogBg.png");
+  background-image: url("@/assets/imgs/large-dialogBg.png");
   background-size: 100% 100%;
 }
 
@@ -325,7 +325,7 @@ background: #3DC5CF;
   background-size: cover;
   position: absolute;
   overflow: hidden;
-  background: url("../imgs/dialogBg.png") no-repeat;
+  background: url("@/assets/imgs/dialogBg.png") no-repeat;
 }
 .menu .mainDialog .el-dialog__header,.menu .mainDialogLarge .el-dialog__header,.watchView .mainDialog .el-dialog__header,.panoramaView .mainDialog .el-dialog__header{
   padding-top: 15px;
@@ -368,7 +368,7 @@ background: #3DC5CF;
   color: #59baf2;
   font-size: 16px;
   text-align: center;
-  background: url("../imgs/dialogTilBg2.png") no-repeat;
+  background: url("@/assets/imgs/dialogTilBg2.png") no-repeat;
   background-size: 100% 100%;
   line-height: 35px;
 }
@@ -387,7 +387,7 @@ background: #3DC5CF;
 
 .cp .mainDialogLarge,.bimP .mainDialogLarge{
   background: none;
-  background-image: url("../imgs/subBg.png");
+  background-image: url("@/assets/imgs/subBg.png");
   background-size: 100% 100%;
 }
 .bimP .mainDialogLarge{
@@ -399,7 +399,7 @@ background: #3DC5CF;
 .surveillanceHome{
   width: 100%;
   background: none;
-  background-image: url("../imgs/subBg.png");
+  background-image: url("@/assets/imgs/subBg.png");
   background-size: 100% 100%;
 }
 .surveillanceHome .el-table--enable-row-hover .el-table__body tr:hover>td{
@@ -429,7 +429,7 @@ background: #3DC5CF;
   height: 40px;
   left: 58px;
   top: 30px;
-  background: url("../imgs/mark20.png");
+  background: url("@/assets/imgs/mark20.png");
   background-size: 100% 100%;
 }
 

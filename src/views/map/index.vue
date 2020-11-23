@@ -17,5 +17,5 @@ export default {
 
 <style lang="scss" scoped>
   @import "@/assets/css/cesiumViewer.scss";
-  @import "@/assets/css/index_visualization.scss";
+  // @import "@/assets/css/index_visualization.scss";
 </style>
