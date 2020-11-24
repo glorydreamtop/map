@@ -52,7 +52,7 @@
 			</el-tab-pane>
 		</el-tabs>
 		<div  v-if="dialogType=='open_jbqkTbale'">
-		   <el-dialog :title="dialogTitle" :modal-append-to-body='false' @close='closeDialog' :close-on-click-modal="true" :visible.sync="showFlag"  
+		   <el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog'  :visible.sync="showFlag"  
 		      v-model="showFlag" class="newStyleDialog " custom-class="jbqkTable_dialog"	>
 		    <jbqkTableHome  :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag" ></jbqkTableHome>
 		  </el-dialog>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-	import jbqkTableHome from '@/components/jbTablePage/jbTable_home.vue' //基本情况表-更多操作
+	import jbqkTableHome from '@/components/jbqkTablePage/jbqkTable_home.vue' //基本情况表-更多操作
 	export default {
 		name: "Index",
 		props: {},
@@ -74,8 +74,8 @@
 				activeName: "",
 				dialogTitle: '', //弹出框标题
 				dialogForm: "", //弹出框表单
-				showFlag: false, //弹出框显隐状态
-				dialogType: '', //弹出框操作类型
+				showFlag: true, //弹出框显隐状态
+				dialogType: 'open_jbqkTbale', //弹出框操作类型
 			};
 		},
 
