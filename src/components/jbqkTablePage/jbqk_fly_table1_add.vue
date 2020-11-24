@@ -29,7 +29,7 @@
 						<el-form-item label="数据项:" prop="stationCode">
 							<el-button size="mini" @click="addTableItem">添加</el-button>
 							<div class="addTable" v-if="ruleForm.itemList.length!=0">
-								<div class="tableHeader">
+								<div class="border-bottom">
 									<span class="cell_row1">项目</span>
 									<span class="cell_row2">单位</span>
 									<span class="cell_row3">备注</span>
@@ -244,9 +244,6 @@
 	} */
 	.table_row:last-child {
 		border-bottom:none;
-	}
-	.tableHeader{
-		border-bottom: 1px solid #4cf0ff;
 	}
 	.rowInput input{
 		width: 100%;

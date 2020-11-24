@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper align-center margin-right-l bg-sub radius-l">
+  <div class="wrapper justify-between align-center margin-right-l bg-sub radius-l">
     <el-select v-model="type" placeholder="请选择">
     <el-option
       v-for="item in options"
@@ -50,14 +50,20 @@ export default {
 <style lang="scss" scoped>
 .wrapper{
   input{
+    width: 5vw;
     background-color: $sub;
     height: 30px;
     border-radius: 20px;
     border-style: none;
-    margin: 0 10px;
+    margin-right:10px;
     color: $white;
     font-size: 18px;
   }
-  
+  ::v-deep input{
+    border: none;
+  }
+  .el-select{
+    width: 110px;
+  }
 }
 </style>

@@ -63,30 +63,13 @@
       class="newStyleDialog"
       custom-class="jbqkTable_dialog"
     >
-      <jbqkTableHome1
+    <!-- 动态组件 -->
+    <component
+    :is="`jbqkTableHome${dialogType}`"
         :dialog-type="dialogType"
         v-on:showStudes="showStudescode"
         :dialog-form="dialogForm"
-        v-if="dialogType === 1 && showFlag"
-      ></jbqkTableHome1>
-      <jbqkTableHome2
-        :dialog-type="dialogType"
-        v-on:showStudes="showStudescode"
-        :dialog-form="dialogForm"
-        v-if="dialogType === 2 && showFlag"
-      ></jbqkTableHome2>
-      <jbqkTableHome3
-        :dialog-type="dialogType"
-        v-on:showStudes="showStudescode"
-        :dialog-form="dialogForm"
-        v-if="dialogType === 3 && showFlag"
-      ></jbqkTableHome3>
-      <jbqkTableHome4
-        :dialog-type="dialogType"
-        v-on:showStudes="showStudescode"
-        :dialog-form="dialogForm"
-        v-if="dialogType === 4 && showFlag"
-      ></jbqkTableHome4>
+      ></component>
     </el-dialog>
     </div>
   </div>
@@ -112,7 +95,7 @@ export default {
       activeName: "",
       dialogTitle: "", //弹出框标题
       dialogForm: "", //弹出框表单
-      showFlag: true, //弹出框显隐状态
+      showFlag: false, //弹出框显隐状态
       dialogType: 1, //弹出框操作类型
     };
   },
@@ -123,8 +106,8 @@ export default {
     check() {},
     jbqkTable(dialogType) {
       //基本情况调查表
-      const titleList = ['农村','城市集镇','专业项目','企事业单位'];
-      this.dialogTitle = `${titleList[dialogType-1]}基本情况调查表`;
+      const titleList = ["农村", "城市集镇", "专业项目", "企事业单位"];
+      this.dialogTitle = `${titleList[dialogType - 1]}基本情况调查表`;
       this.showFlag = true;
       this.dialogForm = "";
       this.dialogType = dialogType;
