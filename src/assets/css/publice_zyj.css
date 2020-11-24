@@ -13,10 +13,33 @@
 	width: 80%!important;
 	height:75vh;
 }
+.jbqk_add_table1_dialog{
+	width:45%!important;
+	min-width:600px ;
+	height:80vh;
+}
 .table_page{
 	margin-top: 3vh;
 	text-align: center;
 }
 .table_page .el-pagination__total,.table_page .el-pagination__jump{
 	color: white!important;
+}
+.header_table_title{
+	color: white;
+}
+.el-form-item__label{
+	color: white!important;
+}
+.shopClose {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: red;
+    font-size: 23px;
+	display: none;
+	cursor: pointer;
+}
+.dialog_foot{
+	text-align: center;
 }
