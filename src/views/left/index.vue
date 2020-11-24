@@ -37,8 +37,7 @@
         </el-collapse>
       </el-tab-pane>
     </el-tabs>
-    <div v-if="dialogType == 'open_jbqkTbale'">
-      <el-dialog
+    <el-dialog
         :title="dialogTitle"
         :append-to-body="true"
         @close="closeDialog"
@@ -54,7 +53,6 @@
           v-if="showFlag"
         ></jbqkTableHome>
       </el-dialog>
-    </div>
   </div>
 </template>
 
@@ -82,7 +80,8 @@ export default {
   methods: {
     check() {},
     jbqkTable(dialogType) {
-      //基本情况调查表
+	  //基本情况调查表
+	  console.log(dialogType);
       this.dialogTitle = "基本情况调查表";
       this.showFlag = true;
       this.dialogForm = "";
