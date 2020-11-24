@@ -3,7 +3,7 @@
     <navigation></navigation>
     <ce-map></ce-map>
     <left></left>
-    <right></right>  
+    <right></right>
   </div>
 </template>
 

@@ -1,16 +1,17 @@
 <template>
   <div>
-    <img class="title" src="@/assets/imgs/title.png" alt="">
+    <img class="title" src="@/assets/imgs/title.png" alt="" />
     <div
-      class="flex justify-end nav bg-primary border-bottom padding-right-l padding-tb-l"
+      class="flex justify-end align-center nav bg-primary border-bottom padding-right-l"
     >
+      <search />
       <div class="text-l">
         <i class="el-icon-notebook-1 text-light"></i>
         <span>选择阶段</span>
       </div>
       <div class="text-l">
         <i class="al-icon-ziliaoguanli text-light"></i>
-          <span>资料管理</span>
+        <span>资料管理</span>
       </div>
       <el-dropdown placement="bottom" class="text-l text-white">
         <div>
@@ -101,6 +102,7 @@
 </template>
 
 <script>
+import search from "@/components/search";
 export default {
   name: "Index",
   props: {},
@@ -108,6 +110,9 @@ export default {
     return {
       activeIndex: 1,
     };
+  },
+  components: {
+    search,
   },
   created() {},
   mounted() {},
@@ -127,13 +132,16 @@ export default {
 }
 .nav {
   height: 60px;
-  >.text-l{
-    margin-right:15px;
+  > .text-l {
+    margin-right: 15px;
   }
 }
 [class*="icon"] {
   margin-right: 5px;
   color: $light;
+}
+.el-icon-arrow-down {
+  margin-right: 0;
 }
 .el-dropdown-menu {
   top: 50px !important;
