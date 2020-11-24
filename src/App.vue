@@ -26,5 +26,6 @@ export default {
 @import "./assets/css/bimPage";
 @import "./assets/css/common";
 @import "./assets/css/reset";
+@import "./assets/css/publice_zyj.css";
 @import "./assets/icon/iconfont.css"
 </style>
