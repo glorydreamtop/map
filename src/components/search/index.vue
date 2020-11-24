@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper align-center margin-right-l bg-sub radius-l">
-    <el-select v-model="value" placeholder="请选择">
+    <el-select v-model="type" placeholder="请选择">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -18,7 +18,28 @@ export default {
   name: 'Search',
   props: {},
   data() {
-    return {}
+    return {
+      options:[{
+        label:'基本情况',
+        value:1
+      },{
+        label:'土地',
+        value:2
+      },{
+        label:'户信息',
+        value:3
+      },{
+        label:'农村专项设施',
+        value:4
+      },{
+        label:'专项项目',
+        value:5
+      },{
+        label:'工业企业',
+        value:6
+      }],
+      type:1
+    }
   },
   created() {},
   mounted() {},
