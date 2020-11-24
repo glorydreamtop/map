@@ -10,3 +10,9 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-select-dropdown.el-popper{
     background-color: $primary;
 }
+.el-table__fixed-right{
+    background-color: #1A3348;
+}
+[class*="el-button"].is-plain:hover{
+    color: $white;
+}

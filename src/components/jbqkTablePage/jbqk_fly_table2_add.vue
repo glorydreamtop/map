@@ -3,7 +3,7 @@
 		<!--员工弹出框-->
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+				<el-form label-position="top" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
 					<el-form-item label="地区类型:" prop="stationName">
 						<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tableType">
 							<el-option key="1" label="水库淹没区" value="1"></el-option>
