@@ -1,0 +1,22 @@
+/* 弹框样式 */
+.newStyleDialog .el-dialog{
+  /* background: url(/static/img/dialogBg.png) no-repeat center center; */
+    background: url(../imgs/dialogBg.png)no-repeat center center;
+	background-size: 100% 100%;
+	
+}
+.newStyleDialog .el-dialog__title{
+	color: white!important; 
+	font-size: 0.9vw;
+}
+.jbqkTable_dialog {
+	width: 80%!important;
+	height:75vh;
+}
+.table_page{
+	margin-top: 3vh;
+	text-align: center;
+}
+.table_page .el-pagination__total,.table_page .el-pagination__jump{
+	color: white!important;
+}
