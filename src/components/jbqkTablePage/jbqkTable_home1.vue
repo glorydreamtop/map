@@ -1,14 +1,14 @@
 <template>
 	<div class="tableMain">
 		<div class="header_table_title">
-			<label>调查表类型：</label>
+			<!-- <label>调查表类型：</label>
 			<el-select v-model="formeData.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tabkeType">
 				<el-option key="1" label="农村基本情况调查表" value="1"></el-option>
 				<el-option key="2" label="城市集镇基本情况调查表" value="2"></el-option>
 				<el-option key="3" label="专业项目基本情况调查表" value="3"></el-option>
 				<el-option key="4" label="企事业单位基本情况调查表" value="4"></el-option>
-			</el-select>
-			<el-button icon="el-icon-add" style="margin-left: 2vw;" @click="addClick()">添加</el-button>
+			</el-select> -->
+			<el-button icon="el-icon-add"  @click="addClick()">添加</el-button>
 		</div>
 		<div class="body_table_mian">
 			<el-table :data="tableData" border style="width: 100%" height="50vh">
@@ -37,8 +37,7 @@
 		<div  >
 		   <el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog'  :visible.sync="showFlag"  
 		      v-model="showFlag" class="newStyleDialog " custom-class="jbqk_add_table1_dialog"	>
-		    <jbFlyTable1Add  :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag&&formeData.tableIndex=='1'" ></jbFlyTable1Add>
-			<jbFlyTable2Add  :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag&&formeData.tableIndex=='2'" ></jbFlyTable2Add>
+		    <jbFlyTable1Add  :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag" ></jbFlyTable1Add>	
 		  </el-dialog>
 		</div>
 	</div>
@@ -368,20 +367,8 @@
 
 			},
 			addClick(){//添加
-			   this.dialogForm ='';
-			   if(this.formeData.tableIndex=='1'){
-				    this.dialogTitle = '添加农村基本情况调查表';
-			   }
-			   if(this.formeData.tableIndex=='2'){
-			   		this.dialogTitle = '添加城市集镇基本情况调查表';
-			   }
-			   if(this.formeData.tableIndex=='3'){
-			   		this.dialogTitle = '专业项目基本情况调查表';
-			   }
-			   if(this.formeData.tableIndex=='4'){
-			   		this.dialogTitle = '企事业单位基本情况调查表';
-			   }
-			  
+			   this.dialogForm ='';   
+			   this.dialogTitle = '添加农村基本情况调查表';
 			   this.dialogType = 'add';
 			   this.showFlag=true;
 				
