@@ -2,7 +2,11 @@
 $--color-primary: #4af0fe;
 $--color-white: transparent;
 $--background-color-base: #1f576b;
+$--color-text-regular:#ffffff;
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
+.el-select-dropdown.el-popper{
+    background-color: $primary;
+}
