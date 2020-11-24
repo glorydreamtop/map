@@ -10,13 +10,15 @@
 <script>
 import navigation from "@/views/nav";
 import ceMap from '@/views/map';
-import left from '@/views/left'
+import left from '@/views/left';
+import right from '@/views/right'
 export default {
   name: "app",
   components: {
     navigation,
     ceMap,
-    left
+    left,
+    right
   },
 };
 </script>

@@ -1,7 +1,15 @@
 <template>
-  <div class="wrapper margin-right-l bg-sub">
+  <div class="wrapper align-center margin-right-l bg-sub radius-l">
+    <el-select v-model="value" placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
     <input type="text">
-    <i class="al-icon-sousuo"></i>
+    <i class="text-l al-icon-sousuo margin-right-m"></i>
   </div>
 </template>
 
@@ -23,6 +31,12 @@ export default {
   input{
     background-color: $sub;
     height: 30px;
+    border-radius: 20px;
+    border-style: none;
+    margin: 0 10px;
+    color: $white;
+    font-size: 18px;
   }
+  
 }
 </style>
