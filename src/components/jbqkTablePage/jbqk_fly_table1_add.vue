@@ -28,22 +28,22 @@
 						</el-form-item>	
 						<el-form-item label="数据项:" prop="stationCode">
 							<el-button size="mini" @click="addTableItem">添加</el-button>
-							<div class="addTable" v-if="ruleForm.itemList.length!=0">
-								<div class="border-bottom">
-									<span class="cell_row1">项目</span>
-									<span class="cell_row2">单位</span>
-									<span class="cell_row3">备注</span>
+							<div class="addTable border" v-if="ruleForm.itemList.length!=0">
+								<div class="border-bottom tableHeader">
+									<span style="width: 30%;" class="border-right">项目</span>
+									<span style="width: 30%;" class="border-right">单位</span>
+									<span style="width: 40%;">备注</span>
 								</div>
 								<div class="tableBody">
-									<div class="table_row" v-for="(item,index) in ruleForm.itemList">
-										<span class="cell_row1 rowInput"  @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
+									<div class="table_row border-bottom" v-for="(item,index) in ruleForm.itemList">
+										<span class="border-right rowInput" style="width: 30%;position: relative;"  @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
 											<input v-model="item.itemName"/>
 											 <i class="el-icon-close shopClose"  @click="delShopItem(index,item)" v-show="seenButton&&currentIndex==index"></i>
 										</span>
-										<span class="cell_row2 rowInput">
+										<span class="border-right rowInput" style="width: 30%;">
 											<input v-model="item.unit"/>
 										</span>
-										<span class="cell_row3 rowInput">
+										<span class="border-right rowInput" style="width: 40%;">
 											<input v-model="item.remark"/>
 										</span>
 									</div>
@@ -228,51 +228,29 @@
 
 	}
 	.addTable{
-		color: white;
-		border: 1px solid #4cf0ff;
+		color: $white;
 	}
 	.tableHeader,.table_row{
 		display: flex;
-		/* height: 4vh; */
 	}
-	.table_row{
-		border-bottom: 1px solid #4cf0ff;
-	}
-	/* .tableBody{
-		height: 20vh;
-		overflow-y: auto;
-	} */
+
 	.table_row:last-child {
 		border-bottom:none;
 	}
+	.rowInput{
+		display: inline-block;
+	}
 	.rowInput input{
-		width: 100%;
+		width: 90%;
 		display: inline-block;
 		height: 4vh;
 		border: none;
 		outline:none;
-		background: #233b50;
-		color: white;
+		background: #233b5000;
+		color: $white;
 		text-align: center;
 		
 		
 	}
-	.cell_row1{
-		display: inline-block;
-		width: 40%;
-		text-align: center;
-		border-right:1px solid #4cf0ff ;
-		position: relative;
-	}
-	.cell_row2{
-		display: inline-block;
-		width: 20%;
-		text-align: center;
-		border-right:1px solid #4cf0ff ;
-	}
-	.cell_row3{
-		display: inline-block;
-		width: 40%;
-		text-align: center;
-	}
+	
 </style>

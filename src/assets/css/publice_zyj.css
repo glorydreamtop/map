@@ -43,3 +43,7 @@
 .dialog_foot{
 	text-align: center;
 }
+.tableHeader{
+	display: inline-block;
+	text-align: center;
+}

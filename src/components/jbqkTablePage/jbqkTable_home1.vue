@@ -15,7 +15,7 @@
 				<!-- <el-table-column type="index" label="序号" width="75" align="center"> </el-table-column> -->
 				<el-table-column :prop="item.prop" :label="item.label" :width="item.width" align="center" v-for="item in elTableColumn">
 				</el-table-column>
-				<el-table-column label="操作" width="300" align="center">
+				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
 						<el-button size="mini" type="primary" plain @click="lookClick(scope.row)">查看</el-button>
 						<el-button size="mini" type="warning" plain>编辑</el-button>

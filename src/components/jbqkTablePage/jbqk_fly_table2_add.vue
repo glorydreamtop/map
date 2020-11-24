@@ -29,21 +29,21 @@
 					</el-form-item>
 					<el-form-item label="基本情况调查:">
 						<!-- <el-button size="mini">添加</el-button> -->
-						<div class="addTable">
-							<div class="tableHeader">
-								<span style="width: 30%;">项目</span>
-								<span style="width: 10%;">单位</span>
-								<span style="width: 15%;">总计</span>
-								<span style="width: 20%;">征地范围内</span>
-								<span style="width: 25%;">备注</span>
+						<div class="addTable border">
+							<div class="tableHeader border-bottom">
+								<span style="width: 30%;" class="border-right">项目</span>
+								<span style="width: 10%;" class="border-right">单位</span>
+								<span style="width: 15%;" class="border-right">总计</span>
+								<span style="width: 20%;" class="border-right">征地范围内</span>
+								<span style="width: 25%;" class="border-right">备注</span>
 							</div>
 							<div class="tableBody">
-								<div class="table_row" v-for="item in peopleItem">
-									<span class=" rowInput" style="width: 30%;">{{item.title}}</span>
-									<span class=" rowInput" style="width: 10%;">{{item.unit}}</span>
-									<span class=" rowInput" style="width: 15%;"></span>
-									<span class=" rowInput" style="width: 20%;"></span>
-									<span class=" rowInput" style="width: 25%;"></span>
+								<div class="table_row border-bottom" v-for="item in peopleItem">
+									<span class=" rowInput border-right" style="width: 30%;">{{item.title}}</span>
+									<span class=" rowInput border-right" style="width: 10%;">{{item.unit}}</span>
+									<span class=" rowInput border-right" style="width: 15%;"></span>
+									<span class=" rowInput border-right" style="width: 20%;"></span>
+									<span class=" rowInput border-right" style="width: 25%;"></span>
 								</div>
 								
 							</div>
@@ -51,22 +51,22 @@
 					</el-form-item>
 					<el-form-item label="市政基础设施调查:">
 						<el-button size="mini" @click="addTableItem">添加</el-button>
-						<div class="addTable" v-if="ruleForm.itemList.length!=0">
-							<div class="tableHeader">
-								<span style="width: 30%;">项目</span>
-								<span style="width: 30%;">单位</span>
-								<span style="width: 40%;">备注</span>
+						<div class="addTable border" v-if="ruleForm.itemList.length!=0">
+							<div class="tableHeader border-bottom">
+								<span style="width: 30%;" class="border-right">项目</span>
+								<span style="width: 30%;" class="border-right">单位</span>
+								<span style="width: 40%;" class="border-right">备注</span>
 							</div>
 							<div class="tableBody">
-								<div class="table_row" v-for="(item,index) in ruleForm.itemList">
-									<span style="width: 30%;position: relative;" class="rowInput" @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
+								<div class="table_row border-bottom" v-for="(item,index) in ruleForm.itemList">
+									<span style="width: 30%;position: relative;" class="rowInput border-right" @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
 										<input v-model="item.itemName" />
 										<i class="el-icon-close shopClose" @click="delShopItem(index,item)" v-show="seenButton&&currentIndex==index"></i>
 									</span>
-									<span style="width: 30%;" class=" rowInput">
+									<span style="width: 30%;" class=" rowInput border-right">
 										<input v-model="item.unit" />
 									</span>
-									<span style="width: 40%;" class="rowInput">
+									<span style="width: 40%;" class="rowInput border-right">
 										<input v-model="item.remark" />
 									</span>
 								</div>
@@ -269,39 +269,24 @@
 	}
 
 	.addTable {
-		color: white;
-		border: 1px solid #4cf0ff;
+		color: $white;
 	}
 
 	.tableHeader,
 	.table_row {
 		display: flex;
-		/* height: 4vh; */
-	}
-	
-
-	.table_row {
-		border-bottom: 1px solid #4cf0ff;
 	}
 
-	/* .tableBody{
-		height: 20vh;
-		overflow-y: auto;
-	} */
 	.table_row:last-child {
 		border-bottom: none;
 	}
 
-	.tableHeader {
-		border-bottom: 1px solid #4cf0ff;
-	}
+
     .rowInput{
-		border-right: 1px solid #4cf0ff;
 	    display: inline-block;
 		text-align: center;
 	}
 	.tableHeader span{
-		border-right: 1px solid #4cf0ff;
 		display: inline-block;
 		text-align: center;
 	}
@@ -312,33 +297,17 @@
 		border-right: none;
 	}
 	.rowInput input {
-		width: 100%;
+		width: 90%;
 		display: inline-block;
 		height: 4vh;
 		border: none;
 		outline: none;
-		background: #233b50;
-		color: white;
+		background: #233b5000;
+		color: $white;
 		text-align: center;
 
 
 	}
 
-	.cell_row1 {
-		width:30%;
-	}
-
-	.cell_row2 {
-		width: 10%;
-	}
-
-	.cell_row3 {
-		width: 20%;
-	}
-	.cell_row4 {
-		width: 20%;
-	}
-	.cell_row5 {
-		width: 20%;
-	}
+	
 </style>

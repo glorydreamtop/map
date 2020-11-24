@@ -243,26 +243,18 @@
 
 	}
 	.addTable{
-		color: white;
-		border: 1px solid #4cf0ff;
+		color: $white;
+	
 	}
 	.tableHeader,.table_row{
 		display: flex;
 		/* height: 4vh; */
 	}
-	.table_row{
-		border-bottom: 1px solid #4cf0ff;
-	}
-	/* .tableBody{
-		height: 20vh;
-		overflow-y: auto;
-	} */
+	
 	.table_row:last-child {
 		border-bottom:none;
 	}
-	.tableHeader{
-		border-bottom: 1px solid #4cf0ff;
-	}
+	
 	.rowInput input{
 		width: 100%;
 		display: inline-block;
@@ -270,7 +262,7 @@
 		border: none;
 		outline:none;
 		background: #233b50;
-		color: white;
+		color: $white;
 		text-align: center;
 		
 		
