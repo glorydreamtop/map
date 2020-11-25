@@ -29,7 +29,7 @@
 		</div>
 		<div>
 			<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
-			 class="newStyleDialog " custom-class="jbqk_add_table1_dialog">
+			 class="newStyleDialog " custom-class="jbqk_add_table3_dialog">
 				<jbFlyTable3Add :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag"></jbFlyTable3Add>
 			</el-dialog>
 		</div>

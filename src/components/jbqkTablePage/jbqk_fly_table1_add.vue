@@ -4,7 +4,6 @@
 		<div class="element_main">
 			<div class="reyuan_form">
 				<el-collapse v-model="activeFormIndex">
-					<!-- 表头 -->
 					<el-collapse-item title="表基础信息" name="1">
 						<div class="formeHeader">
 							<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">

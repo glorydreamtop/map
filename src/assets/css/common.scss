@@ -311,3 +311,8 @@ html,body, #cesiumContainer {
   border-right:1px solid $light;
  
 }
+.border-none{
+	outline: none;
+	border:none;
+	color: $white;
+}

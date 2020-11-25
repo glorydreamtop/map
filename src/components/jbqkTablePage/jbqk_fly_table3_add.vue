@@ -3,43 +3,43 @@
 		<!--员工弹出框-->
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+				<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
 
 					<!-- 农村基本情况调查表 -->
 						<el-form-item label="地区类型:" prop="stationName">
-							<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tableType">
+							<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tableType" style="width:200px">
 								<el-option key="1" label="水库淹没区" value="1"></el-option>
 								<el-option key="2" label="水库影响区" value="2"></el-option>
 								<el-option key="3" label="枢纽工程建设区" value="3"></el-option>
 							</el-select>
 						</el-form-item>	
 						<el-form-item label="地区:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
 						</el-form-item>	
 						
 						<el-form-item label="项目名称:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
 						</el-form-item>	
 						<el-form-item label="项目类别:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
 						</el-form-item>	
 						<el-form-item label="项目规划情况:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
 						</el-form-item>	
 						<el-form-item label="项目规模:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
 						</el-form-item>	
 						<el-form-item label="功能:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
 						</el-form-item>	
 						<el-form-item label="服务对象:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
 						</el-form-item>	
 						<!-- <el-form-item label="作用:" prop="stationName">
 							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
 						</el-form-item>	 -->
 						<el-form-item label="受影响程度:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
 						</el-form-item>	
 						<!-- <el-form-item label="数据项:" prop="stationCode">
 							<el-button size="mini" @click="addTableItem">添加</el-button>
@@ -68,13 +68,14 @@
 					 -->
 					
 				</el-form>
-
+                
 			</div>
-			<div class="dialog_foot" v-show="dialogType!='look'">
+			<div class="dialog_foot margin-top-l" v-show="dialogType!='look'">
 				<span class="btn_foot">
-					<el-button class="bulueBTn" @click="submitForm2('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
+					<el-button  class="button-l" type="primary" plain @click="submitForm2('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
 				</span>
 			</div>
+			
 		</div>
 	</div>
 </template>
@@ -236,36 +237,12 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 65vh;
+		height:40vh;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;
 
 	}
-	.addTable{
-		color: $white;
-	}
-	.tableHeader,.table_row{
-
-	}
-
-	.table_row:last-child {
-		border-bottom:none;
-	}
 	
-	.rowInput input{
-		width: 100%;
-		display: inline-block;
-		height: 4vh;
-		border: none;
-		outline:none;
-		background: #233b50;
-		color: $white;
-		text-align: center;
-			
-	}
-	.rowInput{
-		display: inline-block;
-	}
 	
 </style>

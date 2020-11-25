@@ -2,7 +2,7 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form label-position="top" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+				<el-form label-position="top"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 					<el-form-item label="编号:" prop="stationName">
 						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
