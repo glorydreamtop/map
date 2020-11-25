@@ -28,14 +28,14 @@
 						</el-form-item>	
 						<el-form-item label="数据项:" prop="stationCode">
 							<el-button size="mini" @click="addTableItem">添加</el-button>
-							<div class="addTable border" v-if="ruleForm.itemList.length!=0">
-								<div class="border-bottom tableHeader">
+							<div class="border" v-if="ruleForm.itemList.length!=0">
+								<div class="border-bottom flex">
 									<span style="width: 30%;" class="border-right">项目</span>
 									<span style="width: 30%;" class="border-right">单位</span>
 									<span style="width: 40%;">备注</span>
 								</div>
 								<div class="tableBody">
-									<div class="table_row border-bottom" v-for="(item,index) in ruleForm.itemList">
+									<div class="table_row flex border-bottom" v-for="(item,index) in ruleForm.itemList">
 										<span class="border-right rowInput" style="width: 30%;position: relative;"  @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
 											<input v-model="item.itemName"/>
 											 <i class="el-icon-close shopClose"  @click="delShopItem(index,item)" v-show="seenButton&&currentIndex==index"></i>
@@ -227,13 +227,6 @@
 		overflow-x: hidden;
 
 	}
-	.addTable{
-		color: $white;
-	}
-	.tableHeader,.table_row{
-		display: flex;
-	}
-
 	.table_row:last-child {
 		border-bottom:none;
 	}
@@ -244,13 +237,9 @@
 		width: 90%;
 		display: inline-block;
 		height: 4vh;
-		border: none;
-		outline:none;
 		background: #233b5000;
 		color: $white;
 		text-align: center;
-		
-		
 	}
 	
 </style>

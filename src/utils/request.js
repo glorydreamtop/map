@@ -1,174 +1,92 @@
-import {
-    baseUrl
-  } from './env'
-  
-  import axios from 'axios';
-  
-  import storeLockr from 'Lockr'
-  
-  
-  export default (
-    url = '',
-    data = {},
-    method = 'GET',
-    success,
-    fail,
-    reflectionInterface = true,
-    headerInfo = 'no'
-  ) => {
-    //axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-  
-    axios.defaults.headers['Content-Type'] = 'application/json; charset=utf-8';
-    axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
-    axios.defaults.headers['Access-Control-Allow-Method'] = 'GET, POST, OPTIONS';
-    const token = sessionStorage.getItem('token');
-  
-    const paramUrl = 'webapi/Runapi.ashx?paramUrl=';
-    let rootUrl = baseUrl + paramUrl;
-  
-    rootUrl = baseUrl;
-  
-  
-    //@reflectionInterface 是否是反射接口，如果是反射接口，需要改变url以及参数的数据结构。
-    if(reflectionInterface){
-      const  urlArr=url.split("/");
-      const classUrlEn = `GDYZCBusiness.${urlArr[0]}`;
-      const functionUrlEn = `${urlArr[1]}`;
-      url = `${rootUrl}ReflectInvoke/Invoke?assebleUrlEn=GDYZCBusiness.dll&classUrlEn=${classUrlEn}&functionUrlEn=${functionUrlEn}`;
-  
-  
-    //   let convertData = [];
-  
-    //   for(let key in data){
-    //     convertData.push({"name":key,"value":data[key]});
-    //   }
-    //   data =[];
-    //   convertData.forEach(i=>{
-    //     data.push(i);
-    //   })
-  
-    } else {
-      url = rootUrl + url;
-    }
-  
-    if (method == 'GET') {
-      axios.defaults.headers['Token'] = token;
-    //   let dataStr = ''; //数据拼接字符串
-    //   Object.keys(data).forEach(key => {
-    //     dataStr += key + '=' + data[key] + '&';
-    //   })
-    //   if (dataStr !== '') {
-    //     dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
-    //     url = url + '?' + dataStr;
-    //   }
-      return new Promise((resolve, reject) => {
-        axios.get(url,{params:data}).then(function (res) {
-          if (res) {
-            if (typeof success == 'function') {
-              resolve(success(res));
-            }
-          } else {
-            window.alert('ERROR:' + JSON.stringify(res));
-          }
-        }).catch(function (err) {
-          if (err) {
-            if (typeof fail == 'function') {
-              fail(err);
-            }
-            console.log('ERROR:' + err)
-          }
-        });
-      });
-    }
-  
-  
-    if(method == 'POST'||method=='DELETE'){
-  
-      if(headerInfo !== 'no'){
-        axios.defaults.headers['Authorization'] = headerInfo.Authorization;
-        data = {};
-      }else {
-        console.warn(token);
-        axios.defaults.headers['Token'] = token;
-        //axios.defaults.headers['Token'] = "ce430d48-6572-4359-942b-08ee93cc6951";
+import axios from 'axios'
+import { MessageBox, Message } from 'element-ui'
+import store from '@/store'
+import { getToken } from '@/utils/auth'
+
+// create an axios instance
+const service = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // withCredentials: true, // send cookies when cross-domain requests
+  timeout: 5000 // request timeout
+})
+
+// request interceptor
+service.interceptors.request.use(
+  config => {
+    // do something before request is sent
+
+    if (store.getters.token) {
+      // let each request carry token
+      // ['X-Token'] is a custom headers key
+      // please modify it according to the actual situation
+      config.headers['Authorization'] = getToken()
+      // console.log(config);
+      if (config.method === 'get') {
+        config.params = config.data
       }
-  
-      // console.warn('URL==========>');
-      // console.warn(url);
-      // console.warn(data);
-      if(method == 'POST')
-        return new Promise((resolve, reject) => {
-        axios.post(url,data).then(function(res) {
-          // if(layerflag!=null)
-          //   layer.close(layerflag);
-          if (res) {
-            if (typeof success == 'function') {
-              resolve(success(res));
-            }
-          } else {
-            window.alert('ERROR:' + JSON.stringify(res));
-          }
-        }).catch(function(err) {
-          // layer.close(layerflag);
-          if (err) {
-            if (typeof fail == 'function') {
-              let failResult = {
-                code:401,
-                msg:'AJAX未知的错误'
-              };
-              fail(failResult);
-              //   console.log(typeof (err));
-              //   if(err.indexOf('401') > -1){
-              //     failResult.msg('用户名密码错误')
-              //   }
-              //   fail(failResult);
-            }
-          }
-        })
-      });
-      else{
-        let dataStr = ''; //数据拼接字符串
-        Object.keys(data).forEach(key => {
-          dataStr += key + '=' + data[key] + '&';
-        })
-        if (dataStr !== '') {
-          dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
-          url = url + '?' + dataStr;
-        }
-        return new Promise((resolve, reject) => {
-          axios.delete(url).then(function(res) {
-            // if(layerflag!=null)
-            //   layer.close(layerflag);
-            if (res) {
-              if (typeof success == 'function') {
-                resolve(success(res));
-  
-              }
-            } else {
-              window.alert('ERROR:' + JSON.stringify(res));
-            }
-          }).catch(function(err) {
-            // layer.close(layerflag);
-            if (err) {
-              if (typeof fail == 'function') {
-                let failResult = {
-                  code:401,
-                  msg:'AJAX未知的错误'
-                };
-                fail(failResult);
-                //   console.log(typeof (err));
-                //   if(err.indexOf('401') > -1){
-                //     failResult.msg('用户名密码错误')
-                //   }
-                //   fail(failResult);
-              }
-            }
-          })
-        });
-      }
+      // if (['get', 'put', 'delete'].includes(config.method) && config.data && config.data.id) {
+      //   config.url = `${config.url}/${config.data.id}`
+      //   delete config.data.id
+      // }
     }
-  
-  
-  
+    return config
+  },
+  error => {
+    // do something with request error
+    console.log(error) // for debug
+    return Promise.reject(error)
   }
-  
+)
+
+// response interceptor
+service.interceptors.response.use(
+  /**
+     * If you want to get http information such as headers or status
+     * Please return  response => response
+     */
+
+  /**
+     * Determine the request status by custom code
+     * Here is just an example
+     * You can also judge the status by HTTP Status Code
+     */
+  response => {
+    console.log(response);
+    const res = response.data
+    if (res.bResult !== true) {
+      //  202: Token expired;
+      if (res.code === 202) {
+        // to re-login
+        MessageBox.confirm('身份信息已失效，请重新登录', '提示', {
+          confirmButtonText: '重新登录',
+          cancelButtonText: '算了',
+          type: 'warning'
+        }).then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
+        })
+      } else if (res.code === 201) {
+        Message({
+          message: res.message || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
+      return res.data
+    }
+  },
+  error => {
+    console.log('err' + error) // for debug
+    Message({
+      message: '网络超时',
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(error)
+  }
+)
+
+export default service

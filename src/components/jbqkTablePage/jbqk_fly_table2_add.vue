@@ -29,8 +29,8 @@
 					</el-form-item>
 					<el-form-item label="基本情况调查:">
 						<!-- <el-button size="mini">添加</el-button> -->
-						<div class="addTable border">
-							<div class="tableHeader border-bottom">
+						<div class="border">
+							<div class="flex border-bottom">
 								<span style="width: 30%;" class="border-right">项目</span>
 								<span style="width: 10%;" class="border-right">单位</span>
 								<span style="width: 15%;" class="border-right">总计</span>
@@ -38,7 +38,7 @@
 								<span style="width: 25%;" class="border-right">备注</span>
 							</div>
 							<div class="tableBody">
-								<div class="table_row border-bottom" v-for="item in peopleItem">
+								<div class="table_row flex border-bottom" v-for="item in peopleItem">
 									<span class=" rowInput border-right" style="width: 30%;">{{item.title}}</span>
 									<span class=" rowInput border-right" style="width: 10%;">{{item.unit}}</span>
 									<span class=" rowInput border-right" style="width: 15%;"></span>
@@ -58,7 +58,7 @@
 								<span style="width: 40%;" class="border-right">备注</span>
 							</div>
 							<div class="tableBody">
-								<div class="table_row border-bottom" v-for="(item,index) in ruleForm.itemList">
+								<div class="table_row flex border-bottom" v-for="(item,index) in ruleForm.itemList">
 									<span style="width: 30%;position: relative;" class="rowInput border-right" @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
 										<input v-model="item.itemName" />
 										<i class="el-icon-close shopClose" @click="delShopItem(index,item)" v-show="seenButton&&currentIndex==index"></i>
@@ -266,10 +266,6 @@
 		overflow-y: auto;
 		overflow-x: hidden;
 
-	}
-
-	.addTable {
-		color: $white;
 	}
 
 	.tableHeader,
