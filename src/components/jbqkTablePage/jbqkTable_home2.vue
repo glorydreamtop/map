@@ -1,7 +1,7 @@
 <template>
 	<div class="tableMain">
 		<div class="header_table_title">
-			<el-button icon="el-icon-add"  @click="addClick()">添加</el-button>
+			<el-button icon="el-icon-plus"  @click="addClick()" plain>  </el-button>
 		</div>
 		<div class="body_table_mian">
 			<el-table :data="tableData" border style="width: 100%" height="50vh">
@@ -10,10 +10,10 @@
 				</el-table-column>
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
-						<el-button size="mini" type="primary" plain @click="lookClick(scope.row)">查看</el-button>
-						<el-button size="mini" type="warning" plain>编辑</el-button>
-						<el-button size="mini" type="danger" plain>删除</el-button>
-						<el-button size="mini" type="success" plain>发起审批</el-button>
+						<el-button title="查看"  icon="el-icon-view"  type="primary" plain @click="lookClick(scope.row)"></el-button>
+						<el-button title="修改"   icon="el-icon-edit" type="warning" plain></el-button>
+						<el-button title="删除"  icon="el-icon-delete" type="danger" plain></el-button>
+						<el-button title="发起审批"  icon="el-icon-s-check" type="success" plain></el-button>
 					</template>
 				</el-table-column>
 			</el-table>
