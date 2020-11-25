@@ -1,49 +1,80 @@
 /* 弹框样式 */
-.newStyleDialog .el-dialog{
-  /* background: url(/static/img/dialogBg.png) no-repeat center center; */
+
+.newStyleDialog .el-dialog {
+    /* background: url(/static/img/dialogBg.png) no-repeat center center; */
     background: url(../imgs/dialogBg.png)no-repeat center center;
-	background-size: 100% 100%;
-	
+    background-size: 100% 100%;
 }
-.newStyleDialog .el-dialog__title{
-	color: white!important; 
-	font-size: 0.9vw;
+
+.newStyleDialog .el-dialog__title {
+    color: white!important;
+    font-size: 0.9vw;
 }
+
 .jbqkTable_dialog {
-	width: 80%!important;
-	height:75vh;
+    width: 80%!important;
+    height: 75vh;
 }
-.jbqk_add_table1_dialog{
-	width:45%!important;
-	min-width:600px ;
-	height:80vh;
+
+.jbqk_add_table1_dialog {
+    width: 45%!important;
+    min-width: 600px;
+    height: 80vh;
 }
-.table_page{
-	margin-top: 3vh;
-	text-align: center;
+
+.jbqk_add_table3_dialog {
+    width: 40%!important;
+    min-width: 750px;
+    height: 60vh;
 }
-.table_page .el-pagination__total,.table_page .el-pagination__jump{
-	color: white!important;
+
+.jbqk_add2_table1_dialog {
+    width: 30%!important;
+    min-width: 400px;
+    height: 80vh;
 }
-.header_table_title{
-	color: white;
+
+.table_page {
+    margin-top: 3vh;
+    text-align: center;
 }
-.el-form-item__label{
-	color: white!important;
+
+.table_page .el-pagination__total,
+.table_page .el-pagination__jump {
+    color: white!important;
 }
+
+.header_table_title {
+    color: white;
+}
+
+.el-form-item__label {
+    color: white!important;
+}
+
 .shopClose {
     position: absolute;
     right: 0;
     bottom: 0;
     color: red;
     font-size: 23px;
-	display: none;
-	cursor: pointer;
+    display: none;
+    cursor: pointer;
 }
-.dialog_foot{
-	text-align: center;
+
+.dialog_foot {
+    text-align: center;
 }
-.tableHeader{
-	display: inline-block;
-	text-align: center;
+
+.tableHeader {
+    display: inline-block;
+    text-align: center;
+}
+
+.button-l {
+    width: 6vw;
+    height: 3vh;
+    line-height: 3vh;
+    min-width: 120px;
+    padding: 0!important;
 }

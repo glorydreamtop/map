@@ -8,17 +8,25 @@
       @click.stop=""
     >
       <el-input
+        v-model="loginForm.user"
         class="margin-bottom-l"
         prefix-icon="al-icon-user"
         placeholder="请输入用户名"
       ></el-input>
-      <el-input prefix-icon="al-icon-lock" placeholder="请输入密码"></el-input>
-      <el-button class="margin-top-l text-light" size="mini">登录</el-button>
+      <el-input
+        v-model="loginForm.pwd"
+        prefix-icon="al-icon-lock"
+        placeholder="请输入密码"
+      ></el-input>
+      <el-button class="margin-top-l text-light" size="mini" @click="login"
+        >登录</el-button
+      >
     </div>
   </el-dialog>
 </template>
 
 <script>
+import { login } from "@/api/user";
 import { mapGetters } from "vuex";
 export default {
   name: "Index",
@@ -26,6 +34,10 @@ export default {
   data() {
     return {
       show: true,
+      loginForm: {
+        user: "",
+        pwd: "",
+      },
     };
   },
   computed: {
@@ -38,13 +50,16 @@ export default {
       e.stopPropagation();
       this.show = !this.show;
     },
+    login() {
+      const { user, pwd } = this.loginForm;
+      login(user, pwd);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 ::v-deep .el-dialog {
-  margin-top: 35vh !important;
   background-image: url("../../assets/imgs/subBg.png");
   background-size: 100% 100%;
   border-radius: 20px;

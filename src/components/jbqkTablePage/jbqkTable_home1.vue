@@ -1,38 +1,28 @@
 <template>
 	<div class="tableMain">
 		<div class="header_table_title">
-			<!-- <label>调查表类型：</label>
-			<el-select v-model="formeData.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tabkeType">
-				<el-option key="1" label="农村基本情况调查表" value="1"></el-option>
-				<el-option key="2" label="城市集镇基本情况调查表" value="2"></el-option>
-				<el-option key="3" label="专业项目基本情况调查表" value="3"></el-option>
-				<el-option key="4" label="企事业单位基本情况调查表" value="4"></el-option>
-			</el-select> -->
-			<el-button icon="el-icon-add"  @click="addClick()">添加</el-button>
+			<el-button icon="el-icon-plus"  @click="addClick()" plain>  </el-button>
 		</div>
 		<div class="body_table_mian">
 			<el-table :data="tableData" border style="width: 100%" height="50vh">
-				<!-- <el-table-column type="index" label="序号" width="75" align="center"> </el-table-column> -->
 				<el-table-column :prop="item.prop" :label="item.label" :width="item.width" align="center" v-for="item in elTableColumn">
 				</el-table-column>
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
-						<el-button size="mini" type="primary" plain @click="lookClick(scope.row)">查看</el-button>
-						<el-button size="mini" type="warning" plain>编辑</el-button>
-						<el-button size="mini" type="danger" plain>删除</el-button>
-						<el-button size="mini" type="success" plain>发起审批</el-button>
+						<el-button title="查看"  icon="el-icon-view"  type="primary" plain @click="lookClick(scope.row)"></el-button>
+						<el-button title="修改"   icon="el-icon-edit" type="warning" plain></el-button>
+						<el-button title="删除"  icon="el-icon-delete" type="danger" plain></el-button>
+						<el-button title="发起审批"  icon="el-icon-s-check" type="success" plain></el-button>
+						
 					</template>
 				</el-table-column>
 			</el-table>
-
-
 			<div class="table_page">
 				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageData.page"
 				 :page-sizes="[10, 20, 50, 100]" :page-size="pageData.limit" layout="total, sizes, prev, pager, next, jumper"
 				 :total="total">
 				</el-pagination>
 			</div>
-
 		</div>
 		<div  >
 		   <el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog'  :visible.sync="showFlag"  
@@ -45,13 +35,11 @@
 
 <script>
 	import jbFlyTable1Add from '@/components/jbqkTablePage/jbqk_fly_table1_add' //农村基本情况调查表
-	import jbFlyTable2Add from '@/components/jbqkTablePage/jbqk_fly_table2_add' //城市集镇基本情况调查表
 	export default {
 		name: "jbqlTable_home",
 		props: {},
 		components: {
 			jbFlyTable1Add,
-			jbFlyTable2Add
 		},
 		data() {
 			return {
@@ -157,200 +145,7 @@
 				},];
 				this.tableData=tableData;
 			},
-			change_tabkeType(data) { //调查表类型
-				if (data == '1') {
-					this.elTableColumn = [{
-							label: '编号',
-							prop: 'code',
-							width: '100'
-						},
-						{
-							label: '申请时间',
-							prop: 'date',
-							width: '180'
-						},
-						{
-							label: '地区',
-							prop: 'ditu',
-							width: ''
-						},
-						{
-							label: '地区类型',
-							prop: 'diquType',
-							width: ''
-						},
-						{
-							label: '状态',
-							prop: 'status',
-							width: ''
-						},
-						{
-							label: '乡镇',
-							prop: 'xiangzhen',
-							width: ''
-						},
-						{
-							label: '村委会',
-							prop: 'cunweihui',
-							width: ''
-						},
-					];
-				} else if (data == '2') {
-					this.elTableColumn = [{
-							label: '编号',
-							prop: 'code',
-							width: '100'
-						},
-						{
-							label: '申请时间',
-							prop: 'date',
-							width: '180'
-						},
-						{
-							label: '地区',
-							prop: 'ditu',
-							width: ''
-						},
-						{
-							label: '地区类型',
-							prop: 'diquType',
-							width: ''
-						},
-						{
-							label: '状态',
-							prop: 'status',
-							width: ''
-						},
-						{
-							label: '城市集镇名称',
-							prop: 'xiangzhen',
-							width: ''
-						},
-						{
-							label: '隶属关系',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '等级',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '功能',
-							prop: 'cunweihui',
-							width: ''
-						},
-
-					];
-				} else if (data == '3') {
-					this.elTableColumn = [{
-							label: '编号',
-							prop: 'code',
-							width: '100'
-						},
-						{
-							label: '申请时间',
-							prop: 'date',
-							width: '180'
-						},
-						{
-							label: '地区',
-							prop: 'ditu',
-							width: ''
-						},
-						{
-							label: '地区类型',
-							prop: 'diquType',
-							width: ''
-						},
-						{
-							label: '状态',
-							prop: 'status',
-							width: ''
-						},
-						{
-							label: '项目名称',
-							prop: 'xiangzhen',
-							width: ''
-						},
-						{
-							label: '项目类别',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '项目规划情况',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '项目规模',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '功能',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '受影响程度',
-							prop: 'cunweihui',
-							width: ''
-						},
-
-					];
-				} else {
-					this.elTableColumn = [{
-							label: '编号',
-							prop: 'code',
-							width: '100'
-						},
-						{
-							label: '申请时间',
-							prop: 'date',
-							width: '180'
-						},
-						{
-							label: '地区',
-							prop: 'ditu',
-							width: ''
-						},
-						{
-							label: '地区类型',
-							prop: 'diquType',
-							width: ''
-						},
-						{
-							label: '状态',
-							prop: 'status',
-							width: ''
-						},
-						{
-							label: '单位名称',
-							prop: 'xiangzhen',
-							width: ''
-						},
-						{
-							label: '单位性质',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '主管部门',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '受影响程度',
-							prop: 'cunweihui',
-							width: ''
-						},
-
-					];
-				}
-			},
+			
 			handleSizeChange(val) { //每页#条
 				this.pageData.limit = val;
 				console.log(this.formeData);

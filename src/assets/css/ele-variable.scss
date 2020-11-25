@@ -1,18 +1,44 @@
 /* 改变主题色变量 */
+
 $--color-primary: #4af0fe;
 $--color-white: transparent;
 $--background-color-base: #1f576b;
 $--color-text-regular:#ffffff;
-/* 改变 icon 字体路径变量，必需 */
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
 
+/* 改变 icon 字体路径变量，必需 */
+
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import "~element-ui/packages/theme-chalk/src/index";
-.el-select-dropdown.el-popper{
+.el-select-dropdown.el-popper {
     background-color: $primary;
 }
-.el-table__fixed-right{
+
+.el-table__fixed-right {
     background-color: #1A3348;
 }
-[class*="el-button"].is-plain:hover{
+
+[class*="el-button"].is-plain:hover {
     color: $white;
+}
+
+.el-collapse-item__content,
+.el-collapse-item__header {
+    color: $white;
+}
+
+.el-dialog {
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: calc(100% - 30px);
+    max-width: calc(100% - 30px);
+}
+
+.el-dialog .el-dialog__body {
+    flex: 1;
+    /* overflow: auto; */
 }
