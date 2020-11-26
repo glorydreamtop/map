@@ -1,9 +1,26 @@
 /* 改变主题色变量 */
 
 $--color-primary: #4af0fe;
-$--color-white: transparent;
+$--color-white: #ffffff;
 $--background-color-base: #1f576b;
 $--color-text-regular:#ffffff;
+$--font-size-extra-large:20px;
+$--font-size-large:20px;
+$--font-size-medium:16px;
+$--font-size-base:16px;
+$--font-size-small:12px;
+$--font-size-extra-small:12px;
+$--font-weight-primary:500;
+$--messagebox-title-color:#4af0fe;
+$--button-primary-font-color:#fcfcfc;
+$--button-default-font-color:#fcfcfc;
+$--button-default-background-color:transparent;
+$--input-background-color:transparent;
+$--dialog-background-color:#1f576b;
+$--table-header-background-color:#1f576b;
+$--collapse-header-background-color:transparent;
+$--collapse-content-background-color:transparent;
+$--collapse-header-font-size: 16px;
 
 /* 改变 icon 字体路径变量，必需 */
 
@@ -26,6 +43,11 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     color: $white;
 }
 
+.el-drawer__body,
+.el-drawer {
+    background: transparent;
+}
+
 .el-dialog {
     display: flex;
     flex-direction: column;
@@ -40,5 +62,37 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 .el-dialog .el-dialog__body {
     flex: 1;
+    // background-color: transparent;
     /* overflow: auto; */
+}
+
+.el-message-box {
+    background-color: #1f576b;
+    background-image: url('../../assets/imgs/dialogBg.png');
+    background-size: 100% 100%;
+    border: #1A3348 solid 1px;
+}
+
+.el-table,
+.el-table tr,
+.el-table td {
+    background-color: transparent;
+}
+
+.el-button:hover,
+.el-button:focus {
+    color: #4af0fe;
+    background-color: transparent;
+    border: 1px solid #4af0fe;
+}
+
+.el-button.el-button--default.is-plain:hover,
+.el-button.el-button--default.is-plain:focus {
+    color: #4af0fe;
+    background-color: #4aeffe34;
+    border: 1px solid #4af0fe;
+}
+
+.el-button.el-button--text:hover {
+    border: none;
 }

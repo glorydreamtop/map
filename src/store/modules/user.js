@@ -1,7 +1,7 @@
-import { login } from '@/api/user'
+import { login } from '@/api'
 
 const state = {
-    token: '',
+    token: 'testtoken',
     username: '',
     userid: '',
     role: ''
