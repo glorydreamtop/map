@@ -8,29 +8,29 @@
 						<div class="formeHeader">
 							<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
 								<el-form-item label="地区类型:" prop="stationName">
-									<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择地区类型" @change="change_tableType" style="width:200px">
+									<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择地区类型" @change="change_tableType" class="input-200">
 										<el-option key="1" label="水库淹没区" value="1"></el-option>
 										<el-option key="2" label="水库影响区" value="2"></el-option>
 										<el-option key="3" label="枢纽工程建设区" value="3"></el-option>
 									</el-select>
 								</el-form-item>
 								<el-form-item label="地区:" prop="stationName">
-									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 								</el-form-item>
 
 								<el-form-item label="乡镇:" prop="stationName">
-									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 								</el-form-item>
 								<el-form-item label="村民委:" prop="stationName">
-									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 								</el-form-item>
 								<el-form-item label="村民小组:" prop="stationName">
-									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 								</el-form-item>
 								<el-form-item label="高程范围:" prop="stationName">
-									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:90px"></el-input>
+									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-90"></el-input>
 									<span>---</span>
-									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:90px"></el-input>
+									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-90"></el-input>
 								</el-form-item>
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'">
@@ -199,40 +199,12 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 65vh;
+		height:600px;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;
 
 	}
 
-	.addTable {
-		color: $white;
-	}
-
-	.tableHeader,
-	.table_row {
-		display: flex;
-	}
-
-	.table_row:last-child {
-		border-bottom: none;
-	}
-
-	.rowInput {
-		display: inline-block;
-	}
-
-	.rowInput input {
-		width: 90%;
-		display: inline-block;
-		height: 4vh;
-		border: none;
-		outline: none;
-		background: #233b5000;
-		color: $white;
-		text-align: center;
-
-
-	}
+	
 </style>

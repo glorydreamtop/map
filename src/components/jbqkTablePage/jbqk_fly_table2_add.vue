@@ -7,31 +7,31 @@
 					<el-collapse-item title="表基础信息" name="1">
 						<el-form :inline="true" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
 							<el-form-item label="地区类型:" prop="stationName">
-								<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tableType" style="width:200px">
+								<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tableType" class="input-200">
 									<el-option key="1" label="水库淹没区" value="1"></el-option>
 									<el-option key="2" label="水库影响区" value="2"></el-option>
 									<el-option key="3" label="枢纽工程建设区" value="3"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="地区:" prop="stationName">
-								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 							</el-form-item>
 
 							<el-form-item label="城市集镇名称:" prop="stationName">
-								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 							</el-form-item>
 							<el-form-item label="隶属关系:" prop="stationName">
-								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 							</el-form-item>
 							<el-form-item label="等级:" prop="stationName">
-								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 							</el-form-item>
 							<el-form-item label="其他:" prop="stationName">
-								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 							</el-form-item>
 							<div >	
 								<div class="addTable border">
-									<div class="tableHeader border-bottom">
+									<div class="tableHeader flex border-bottom">
 										<span style="width: 30%;" class="border-right">项目</span>
 										<span style="width: 10%;" class="border-right">单位</span>
 										<span style="width: 15%;" class="border-right">总计</span>
@@ -39,7 +39,7 @@
 										<span style="width: 25%;" class="border-right">备注</span>
 									</div>
 									<div class="tableBody">
-										<div class="table_row border-bottom" v-for="item in peopleItem">
+										<div class="table_row flex border-bottom" v-for="item in peopleItem">
 											<span class=" rowInput border-right" style="width: 30%;">{{item.title}}</span>
 											<span class=" rowInput border-right" style="width: 10%;">{{item.unit}}</span>
 											<span class=" rowInput border-right" style="width: 15%;">
@@ -370,35 +370,21 @@
 
 	}
 
-	.tableHeader,
-	.table_row {
-		display: flex;
-	}
-
 	.table_row:last-child {
 		border-bottom: none;
 	}
-
-
 	.rowInput {
 		display: inline-block;
 		text-align: center;
 	}
-
 	.tableHeader span {
 		display: inline-block;
 		text-align: center;
 	}
-
-	.tableHeader span:last-child {
+	.tableHeader span:last-child,.rowInput:last-child {
 		border-right: none;
 	}
-
-	.rowInput:last-child {
-		border-right: none;
-	}
-
-	.rowInput input {
+    .rowInput input {
 		width: 90%;
 		display: inline-block;
 		height: 4vh;

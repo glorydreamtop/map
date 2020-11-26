@@ -7,39 +7,39 @@
 
 					<!-- 农村基本情况调查表 -->
 						<el-form-item label="地区类型:" prop="stationName">
-							<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tableType" style="width:200px">
+							<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tableType" class="input-200">
 								<el-option key="1" label="水库淹没区" value="1"></el-option>
 								<el-option key="2" label="水库影响区" value="2"></el-option>
 								<el-option key="3" label="枢纽工程建设区" value="3"></el-option>
 							</el-select>
 						</el-form-item>	
 						<el-form-item label="地区:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
 						
 						<el-form-item label="项目名称:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
 						<el-form-item label="项目类别:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
 						<el-form-item label="项目规划情况:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
 						<el-form-item label="项目规模:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
 						<el-form-item label="功能:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
 						<el-form-item label="服务对象:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
 						<!-- <el-form-item label="作用:" prop="stationName">
 							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
 						</el-form-item>	 -->
 						<el-form-item label="受影响程度:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" style="width:200px"></el-input>
+							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
 						<!-- <el-form-item label="数据项:" prop="stationCode">
 							<el-button size="mini" @click="addTableItem">添加</el-button>
@@ -243,6 +243,5 @@
 		overflow-x: hidden;
 
 	}
-	
-	
+
 </style>
