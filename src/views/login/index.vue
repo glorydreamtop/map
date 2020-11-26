@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="show" width="20%" :show-close="false" center>
+  <el-dialog :visible.sync="show" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" width="20%" center>
     <template slot="title">
       <span class="text-light text-l">登录到系统</span>
     </template>
@@ -18,7 +18,7 @@
         prefix-icon="al-icon-lock"
         placeholder="请输入密码"
       ></el-input>
-      <el-button class="margin-top-l text-light" size="mini" @click="login"
+      <el-button class="margin-top-l text-light" :loading="loading" size="mini" @click="login"
         >登录</el-button
       >
     </div>
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { login } from "@/api/user";
 import { mapGetters } from "vuex";
 export default {
   name: "Index",
@@ -34,6 +33,7 @@ export default {
   data() {
     return {
       show: true,
+      loading:false,
       loginForm: {
         user: "",
         pwd: "",
@@ -43,6 +43,14 @@ export default {
   computed: {
     ...mapGetters(["token"]),
   },
+  watch: {
+    token: {
+      handler(newVal) {
+        this.show = !Boolean(newVal)
+      },
+      immediate: true,
+    },
+  },
   created() {},
   mounted() {},
   methods: {
@@ -50,9 +58,10 @@ export default {
       e.stopPropagation();
       this.show = !this.show;
     },
-    login() {
-      const { user, pwd } = this.loginForm;
-      login(user, pwd);
+    async login() {
+      this.loading = true;
+      await this.$store.dispatch("user/login", this.loginForm);
+      this.loading = false;
     },
   },
 };
