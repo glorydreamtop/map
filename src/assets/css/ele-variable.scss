@@ -108,6 +108,26 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     border: 1px solid #4af0fe;
 }
 
+.el-button.el-button--primary.is-plain,
+.el-button.el-button--primary.is-plain {
+    background-color: rgba(#4aeffe, 0.5);
+}
+
+.el-button.el-button--warning.is-plain,
+.el-button.el-button--warning.is-plain {
+    background-color: rgba(#E6A23C, 0.5);
+}
+
+.el-button.el-button--danger.is-plain,
+.el-button.el-button--danger.is-plain {
+    background-color: rgba(#F56C6C, 0.5);
+}
+
+.el-button.el-button--success.is-plain,
+.el-button.el-button--success.is-plain {
+    background-color: rgba(#67C23A, 0.5);
+}
+
 .el-button.el-button--text:hover {
     border: none;
 }
