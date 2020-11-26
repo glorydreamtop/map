@@ -4,7 +4,7 @@
 			<el-button icon="el-icon-plus"  @click="addClick()" plain>  </el-button>
 		</div>
 		<div class="body_table_mian">
-			<el-table :data="tableData" border style="width: 100%" height="450px">
+			<el-table :data="tableData" border style="width: 100%" height="25vw">
 				<el-table-column :prop="item.prop" :label="item.label" :width="item.width" align="center" v-for="item in elTableColumn">
 				</el-table-column>
 				<el-table-column fixed="right" label="操作" width="300" align="center">

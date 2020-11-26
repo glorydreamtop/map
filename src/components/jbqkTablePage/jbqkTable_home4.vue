@@ -4,7 +4,7 @@
 			<el-button icon="el-icon-plus"  @click="addClick()" plain>  </el-button>
 		</div>
 		<div class="body_table_mian main-top" >
-			<el-table :data="tableData" border style="width: 100%" height="50vh">
+			<el-table :data="tableData" border style="width: 100%" height="25vw">
 				<!-- <el-table-column type="index" label="序号" width="75" align="center"> </el-table-column> -->
 				<el-table-column :prop="item.prop" :label="item.label" :width="item.width" align="center" v-for="item in elTableColumn">
 				</el-table-column>
@@ -29,7 +29,7 @@
 		</div>
 		<div>
 			<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
-			 class="newStyleDialog " custom-class="jbqk_add_table1_dialog">
+			 class="newStyleDialog " custom-class="jbqk_add_table3_dialog">
 				<jbFlyTable4Add :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag"></jbFlyTable4Add>
 			</el-dialog>
 		</div>
