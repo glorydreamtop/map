@@ -12,7 +12,7 @@
             <jbqk />
           </el-collapse-item>
           <el-collapse-item title="土地调查表" name="2">
-            <td />
+            <tdxx />
           </el-collapse-item>
           <el-collapse-item title="户信息调查表" name="3">
             <hxx />
@@ -37,7 +37,7 @@
 
 <script>
 import jbqk from '@/components/leftjbqk'
-import td from '@/components/td'
+import tdxx from '@/components/td'
 import hxx from '@/components/hxx'
 import zxss from '@/components/zxss'
 import zxxm from '@/components/zxxm'
@@ -47,7 +47,7 @@ export default {
   name: "Index",
   props: {},
   components: {
-    jbqk,td,hxx,zxss,zxxm,gyqy
+    jbqk,tdxx,hxx,zxss,zxxm,gyqy
   },
   data() {
     return {

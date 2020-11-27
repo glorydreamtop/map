@@ -79,9 +79,12 @@ service.interceptors.response.use(
     },
     error => {
         const response = error.response
-        console.log(error);
+        console.log(response);
 
         if (response.status === 401) {
+            if (/login/i.test(response.request.requestURL)) {
+                return Promise.reject(new Error('Login Error'))
+            }
             // to re-login
             MessageBox.confirm('身份信息已失效，请重新登录', '提示', {
                 confirmButtonText: '重新登录',
@@ -104,7 +107,7 @@ service.interceptors.response.use(
                 duration: 5 * 1000
             })
         }
-        return Promise.reject(new Error(response.statusText || 'Error'))
+        return Promise.reject(new Error(`${response.statusText}(${response.status})` || 'Error'))
     }
 )
 

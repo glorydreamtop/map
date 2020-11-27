@@ -1,5 +1,12 @@
 <template>
-  <el-dialog :visible.sync="show" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" width="20%" center>
+  <el-dialog
+    :visible.sync="show"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    :show-close="false"
+    width="20%"
+    center
+  >
     <template slot="title">
       <span class="text-light text-l">登录到系统</span>
     </template>
@@ -17,8 +24,13 @@
         v-model="loginForm.pwd"
         prefix-icon="al-icon-lock"
         placeholder="请输入密码"
+        @keyup.enter="login"
       ></el-input>
-      <el-button class="margin-top-l text-light" :loading="loading" size="mini" @click="login"
+      <el-button
+        class="margin-top-l text-light"
+        :loading="loading"
+        size="mini"
+        @click="login"
         >登录</el-button
       >
     </div>
@@ -33,7 +45,7 @@ export default {
   data() {
     return {
       show: true,
-      loading:false,
+      loading: false,
       loginForm: {
         user: "",
         pwd: "",
@@ -46,7 +58,7 @@ export default {
   watch: {
     token: {
       handler(newVal) {
-        this.show = !Boolean(newVal)
+        this.show = !Boolean(newVal);
       },
       immediate: true,
     },
@@ -59,9 +71,15 @@ export default {
       this.show = !this.show;
     },
     async login() {
-      this.loading = true;
-      await this.$store.dispatch("user/login", this.loginForm);
-      this.loading = false;
+      if (Object.values(this.loginForm).some((i) => i.length < 1)) return;
+      try {
+        this.loading = true;
+        await this.$store.dispatch("user/login", this.loginForm);
+        this.loading = false;
+      } catch (error) {
+        this.loading = false;
+        this.$message.error('用户名/密码 错误')
+      }
     },
   },
 };
