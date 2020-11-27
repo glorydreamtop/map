@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
+import { deepClone } from '.'
 
 // create an axios instance
 const service = axios.create({
@@ -12,9 +13,8 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
         // do something before request is sent
-
+        config.headers['Content-Type'] = 'application/json;charset=utf-8';
         if (store.getters.token) {
-            debugger
             // let each request carry token
             // ['X-Token'] is a custom headers key
             // please modify it according to the actual situation
@@ -22,6 +22,14 @@ service.interceptors.request.use(
                 // console.log(config);
             if (config.method === 'get') {
                 config.params = config.data
+            }
+            if (config.method === 'post') {
+                let dataObj = deepClone(config.data)
+                let dataArr = []
+                for (let key in dataObj) {
+                    dataArr.push({ name: key, value: dataObj[key] })
+                }
+                config.data = dataArr
             }
             // if (['get', 'put', 'delete'].includes(config.method) && config.data && config.data.id) {
             //   config.url = `${config.url}/${config.data.id}`

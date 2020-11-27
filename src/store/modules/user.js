@@ -1,7 +1,7 @@
 import { login } from '@/api'
 
 const state = {
-    token: 'testtoken',
+    token: '',
     username: '',
     userid: '',
     role: ''
