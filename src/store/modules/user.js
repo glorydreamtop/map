@@ -1,7 +1,8 @@
 import { login } from '@/api'
+import { getToken, setToken } from '@/utils/auth'
 
 const state = {
-    token: '',
+    token: getToken(),
     username: '',
     userid: '',
     role: ''
@@ -10,6 +11,7 @@ const state = {
 const mutations = {
     SET_TOKEN: (state, token) => {
         state.token = token
+        setToken(token)
     },
     SET_NAME: (state, username) => {
         state.username = username
