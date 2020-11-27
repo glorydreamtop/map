@@ -1,8 +1,8 @@
 import { login } from '@/api'
-import { setToken } from '@/utils/auth'
+import { getToken, setToken } from '@/utils/auth'
 
 const state = {
-    token: '',
+    token: getToken(),
     username: '',
     userid: '',
     role: ''

@@ -23,7 +23,7 @@ service.interceptors.request.use(
             if (config.method === 'get') {
                 config.params = config.data
             }
-            if (config.method === 'post') {
+            if (config.method === 'post' && config.data) {
                 let dataObj = deepClone(config.data)
                 let dataArr = []
                 for (let key in dataObj) {
@@ -65,7 +65,7 @@ service.interceptors.response.use(
         } else {
             if (res.bResult === false) {
                 Message({
-                    message: response.statusText || 'Error',
+                    message: res.strMessage || 'Error',
                     type: 'error',
                     duration: 5 * 1000
                 })
@@ -80,7 +80,7 @@ service.interceptors.response.use(
     error => {
         const response = error.response
         console.log(error);
-		
+
         if (response.status === 401) {
             // to re-login
             MessageBox.confirm('身份信息已失效，请重新登录', '提示', {
