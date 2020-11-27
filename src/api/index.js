@@ -49,15 +49,6 @@ export function GetBaseTablesBaseAttrs(data) {
     })
 }
 
-// 添加基本情况调查表（基础数据列） AddBaseTablesBaseAttrs
-export function AddBaseTablesBaseAttrs(data) {
-    return request({
-        url: `${baseReflect}AddBaseTablesBaseAttrs`,
-        method: 'post',
-        data
-    })
-}
-
 // 获取基本情况调查表中数据项列表 GetJBQKDCBItems
 export function GetJBQKDCBItems(data) {
     return request({
