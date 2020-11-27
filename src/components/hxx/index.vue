@@ -1,5 +1,8 @@
 <template>
-  <div></div>
+  <div class="tableMain">
+	  <div></div>
+	  
+  </div>
 </template>
 
 <script>

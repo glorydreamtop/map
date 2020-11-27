@@ -35,7 +35,7 @@
 
 <script>
 	// import store from '@/store'
-	import { GetBaseTablesBaseAttrs } from '@/api'
+	import { GetJBQKDCBItems } from '@/api'
 	import jbFlyTable1Add from '@/components/jbqkTablePage/jbqk_fly_table1_add' //农村基本情况调查表
 	export default {
 		name: "jbqlTable_home",
@@ -107,9 +107,18 @@
 		
 		methods: {
 			tableInit(){
-				 var data= {name:'BaseType',"value": "NONGCUN"}
-				GetBaseTablesBaseAttrs(data).then((response) => {
-				  console.log(response)
+				 var data= {BaseType:'NONGCUN'};
+				GetJBQKDCBItems(data).then((res) => {
+				  console.log(res)
+				  if(res.bResult){
+					  
+				  }else{
+					  this.$message({
+					    message: '列表返回失败'+res.strMessage,
+					    type: 'warning',
+					    center: true
+					  });
+				  }
 				})
 				.catch((error) => {
 					console.log(error)
