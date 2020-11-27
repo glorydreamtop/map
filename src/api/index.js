@@ -66,3 +66,12 @@ export function GetJBQKDCBItems(data) {
         data
     })
 }
+
+//获取基本情况调查表(基础列) GetBaseTablesBaseAttrs
+export function GetBaseTablesBaseAttrs(data) {
+    return request({
+        url: '/ReflectInvoke/Invoke?assebleUrlEn=GDYZCBusiness.dll&classUrlEn=GDYZCBusiness.HCProject.Project&functionUrlEn=GetBaseTablesBaseAttrs',
+        method: 'post',
+        data
+    })
+}
