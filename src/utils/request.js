@@ -80,7 +80,8 @@ service.interceptors.response.use(
     },
     error => {
         const response = error.response
-        console.log(response);
+        console.log(error);
+		
         if (response.status === 401) {
             // to re-login
             MessageBox.confirm('身份信息已失效，请重新登录', '提示', {

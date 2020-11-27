@@ -107,7 +107,8 @@
 		
 		methods: {
 			tableInit(){
-				GetBaseTablesBaseAttrs().then((response) => {
+				 var data= {name:'BaseType',"value": "NONGCUN"}
+				GetBaseTablesBaseAttrs(data).then((response) => {
 				  console.log(response)
 				})
 				.catch((error) => {

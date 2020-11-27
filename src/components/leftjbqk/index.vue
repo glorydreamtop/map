@@ -29,7 +29,7 @@
     >
     <!-- 动态组件 -->
     <component
-    :is="`jbqkTableHome${dialogType}`"
+        :is="`jbqkTableHome${dialogType}`"
         :dialog-type="dialogType"
         v-on:showStudes="showStudescode"
         :dialog-form="dialogForm"
