@@ -21,6 +21,7 @@ $--table-header-background-color:#1f576b;
 $--collapse-header-background-color:transparent;
 $--collapse-content-background-color:transparent;
 $--collapse-header-font-size: 16px;
+$--tab-header-color:#ffffff;
 
 /* 改变 icon 字体路径变量，必需 */
 
@@ -130,4 +131,14 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 .el-button.el-button--text:hover {
     border: none;
+}
+
+.el-collapse-item__header {
+    border-bottom: 1px solid $sub;
+}
+
+.el-tabs__item {
+    color: $white;
+    text-align: center;
+    padding: 0;
 }
