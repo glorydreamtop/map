@@ -17,10 +17,7 @@
           <el-collapse-item title="户信息调查表" name="3">
             <hxx />
           </el-collapse-item>
-          <el-collapse-item
-            title="农村专项设施调查表"
-            name="4"
-          >
+          <el-collapse-item title="农村专项设施调查表" name="4">
           <zxss />
           </el-collapse-item>
           <el-collapse-item title="专项项目调查表" name="5">
