@@ -34,6 +34,8 @@
 </template>
 
 <script>
+	// import store from '@/store'
+	import { GetBaseTablesBaseAttrs } from '@/api'
 	import jbFlyTable1Add from '@/components/jbqkTablePage/jbqk_fly_table1_add' //农村基本情况调查表
 	export default {
 		name: "jbqlTable_home",
@@ -105,45 +107,52 @@
 		
 		methods: {
 			tableInit(){
-				var tableData=[{
-					code: '001',
-					date: '2016-05-02',
-					name: '王小虎',
-					ditu: '蓟州区',
-					diquType: '水库淹没区',
-					xiangzhen: '别山镇',
-					cunweihui: '大别山村',
-					status: '未审批'
-
-				}, {
-					date: '2016-05-04',
-					code: '002',
-					name: '王小虎',
-					diquType: '水库影响区',
-					ditu: '津南区',
-					xiangzhen: '咸水沽镇',
-					cunweihui: '黄水村',
-					status: '未审批'
-				}, {
-					date: '2016-05-01',
-					code: '003',
-					name: '王小虎',
-					diquType: '枢纽工程建设区',
-					ditu: '武清区',
-					xiangzhen: '黄庄村镇',
-					cunweihui: '朱庄子村',
-					status: '未审批'
-				}, {
-					date: '2016-05-03',
-					code: '004',
-					name: '王小虎',
-					ditu: '静海区',
-					diquType: '水库影响区',
-					xiangzhen: '茅台镇',
-					cunweihui: '别久村',
-					status: '未审批'
-				},];
-				this.tableData=tableData;
+				GetBaseTablesBaseAttrs().then((response) => {
+				  console.log(response)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+				
+// 				var tableData=[{
+// 					code: '001',
+// 					date: '2016-05-02',
+// 					name: '王小虎',
+// 					ditu: '蓟州区',
+// 					diquType: '水库淹没区',
+// 					xiangzhen: '别山镇',
+// 					cunweihui: '大别山村',
+// 					status: '未审批'
+// 
+// 				}, {
+// 					date: '2016-05-04',
+// 					code: '002',
+// 					name: '王小虎',
+// 					diquType: '水库影响区',
+// 					ditu: '津南区',
+// 					xiangzhen: '咸水沽镇',
+// 					cunweihui: '黄水村',
+// 					status: '未审批'
+// 				}, {
+// 					date: '2016-05-01',
+// 					code: '003',
+// 					name: '王小虎',
+// 					diquType: '枢纽工程建设区',
+// 					ditu: '武清区',
+// 					xiangzhen: '黄庄村镇',
+// 					cunweihui: '朱庄子村',
+// 					status: '未审批'
+// 				}, {
+// 					date: '2016-05-03',
+// 					code: '004',
+// 					name: '王小虎',
+// 					ditu: '静海区',
+// 					diquType: '水库影响区',
+// 					xiangzhen: '茅台镇',
+// 					cunweihui: '别久村',
+// 					status: '未审批'
+// 				},];
+// 				this.tableData=tableData;
 			},
 			
 			handleSizeChange(val) { //每页#条
