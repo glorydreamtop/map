@@ -71,7 +71,6 @@ service.interceptors.response.use(
                 })
                 return
             }
-            console.log(response.headers.token);
             if (response.headers.token) {
                 store.commit('user/SET_TOKEN', response.headers.token)
             }
