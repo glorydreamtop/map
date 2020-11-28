@@ -40,21 +40,18 @@
 							</div>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="表数据信息" name="1">
+					<el-collapse-item title="表数据信息" name="2">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
-							<el-table :data="tableItemData" border style="width: 100%" class="margin-top-m">
+							<el-button title="修改" size="mini"  icon="el-icon-edit"  plain></el-button>
+							<el-button title="删除" size="mini"  icon="el-icon-delete"  plain></el-button>
+							<el-table :data="tableItemData"  highlight-current-row border style="width: 100%" class="margin-top-m">
 								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
 								<el-table-column prop="name" label="项目" width="180" align="center"></el-table-column>
 								<el-table-column prop="unit" label="单位" width="80" align="center"></el-table-column>
 								<el-table-column prop="length" label="数量" width="80" align="center"></el-table-column>
 								<el-table-column prop="address" label="备注" align="center"></el-table-column>
-								<el-table-column  label="操作" width="100" align="center">
-									<template slot-scope="scope">
-										<el-button type="text" size="small" icon="el-icon-view"></el-button>
-										<el-button type="text" size="small" icon="el-icon-delete"></el-button>
-									</template>
-								</el-table-column>
+								
 							</el-table>
 						</div>
 
@@ -199,7 +196,7 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height:600px;
+		height:650px;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;

@@ -27,7 +27,7 @@ $--tab-header-color:#ffffff;
 
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import "~element-ui/packages/theme-chalk/src/index";
-.el-select-dropdown.el-popper {
+.el-select-dropdown.el-popper,.el-scrollbar  {
     background-color: $primary;
 }
 
@@ -141,4 +141,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     color: $white;
     text-align: center;
     padding: 0;
+}
+.el-table__body tr.current-row > td{
+	    background-color: #00BCD4;
 }

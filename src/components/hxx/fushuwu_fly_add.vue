@@ -2,24 +2,34 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form label-position="top"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-					<el-form-item label="编号:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+				<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
+					
+					<el-form-item label="项目名称:" prop="stationName">
+						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
 					</el-form-item>
 
-					<el-form-item label="项目:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
 					<el-form-item label="单位:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-					<el-form-item label="数量:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-					<el-form-item label="备注:" prop="stationName">
-						<el-input type="textarea" v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
+						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
 					</el-form-item>
 					
+					<el-form-item label="规格:" prop="stationName">
+						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
+					</el-form-item>
+					<el-form-item label="丈量尺寸(m×m):" prop="stationName">
+						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
+					</el-form-item>
+					<el-form-item label="数量:" prop="stationName">
+						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
+					</el-form-item>
+					<el-form-item label="结构材料:" prop="stationName">
+						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
+					</el-form-item>
+					<el-form-item label="备注:" prop="stationName">
+						<el-input v-model="ruleForm.stationName" type="textarea" :disabled="dialogType=='look'?true:false" class="input-600"></el-input>
+					</el-form-item>
+
+
+
 				</el-form>
                 <div class="margin-top-l text-center " v-show="dialogType!='look'">
                 		<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
@@ -27,19 +37,17 @@
 			</div>
 			
 		</div>
-	
 	</div>
 </template>
 
 <script>
 	// import axios from 'axios'
 	export default {
-		name: 'jbqk_table1_add_two',
+		name: 'huxinxidiaocha_fly_add',
 		data: function() {
 			return {
 				ruleForm: {
 					stationName: '',
-
 				},
 				loading: false,
 				disabled: false,
@@ -49,7 +57,7 @@
 						message: '请填写名称',
 						trigger: 'blur'
 					}, ],
-					
+
 				},
 
 			}
@@ -71,6 +79,9 @@
 		},
 
 		methods: {
+			change_tableType(data) { //选择表类型
+
+			},
 			submitForm(formName) { //表单提交按钮
 				var self = this;
 				// self.loading = true;
@@ -128,12 +139,10 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 65vh;
+		height: 330px;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;
 
 	}
-
-	
 </style>

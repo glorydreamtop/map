@@ -29,7 +29,7 @@
 							<el-form-item label="其他:" prop="stationName">
 								<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 							</el-form-item>
-							<div >	
+							<div>
 								<div class="addTable border">
 									<div class="tableHeader flex border-bottom">
 										<span style="width: 30%;" class="border-right">项目</span>
@@ -43,104 +43,75 @@
 											<span class=" rowInput border-right" style="width: 30%;">{{item.title}}</span>
 											<span class=" rowInput border-right" style="width: 10%;">{{item.unit}}</span>
 											<span class=" rowInput border-right" style="width: 15%;">
-												<input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="border-none"/>
+												<input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="border-none" />
 											</span>
 											<span class=" rowInput border-right" style="width: 20%;">
-												<input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="border-none"/>
+												<input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="border-none" />
 											</span>
 											<span class=" rowInput border-right" style="width: 25%;">
-												<input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="border-none"/>
+												<input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="border-none" />
 											</span>
-										</div>	
+										</div>
 									</div>
-								</div>	
+								</div>
 							</div>
 						</el-form>
 
 
 
 					</el-collapse-item>
+					<el-collapse-item title="设施调查表" name="2">
+						<div class="formeBody">
+							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
+							<el-button title="修改" size="mini"  icon="el-icon-edit"  plain></el-button>
+							<el-button title="删除" size="mini"  icon="el-icon-delete"  plain></el-button>
+							<el-table :data="tableItemData"  highlight-current-row border style="width: 100%" class="margin-top-m">
+								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
+								<el-table-column prop="name" label="项目" width="180" align="center"></el-table-column>
+								<el-table-column prop="unit" label="单位" width="130" align="center"></el-table-column>
+								<el-table-column prop="length" label="数量" width="130" align="center"></el-table-column>
+								<el-table-column prop="address" label="备注" align="center"></el-table-column>
+								
+							</el-table>
+						</div>
+					</el-collapse-item>
+					<el-collapse-item title="防洪设施调查表" name="3">
+						<div class="formeBody">
+							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
+							<el-button title="修改" size="mini"  icon="el-icon-edit"  plain></el-button>
+							<el-button title="删除" size="mini"  icon="el-icon-delete"  plain></el-button>
+							<el-table :data="tableItemData"  highlight-current-row border style="width: 100%" class="margin-top-m">
+								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
+								<el-table-column prop="name" label="防洪设施" width="180" align="center"></el-table-column>
+								<el-table-column prop="unit" label="防洪标准" width="130" align="center"></el-table-column>
+								<el-table-column prop="length" label="防洪水位" width="130" align="center"></el-table-column>
+								<el-table-column prop="length" label="淹没范围" width="130" align="center"></el-table-column>
+								<el-table-column prop="length" label="历史情况"  align="center"></el-table-column>
+								<!-- <el-table-column prop="address" label="备注" align="center"></el-table-column> -->
+								
+							</el-table>
+						</div>
+					</el-collapse-item>
+					<el-collapse-item title="其他调查" name="4">
+						<div class="formeBody">
+							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
+							<el-button title="修改" size="mini"  icon="el-icon-edit"  plain></el-button>
+							<el-button title="删除" size="mini"  icon="el-icon-delete"  plain></el-button>
+							<el-table :data="tableItemData"  highlight-current-row border style="width: 100%" class="margin-top-m">
+								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
+								<el-table-column prop="name" label="项目" width="180" align="center"></el-table-column>
+								<el-table-column prop="unit" label="区域自然条件" width="180" align="center"></el-table-column>
+								<el-table-column prop="length" label="地质灾害影响" width="180" align="center"></el-table-column>
+								<el-table-column prop="length" label="历史情况"  align="center"></el-table-column>
+								<!-- <el-table-column prop="address" label="备注" align="center"></el-table-column> -->
+								
+							</el-table>
+						</div>
+					</el-collapse-item>
+				
+				
 				</el-collapse>
-				<!-- <el-form :inline="true"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
-					<el-form-item label="地区类型:" prop="stationName">
-						<el-select v-model="ruleForm.tableIndex" filterable placeholder="请选择调查表类型" @change="change_tableType">
-							<el-option key="1" label="水库淹没区" value="1"></el-option>
-							<el-option key="2" label="水库影响区" value="2"></el-option>
-							<el-option key="3" label="枢纽工程建设区" value="3"></el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item label="地区:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
 
-					<el-form-item label="城市集镇名称:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-					<el-form-item label="隶属关系:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-					<el-form-item label="等级:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-					<el-form-item label="其他:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-					<el-form-item label="基本情况调查:">
-						
-				<div class="addTable border">
-					<div class="tableHeader border-bottom">
-						<span style="width: 30%;" class="border-right">项目</span>
-						<span style="width: 10%;" class="border-right">单位</span>
-						<span style="width: 15%;" class="border-right">总计</span>
-						<span style="width: 20%;" class="border-right">征地范围内</span>
-						<span style="width: 25%;" class="border-right">备注</span>
-					</div>
-					<div class="tableBody">
-						<div class="table_row border-bottom" v-for="item in peopleItem">
-							<span class=" rowInput border-right" style="width: 30%;">{{item.title}}</span>
-							<span class=" rowInput border-right" style="width: 10%;">{{item.unit}}</span>
-							<span class=" rowInput border-right" style="width: 15%;"></span>
-							<span class=" rowInput border-right" style="width: 20%;"></span>
-							<span class=" rowInput border-right" style="width: 25%;"></span>
-						</div>
-
-					</div>
-				</div>
-				</el-form-item>
-				<el-form-item label="市政基础设施调查:">
-					<el-button size="mini" @click="addTableItem">添加</el-button>
-					<div class="addTable border" v-if="ruleForm.itemList.length!=0">
-						<div class="tableHeader border-bottom">
-							<span style="width: 30%;" class="border-right">项目</span>
-							<span style="width: 30%;" class="border-right">单位</span>
-							<span style="width: 40%;" class="border-right">备注</span>
-						</div>
-						<div class="tableBody">
-							<div class="table_row border-bottom" v-for="(item,index) in ruleForm.itemList">
-								<span style="width: 30%;position: relative;" class="rowInput border-right" @mouseenter="mouseEnter(index)"
-								 @mouseleave="mouseLeave(index)">
-									<input v-model="item.itemName" />
-									<i class="el-icon-close shopClose" @click="delShopItem(index,item)" v-show="seenButton&&currentIndex==index"></i>
-								</span>
-								<span style="width: 30%;" class=" rowInput border-right">
-									<input v-model="item.unit" />
-								</span>
-								<span style="width: 40%;" class="rowInput border-right">
-									<input v-model="item.remark" />
-								</span>
-							</div>
-						</div>
-					</div>
-				</el-form-item>
-
-				</el-form>
-
-				-->
-			</div>
-			<div class="dialog_foot" v-show="dialogType!='look'">
-				<span class="btn_foot">
-					<el-button class="bulueBTn" @click="submitForm2('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
-				</span>
 			</div>
 		</div>
 	</div>
@@ -363,7 +334,7 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 65vh;
+		height: 680px;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;
@@ -373,18 +344,23 @@
 	.table_row:last-child {
 		border-bottom: none;
 	}
+
 	.rowInput {
 		display: inline-block;
 		text-align: center;
 	}
+
 	.tableHeader span {
 		display: inline-block;
 		text-align: center;
 	}
-	.tableHeader span:last-child,.rowInput:last-child {
+
+	.tableHeader span:last-child,
+	.rowInput:last-child {
 		border-right: none;
 	}
-    .rowInput input {
+
+	.rowInput input {
 		width: 90%;
 		display: inline-block;
 		height: 4vh;

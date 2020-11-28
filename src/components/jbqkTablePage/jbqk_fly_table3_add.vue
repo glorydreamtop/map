@@ -35,45 +35,16 @@
 						<el-form-item label="服务对象:" prop="stationName">
 							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
-						<!-- <el-form-item label="作用:" prop="stationName">
-							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input>
-						</el-form-item>	 -->
+
 						<el-form-item label="受影响程度:" prop="stationName">
 							<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 						</el-form-item>	
-						<!-- <el-form-item label="数据项:" prop="stationCode">
-							<el-button size="mini" @click="addTableItem">添加</el-button>
-							<div class="addTable" v-if="ruleForm.itemList.length!=0">
-								<div class="tableHeader">
-									<span class="cell_row1">项目</span>
-									<span class="cell_row2">单位</span>
-									<span class="cell_row3">备注</span>
-								</div>
-								<div class="tableBody">
-									<div class="table_row" v-for="(item,index) in ruleForm.itemList">
-										<span class="cell_row1 rowInput"  @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)">
-											<input v-model="item.itemName"/>
-											 <i class="el-icon-close shopClose"  @click="delShopItem(index,item)" v-show="seenButton&&currentIndex==index"></i>
-										</span>
-										<span class="cell_row2 rowInput">
-											<input v-model="item.unit"/>
-										</span>
-										<span class="cell_row3 rowInput">
-											<input v-model="item.remark"/>
-										</span>
-									</div>
-								</div>
-							</div>
-						</el-form-item>
-					 -->
-					
+
 				</el-form>
+				<div class="margin-top-l text-center " v-show="dialogType!='look'">
+						<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
+				</div>
                 
-			</div>
-			<div class="dialog_foot margin-top-l" v-show="dialogType!='look'">
-				<span class="btn_foot">
-					<el-button  class="button-l" type="primary" plain @click="submitForm2('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
-				</span>
 			</div>
 			
 		</div>
@@ -237,7 +208,7 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height:40vh;
+		height:400px;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;

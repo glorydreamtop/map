@@ -18,7 +18,36 @@
     min-width: 750px;
     height:550px;
 }
-
+.hxx_add_dialog{
+	width:80%!important;
+	min-width:800px;
+	height:800px;
+}
+.huxinxidiaochaFlyAdd_dialog{
+	width: 30%!important;
+	min-width: 750px;
+	height:600px;
+}
+.renkouxinxiFlyAdd_dialog{
+	width: 30%!important;
+	min-width: 750px;
+	height:700px;
+}
+.fangwuxinxiFlyAdd_dialog{
+	width: 50%!important;
+	min-width: 750px;
+	height:550px;
+}
+.fushuwuFlyAdd_dialog{
+  width: 50%!important;
+  min-width: 750px;
+  height:500px;	
+}
+.lingxingguomuFlyAdd_dialog{
+	width:30%!important;
+	min-width:500px;
+	height:450px;
+}
 .jbqk_add2_table1_dialog {
     width: 30%!important;
     min-width: 400px;
@@ -67,3 +96,20 @@
     min-width: 120px;
     padding: 0!important;
 } */
+::-webkit-scrollbar {
+        width: 16px;   
+        height: 1px;
+    } 
+
+ ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        background: #1183aa;
+    }
+ 
+::-webkit-scrollbar-track {/*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        border-radius: 10px;
+        background: #EDEDED;
+
+}
