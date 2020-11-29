@@ -33,6 +33,8 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 .el-table__fixed-right {
     background-color: #1A3348;
+    box-shadow: -15px 0px 10px #1A3348;
+    border-left: solid 1px $sub;
 }
 
 [class*="el-button"].is-plain:hover {
