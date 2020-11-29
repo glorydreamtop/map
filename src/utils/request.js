@@ -63,18 +63,18 @@ service.interceptors.response.use(
             //  202: Token expired;
 
         } else {
-            if (res.bResult === false) {
+            if (!res.bResult) {
                 Message({
                     message: res.strMessage || 'Error',
                     type: 'error',
                     duration: 5 * 1000
                 })
-                return
+                return Promise.reject(new Error('bResult is false!'))
             }
             if (response.headers.token) {
                 store.commit('user/SET_TOKEN', response.headers.token)
             }
-            return res.ObjectList
+            return Promise.resolve(res.ObjectList)
         }
     },
     error => {

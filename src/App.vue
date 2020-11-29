@@ -17,6 +17,7 @@
     <bar @click="closeDrawer" />
     <right></right>
     <login></login>
+    <!-- <dragableDialog /> -->
   </div>
 </template>
 
@@ -27,11 +28,12 @@ import left from "@/views/left";
 import right from "@/views/right";
 import login from "@/views/login";
 import bar from "@/components/bar";
+
 export default {
   name: "app",
   data() {
     return {
-      leftDrawer: false,
+      leftDrawer: false
     };
   },
   components: {
@@ -40,13 +42,16 @@ export default {
     left,
     right,
     login,
-    bar,
+    bar
+  },
+  mounted() {
+    
   },
   methods: {
     closeDrawer() {
       this.leftDrawer = !this.leftDrawer;
-    },
-  },
+    }
+  }
 };
 </script>
 

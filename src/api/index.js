@@ -40,7 +40,25 @@ export function GetSerialNumber(data) {
     })
 }
 
-// 获取基本情况调查表(基础列) GetBaseTablesBaseAttrs
+// 获取基本情况调查表中数据项列表 GetJBQKDCBItems
+export function GetJBQKDCBItems(data) {
+    return request({
+        url: `${baseReflect}GetJBQKDCBItems`,
+        method: 'post',
+        data
+    })
+}
+
+// 获取所有基本情况调查表（基础列） GetAllBaseTablesBaseAttrs
+export function GetAllBaseTablesBaseAttrs(data) {
+    return request({
+        url: `${baseReflect}GetAllBaseTablesBaseAttrs`,
+        method: 'post',
+        data
+    })
+}
+
+// 获取基本情况调查表（基础列） GetBaseTablesBaseAttrs
 export function GetBaseTablesBaseAttrs(data) {
     return request({
         url: `${baseReflect}GetBaseTablesBaseAttrs`,
@@ -49,10 +67,64 @@ export function GetBaseTablesBaseAttrs(data) {
     })
 }
 
-// 获取基本情况调查表中数据项列表 GetJBQKDCBItems
-export function GetJBQKDCBItems(data) {
+// 获取一个基本情况调查表中数据列集合 GetBaseTablesListAttrs
+export function GetBaseTablesListAttrs(data) {
     return request({
-        url: `${baseReflect}GetJBQKDCBItems`,
+        url: `${baseReflect}GetBaseTablesListAttrs`,
+        method: 'post',
+        data
+    })
+}
+
+// 添加基本情况调查表（基础列） AddBaseTablesBaseAttrs
+export function AddBaseTablesBaseAttrs(data) {
+    return request({
+        url: `${baseReflect}AddBaseTablesBaseAttrs`,
+        method: 'post',
+        data
+    })
+}
+
+// 更新基本情况调查表（基础列） UpdateBaseTablesBaseAttrs
+export function UpdateBaseTablesBaseAttrs(data) {
+    return request({
+        url: `${baseReflect}UpdateBaseTablesBaseAttrs`,
+        method: 'post',
+        data
+    })
+}
+
+// 删除基本情况调查表 DeleteBaseTable
+export function DeleteBaseTable(data) {
+    return request({
+        url: `${baseReflect}DeleteBaseTable`,
+        method: 'post',
+        data
+    })
+}
+
+// 添加基本情况调查表（数据列） AddBaseTablesListAttrs
+export function AddBaseTablesListAttrs(data) {
+    return request({
+        url: `${baseReflect}AddBaseTablesListAttrs`,
+        method: 'post',
+        data
+    })
+}
+
+// 更新基本情况调查表（数据列） UpdateBaseTablesListAttrs
+export function UpdateBaseTablesListAttrs(data) {
+    return request({
+        url: `${baseReflect}UpdateBaseTablesListAttrs`,
+        method: 'post',
+        data
+    })
+}
+
+// 删除基本情况调查表下数据列 DeleteBaseTablesAttr
+export function DeleteBaseTablesAttr(data) {
+    return request({
+        url: `${baseReflect}DeleteBaseTablesAttr`,
         method: 'post',
         data
     })
