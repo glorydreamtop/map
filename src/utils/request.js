@@ -89,7 +89,10 @@ service.interceptors.response.use(
             MessageBox.confirm('身份信息已失效，请重新登录', '提示', {
                 confirmButtonText: '重新登录',
                 cancelButtonText: '算了',
-                type: 'warning'
+                type: 'warning',
+                showClose: false,
+                closeOnClickModal: false,
+                closeOnPressEscape: false
             }).then(res => {
                 store.commit('user/SET_TOKEN', '')
                 location.reload()

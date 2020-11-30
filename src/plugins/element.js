@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Element from 'element-ui'
 import '@/assets/css/ele-variable.scss'
-// import dragableDialog from '@/utils/dragable'
+import dragableDialog from '@/components/dragableDialog'
 
 
 Vue.use(Element)
-
-// Vue.component(dragableDialog.$options.name,dragableDialog)
+console.log(dragableDialog);
+Vue.component(dragableDialog.name, dragableDialog)
