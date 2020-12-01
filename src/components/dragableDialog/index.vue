@@ -20,9 +20,9 @@ export default {
       // 鼠标按下，计算当前元素距离可视区的距离
       const disX = e.clientX;
       const disY = e.clientY;
-      let startX = parseFloat(style.transform.substring(6).split(",")[4]);
-      let startY = parseFloat(style.transform.substring(6).split(",")[5]);
-
+      let start = style.transform.substring(6).split(",")
+      let startX = parseFloat(start[4]);
+      let startY = parseFloat(start[5]);
       document.onmousemove = function (e) {
         // 通过事件委托，计算移动的距离
         const l = e.clientX - disX;

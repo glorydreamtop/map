@@ -5,5 +5,4 @@ import dragableDialog from '@/components/dragableDialog'
 
 
 Vue.use(Element)
-console.log(dragableDialog);
 Vue.component(dragableDialog.name, dragableDialog)

@@ -1,13 +1,14 @@
 <template>
   <div>
-    <img class="title" src="@/assets/imgs/title.png" alt="" />
+    <!-- <img class="title" src="@/assets/imgs/title.png" alt="" /> -->
     <div
       class="flex justify-end align-center nav bg-primary border-bottom padding-right-l"
     >
       <search />
       <div class="text-l">
         <i class="el-icon-notebook-1 text-light"></i>
-        <span>选择阶段</span>
+        <span @click="stageShow = !stageShow">选择阶段</span>
+        <stage-selector :stageShow.sync="stageShow" />
       </div>
       <div class="text-l">
         <i class="al-icon-ziliaoguanli text-light"></i>
@@ -103,16 +104,18 @@
 
 <script>
 import search from "@/components/search";
+import stageSelector from '@/components/stageSelector'
 export default {
   name: "Index",
   props: {},
   data() {
     return {
-      activeIndex: 1,
+      stageShow:false//阶段选择器
     };
   },
   components: {
     search,
+    stageSelector
   },
   created() {},
   mounted() {},
@@ -134,6 +137,7 @@ export default {
   height: 60px;
   > .text-l {
     margin-right: 15px;
+    cursor: pointer;
   }
 }
 [class*="icon"] {
@@ -142,6 +146,9 @@ export default {
 }
 .el-icon-arrow-down {
   margin-right: 0;
+}
+.el-dropdown>div{
+  cursor: pointer;
 }
 .el-dropdown-menu {
   top: 50px !important;
