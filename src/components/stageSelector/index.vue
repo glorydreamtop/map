@@ -4,6 +4,7 @@
     :close-on-press-escape="false"
     :show-close="false"
     width="240px"
+    title="选择阶段"
     @close="$emit('update:stageShow',false)"
     center
   >

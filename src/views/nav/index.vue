@@ -12,7 +12,8 @@
       </div>
       <div class="text-l">
         <i class="al-icon-ziliaoguanli text-light"></i>
-        <span>资料管理</span>
+        <span @click="zlglShow = !zlglShow">资料管理</span>
+        <zlgl :zlglShow.sync="zlglShow" />
       </div>
       <el-dropdown placement="bottom" class="text-l text-white">
         <div>
@@ -105,17 +106,20 @@
 <script>
 import search from "@/components/search";
 import stageSelector from '@/components/stageSelector'
+import zlgl from '@/components/zlgl'
 export default {
   name: "Index",
   props: {},
   data() {
     return {
-      stageShow:false//阶段选择器
+      stageShow:false,//阶段选择器
+      zlglShow:false
     };
   },
   components: {
     search,
-    stageSelector
+    stageSelector,
+    zlgl
   },
   created() {},
   mounted() {},

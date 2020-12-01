@@ -13,7 +13,7 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
         // do something before request is sent
-        config.headers['Content-Type'] = 'application/json;charset=utf-8';
+        config.headers['Content-Type'] = config.headers['Content-Type'] || 'application/json;charset=utf-8';
         if (store.getters.token) {
             // let each request carry token
             // ['X-Token'] is a custom headers key

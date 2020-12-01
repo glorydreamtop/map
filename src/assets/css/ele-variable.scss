@@ -153,3 +153,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-popper[x-placement] .popper__arrow::after {
     border-bottom-color: $primary;
 }
+
+.el-tree{
+    background: transparent;
+}
