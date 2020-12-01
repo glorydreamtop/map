@@ -1,4 +1,6 @@
 import request from '@/utils/request'
+import Axios from 'axios';
+import { getToken } from '@/utils/auth';
 
 const baseReflect = '/ReflectInvoke/Invoke?assebleUrlEn=GDYZCBusiness.dll&classUrlEn=GDYZCBusiness.HCProject.Project&functionUrlEn='
     // 登录
@@ -125,6 +127,95 @@ export function UpdateBaseTablesListAttrs(data) {
 export function DeleteBaseTablesAttr(data) {
     return request({
         url: `${baseReflect}DeleteBaseTablesAttr`,
+        method: 'post',
+        data
+    })
+}
+
+// 获取资料管理目录结构 GetFolders
+export function GetFolders(data) {
+    return request({
+        url: `${baseReflect}GetFolders`,
+        method: 'post',
+        data
+    })
+}
+
+// 获取目录下文件 GetDocsByFolderId
+export function GetDocsByFolderId(data) {
+    return request({
+        url: `${baseReflect}GetDocsByFolderId`,
+        method: 'post',
+        data
+    })
+}
+
+// 获取文件地址 GetDocumentByDocNo
+export function GetDocumentByDocNo(data) {
+    return request({
+        url: `${baseReflect}GetDocumentByDocNo`,
+        method: 'post',
+        data
+    })
+}
+
+// 把WORD或EXCEL转成PDF并返回地址 getWordOrExcelToPDF
+export function GetWordOrExcelToPDF(data) {
+    return request({
+        url: `${baseReflect}getWordOrExcelToPDF`,
+        method: 'post',
+        data
+    })
+}
+
+// 获取上传文件类型 GetSubTypeTempdefns
+export function GetSubTypeTempdefns(data) {
+    return request({
+        url: `${baseReflect}GetSubTypeTempdefns`,
+        method: 'post',
+        data
+    })
+}
+
+// 添加文件信息 GetCreateDocId
+export function GetCreateDocId(data) {
+    return request({
+        url: `${baseReflect}GetCreateDocId`,
+        method: 'post',
+        data
+    })
+}
+
+// 上传文件 UploadDocFile
+export function UploadDocFile(data) {
+    const itemno = data.itemno;
+    let file = data.flie;
+    const formdata = new FormData()
+    formdata.append('file',file,file.name)
+    return Axios({
+        url: `/Document/UploadDocFile?itemno=${itemno}`,
+        method: 'post',
+        headers:{
+            'Content-Type':'multipart/form-data',
+            'token':getToken()
+        },
+        data:formdata
+    })
+}
+
+// 更新文件信息 GetUpdateDocId
+export function GetUpdateDocId(data) {
+    return request({
+        url: `${baseReflect}GetUpdateDocId`,
+        method: 'post',
+        data
+    })
+}
+
+// 删除文件 DelDoc
+export function DelDoc(data) {
+    return request({
+        url: `${baseReflect}DelDoc`,
         method: 'post',
         data
     })
