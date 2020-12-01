@@ -33,6 +33,7 @@
         :dialog-type="dialogType"
         v-on:showStudes="showStudescode"
         :dialog-form="dialogForm"
+		v-if="showFlag"
       ></component>
     </el-dialog>
   </div>
