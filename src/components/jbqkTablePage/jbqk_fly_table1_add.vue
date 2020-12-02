@@ -40,11 +40,7 @@
 										</el-option>
 									</el-select>
 								</el-form-item>
-								<el-form-item label="高程范围:" prop="stationName">
-									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-90"></el-input>
-									<span>---</span>
-									<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-90"></el-input>
-								</el-form-item>
+				
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'">
 								<span class="btn_foot">
@@ -59,8 +55,8 @@
 							<el-button title="修改" size="mini" icon="el-icon-edit" plain></el-button>
 							<el-button title="删除" size="mini" icon="el-icon-delete" plain></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m">
-								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="name" label="项目" width="180" align="center"></el-table-column>
+								<el-table-column prop="value" label="编号" width="80" align="center"></el-table-column>
+								<el-table-column prop="label" label="项目" width="180" align="center"></el-table-column>
 								<el-table-column prop="unit" label="单位" width="80" align="center"></el-table-column>
 								<el-table-column prop="length" label="数量" width="80" align="center"></el-table-column>
 								<el-table-column prop="address" label="备注" align="center"></el-table-column>
@@ -104,6 +100,7 @@
 				countyData: [], //区县数据
 				townData: [], //城镇数据
 				villageData: [], //村庄数据
+				villageGroupData:[],//村庄小组
 				dialogTitle: '', //弹出框标题
 				fly2_dialogForm: "", //弹出框表单
 				showFlag: false, //弹出框显隐状态
@@ -117,12 +114,7 @@
 					VillageGroup:'',
 					Region:'',
 				},
-				tableItemData: [{
-					code: '001',
-					name: '项目1',
-					length: '10',
-					unit: '个'
-				}], //数据项列表数据
+				tableItemData: [], //数据项列表数据
 				tableData: [],
 				loading: false,
 				disabled: false,
@@ -168,6 +160,7 @@
 				};
 				GetJBQKDCBItems(data).then((res) => {
 						console.log(res, '获取数据项')
+						this.tableItemData=res;
 						// this.tableData = res;
 					})
 					.catch((error) => {

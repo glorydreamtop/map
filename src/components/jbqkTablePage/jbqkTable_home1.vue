@@ -2,11 +2,9 @@
 	<div class="tableMain">
 		<div class="header_table_title">
 			<el-button icon="el-icon-plus" @click="addClick()" plain> </el-button>
-			<!-- {{ projectNo }} -->
-			<!-- {{ tableData }} -->
 		</div>
 		<div class="body_table_mian">
-			<el-table :data="tableData" border style="width: 100%" height="25vw">
+			<el-table :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="25vw">
 				<el-table-column prop="SerialNumber" label="编号" width="100" align="center"> </el-table-column>
 				<el-table-column prop="" label="申请时间" width="100" align="center"> </el-table-column>
 				<el-table-column prop="" label="地区" width="100" align="center"> </el-table-column>
@@ -25,8 +23,8 @@
 				</el-table-column>
 			</el-table>
 			<div class="table_page">
-				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageData.page"
-				 :page-sizes="[10, 20, 50, 100]" :page-size="pageData.limit" layout="total, sizes, prev, pager, next, jumper"
+				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
+				 :page-sizes="[10, 20, 50, 100]" :page-size="formeData.PageSize" layout="total, sizes, prev, pager, next, jumper"
 				 :total="total">
 				</el-pagination>
 			</div>
@@ -50,16 +48,6 @@
 		components: {
 			jbFlyTable1Add,
 		},
-		// watch: {
-		// 	projectNo: { //监听参数变化重新加载init
-		// 		handler: function(val, oldval) {
-		// 			console.log(val, oldval, '我变化了');
-		// 			this.tableInit(); //表格初始化
-
-		// 		},
-		// 		deep: true //
-		// 	}
-		// },
 		computed: {
 			...mapGetters(['projectNo'])
 		},
@@ -72,16 +60,12 @@
 				dialogForm: "", //弹出框表单
 				showFlag: false, //弹出框显隐状态
 				dialogType: '', //弹出框操作类型
-				total: 4,
+				total:0,
 				formeData: {
-					page: 1,
-					limit: 10,
-					tableIndex: '1'
+					CurrentPage: 1,
+					PageSize: 10,
 				},
-				pageData: {
-					page: 1,
-					limit: 10
-				}
+				
 
 			};
 		},
@@ -97,27 +81,28 @@
 			tableInit() {
 				var data = {
 					BaseType: this.BaseType,
-					ProjectNo: this.projectNo
+					ProjectNo: this.projectNo,
+					...this.formeData
 				};
 				GetAllBaseTablesBaseAttrs(data).then((res) => {
 					console.log(res)
-					this.tableData = res;
+					
+					this.tableData = res.list;
+					this.total=res.total;
 				})
 				.catch((error) => {
 					this.tableData = [];
 					console.log(error)
 				})
-
-
 			},
 
 			handleSizeChange(val) { //每页#条
-				this.pageData.limit = val;
-				console.log(this.formeData);
+				this.formeData.PageSize = val;
+				this.tableInit();
 			},
 			handleCurrentChange(val) { //当前第几页
-				this.pageData.page = val;
-				console.log(this.formeData);
+				this.formeData.CurrentPage = val;
+				this.tableInit();
 			},
 			lookClick(row) { //查看农村基本情况调查表
 				this.dialogForm = row;
