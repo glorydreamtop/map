@@ -74,7 +74,7 @@ service.interceptors.response.use(
             if (response.headers.token) {
                 store.commit('user/SET_TOKEN', response.headers.token)
             }
-            return Promise.resolve(res.ObjectList)
+            return Promise.resolve({ list: res.ObjectList, total: res.allResultCounts })
         }
     },
     error => {
