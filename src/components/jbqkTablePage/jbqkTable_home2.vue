@@ -6,8 +6,14 @@
 		<div class="body_table_mian">
 			<el-table :data="tableData" border style="width: 100%" height="25vw">
 				<!-- <el-table-column type="index" label="序号" width="75" align="center"> </el-table-column> -->
-				<el-table-column :prop="item.prop" :label="item.label" :width="item.width" align="center" v-for="item in elTableColumn">
-				</el-table-column>
+				<el-table-column prop="SerialNumber" label="编号" width="100" align="center"> </el-table-column>
+				<el-table-column prop="Createdate" label="申请时间" width="100" align="center"> </el-table-column>
+				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
+				<el-table-column prop="Region" label="地区类型" width="100" align="center"> </el-table-column>
+				<el-table-column prop="" label="状态" width="100" align="center"> </el-table-column>
+				<el-table-column prop="TownDESC" label="城市集镇名称" width="100" align="center"> </el-table-column>
+				<el-table-column prop="VillageDESC" label="隶属关系" width="100" align="center"> </el-table-column>
+				<el-table-column prop="VillageDESC" label="隶属关系" width="100" align="center"> </el-table-column>
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
 						<el-button title="查看"  icon="el-icon-view"  type="primary" plain @click="lookClick(scope.row)"></el-button>
@@ -20,8 +26,8 @@
 
 
 			<div class="table_page">
-				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageData.page"
-				 :page-sizes="[10, 20, 50, 100]" :page-size="pageData.limit" layout="total, sizes, prev, pager, next, jumper"
+				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
+				 :page-sizes="[10, 20, 50, 100]" :page-size="formeData.PageSize" layout="total, sizes, prev, pager, next, jumper"
 				 :total="total">
 				</el-pagination>
 			</div>
@@ -37,62 +43,21 @@
 </template>
 
 <script>
+	import {mapGetters} from 'vuex'
+	import {GetAllBaseTablesBaseAttrs} from '@/api'
 	import jbFlyTable2Add from '@/components/jbqkTablePage/jbqk_fly_table2_add' //城市集镇基本情况调查表
 	export default {
 		name: "jbqlTable_home",
 		props: {},
+		computed: {
+			...mapGetters(['projectNo'])
+		},
 		components: {
 			jbFlyTable2Add
 		},
 		data() {
 			return {
-				elTableColumn:  [{
-							label: '编号',
-							prop: 'code',
-							width: '100'
-						},
-						{
-							label: '申请时间',
-							prop: 'date',
-							width: '180'
-						},
-						{
-							label: '地区',
-							prop: 'ditu',
-							width: ''
-						},
-						{
-							label: '地区类型',
-							prop: 'diquType',
-							width: ''
-						},
-						{
-							label: '状态',
-							prop: 'status',
-							width: ''
-						},
-						{
-							label: '城市集镇名称',
-							prop: 'xiangzhen',
-							width: ''
-						},
-						{
-							label: '隶属关系',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '等级',
-							prop: 'cunweihui',
-							width: ''
-						},
-						{
-							label: '功能',
-							prop: 'cunweihui',
-							width: ''
-						},
-
-					],
+				BaseType: 'CHENGSHI',
 				tableData: [],
 				activeName: "",
 				dialogTitle: '', //弹出框标题
@@ -101,14 +66,9 @@
 				dialogType: '', //弹出框操作类型
 				total: 4,
 				formeData: {
-					page: 1,
-					limit: 10,
-					tableIndex: '1'
+					CurrentPage: 1,
+					PageSize: 10,
 				},
-				pageData: {
-					page: 1,
-					limit: 10
-				}
 
 			};
 		},
@@ -119,53 +79,29 @@
 		
 		methods: {
 			tableInit(){
-				var tableData=[{
-					code: '001',
-					date: '2016-05-02',
-					name: '王小虎',
-					ditu: '蓟州区',
-					diquType: '水库淹没区',
-					xiangzhen: '别山镇',
-					cunweihui: '大别山村',
-					status: '未审批'
-
-				}, {
-					date: '2016-05-04',
-					code: '002',
-					name: '王小虎',
-					diquType: '水库影响区',
-					ditu: '津南区',
-					xiangzhen: '咸水沽镇',
-					cunweihui: '黄水村',
-					status: '未审批'
-				}, {
-					date: '2016-05-01',
-					code: '003',
-					name: '王小虎',
-					diquType: '枢纽工程建设区',
-					ditu: '武清区',
-					xiangzhen: '黄庄村镇',
-					cunweihui: '朱庄子村',
-					status: '未审批'
-				}, {
-					date: '2016-05-03',
-					code: '004',
-					name: '王小虎',
-					ditu: '静海区',
-					diquType: '水库影响区',
-					xiangzhen: '茅台镇',
-					cunweihui: '别久村',
-					status: '未审批'
-				},];
-				this.tableData=tableData;
+				var data = {
+					BaseType: this.BaseType,
+					ProjectNo: this.projectNo,
+					...this.formeData
+				};
+				GetAllBaseTablesBaseAttrs(data).then((res) => {
+					console.log(res)
+					
+					this.tableData = res.list;
+					this.total=res.total;
+				})
+				.catch((error) => {
+					this.tableData = [];
+					console.log(error)
+				})
 			},
 			
 			handleSizeChange(val) { //每页#条
-				this.pageData.limit = val;
+				this.formeData.PageSize = val;
 				console.log(this.formeData);
 			},
 			handleCurrentChange(val) { //当前第几页
-				this.pageData.page = val;
+				this.formeData.CurrentPage = val;
 				console.log(this.formeData);
 			},
 			lookClick(row) { //查看城市集镇基本情况调查表

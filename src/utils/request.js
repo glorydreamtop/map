@@ -13,7 +13,7 @@ const service = axios.create({
     // request interceptor
 service.interceptors.request.use(
     config => {
-        console.log(config);
+        // console.log(config);
         if (config.data && Boolean(config.data.ProjectNo) && !(config.data.ProjectNo > 0)) {
             console.log(123);
             evnetBus.$emit('selectStage')
