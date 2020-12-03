@@ -39,6 +39,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import evnetBus from '@/utils/eventBus'
 export default {
   name: "Index",
   props: {},
@@ -76,9 +77,10 @@ export default {
         this.loading = true;
         await this.$store.dispatch("user/login", this.loginForm);
         this.loading = false;
+        evnetBus.$emit("selectStage");
       } catch (error) {
         this.loading = false;
-        this.$message.error('用户名/密码 错误')
+        this.$message.error("用户名/密码 错误");
       }
     },
   },

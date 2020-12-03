@@ -1,6 +1,7 @@
 <template>
   <el-dialog
     :visible.sync="visible"
+    :close-on-click-modal="false"
     :close-on-press-escape="false"
     :show-close="false"
     width="240px"
@@ -39,12 +40,12 @@ export default {
     stageShow:{
       handler(newVal){
         this.visible = newVal
+        if(newVal){
+          this.getList()
+        }
       },
       immediate:true
     }
-  },
-  mounted() {
-    this.getList()
   },
   methods: {
     async getList() {
@@ -61,6 +62,7 @@ export default {
         this.$emit('update:stageShow',false)
         timer = null
       },500)
+      this.$eventBus.$emit('selectedStage')
     }
   },
 };

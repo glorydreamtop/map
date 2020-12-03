@@ -107,6 +107,8 @@
 import search from "@/components/search";
 import stageSelector from '@/components/stageSelector'
 import zlgl from '@/components/zlgl'
+import evnetBus from '@/utils/eventBus'
+
 export default {
   name: "Index",
   props: {},
@@ -122,7 +124,11 @@ export default {
     zlgl
   },
   created() {},
-  mounted() {},
+  mounted() {
+    evnetBus.$on('selectStage',()=>{
+      this.stageShow = true
+    })
+  },
   methods: {
     handleSelect() {},
   },

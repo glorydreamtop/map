@@ -31,12 +31,14 @@ const actions = {
         return new Promise((resolve, reject) => {
             login(user, pwd)
                 .then((response) => {
+                    console.log(response);
                     commit('SET_NAME', response[0].o_username)
                     commit('SET_ROLE', response[0].o_userdesc)
                     commit('SET_USERID', response[0].o_userno)
                     resolve()
                 })
                 .catch((error) => {
+                    console.log(error);
                     reject(error)
                 })
         })
