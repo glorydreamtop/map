@@ -2,6 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { deepClone } from '.'
+import evnetBus from './eventBus'
 
 // create an axios instance
 const service = axios.create({
@@ -12,6 +13,12 @@ const service = axios.create({
     // request interceptor
 service.interceptors.request.use(
     config => {
+        console.log(config);
+        if (config.data && Boolean(config.data.ProjectNo) && !(config.data.ProjectNo > 0)) {
+            console.log(123);
+            evnetBus.$emit('selectStage')
+            return
+        }
         // do something before request is sent
         config.headers['Content-Type'] = config.headers['Content-Type'] || 'application/json;charset=utf-8';
         if (store.getters.token) {
@@ -36,6 +43,7 @@ service.interceptors.request.use(
             //   delete config.data.id
             // }
         }
+
         return config
     },
     error => {
@@ -74,7 +82,7 @@ service.interceptors.response.use(
             if (response.headers.token) {
                 store.commit('user/SET_TOKEN', response.headers.token)
             }
-            if (response.config.data.includes('CurrentPage')) {
+            if (response.config.data && response.config.data.includes('CurrentPage')) {
                 return Promise.resolve({ list: res.ObjectList, total: res.allResultCounts })
             } else {
                 return Promise.resolve(res.ObjectList)
