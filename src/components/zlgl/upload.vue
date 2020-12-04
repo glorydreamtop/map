@@ -69,6 +69,7 @@ export default {
         docname:this.fileName
       });
       await UploadDocFile({itemno:res[0].docno,file:file.file})
+      this.$emit('update')
     },
   },
 };

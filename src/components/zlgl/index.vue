@@ -27,7 +27,7 @@
             class="el-icon-plus margin-bottom-m"
             @click="$refs.upload.dialogVisible = true"
           />
-          <upload :folderid="currentNo" ref="upload" />
+          <upload @update="getList(1)" :folderid="currentNo" ref="upload" />
           <el-table :data="tableData">
             <el-table-column prop="no" label="文件编号"></el-table-column>
             <el-table-column prop="name" label="文件名"></el-table-column>
@@ -149,9 +149,14 @@ export default {
       this.loading2 = true;
       const Type = e.minetype.includes("doc") ? "word" : "excel";
       const res1 = await GetDocumentByDocNo({ docid: e.no });
-      const res2 = await GetWordOrExcelToPDF({ Type, Path: res1[0].url });
-      this.loading2 = false;
-      window.open(`http://aglostech1.yicp.io:9080/${res2[0].url}`);
+      try {
+        const res2 = await GetWordOrExcelToPDF({ Type, Path: res1[0].url });
+        this.loading2 = false;
+        window.open(`http://aglostech1.yicp.io:9080/${res2[0].url}`);
+      } catch (error) {
+        this.loading2 = false;
+        this.$message.error('文件转换失败')
+      }
     },
     editClick(e) {},
     delClick(e) {},
