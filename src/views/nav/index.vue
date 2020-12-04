@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <img class="title" src="@/assets/imgs/title.png" alt="" /> -->
+    <img class="title" src="@/assets/imgs/title.png" alt="" />
     <div
       class="flex justify-end align-center nav bg-primary border-bottom padding-right-l"
     >

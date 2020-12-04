@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import Axios from 'axios';
-import { getToken } from '@/utils/auth';
+import { getToken } from '@/utils/cookie';
 
 const baseReflect = '/ReflectInvoke/Invoke?assebleUrlEn=GDYZCBusiness.dll&classUrlEn=GDYZCBusiness.HCProject.Project&functionUrlEn='
     // 登录
@@ -168,10 +168,10 @@ export function GetWordOrExcelToPDF(data) {
     })
 }
 
-// 获取上传文件类型 GetSubTypeTempdefns
-export function GetSubTypeTempdefns(data) {
+// 获取上传文件类型 GetUploadFileType
+export function GetUploadFileType(data) {
     return request({
-        url: `${baseReflect}GetSubTypeTempdefns`,
+        url: `${baseReflect}GetUploadFileType`,
         method: 'post',
         data
     })
@@ -188,18 +188,20 @@ export function GetCreateDocId(data) {
 
 // 上传文件 UploadDocFile
 export function UploadDocFile(data) {
+    console.log(data);
     const itemno = data.itemno;
-    let file = data.flie;
-    const formdata = new FormData()
-    formdata.append('file',file,file.name)
+    let file = data.file;
+    const formdata = new FormData();
+    formdata.append('file', file, file.name)
+    console.log(formdata);
     return Axios({
         url: `/Document/UploadDocFile?itemno=${itemno}`,
         method: 'post',
-        headers:{
-            'Content-Type':'multipart/form-data',
-            'token':getToken()
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'token': getToken()
         },
-        data:formdata
+        data: formdata
     })
 }
 
