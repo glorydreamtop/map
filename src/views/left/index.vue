@@ -44,7 +44,7 @@ import zxxm from '@/components/zxxm'
 import gyqy from '@/components/gyqy'
 
 export default {
-  name: "Index",
+  name: "Left",
   props: {},
   components: {
     jbqk,tdxx,hxx,zxss,zxxm,gyqy

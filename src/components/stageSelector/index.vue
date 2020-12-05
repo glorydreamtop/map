@@ -6,7 +6,6 @@
     :show-close="false"
     width="240px"
     title="选择阶段"
-    @close="$emit('update:stageShow',false)"
     center
   >
     <el-radio-group
@@ -24,7 +23,7 @@ import {GetSubProjects} from '@/api'
 export default {
   name: "stageSelector",
   props: {
-    stageShow:{
+    showDialog:{
       type:Boolean,
       default:false
     }
@@ -37,12 +36,10 @@ export default {
     };
   },
   watch:{
-    stageShow:{
+    showDialog:{
       handler(newVal){
         this.visible = newVal
-        if(newVal){
-          this.getList()
-        }
+        newVal&&this.getList()
       },
       immediate:true
     }
@@ -59,7 +56,7 @@ export default {
     change(e){
       this.$store.commit('info/SET_PROJECTNO',e)
       let timer = setTimeout(()=>{
-        this.$emit('update:stageShow',false)
+        this.$emit('update:showDialog',false)
         timer = null
       },500)
       this.$eventBus.$emit('selectedStage')

@@ -1,27 +1,24 @@
 <template>
-  <el-dialog
-    title="文件上传"
-    :visible.sync="dialogVisible"
-    append-to-body
-    width="20vw"
-  >
+  <el-dialog title="文件上传" :visible.sync="dialogVisible" append-to-body width="20vw">
     <div class="align-center">
-      <el-input placeholder="请输入文件名称" v-model="fileName"></el-input>
       <el-select v-model="currentType" placeholder="选择文件类型">
         <el-option
           v-for="item in typeList"
           :key="item.value"
           :label="item.label"
           :value="item.value"
-        >
-        </el-option>
+        ></el-option>
       </el-select>
       <el-upload
+        ref="upload"
         class="upload"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :http-request="upload"
+        :before-upload="beforeUpload"
+        :action="uploadUrl"
         :limit="1"
+        name="upFiles_1"
+        :headers="headers"
         :show-file-list="false"
+        :on-success="onSuccess"
       >
         <i class="el-icon-upload"></i>
       </el-upload>
@@ -30,22 +27,32 @@
 </template>
 
 <script>
-import { GetCreateDocId, GetUploadFileType, UploadDocFile } from "@/api";
+import {
+  GetCreateDocId,
+  GetUploadFileType,
+  UploadDocFile,
+  GetUpdateDocId
+} from "@/api";
+import { getToken } from "@/utils/cookie";
 export default {
   name: "upload",
   props: {
     folderid: {
       type: Number,
-      default: 0,
+      default: 0
     },
+    updateFileId: {
+      type: Number,
+      default: 0
+    }
   },
   watch: {
     dialogVisible: {
       handler(newVal) {
         newVal && this.getTypeList();
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   data() {
     return {
@@ -53,25 +60,58 @@ export default {
       fileName: "",
       typeList: [],
       currentType: "",
+      uploadUrl: ""
     };
+  },
+  computed: {
+    headers() {
+      return { token: getToken() };
+    }
   },
   methods: {
     async getTypeList() {
       this.typeList = await GetUploadFileType();
     },
-    async upload(file) {
-      !this.fileName && this.$message.error("请先添加文件名称");
+    async beforeUpload(file) {
+      let itemno;
+      try {
+        if (this.updateFileId > 0) {
+          itemno = await this.update(file);
+        } else {
+          itemno = await this.create(file);
+        }
+        this.uploadUrl = `http://aglostech1.yicp.io:9080/Document/UploadDocFile?itemno=${itemno}`;
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
+    // 创建
+    async create(file) {
       !this.currentType && this.$message.error("请先选择文件类型");
-      console.log(file);
       const res = await GetCreateDocId({
         folderid: this.folderid,
         tempdefno: this.currentType,
-        docname:this.fileName
+        docname: file.name
       });
-      await UploadDocFile({itemno:res[0].docno,file:file.file})
-      this.$emit('update')
+      return res[0].docno;
     },
-  },
+    // 更新
+    async update(file) {
+      const res = await GetUpdateDocId({
+        docid: this.updateFileId,
+        tempdefno: this.currentType,
+        docname: file.name
+      });
+      return res[0].docno;
+    },
+    onSuccess() {
+      this.dialogVisible = false;
+      this.$refs.upload.clearFiles();
+      this.$emit("update");
+    }
+  }
 };
 </script>
 

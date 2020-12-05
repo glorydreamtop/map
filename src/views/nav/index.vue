@@ -1,19 +1,15 @@
 <template>
   <div>
-    <img class="title" src="@/assets/imgs/title.png" alt="" />
-    <div
-      class="flex justify-end align-center nav bg-primary border-bottom padding-right-l"
-    >
+    <img class="title" src="@/assets/imgs/title.png" alt />
+    <div class="flex justify-end align-center nav bg-primary border-bottom padding-right-l">
       <search />
       <div class="text-l">
         <i class="el-icon-notebook-1 text-light"></i>
-        <span @click="stageShow = !stageShow">选择阶段</span>
-        <stage-selector :stageShow.sync="stageShow" />
+        <span @click="show('stageSelector')">选择阶段</span>
       </div>
       <div class="text-l">
         <i class="al-icon-ziliaoguanli text-light"></i>
-        <span @click="zlglShow = !zlglShow">资料管理</span>
-        <zlgl :zlglShow.sync="zlglShow" />
+        <span @click="show('zlgl')">资料管理</span>
       </div>
       <el-dropdown placement="bottom" class="text-l text-white">
         <div>
@@ -24,7 +20,7 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
             <i class="al-icon-dingeshezhi"></i>
-            <span>定额设置</span>
+            <span @click="show('desz')">定额设置</span>
           </el-dropdown-item>
           <el-dropdown-item>
             <i class="al-icon-gongshiguanli"></i>
@@ -100,38 +96,52 @@
         <span>admin</span>
       </div>
     </div>
+    <component :is="currentCompoent" :showDialog.sync="showDialog"></component>
   </div>
 </template>
 
 <script>
 import search from "@/components/search";
-import stageSelector from '@/components/stageSelector'
-import zlgl from '@/components/zlgl'
-import evnetBus from '@/utils/eventBus'
+import stageSelector from "@/components/stageSelector";
+import zlgl from "@/components/zlgl";
+import desz from "@/components/desz";
+import evnetBus from "@/utils/eventBus";
 
 export default {
-  name: "Index",
+  name: "Nav",
   props: {},
   data() {
     return {
-      stageShow:false,//阶段选择器
-      zlglShow:false
+      currentCompoent: "",
+      showDialog: false
     };
   },
   components: {
     search,
     stageSelector,
-    zlgl
+    zlgl,
+    desz
   },
-  created() {},
+  watch:{
+    showDialog:{
+      handler(newVal){
+        if(newVal)return
+        this.currentCompoent = ''
+      }
+    }
+  },
   mounted() {
-    evnetBus.$on('selectStage',()=>{
-      this.stageShow = true
-    })
+    evnetBus.$on("selectStage", () => {
+      this.stageShow = true;
+    });
   },
   methods: {
     handleSelect() {},
-  },
+    show(name) {
+      this.currentCompoent = name;
+      this.showDialog = true;
+    }
+  }
 };
 </script>
 
@@ -157,7 +167,7 @@ export default {
 .el-icon-arrow-down {
   margin-right: 0;
 }
-.el-dropdown>div{
+.el-dropdown > div {
   cursor: pointer;
 }
 .el-dropdown-menu {
