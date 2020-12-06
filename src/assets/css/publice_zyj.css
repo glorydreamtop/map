@@ -5,12 +5,12 @@
 } */
 .jbqkTable_dialog {
     width: 80%!important;
-    height: 700px;
+    height: 75vh;
 }
 .jbqk_add_table1_dialog {
     width: 45%!important;
     min-width: 600px;
-    height:800px;
+    height:80vh;
 }
 
 .jbqk_add_table3_dialog {
@@ -51,7 +51,7 @@
 .jbqk_add2_table1_dialog {
     width: 30%!important;
     min-width: 400px;
-    height: 80vh;
+    height:70vh;
 }
 
 .table_page {
@@ -97,8 +97,9 @@
     padding: 0!important;
 } */
 ::-webkit-scrollbar {
-        width: 16px;   
-        height: 1px;
+        /* width: 16px;   */
+	   height: auto;
+	   min-height: 1px;
     } 
 
  ::-webkit-scrollbar-thumb {

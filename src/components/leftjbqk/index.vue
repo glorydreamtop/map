@@ -18,9 +18,10 @@
       <span>企事业单位</span>
     </div>
   </div>
+  <!--   :modal-append-to-body='false'  -->
   <el-dialog
       :title="dialogTitle"
-      :append-to-body="true"
+      :append-to-body="true" 
       @close="closeDialog"
       :visible.sync="showFlag"
       v-model="showFlag"
@@ -40,10 +41,10 @@
 </template>
 
 <script>
-import jbqkTableHome1 from "@/components/jbqkTablePage/jbqkTable_home1.vue"; //基本情况表农村-更多操作
-import jbqkTableHome2 from "@/components/jbqkTablePage/jbqkTable_home2.vue"; //基本情况表城市-更多操作
-import jbqkTableHome3 from "@/components/jbqkTablePage/jbqkTable_home3.vue"; //基本情况表专业项目-更多操作
-import jbqkTableHome4 from "@/components/jbqkTablePage/jbqkTable_home4.vue"; //基本情况表企事业-更多操作
+import jbqkTableHome1 from "@/components/jbqkTablePage/villagePage/village_table.vue"; //基本情况表农村-更多操作
+import jbqkTableHome2 from "@/components/jbqkTablePage/cityTownPage/cityTown_table.vue"; //基本情况表城市-更多操作
+import jbqkTableHome3 from "@/components/jbqkTablePage/programPage/program_table.vue"; //基本情况表专业项目-更多操作
+import jbqkTableHome4 from "@/components/jbqkTablePage/businessPage/business_table.vue"; //基本情况表企事业-更多操作
 export default {
   name: "Leftjbqk",
   props: {},
@@ -67,7 +68,9 @@ export default {
     jbqkTable(dialogType) {
       //基本情况调查表
       const titleList = ["农村", "城市集镇", "专业项目", "企事业单位"];
+	  const BaseType=['NONGCUN','CHENGSHI','ZHUANXIANG','QISHIYE'];
       this.dialogTitle = `${titleList[dialogType - 1]}基本情况调查表`;
+	  this.$store.commit('jbqk/set_BaseType', BaseType[dialogType - 1])
       this.showFlag = true;
       this.dialogForm = "";
       this.dialogType = dialogType;
