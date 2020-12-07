@@ -7,7 +7,7 @@ export default {
   data() {
     return {};
   },
-  mounted() {
+  mounted() { 
     const el = this.$el;
     const dialogHeaderEl = el.querySelector(".el-dialog__header");
     const dragDom = el.querySelector(".el-dialog");
@@ -35,7 +35,6 @@ export default {
         document.onmouseup = null;
       };
     };
-  },
-  methods: {},
+  }
 };
 </script>

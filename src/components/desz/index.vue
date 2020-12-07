@@ -7,8 +7,8 @@
       width="70vw"
       v-loading="loading2"
       element-loading-text="文件转码中..."
-      title="资料管理"
-      @close="$emit('update:zlglShow', false)"
+      title="定额设置"
+      @close="$emit('update:showDialog', false)"
       center
     >
       <div class="box">
@@ -73,11 +73,7 @@
 
 <script>
 import {
-  GetFolders,
-  GetDocsByFolderId,
-  GetDocumentByDocNo,
-  GetWordOrExcelToPDF,
-  DelDoc
+  GetQuotaTree
 } from "@/api";
 import { mapGetters } from "vuex";
 export default {
@@ -112,7 +108,7 @@ export default {
     showDialog: {
       handler(newVal) {
         this.visible = newVal;
-        newVal && this.getFolders();
+        newVal && this.getTrees();
       },
       immediate: true
     }
@@ -120,9 +116,9 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    async getFolders() {
+    async getTrees() {
       this.loading1 = true;
-      this.folders = await GetFolders({ ProjectNo: this.projectNo });
+      this.folders = await GetQuotaTree({ ProjectNo: this.projectNo });
       this.loading1 = false;
     },
     async getList(currentPage = 1) {

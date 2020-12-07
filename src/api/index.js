@@ -222,3 +222,12 @@ export function DelDoc(data) {
         data
     })
 }
+
+// 删除文件 GetQuotaTree
+export function GetQuotaTree(data) {
+    return request({
+        url: `${baseReflect}GetQuotaTree`,
+        method: 'post',
+        data
+    })
+}
