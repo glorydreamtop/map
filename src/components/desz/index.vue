@@ -8,7 +8,7 @@
       v-loading="loading2"
       element-loading-text="文件转码中..."
       title="资料管理"
-      @close="$emit('update:showDialog', false)"
+      @close="$emit('update:zlglShow', false)"
       center
     >
       <div class="box">
@@ -26,12 +26,6 @@
             size="small"
             class="el-icon-plus margin-bottom-m"
             @click="$refs.upload.dialogVisible = true"
-          />
-          <upload
-            @update="updateTable"
-            :folderid="currentNo"
-            :updateFileId="updateFileId"
-            ref="upload"
           />
           <el-table :data="tableData">
             <el-table-column prop="no" label="文件编号"></el-table-column>
@@ -86,19 +80,18 @@ import {
   DelDoc
 } from "@/api";
 import { mapGetters } from "vuex";
-import upload from "./upload";
 export default {
-  name: "Zlgl",
+  name: "Desz",
   props: {
     showDialog: {
       type: Boolean,
       default: false
     }
   },
-  components: { upload },
+  components: { },
   data() {
     return {
-      visible: false,
+      visible:false,
       folders: [], //树的数据
       tableData: [], //表格数据
       defaultProps: {

@@ -4,14 +4,16 @@
 			<el-button icon="el-icon-plus" @click="addClick()" plain> </el-button>
 		</div>
 		<div class="body_table_mian">
-			<el-table :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="25vw">
-				<el-table-column prop="SerialNumber" label="编号" width="100" align="center"> </el-table-column>
-				<el-table-column prop="Createdate" label="申请时间" width="100" align="center"> </el-table-column>
+			<el-table v-loading="tableLoad" element-loading-text="客官请稍后" element-loading-spinner="el-icon-loading" class="fixTable49"
+                                 element-loading-background='#022333' :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">
+				<el-table-column prop="SerialNumber" label="编号" width="150" align="center"> </el-table-column>
+				<el-table-column prop="Createdate" label="申请时间" align="center"> </el-table-column>
 				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
-				<el-table-column prop="Region" label="地区类型" width="100" align="center"> </el-table-column>
+				<el-table-column prop="Region" label="地区类型" align="center"> </el-table-column>
 				<el-table-column prop="" label="状态" width="100" align="center"> </el-table-column>
 				<el-table-column prop="TownDESC" label="乡镇" width="100" align="center"> </el-table-column>
-				<el-table-column prop="VillageDESC" label="村委会" width="100" align="center"> </el-table-column>
+				<el-table-column prop="VillageDESC" label="村委会" align="center"> </el-table-column>
+				<el-table-column prop="VillageGroupDESC" label="村委小组"  align="center"> </el-table-column>
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
 						<el-button title="查看" icon="el-icon-view" type="primary" plain @click="lookClick(scope.row)"></el-button>
@@ -30,9 +32,9 @@
 			</div>
 		</div>
 		<div>
-			<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
+			<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
 			 class="newStyleDialog " custom-class="jbqk_add_table1_dialog">
-				<jbFlyTable1Add :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag"></jbFlyTable1Add>
+				<villageHeaderAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag"></villageHeaderAdd>
 			</el-dialog>
 		</div>
 	</div>
@@ -45,20 +47,19 @@
 	import {
 		GetAllBaseTablesBaseAttrs,DeleteBaseTable
 	} from '@/api'
-	import jbFlyTable1Add from '@/components/jbqkTablePage/jbqk_fly_table1_add' //农村基本情况调查表
+	import villageHeaderAdd from '@/components/jbqkTablePage/villagePage/village_header_add' //农村基本情况调查表
 	export default {
 		name: "jbqlTable_home",
 		props: {},
 		components: {
-			jbFlyTable1Add,
+			villageHeaderAdd,
 		},
 		computed: {
-			...mapGetters(['projectNo'])
+			...mapGetters(['projectNo','BaseType'])
 		},
 		data() {
 			return {
 				tableData: [],
-				BaseType: 'NONGCUN',
 				activeName: "",
 				dialogTitle: '', //弹出框标题
 				dialogForm: "", //弹出框表单
@@ -69,6 +70,7 @@
 					CurrentPage: 1,
 					PageSize: 10,
 				},
+				tableLoad:false,
 
 
 			};
@@ -87,16 +89,18 @@
 					ProjectNo: this.projectNo,
 					...this.formeData
 				};
+				this.tableLoad=true;
 				GetAllBaseTablesBaseAttrs(data).then((res) => {
-						console.log(res)
-
-						this.tableData = res.list;
-						this.total = res.total;
-					})
-					.catch((error) => {
-						this.tableData = [];
-						console.log(error)
-					})
+					console.log(res)
+					this.tableLoad=false;
+					this.tableData = res.list;
+					this.total = res.total;
+				})
+				.catch((error) => {
+					this.tableData = [];
+					this.tableLoad=false;
+					console.log(error)
+				})
 			},
 
 			handleSizeChange(val) { //每页#条
@@ -134,11 +138,6 @@
 					
 					}).catch((res) => {
 						console.log(res);
-						// this.$message({
-						// 	message: '信息返回有误',
-						// 	type: 'error',
-						// 	center: true
-						// })
 					})
 
 

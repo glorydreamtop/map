@@ -22,6 +22,7 @@
       ></el-input>
       <el-input
         v-model="loginForm.pwd"
+        type="password"
         prefix-icon="al-icon-lock"
         placeholder="请输入密码"
         @keyup.enter="login"
@@ -41,7 +42,7 @@
 import { mapGetters } from "vuex";
 import evnetBus from '@/utils/eventBus'
 export default {
-  name: "Index",
+  name: "Login",
   props: {},
   data() {
     return {

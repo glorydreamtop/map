@@ -95,7 +95,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-table,
 .el-table tr,
 .el-table td {
-    background-color: transparent;
+    background-color: #1a3348;
 }
 
 .el-button:hover,
@@ -166,3 +166,27 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-loading-mask {
     background: rgba(#0d3646, 0.5);
 }
+.el-table__expand-icon{
+ color: $--color-white;	
+}
+.el-table--scrollable-x .el-table__body-wrapper {
+    z-index: 1;
+  }
+  .el-scrollbar .el-scrollbar__wrap .el-scrollbar__view{
+     white-space: nowrap;
+  }
+  .el-table__fixed, .el-table__fixed-right {
+      box-shadow: none;
+  }
+.el-table__fixed, .el-table__fixed-right {
+	&::after{
+	   position:absolute;
+	   top:0;
+	   right:0;
+	   bottom:0;
+	   content:'';
+	   z-index:100;
+	   box-shadow: 0 0 10px rgba(0,0,0,.12);
+	}
+  }
+.el-popper{ z-index:9999!important }
