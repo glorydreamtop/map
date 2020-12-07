@@ -55,7 +55,6 @@ module.exports = {
             }, ])
             // set alias for src
         config.resolve.alias.set('@', resolve('src'))
-        config.resolve.modules.set('node_modules', resolve('node_modules'))
             // when there are many pages, it will cause too many meaningless requests
         config.plugins.delete('prefetch')
 
