@@ -1,4 +1,3 @@
-<script>
 import Dialog from "element-ui/packages/dialog/src/component.vue";
 export default {
   extends: Dialog,
@@ -37,4 +36,3 @@ export default {
     };
   }
 };
-</script>

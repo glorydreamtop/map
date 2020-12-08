@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :visible.sync="visible"
+    :visible.sync="showDialog"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     :show-close="false"
@@ -38,7 +38,6 @@ export default {
   watch:{
     showDialog:{
       handler(newVal){
-        this.visible = newVal
         newVal&&this.getList()
       },
       immediate:true

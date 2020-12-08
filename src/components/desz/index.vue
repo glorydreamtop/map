@@ -3,7 +3,6 @@
     <el-dialog
       :visible.sync="visible"
       :close-on-press-escape="false"
-      :show-close="false"
       width="70vw"
       v-loading="loading2"
       element-loading-text="文件转码中..."
@@ -59,7 +58,7 @@
           </el-table>
           <el-pagination
             class="margin-top-l"
-            layout="prev, pager, next"
+            layout="prev, pager, next,total"
             :total="currentTotal"
             small
             :page-size="5"

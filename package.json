@@ -10,6 +10,8 @@
         "new": "plop"
     },
     "dependencies": {
+        "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
+        "@vue/babel-plugin-transform-vue-jsx": "^1.2.1",
         "cesium": "^1.75.0",
         "cesium-navigation": "^1.0.0",
         "core-js": "^3.6.5",
