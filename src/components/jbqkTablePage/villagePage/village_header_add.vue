@@ -56,17 +56,16 @@
 					<el-collapse-item title="表数据信息" name="2" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
+							<el-button title="修改" @click="editTableItem" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delTableItem" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="35vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
-							 default-expand-all>
-								<el-table-column prop="value" label="编号" align="left"></el-table-column>
-								<el-table-column prop="label" label="项目" width="180" align="center"></el-table-column>
-								<el-table-column prop="unit" label="单位" width="80" align="center"></el-table-column>
-								<el-table-column prop="length" label="数量" width="80" align="center"></el-table-column>
-								<el-table-column prop="address" label="备注" align="center"></el-table-column>
-
+							 default-expand-all @row-click="rowClick">
+								<el-table-column prop="value" label="编号" width="180" align="left"></el-table-column>
+								<el-table-column prop="label" label="项目"  align="center"></el-table-column>
+								<el-table-column prop="Unit" label="单位"  align="center"></el-table-column>
+								<el-table-column prop="AttrNum" label="数量" align="center"></el-table-column>
+								<el-table-column prop="Remarks" label="备注" align="center"></el-table-column>
 							</el-table>
 						</div>
 
@@ -75,8 +74,8 @@
 				</el-collapse>
 
 				<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
-				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog">
-					<villageHeaderAdd :dialog-type="fly2_dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag"></villageHeaderAdd>
+				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog" >
+					<villageHeaderAdd :dialog-type="fly2_dialogType" :dialog-table="tableItemData" v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></villageHeaderAdd>
 				</el-dialog>
 			</div>
 
@@ -94,7 +93,8 @@
 		GetBaseTablesListAttrs,
 		AddBaseTablesBaseAttrs,
 		GetJBQKDCBItems,
-		GetSerialNumber
+		GetSerialNumber,
+		DeleteBaseTablesAttr
 	} from '@/api'
 	import villageHeaderAdd from '@/components/jbqkTablePage/villagePage/village_item_add' 
 	export default {
@@ -168,20 +168,76 @@
 				row,
 				rowIndex
 			}) {
-				// console.log(row, rowIndex);
-				// if (rowIndex === 1) {
-				//   return 'warning-row';
-				// } else if (rowIndex === 3) {
-				//   return 'success-row';
-				// }
-				// return '';
+				  return row.ClassName;
 			},
-
+            rowClick(row, column){//单击表格一行
+				console.log(row, column);
+				if(row.ClassName=="singleitem"){
+					this.fly2_dialogForm=row;
+					
+				}
+			},
+			addTableItem() { //添加项目
+				this.fly2_dialogForm = '';
+				this.dialogTitle = '添加农村信息数据项';
+				this.fly2_dialogType = 'add';
+				this.showFlag = true;
+			},
+			editTableItem(){//添加
+				if(this.fly2_dialogForm){
+					this.dialogTitle = '修改农村信息数据项';
+					this.fly2_dialogType = 'edit';
+					this.showFlag = true;
+				}else{
+					this.$message({
+						message: '请选择要编辑的数据项',
+						type: 'error',
+						center: true
+					})
+				}
+				
+			},
+			delTableItem(){//删除
+			console.log(this.fly2_dialogForm)
+			    if(this.fly2_dialogForm){
+					var self=this;
+					this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						center: true,
+						type: 'warning'
+					}).then(() => {
+						DeleteBaseTablesAttr({id:this.fly2_dialogForm.KeyNo}).then((res) => {
+							console.log(res)
+								self.$message({
+									message: '操作成功',
+									type: 'success',
+									center: true
+								});
+								self.GetJBQKDCBItemInit();
+						
+						}).catch((res) => {
+							console.log(res);
+						})
+					
+					
+					}).catch((res) => {
+						
+					})
+				}else{
+					this.$message({
+						message: '请选择要删除的数据项',
+						type: 'error',
+						center: true
+					})
+				}
+				
+			},
 			GetJBQKDCBItemInit() {//获取数据项
 			    console.log(this.KeyNo)
 				var data = {id: this.KeyNo};
 				GetBaseTablesListAttrs(data).then((res) => {
-						 this.tableItemData = listToTree(res, 'VirtualitemName', 'ParentVirtualitemName');
+						 this.tableItemData =res;
 						 console.log(res, this.tableItemData, '获取数据项')
 				})
 				.catch((error) => {
@@ -235,12 +291,7 @@
 					console.log(error)
 				})
 			},
-			addTableItem() { //添加项目
-				this.fly2_dialogForm = '';
-				this.dialogTitle = '添加农村信息数据项';
-				this.fly2_dialogType = 'add';
-				this.showFlag = true;
-			},
+			
 			closeDialog() { //关闭弹出框
 				this.GetJBQKDCBItemInit();
 			},
@@ -299,7 +350,7 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 70vh;
+		height: 80vh;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;

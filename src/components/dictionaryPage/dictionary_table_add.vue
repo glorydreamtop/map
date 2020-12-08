@@ -3,17 +3,18 @@
 		<div class="element_main">
 			<div class="reyuan_form">
 				<el-form label-position="top"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-					<el-form-item label="项目:">
-						  <el-cascader v-model="project1" filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
+					<el-form-item label="父节点名称:">
+						  <el-cascader placeholder="请选择父节点" v-model="project1" filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
 						<!-- <el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input> -->
 					</el-form-item>
-					<el-form-item label="单位:" >
+					<el-form-item label="子节点名称:" >
 						<el-input v-model="ruleForm.Unit" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="数量:" >
-						<el-input v-model="ruleForm.AttrNum" :disabled="dialogType=='look'?true:false"></el-input>
+					<el-form-item label="定额单位:" >
+						<el-input v-model="ruleForm.Unit" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="备注:" >
+					
+					<el-form-item label="定额备注:" >
 						<el-input type="textarea"  :rows="5" v-model="ruleForm.Remarks" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					

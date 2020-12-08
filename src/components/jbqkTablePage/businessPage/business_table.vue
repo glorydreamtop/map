@@ -29,7 +29,7 @@
 			</el-table>
 			<div class="table_page">
 				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
-				 :page-sizes="[10, 20, 50, 100]" :page-size="formeData.PageSize" layout="total, sizes, prev, pager, next, jumper"
+				  :page-size="formeData.PageSize" llayout="prev, pager, next"
 				 :total="total">
 				</el-pagination>
 			</div>
@@ -73,7 +73,7 @@
 				total: 4,
 				formeData: {
 					CurrentPage: 1,
-					PageSize: 10,
+					PageSize: 5,
 				},
 				tableLoad:false,
 

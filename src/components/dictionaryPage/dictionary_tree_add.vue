@@ -3,17 +3,10 @@
 		<div class="element_main">
 			<div class="reyuan_form">
 				<el-form label-position="top"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-					<el-form-item label="项目:">
-						  <el-cascader v-model="project1" filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
-						<!-- <el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input> -->
-					</el-form-item>
-					<el-form-item label="单位:" >
-						<el-input v-model="ruleForm.Unit" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-					<el-form-item label="数量:" >
+					<el-form-item label="分类编码:" >
 						<el-input v-model="ruleForm.AttrNum" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="备注:" >
+					<el-form-item label="分类描述:" >
 						<el-input type="textarea"  :rows="5" v-model="ruleForm.Remarks" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					
@@ -44,14 +37,9 @@
 		data: function() {
 			return {
 				ruleForm: {
-					VirtualitemName: '',
-					VirtualitemDesc: '',
-					Unit: '',
 					AttrNum: '',
 					Remarks: '',
 				},
-				project1:'',
-				postionArry:[],
 				submitLoad: false,
 				disabled: false,
 				rules: { //约定的验证规则
@@ -83,11 +71,9 @@
 		components: {},
 		props: ['dialogType', 'dialogForm','dialogTable'],
 		mounted: function() {
-			this.GetJBQKDCBItemsInit();//项目层级化
 			console.log(this.dialogForm);
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.ruleForm=this.dialogForm;
-				this.project1=this.dialogForm.value;
 				if(this.dialogType == 'look'){
 					this.disabled = true;
 				}
@@ -98,44 +84,7 @@
 
 		methods: {
 			
-			postionChange(data){
-				console.log(data)
-				var itemData=this.$refs["cascaderAddr"].getCheckedNodes();
-				this.ruleForm.VirtualitemDesc=itemData[0].label
-				this.ruleForm.VirtualitemName=itemData[0].value;
-				console.log(itemData)//获得当前节点，
-			},
-			GetJBQKDCBItemsInit(){//项目级层初始化
-				var data = {
-					BaseType: this.BaseType,
-				};
-				GetJBQKDCBItems(data).then((res) => {	  
-					// var newData=res;
-					var newData=this.setList(res,this.dialogTable);
-					this.postionArry=newData;
-					
-				})
-				.catch((error) => {
-					this.postionArry = [];
-					console.log(error)
-				})
-			},
-			setList(newData,oldData){
-						for(var j in oldData){
-							if(oldData[j]&&oldData[j].children&&oldData[j].children.length!=0){	
-								this.setList(newData[j].children,oldData[j].children);
-							}
-							else{
-								if(newData[j].SerialNumber==oldData[j].SerialNumber&&oldData[j].ClassName=='singleitem'){
-									newData[j].disabled=true;
-								}else{
-									newData[j].disabled=false;
-								}
-							}
-						}
-					return newData;
-				  // console.log(newData)
-			},
+			
 			submitForm(formName) { //表单提交按钮
 				var self = this;
 				this.$refs[formName].validate((valid) => {
@@ -182,7 +131,7 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 65vh;
+		height:38vh;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;

@@ -89,6 +89,10 @@
             <i class="al-icon-quanxianguanli"></i>
             <span>权限管理</span>
           </el-dropdown-item>
+		  <el-dropdown-item>
+		    <i class="el-icon-s-management"></i>
+		    <span @click="show('dictionary')">字典设置</span>
+		  </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <div class="admin text-l border-left padding-left-l">
@@ -96,6 +100,7 @@
         <span>admin</span>
       </div>
     </div>
+	
     <component :is="currentCompoent" :showDialog.sync="showDialog"></component>
   </div>
 </template>
@@ -103,6 +108,7 @@
 <script>
 import search from "@/components/search";
 import stageSelector from "@/components/stageSelector";
+import dictionary from "@/components/dictionaryPage/dictionary_table";
 import zlgl from "@/components/zlgl";
 import desz from "@/components/desz";
 import evnetBus from "@/utils/eventBus";
@@ -120,7 +126,8 @@ export default {
     search,
     stageSelector,
     zlgl,
-    desz
+    desz,
+	dictionary
   },
   watch:{
     showDialog:{
