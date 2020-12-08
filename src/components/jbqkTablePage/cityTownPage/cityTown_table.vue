@@ -26,12 +26,10 @@
 			</el-table>
 
 
-			<div class="table_page">
-				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
+			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
 				  :page-size="formeData.PageSize" llayout="prev, pager, next"
 				 :total="total">
 				</el-pagination>
-			</div>
 
 		</div>
 		<div  >

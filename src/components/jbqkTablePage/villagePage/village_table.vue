@@ -24,12 +24,10 @@
 					</template>
 				</el-table-column>
 			</el-table>
-			<div class="table_page">
-				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
-				  :page-size="formeData.PageSize" llayout="prev, pager, next"
+			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
+				  :page-size="formeData.PageSize"
 				 :total="total">
 				</el-pagination>
-			</div>
 		</div>
 		<div>
 			<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
