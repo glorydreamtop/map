@@ -87,7 +87,7 @@
 							<el-button title="删除" size="mini" icon="el-icon-delete" plain></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m">
 								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="name" label="项目" width="180" align="center"></el-table-column>
+								<el-table-column prop="name" label="项目名称" width="180" align="center"></el-table-column>
 								<el-table-column prop="unit" label="单位" width="130" align="center"></el-table-column>
 								<el-table-column prop="length" label="数量" width="130" align="center"></el-table-column>
 								<el-table-column prop="address" label="备注" align="center"></el-table-column>
@@ -95,39 +95,21 @@
 							</el-table>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="防洪设施调查表" name="3">
+					<el-collapse-item title="防洪(其他)设施调查表" name="3">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
 							<el-button title="修改" size="mini" icon="el-icon-edit" plain></el-button>
 							<el-button title="删除" size="mini" icon="el-icon-delete" plain></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m">
 								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="name" label="防洪设施" width="180" align="center"></el-table-column>
-								<el-table-column prop="unit" label="防洪标准" width="130" align="center"></el-table-column>
-								<el-table-column prop="length" label="防洪水位" width="130" align="center"></el-table-column>
-								<el-table-column prop="length" label="淹没范围" width="130" align="center"></el-table-column>
-								<el-table-column prop="length" label="历史情况" align="center"></el-table-column>
+								<el-table-column prop="name" label="项目名称" width="180" align="center"></el-table-column>
+								<el-table-column prop="unit" label="内容" width="130" align="center"></el-table-column>
 								<!-- <el-table-column prop="address" label="备注" align="center"></el-table-column> -->
 
 							</el-table>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="其他调查" name="4">
-						<div class="formeBody">
-							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m">
-								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="name" label="项目" width="180" align="center"></el-table-column>
-								<el-table-column prop="unit" label="区域自然条件" width="180" align="center"></el-table-column>
-								<el-table-column prop="length" label="地质灾害影响" width="180" align="center"></el-table-column>
-								<el-table-column prop="length" label="历史情况" align="center"></el-table-column>
-								<!-- <el-table-column prop="address" label="备注" align="center"></el-table-column> -->
-
-							</el-table>
-						</div>
-					</el-collapse-item>
+					
 				</el-collapse>
 
 			</div>
@@ -271,7 +253,7 @@
 				this.$store.commit('jbqk/set_KeyNo', this.dialogForm.KeyNo)
 				this.GetLocationInit(0, 'countyData'); //获取区县
 				this.GetLocationInit(this.dialogForm.County, 'townData'); //获取乡镇
-				// this.GetJBQKDCBItemInit(); //获取数据项
+				this.GetJBQKDCBItemInit(); //获取数据项
 			} else {
 				this.GetLocationInit(0, 'countyData'); //获取地区
 			}
@@ -291,6 +273,18 @@
 						this[type] = [];
 						console.log(error)
 					})
+			},
+			GetJBQKDCBItemInit() {//获取数据项
+			    console.log(this.KeyNo)
+				var data = {id: this.KeyNo};
+				GetBaseTablesListAttrs(data).then((res) => {
+						 this.tableItemData =res;
+						 console.log(res, this.tableItemData, '获取数据项')
+				})
+				.catch((error) => {
+					this.tableItemData = [];
+					console.log(error)
+				})
 			},
 			addTableItem() {
 

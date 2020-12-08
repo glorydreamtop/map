@@ -10,7 +10,7 @@
 .jbqk_add_table1_dialog {
     width: 45%!important;
     min-width: 600px;
-    height:80vh;
+    height:90vh;
 }
 
 .jbqk_add_table3_dialog {
@@ -113,4 +113,13 @@
         border-radius: 10px;
         background: #EDEDED;
 
+}
+.bigtitle,.bigtitle td{
+	background: #0d66ad!important;
+}
+.mediumtitle,.mediumtitle td{
+	background: #1a3348!important;
+}
+.singleitem,.singleitem td{
+	/* background: #1a3348!important; */
 }
