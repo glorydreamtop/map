@@ -1,43 +1,66 @@
 <template>
-	<div class="tableMain">
-		<div class="header_table_title">
-			<el-button icon="el-icon-plus" @click="addClick()" plain> </el-button>
-		</div>
-		<div class="body_table_mian">
-			<el-table v-loading="tableLoad" element-loading-text="客官请稍后" element-loading-spinner="el-icon-loading" class="fixTable49"
-                                 element-loading-background='#022333' :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">
-				<el-table-column prop="SerialNumber" label="编号" width="150" align="center"> </el-table-column>
-				<el-table-column prop="Createdate" label="申请时间" align="center"> </el-table-column>
-				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
-				<el-table-column prop="Region" label="地区类型" align="center"> </el-table-column>
-				<el-table-column prop="" label="状态" width="100" align="center"> </el-table-column>
-				<el-table-column prop="TownDESC" label="乡镇" width="100" align="center"> </el-table-column>
-				<el-table-column prop="VillageDESC" label="村委会" align="center"> </el-table-column>
-				<el-table-column prop="VillageGroupDESC" label="村委小组"  align="center"> </el-table-column>
-				<el-table-column fixed="right" label="操作" width="300" align="center">
-					<template slot-scope="scope">
-						<el-button title="查看" icon="el-icon-view" type="primary" plain @click="lookClick(scope.row)"></el-button>
-						<el-button title="修改" icon="el-icon-edit" type="warning" plain @click="editClick(scope.row)"></el-button>
-						<el-button title="删除" icon="el-icon-delete" type="danger" plain @click="delClick(scope.row)"></el-button>
-						<el-button title="发起审批" icon="el-icon-s-check" type="success" plain></el-button>
+	<el-row :gutter="10">
+		<el-col :xs="8" :sm="6" :md="6" :lg="5" :xl="4">
+			<div class="tableMain">
+				<div class="header_table_title">
+					<el-button size="mini" @click="addClick('tree')" icon="el-icon-plus"></el-button>
+					<el-button title="修改" @click="editClick('tree')" size="mini" icon="el-icon-edit" plain></el-button>
+					<el-button title="删除" @click="delClick('tree')" size="mini" icon="el-icon-delete" plain></el-button>
+				</div>
+				<div class="body_table_mian">
+					<el-tree :data="treeData" :props="defaultProps" @node-click="handleNodeClick" default-expand-all></el-tree>
+				</div>
 
-					</template>
-				</el-table-column>
-			</el-table>
-			<div class="table_page">
-				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
-				 :page-sizes="[10, 20, 50, 100]" :page-size="formeData.PageSize" layout="total, sizes, prev, pager, next, jumper"
-				 :total="total">
-				</el-pagination>
 			</div>
-		</div>
+		</el-col>
+		<el-col :xs="16" :sm="18" :md="18" :lg="19" :xl="20">
+			<div class="tableMain">
+				<div class="header_table_title">
+					<el-button size="mini" @click="addClick('table')" icon="el-icon-plus"></el-button>
+					<el-button title="修改" @click="editClick('table')" size="mini" icon="el-icon-edit" plain></el-button>
+					<el-button title="删除" @click="delClick('table')" size="mini" icon="el-icon-delete" plain></el-button>
+				</div>
+				<div class="body_table_mian">
+					<el-table v-loading="tableLoad" element-loading-text="客官请稍后" element-loading-spinner="el-icon-loading" class="fixTable49"
+					 element-loading-background='#022333' :data="tableData" row-key="id" :tree-props="{children: 'children'}" border
+					 style="width: 100%" height="50vh">
+						<el-table-column prop="SerialNumber" label="编号" width="150" align="center"> </el-table-column>
+						<el-table-column prop="Createdate" label="申请时间" align="center"> </el-table-column>
+						<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
+						<el-table-column prop="Region" label="地区类型" align="center"> </el-table-column>
+						<el-table-column prop="" label="状态" width="100" align="center"> </el-table-column>
+						<el-table-column prop="TownDESC" label="乡镇" width="100" align="center"> </el-table-column>
+						<el-table-column prop="VillageDESC" label="村委会" align="center"> </el-table-column>
+						<el-table-column prop="VillageGroupDESC" label="村委小组" align="center"> </el-table-column>
+						<el-table-column fixed="right" label="操作" width="300" align="center">
+							<template slot-scope="scope">
+								<el-button title="查看" icon="el-icon-view" type="primary" plain @click="lookClick(scope.row)"></el-button>
+								<el-button title="修改" icon="el-icon-edit" type="warning" plain @click="editClick(scope.row)"></el-button>
+								<el-button title="删除" icon="el-icon-delete" type="danger" plain @click="delClick(scope.row)"></el-button>
+								<el-button title="发起审批" icon="el-icon-s-check" type="success" plain></el-button>
+
+							</template>
+						</el-table-column>
+					</el-table>
+					<div class="table_page">
+						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
+						 :page-sizes="[10, 20, 50, 100]" :page-size="formeData.PageSize" layout="total, sizes, prev, pager, next, jumper"
+						 :total="total">
+						</el-pagination>
+					</div>
+				</div>
+
+			</div>
+		</el-col>
 		<div>
-			<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
-			 class="newStyleDialog " custom-class="jbqk_add_table1_dialog">
-				<villageHeaderAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag" ></villageHeaderAdd>
+			<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
+			 class="newStyleDialog " :custom-class="flyType+'_add_dialog'">
+				<treeAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag&&flyType=='tree'"></treeAdd>
+				<tableAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag&&flyType=='table'"></tableAdd>
 			</el-dialog>
 		</div>
-	</div>
+	</el-row>
+
 </template>
 
 <script>
@@ -45,64 +68,110 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		GetAllBaseTablesBaseAttrs,DeleteBaseTable
+		GetAllBaseTablesBaseAttrs,
+		DeleteBaseTable
 	} from '@/api'
-	import villageHeaderAdd from '@/components/jbqkTablePage/villagePage/village_header_add' //农村基本情况调查表
+	import treeAdd from '@/components/dictionaryPage/dictionary_tree_add'
+	import tableAdd from '@/components/dictionaryPage/dictionary_table_add'
 	export default {
 		name: "jbqlTable_home",
 		props: {},
 		components: {
-			villageHeaderAdd,
+			treeAdd,
+			tableAdd
 		},
 		computed: {
-			...mapGetters(['projectNo','BaseType'])
+			...mapGetters(['projectNo', 'BaseType'])
 		},
 		data() {
 			return {
 				tableData: [],
-				activeName: "",
+				treeData: [],
 				dialogTitle: '', //弹出框标题
 				dialogForm: "", //弹出框表单
 				showFlag: false, //弹出框显隐状态
 				dialogType: '', //弹出框操作类型
+				flyType: '',
 				total: 0,
 				formeData: {
 					CurrentPage: 1,
 					PageSize: 10,
 				},
-				tableLoad:false,
+				tableLoad: false,
+				defaultProps: {
+					children: 'children',
+					label: 'label'
+				}
 
 
 			};
 		},
 		created() {},
 		mounted() {
-			if (this.projectNo) {
-				this.tableInit(); //表格初始化
-			}
+			this.tableInit(); //表格初始化
+			this.treeInit(); //树形初始化
 
 		},
 		methods: {
+			treeInit() {
+				this.treeData = [{
+					label: '一级 1',
+					children: [{
+						label: '二级 1-1',
+						children: [{
+							label: '三级 1-1-1'
+						}]
+					}]
+				}, {
+					label: '一级 2',
+					children: [{
+						label: '二级 2-1',
+						children: [{
+							label: '三级 2-1-1'
+						}]
+					}, {
+						label: '二级 2-2',
+						children: [{
+							label: '三级 2-2-1'
+						}]
+					}]
+				}, {
+					label: '一级 3',
+					children: [{
+						label: '二级 3-1',
+						children: [{
+							label: '三级 3-1-1'
+						}]
+					}, {
+						label: '二级 3-2',
+						children: [{
+							label: '三级 3-2-1'
+						}]
+					}]
+				}];
+			},
 			tableInit() {
 				var data = {
 					BaseType: this.BaseType,
 					ProjectNo: this.projectNo,
 					...this.formeData
 				};
-				this.tableLoad=true;
+				this.tableLoad = true;
 				GetAllBaseTablesBaseAttrs(data).then((res) => {
-					console.log(res)
-					this.tableLoad=false;
-					this.tableData = res.list;
-					this.total = res.total;
-				})
-				.catch((error) => {
-					this.tableData = [];
-					this.tableLoad=false;
-					console.log(error)
-				})
+						console.log(res)
+						this.tableLoad = false;
+						this.tableData = res.list;
+						this.total = res.total;
+					})
+					.catch((error) => {
+						this.tableData = [];
+						this.tableLoad = false;
+						console.log(error)
+					})
 			},
+			handleNodeClick(data) { //点击树形
 
+			},
 			handleSizeChange(val) { //每页#条
 				this.formeData.PageSize = val;
 				this.tableInit();
@@ -111,51 +180,56 @@
 				this.formeData.CurrentPage = val;
 				this.tableInit();
 			},
-			lookClick(row) { //查看
-				this.dialogForm = row;
-				this.dialogTitle = '查看农村基本情况调查表';
-				this.dialogType = 'look';
+			lookClick(type) { //查看
+				this.flyType = type;
+				this.dialogForm = '';
+				this.dialogTitle = '查看' + (type == 'tree' ? '项目树' : '数据项');
+				this.dialogType = type + 'look';
 				this.showFlag = true;
 
 			},
-			delClick(row) {
-				var self=this;
+			delClick() {
+				var self = this;
 				this.$confirm('此操作将永久删除, 是否继续?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					center: true,
 					type: 'warning'
 				}).then(() => {
-					DeleteBaseTable({id:row.KeyNo}).then((res) => {
+					DeleteBaseTable({
+						id: row.KeyNo
+					}).then((res) => {
 						console.log(res)
-							self.$message({
-								message: '操作成功',
-								type: 'success',
-								center: true
-							});
+						self.$message({
+							message: '操作成功',
+							type: 'success',
+							center: true
+						});
 
-							self.tableInit();
-					
+						self.tableInit();
+
 					}).catch((res) => {
 						console.log(res);
 					})
 
 
 				}).catch((res) => {
-					
+
 				})
 			},
-			editClick(row) { //修改
-				this.dialogForm = row;
-				this.dialogTitle = '编辑农村基本情况调查表';
-				this.dialogType = 'edit';
+			editClick(type) { //修改
+				this.flyType = type;
+				this.dialogForm = '';
+				this.dialogTitle = '修改' + (type == 'tree' ? '项目树' : '数据项');
+				this.dialogType = type + 'edit';
 				this.showFlag = true;
 
 			},
-			addClick() { //添加
+			addClick(type) { //添加
+			    this.flyType = type;
 				this.dialogForm = '';
-				this.dialogTitle = '添加农村基本情况调查表';
-				this.dialogType = 'add';
+				this.dialogTitle = '添加' + (type == 'tree' ? '项目树' : '数据项');
+				this.dialogType = type + 'add';
 				this.showFlag = true;
 
 			},
@@ -171,10 +245,11 @@
 
 
 <style scoped="scoped">
-	.tableMain{
+	.tableMain {
 		width: 70%;
 		height: 50vh;
 	}
+
 	.body_table_mian {
 		margin-top: 1vh;
 	}

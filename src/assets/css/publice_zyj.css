@@ -12,7 +12,16 @@
     min-width: 600px;
     height:90vh;
 }
-
+.table_add_dialog{
+	width: 45%!important;
+	min-width:400px;
+	height:75vh;
+}
+.tree_add_dialog{
+	width: 45%!important;
+	min-width:400px;
+	height:50vh;
+}
 .jbqk_add_table3_dialog {
     width: 40%!important;
     min-width: 750px;
