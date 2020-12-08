@@ -42,6 +42,21 @@ module.exports = {
         // provide the app's title in webpack's name field, so that
         // it can be accessed in index.html to inject the correct title.
         name: name,
+        optimization: {
+            chunkIds: 'natural'
+        },
+        module: {
+            rules: [{
+                test: /\.js$/,
+                include: '/src/',
+                use: [{
+                    loader: 'thread-loader',
+                    options: {
+                        workers: 3
+                    }
+                }]
+            }]
+        }
     },
     chainWebpack(config) {
         // it can improve the speed of the first screen, it is recommended to turn on preload
@@ -55,12 +70,9 @@ module.exports = {
             }, ])
             // set alias for src
         config.resolve.alias.set('@', resolve('src'))
-        config.resolve.modules.set('node_modules', resolve('node_modules'))
+        config.resolve.modules.add(resolve('node_modules'))
             // when there are many pages, it will cause too many meaningless requests
         config.plugins.delete('prefetch')
-
-
-
         config.when(process.env.NODE_ENV !== 'development', (config) => {
             config
                 .plugin('ScriptExtHtmlWebpackPlugin')
@@ -72,8 +84,9 @@ module.exports = {
                 .end()
             config.optimization.splitChunks({
                     chunks: 'all',
+                    minSize: 30000,
                     cacheGroups: {
-                        libs: {
+                        vendors: {
                             name: 'chunk-libs',
                             test: /[\\/]node_modules[\\/]/,
                             priority: 10,
@@ -83,18 +96,13 @@ module.exports = {
                             name: 'chunk-elementUI', // split elementUI into a single package
                             priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
                             test: /[\\/]node_modules[\\/]_?element-ui(.*)/, // in order to adapt to cnpm
-                        },
-                        commons: {
-                            name: 'chunk-commons',
-                            test: resolve('src/components'), // can customize your rules
-                            minChunks: 3, //  minimum common number
-                            priority: 5,
-                            reuseExistingChunk: true,
-                        },
+                        }
                     },
                 })
                 // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
             config.optimization.runtimeChunk('single')
+                // config.plugin('progressBar').use(require('progress-bar-webpack-plugin')).end()
+            config.plugin('analyzer').use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin).end()
         })
     },
     css: {
