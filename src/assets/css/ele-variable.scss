@@ -32,12 +32,6 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     background-color: $primary;
 }
 
-.el-table__fixed-right {
-    background-color: #1A3348;
-    box-shadow: -15px 0px 10px #1A3348;
-    border-left: solid 1px $sub;
-}
-
 [class*="el-button"].is-plain:hover {
     color: $white;
 }
@@ -89,7 +83,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     background-color: #1f576b;
     background-image: url('../../assets/imgs/dialogBg.png');
     background-size: 100% 100%;
-    border: #1A3348 solid 1px;
+    border: $sub solid 1px;
 }
 
 .el-table,
@@ -167,17 +161,14 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     background: rgba(#0d3646, 0.5);
 }
 .el-table__expand-icon{
- color: $--color-white;	
+ color: $white;	
 }
 .el-table--scrollable-x .el-table__body-wrapper {
     z-index: 1;
-  }
-  .el-scrollbar .el-scrollbar__wrap .el-scrollbar__view{
-     white-space: nowrap;
-  }
-  .el-table__fixed, .el-table__fixed-right {
-      box-shadow: none;
-  }
+}
+.el-scrollbar .el-scrollbar__wrap .el-scrollbar__view{
+    white-space: nowrap;
+}
 .el-table__fixed, .el-table__fixed-right {
 	&::after{
 	   position:absolute;

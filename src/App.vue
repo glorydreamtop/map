@@ -28,7 +28,6 @@ import left from "@/views/left";
 import right from "@/views/right";
 import login from "@/views/login";
 import bar from "@/components/bar";
-
 export default {
   name: "app",
   data() {
@@ -43,9 +42,6 @@ export default {
     right,
     login,
     bar
-  },
-  mounted() {
-    
   },
   methods: {
     closeDrawer() {

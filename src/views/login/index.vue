@@ -25,7 +25,7 @@
         type="password"
         prefix-icon="al-icon-lock"
         placeholder="请输入密码"
-        @keyup.enter="login"
+        @keyup.enter.native="login"
       ></el-input>
       <el-button
         class="margin-top-l text-light"

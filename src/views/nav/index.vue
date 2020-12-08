@@ -132,7 +132,8 @@ export default {
   },
   mounted() {
     evnetBus.$on("selectStage", () => {
-      this.stageShow = true;
+      this.currentCompoent = 'stageSelector'
+      this.showDialog = true;
     });
   },
   methods: {
