@@ -95,9 +95,7 @@
 			}
             
 		},
-
 		methods: {
-			
 			postionChange(data){
 				console.log(data)
 				var itemData=this.$refs["cascaderAddr"].getCheckedNodes();
@@ -109,9 +107,15 @@
 				var data = {
 					BaseType: this.BaseType,
 				};
-				GetJBQKDCBItems(data).then((res) => {	  
-					// var newData=res;
-					var newData=this.setList(res,this.dialogTable);
+				GetJBQKDCBItems(data).then((res) => {	
+					var newRes=[];
+					for(var i in res){
+						if(res[i].label!='防洪设施调查'&&res[i].label!='其他调查'){
+							newRes.push(res[i])
+						}
+					}
+					console.log(newRes)
+					var newData=this.setList(newRes,this.dialogTable);
 					this.postionArry=newData;
 					
 				})
