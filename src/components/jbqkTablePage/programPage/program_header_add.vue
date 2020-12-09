@@ -38,14 +38,14 @@
 					<el-collapse-item title="表数据信息" name="2" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" >
-								<el-table-column prop="value" label="编号" align="center"></el-table-column>
-								<el-table-column prop="VirtualitemName" label="项目编码" width="180" align="center"></el-table-column>
-								<el-table-column prop="VirtualitemDesc" label="项目名称" width="150" align="center"></el-table-column>
+							<el-button title="修改"  @click="editTableItem" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delTableItem" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m"  :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
+							 default-expand-all @row-click="rowClick">
+								<el-table-column prop="value" label="项目编码" align="center"></el-table-column>
+								<el-table-column prop="label" label="项目名称" width="150" align="center"></el-table-column>
 								<el-table-column prop="Target" label="指标" width="80" align="center"></el-table-column>
-								<el-table-column prop="address" label="备注" align="center"></el-table-column>
+								<el-table-column prop="Remarks" label="备注" align="center"></el-table-column>
 							</el-table>
 						</div>
 			
@@ -55,7 +55,7 @@
 			
 				<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
 				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog">
-					<programHeaderAdd :dialog-type="fly2_dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag"></programHeaderAdd>
+					<programHeaderAdd :dialog-type="fly2_dialogType" v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></programHeaderAdd>
 				</el-dialog>
 			</div>
 			
@@ -73,7 +73,8 @@
 		GetBaseTablesListAttrs,
 		AddBaseTablesBaseAttrs,
 		GetJBQKDCBItems,
-		GetSerialNumber
+		GetSerialNumber,
+		DeleteBaseTablesAttr
 	} from '@/api'
 	import programHeaderAdd from '@/components/jbqkTablePage/programPage/program_item_add' 
 	export default {
@@ -88,6 +89,8 @@
 				ruleForm: {
 				},
 				dialogTitle:'',
+				fly2_dialogType:'',
+				fly2_dialogForm:'',
 				showFlag:false,
 				countyData:[],//地区数据
 				seenButton: false,
@@ -127,6 +130,12 @@
 		},
 
 		methods: {
+			tableRowClassName({
+				row,
+				rowIndex
+			}) {
+				  return row.ClassName;
+			},
 			GetJBQKDCBItemInit() {//获取数据项
 			    console.log(this.KeyNo)
 				var data = {id: this.KeyNo};
@@ -172,6 +181,62 @@
 				this.dialogTitle = '添加专业项目信息数据项';
 				this.fly2_dialogType = 'add';
 				this.showFlag = true;
+			},
+			editTableItem(){//添加
+				if(this.fly2_dialogForm){
+					this.dialogTitle = '修改专业项目信息数据项';
+					this.fly2_dialogType = 'edit';
+					this.showFlag = true;
+				}else{
+					this.$message({
+						message: '请选择要编辑的数据项',
+						type: 'error',
+						center: true
+					})
+				}
+				
+			},
+			delTableItem(){//删除
+			console.log(this.fly2_dialogForm)
+			    if(this.fly2_dialogForm){
+					var self=this;
+					this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						center: true,
+						type: 'warning'
+					}).then(() => {
+						DeleteBaseTablesAttr({id:this.fly2_dialogForm.KeyNo}).then((res) => {
+							console.log(res)
+								self.$message({
+									message: '操作成功',
+									type: 'success',
+									center: true
+								});
+								self.GetJBQKDCBItemInit();
+						
+						}).catch((res) => {
+							console.log(res);
+						})
+					
+					
+					}).catch((res) => {
+						
+					})
+				}else{
+					this.$message({
+						message: '请选择要删除的数据项',
+						type: 'error',
+						center: true
+					})
+				}
+				
+			},
+			rowClick(row, column){//单击表格一行
+				console.log(row, column);
+				if(row.ClassName=="singleitem"){
+					this.fly2_dialogForm=row;	
+				}
 			},
 			submitForm(formName) { //表单提交按钮
 				this.$refs[formName].validate((valid) => {

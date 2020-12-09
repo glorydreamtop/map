@@ -4,8 +4,7 @@
 			<el-button icon="el-icon-plus" @click="addClick()" plain> </el-button>
 		</div>
 		<div class="body_table_mian">
-			<el-table v-loading="tableLoad" element-loading-text="客官请稍后" element-loading-spinner="el-icon-loading" class="fixTable49"
-                                 element-loading-background='#022333' :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">
+			<el-table v-loading="tableLoad"  :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">
 				<el-table-column prop="SerialNumber" label="编号" width="150" align="center"> </el-table-column>
 				<el-table-column prop="Createdate" label="申请时间" align="center"> </el-table-column>
 				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
@@ -26,8 +25,8 @@
 			</el-table>
 			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
 				  :page-size="formeData.PageSize"
-				 :total="total">
-				</el-pagination>
+				  :total="total">
+		    </el-pagination>
 		</div>
 		<div>
 			<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
