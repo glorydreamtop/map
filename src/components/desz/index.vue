@@ -10,16 +10,20 @@
       @close="$emit('update:showDialog', false)"
       center
     >
-      <div class="box">
-        <el-tree
-          v-loading="loading1"
-          element-loading-text="加载中..."
-          class="tree"
-          :data="folders"
-          :props="defaultProps"
-          @node-click="handleNodeClick"
-        ></el-tree>
-        <div class="datalist">
+      <div class="box justify-between">
+        <div class="box-left">
+          <el-cascader class="margin-bottom-l" placeholder="选择地区" :props="selectorList"></el-cascader>
+          <el-collapse v-model="classify" accordion>
+            <el-collapse-item v-for="item in classifyNames" :title="item" :key="item" :name="item">
+              <div
+                :class="['typeList padding-left-l',currentType === item ?'active':'']"
+                v-for="item in 16"
+                :key="item"
+              >土木房屋结构</div>
+            </el-collapse-item>
+          </el-collapse>
+        </div>
+        <div class="datalist margin-left-l">
           <el-button
             title="上传"
             size="small"
@@ -69,9 +73,7 @@
 </template>
 
 <script>
-import {
-  GetQuotaTree
-} from "@/api";
+import { GetQuotas, GetQuotaClassifyList } from "@/api";
 import { mapGetters } from "vuex";
 export default {
   name: "Desz",
@@ -81,18 +83,31 @@ export default {
       default: false
     }
   },
-  components: { },
+  components: {},
   data() {
     return {
-      visible:false,
+      locationno: 0,
+      visible: false,
       folders: [], //树的数据
       tableData: [], //表格数据
-      defaultProps: {
-        children: "children",
-        label: "desc"
+      selectorList: {
+        lazy: true,
+        async lazyload(node, resolve) {
+          const nodes = await this.getArea();
+          resolve(nodes);
+        }
       },
-      currentNo: 0,
-      currentTotal:5,
+      classify: "",
+      classifyNames: [
+        "土地补偿标准",
+        "房屋补偿标准",
+        "青苗补偿标准",
+        "地面附着物拆迁标准",
+        "专项设置标准",
+        "相关政策文件及标准"
+      ],
+      currentType: "",
+      currentTotal: 5,
       loading1: false,
       loading2: false,
       updateFileId: 0 // 待更新文件id
@@ -105,7 +120,7 @@ export default {
     showDialog: {
       handler(newVal) {
         this.visible = newVal;
-        newVal && this.getTrees();
+        // newVal && this.getArea();
       },
       immediate: true
     }
@@ -113,10 +128,19 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    async getTrees() {
-      this.loading1 = true;
-      this.folders = await GetQuotaTree({ ProjectNo: this.projectNo });
-      this.loading1 = false;
+    async getArea() {
+      const res = await GetQuotas({
+        ProjectNo: this.projectNo,
+        Locationno: this.locationno
+      });
+      return res.map(item => ({
+        value: item.o_locationno,
+        label: item.o_locationdesc,
+        leaf: !item.o_haschild
+      }));
+    },
+    async getTypeList() {
+      await GetQuotaClassifyList();
     },
     async getList(currentPage = 1) {
       const { list, total } = await GetDocsByFolderId({
@@ -167,17 +191,35 @@ export default {
 
 <style lang="scss" scoped>
 .box {
-  display: flex;
   width: 100%;
   min-height: 600px;
-  justify-content: space-between;
-  .tree {
-    width: 400px;
-    height: 550px;
+  .box-left {
+    position: relative;
+    background-color: rgba($primary, 0.5);
+  }
+  .box-left::after {
+    content: "\e6dc";
+    font-family: element-icons;
+    position: absolute;
+    top: 45%;
+    right: -40px;
+    font-size: 36px;
+  }
+  .el-cascader {
+    width: 300px;
+  }
+  .el-collapse {
+    width: 300px;
+    height: 500px;
     overflow: auto;
+    .typeList:hover,
+    .typeList.active {
+      background-color: $sub;
+    }
   }
   .datalist {
-    width: 950px;
+    max-width: 950px;
+    flex-grow: 1;
     .opreation {
     }
   }

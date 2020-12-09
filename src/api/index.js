@@ -223,10 +223,91 @@ export function DelDoc(data) {
     })
 }
 
-// 删除文件 GetQuotaTree
+// 获取定额树结构 GetQuotaTree
 export function GetQuotaTree(data) {
     return request({
         url: `${baseReflect}GetQuotaTree`,
+        method: 'post',
+        data
+    })
+}
+
+// 获取定额设置行政编码 GetQuotas
+export function GetQuotas(data) {
+    return request({
+        url: `${baseReflect}GetQuotas`,
+        method: 'post',
+        data
+    })
+}
+
+// 获取相关类别的补偿标准列表 GetQuotaClassifyList
+export function GetQuotaClassifyList(data) {
+    return request({
+        url: `${baseReflect}GetQuotaClassifyList`,
+        method: 'post',
+        data
+    })
+}
+
+// 添加补偿标准列表中数据项 AddQuota
+export function AddQuota(data) {
+    return request({
+        url: `${baseReflect}AddQuota`,
+        method: 'post',
+        data
+    })
+}
+
+// 更改补偿标准列表中数据项 EditQuota
+export function EditQuota(data) {
+    return request({
+        url: `${baseReflect}EditQuota`,
+        method: 'post',
+        data
+    })
+}
+
+// 删除补偿标准列表中数据 DeleteQuota
+export function DeleteQuota(data) {
+    return request({
+        url: `${baseReflect}DeleteQuota`,
+        method: 'post',
+        data
+    })
+}
+
+// 获取定额标准详细条目信息列表 GetQuotaItemList
+export function GetQuotaItemList(data) {
+    return request({
+        url: `${baseReflect}GetQuotaItemList`,
+        method: 'post',
+        data
+    })
+}
+
+// 添加定额标准详细条目信息 AddQuotaItem
+export function AddQuotaItem(data) {
+    return request({
+        url: `${baseReflect}AddQuotaItem`,
+        method: 'post',
+        data
+    })
+}
+
+// 更改定额标准详细条目信息 EditQuotaItem
+export function EditQuotaItem(data) {
+    return request({
+        url: `${baseReflect}EditQuotaItem`,
+        method: 'post',
+        data
+    })
+}
+
+// 删除定额标准详细条目 DeleteQuotaItem
+export function DeleteQuotaItem(data) {
+    return request({
+        url: `${baseReflect}DeleteQuotaItem`,
         method: 'post',
         data
     })
