@@ -3,18 +3,12 @@
 		<div class="element_main">
 			<div class="reyuan_form">
 				<el-form label-position="top"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-					<el-form-item label="项目:">
+					<el-form-item label="项目名称:">
 						  <el-cascader v-model="project1" filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
 						<!-- <el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input> -->
 					</el-form-item>
-					<el-form-item label="单位:" >
-						<el-input v-model="ruleForm.Unit" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-					<el-form-item label="数量:" >
-						<el-input v-model="ruleForm.AttrNum" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-					<el-form-item label="备注:" >
-						<el-input type="textarea"  :rows="5" v-model="ruleForm.Remarks" :disabled="dialogType=='look'?true:false"></el-input>
+					<el-form-item label="内容:" >
+						<el-input type="textarea"  :rows="5" v-model="ruleForm.Content" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					
 				</el-form>
@@ -46,9 +40,7 @@
 				ruleForm: {
 					VirtualitemName: '',
 					VirtualitemDesc: '',
-					Unit: '',
-					AttrNum: '',
-					Remarks: '',
+					Content: '',
 				},
 				project1:'',
 				postionArry:[],
@@ -110,8 +102,14 @@
 					BaseType: this.BaseType,
 				};
 				GetJBQKDCBItems(data).then((res) => {	  
-					// var newData=res;
-					var newData=this.setList(res,this.dialogTable);
+					var newRes=[];
+					for(var i in res){
+						if(res[i].label=='防洪设施调查'||res[i].label=='其他调查'){
+							newRes.push(res[i])
+						}
+					}
+					console.log(newRes)
+					var newData=this.setList(newRes,this.dialogTable);
 					this.postionArry=newData;
 					
 				})

@@ -3,9 +3,8 @@
 		<div class="element_main">
 			<div class="reyuan_form">
 				<el-form label-position="top"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-					<el-form-item label="项目名称:">
-						  <el-cascader filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
-						<!-- <el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input> -->
+					<el-form-item label="项目:">
+						  <el-cascader v-model="project1" filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
 					</el-form-item>
 					<el-form-item label="指标:" >
 						<el-input v-model="ruleForm.Target" :disabled="dialogType=='look'?true:false"></el-input>
@@ -43,10 +42,10 @@
 				ruleForm: {
 					VirtualitemName: '',
 					VirtualitemDesc: '',
-					Unit: '',
-					AttrNum: '',
+					Target:'',
 					Remarks: '',
 				},
+				project1:'',
 				postionArry:[],
 				submitLoad: false,
 				disabled: false,
@@ -73,18 +72,29 @@
 			},
 			deep: true //
 		},
+		activated() {
+			
+		},
 		components: {},
-		props: ['dialogType', 'dialogForm'],
+		props: ['dialogType', 'dialogForm','dialogTable'],
 		mounted: function() {
-			console.log(this.KeyNo);
+			this.GetJBQKDCBItemsInit();//项目层级化
+			console.log(this.dialogForm);
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
-				this.disabled = true;
+				this.ruleForm=this.dialogForm;
+				this.project1=this.dialogForm.value;
+				if(this.dialogType == 'look'){
+					this.disabled = true;
+				}
+				
 			}
-            this.GetJBQKDCBItemsInit();
+            
 		},
 
 		methods: {
+			
 			postionChange(data){
+				console.log(data)
 				var itemData=this.$refs["cascaderAddr"].getCheckedNodes();
 				this.ruleForm.VirtualitemDesc=itemData[0].label
 				this.ruleForm.VirtualitemName=itemData[0].value;
@@ -95,40 +105,50 @@
 					BaseType: this.BaseType,
 				};
 				GetJBQKDCBItems(data).then((res) => {	  
-					var newData=this.setList(res);
-					console.log(newData);
+					// var newData=res;
+					var newData=this.setList(res,this.dialogTable);
 					this.postionArry=newData;
-						console.log(res)
+					
 				})
 				.catch((error) => {
 					this.postionArry = [];
 					console.log(error)
 				})
 			},
-			setList(res){
-				for(var i in res){
-					var data=res[i];
-					 if(data.children.length!=0){
-						 this.setList(data.children) //自己调用自己
-					}else{
-						data.children=null;
-					 }
-				}
-				return res
+			setList(newData,oldData){
+						for(var j in oldData){
+							if(oldData[j]&&oldData[j].children&&oldData[j].children.length!=0){	
+								this.setList(newData[j].children,oldData[j].children);
+							}
+							else{
+								if(newData[j].SerialNumber==oldData[j].SerialNumber&&oldData[j].ClassName=='singleitem'){
+									newData[j].disabled=true;
+								}else{
+									newData[j].disabled=false;
+								}
+							}
+						}
+					return newData;
+				  // console.log(newData)
 			},
 			submitForm(formName) { //表单提交按钮
 				var self = this;
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						this.submitLoad=true;
-						var data = {
-							id: self.KeyNo,
-							BaseType: self.BaseType,
-							JsonStr:JSON.stringify(self.ruleForm)   
-						};
+						
 						if (self.dialogType == 'edit') {
+							var data = {
+								id: self.dialogForm.KeyNo,
+								JsonStr:JSON.stringify(self.ruleForm)   
+							};
 							var url = UpdateBaseTablesListAttrs;
 						} else {
+							var data = {
+								id: self.KeyNo,
+								BaseType: self.BaseType,
+								JsonStr:JSON.stringify(self.ruleForm)   
+							};
 							var url = AddBaseTablesListAttrs;
 						}
 						url(data).then((res) => {

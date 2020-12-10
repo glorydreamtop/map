@@ -1,6 +1,5 @@
 <template>
 	<div id="element_add">
-		<!--员工弹出框-->
 		<div class="element_main">
 			<div class="reyuan_form">
 				<el-collapse v-model="activeFormIndex">
@@ -18,7 +17,7 @@
 								<span>---</span>
 								<el-input v-model="ruleForm.AltitudeEnd" :disabled="dialogType=='look'?true:false" class="input-90"></el-input>
 							</el-form-item>
-							<el-form-item label="区县:" >
+							<el-form-item label="区县:">
 								<el-select v-model="ruleForm.County" filterable :disabled="disabled" placeholder="请选择区县" @change="change_county"
 								 class="input-200">
 									<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in countyData">
@@ -26,7 +25,7 @@
 								</el-select>
 							</el-form-item>
 
-							<el-form-item label="城市集镇:" >
+							<el-form-item label="城市集镇:">
 								<el-select v-model="ruleForm.CityTownName" filterable :disabled="disabled" placeholder="请选择区县" @change="change_town"
 								 class="input-200">
 									<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
@@ -34,10 +33,10 @@
 								</el-select>
 
 							</el-form-item>
-							<el-form-item label="隶属关系:" >
+							<el-form-item label="隶属关系:">
 								<el-input v-model="ruleForm.Affiliation" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 							</el-form-item>
-							<el-form-item label="等级:" >
+							<el-form-item label="等级:">
 								<el-input v-model="ruleForm.Grade" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 							</el-form-item>
 							<el-form-item label="其他:">
@@ -74,50 +73,57 @@
 								</div>
 							</div>
 						</el-form>
-                        <div class="dialog_foot margin-top-l" v-show="dialogType!='look'&&!disabled">
-                        	<span class="btn_foot">
-                        		<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
-                        	</span>
-                        </div>
+						<div class="dialog_foot margin-top-l" v-show="dialogType!='look'&&!disabled">
+							<span class="btn_foot">
+								<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
+							</span>
+						</div>
 					</el-collapse-item>
-					<el-collapse-item title="设施调查表" name="2">
+					<el-collapse-item title="基础设施调查表" name="2">
 						<div class="formeBody">
-							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m">
-								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="name" label="项目名称" width="180" align="center"></el-table-column>
-								<el-table-column prop="unit" label="单位" width="130" align="center"></el-table-column>
-								<el-table-column prop="length" label="数量" width="130" align="center"></el-table-column>
-								<el-table-column prop="address" label="备注" align="center"></el-table-column>
-
+							<el-button size="mini" @click="addTableItem(1)" icon="el-icon-plus"></el-button>
+							<el-button title="修改" @click="editTableItem(1)" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delTableItem(1)" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" @row-click="rowClick"
+							 :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value">
+								<el-table-column prop="value" label="编号" width="150" align="center"></el-table-column>
+								<el-table-column prop="label" label="项目名称" width="180" align="center"></el-table-column>
+								<el-table-column prop="Unit" label="单位" width="130" align="center"></el-table-column>
+								<el-table-column prop="AttrNum" label="数量" align="center"></el-table-column>
+								<!-- <el-table-column prop="Remarks" label="备注" align="center"></el-table-column> -->
 							</el-table>
 						</div>
 					</el-collapse-item>
 					<el-collapse-item title="防洪(其他)设施调查表" name="3">
 						<div class="formeBody">
-							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m">
-								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="name" label="项目名称" width="180" align="center"></el-table-column>
-								<el-table-column prop="unit" label="内容" width="130" align="center"></el-table-column>
-								<!-- <el-table-column prop="address" label="备注" align="center"></el-table-column> -->
-
+							<el-button size="mini" @click="addTableItem(2)" icon="el-icon-plus"></el-button>
+							<el-button title="修改" @click="editTableItem(2)" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delTableItem(2)" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableItemData_else" highlight-current-row border style="width: 100%" @row-click="rowClick"
+							 class="margin-top-m" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value">
+								<el-table-column prop="value" label="编号" width="150" align="center"></el-table-column>
+								<el-table-column prop="label" label="项目名称" width="180" align="center"></el-table-column>
+								<el-table-column prop="Content" label="内容" align="center"></el-table-column>
 							</el-table>
 						</div>
 					</el-collapse-item>
-					
+
 				</el-collapse>
 
 			</div>
 		</div>
+		<el-dialog :title="flyTitle" :append-to-body="true" @close="closeDialog" :visible.sync="showFlag" v-model="showFlag"
+		 class="newStyleDialog " center :custom-class="`cityTownAdd_dialog${flyIndex}`">
+			<component :is="`itemAdd${flyIndex}`" :dialog-type="flyType" v-on:showStudes="showStudescode" :dialog-form="flyForm"
+			 v-if="showFlag"></component>
+
+		</el-dialog>
 	</div>
 </template>
 
 <script>
+	import itemAdd1 from '@/components/jbqkTablePage/cityTownPage/cityTown_item_add'
+	import itemAdd2 from '@/components/jbqkTablePage/cityTownPage/cityTown_item2_add'
 	import {
 		mapGetters
 	} from 'vuex'
@@ -127,12 +133,17 @@
 		GetBaseTablesListAttrs,
 		AddBaseTablesBaseAttrs,
 		GetJBQKDCBItems,
-		GetSerialNumber
+		GetSerialNumber,
+		DeleteBaseTablesAttr
 	} from '@/api'
 	export default {
 		name: 'jbqk_table1_add',
+		components: {
+			itemAdd2,
+			itemAdd1
+		},
 		computed: {
-			...mapGetters(['projectNo','BaseType'])
+			...mapGetters(['projectNo', 'BaseType', 'KeyNo'])
 		},
 		data: function() {
 			return {
@@ -141,6 +152,7 @@
 				townData: [], //城镇集合
 				ruleForm: {},
 				tableItemData: [],
+				tableItemData_else: [],
 				peopleItem: [{
 						title: '总人口规模',
 						params: ['PopulationUnit', 'PopulationTotal', 'PopulationLandRange', 'PopulationRemarks']
@@ -223,6 +235,7 @@
 				tableData: [],
 				submitLoad: false,
 				disabled: false,
+				showFlag: false,
 				rules: { //约定的验证规则
 					stationName: [{
 						required: true,
@@ -231,6 +244,10 @@
 					}, ],
 
 				},
+				flyType: '',
+				flyForm: '',
+				flyTitle: '',
+				flyIndex: '',
 
 			}
 		},
@@ -241,7 +258,7 @@
 			},
 			deep: true //
 		},
-		components: {},
+
 		props: ['dialogType', 'dialogForm'],
 		mounted: function() {
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
@@ -249,7 +266,7 @@
 					this.disabled = true;
 				}
 				this.ruleForm = this.dialogForm;
-				this.KeyNo_new = this.dialogForm.KeyNo;
+				this.$store.commit('jbqk/set_KeyNo', this.dialogForm.KeyNo)
 				this.$store.commit('jbqk/set_KeyNo', this.dialogForm.KeyNo)
 				this.GetLocationInit(0, 'countyData'); //获取区县
 				this.GetLocationInit(this.dialogForm.County, 'townData'); //获取乡镇
@@ -261,6 +278,81 @@
 		},
 
 		methods: {
+			addTableItem(index) { //添加
+				var title = ['添加设施调查表', '添加防洪其他调查表'];
+				this.flyIndex = index;
+				this.flyTitle = title[index - 1];
+				this.showFlag = true;
+				this.flyType = 'add';
+				this.flyForm = '';
+			},
+			rowClick(row, column) { //单击表格一行
+				console.log(row, column);
+				if (row.ClassName == "singleitem") {
+					this.flyForm = row;
+
+				}
+			},
+			editTableItem(index) { //修改
+				var title = ['修改设施调查表', '修改防洪其他调查表'];
+				if (this.flyForm) {
+					this.flyIndex = index;
+					this.showFlag = true;
+					this.flyTitle = title[index - 1];
+					this.flyType = 'edit';
+				} else {
+					this.$message({
+						message: '请选择要编辑的数据项',
+						type: 'error',
+						center: true
+					})
+				}
+			},
+			
+			delTableItem(index) { //删除
+				if (this.flyForm) {
+					var self = this;
+					this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						center: true,
+						type: 'warning'
+					}).then(() => {
+						DeleteBaseTablesAttr({
+							id: this.flyForm.KeyNo
+						}).then((res) => {
+							console.log(res)
+							self.$message({
+								message: '操作成功',
+								type: 'success',
+								center: true
+							});
+							self.GetJBQKDCBItemInit();
+
+						}).catch((res) => {
+							console.log(res);
+						})
+
+
+					}).catch((res) => {
+
+					})
+				} else {
+					this.$message({
+						message: '请选择要删除的数据项',
+						type: 'error',
+						center: true
+					})
+				}
+			},
+			closeDialog() { //关闭弹出框
+				this.GetJBQKDCBItemInit();
+			},
+			showStudescode(data) { //监听弹出框是关还是闭
+				this.showFlag = data;
+				this.GetJBQKDCBItemInit();
+
+			},
 			GetLocationInit(id, type) {
 				var data = {
 					Locationno: id,
@@ -274,21 +366,32 @@
 						console.log(error)
 					})
 			},
-			GetJBQKDCBItemInit() {//获取数据项
-			    console.log(this.KeyNo)
-				var data = {id: this.KeyNo};
+			GetJBQKDCBItemInit() { //获取数据项
+				console.log(this.KeyNo)
+				var data = {
+					id: this.KeyNo
+				};
+				var elseData = [];
+				var newData = [];
 				GetBaseTablesListAttrs(data).then((res) => {
-						 this.tableItemData =res;
-						 console.log(res, this.tableItemData, '获取数据项')
-				})
-				.catch((error) => {
-					this.tableItemData = [];
-					console.log(error)
-				})
-			},
-			addTableItem() {
+						for (var i in res) {
+							if (res[i].label == "防洪设施调查" || res[i].label == "其他调查") {
+								elseData.push(res[i]);
 
+							} else {
+								newData.push(res[i]);
+							}
+						}
+						this.tableItemData = newData;
+						this.tableItemData_else = elseData;
+						console.log(elseData, newData, '获取数据项')
+					})
+					.catch((error) => {
+						this.tableItemData = [];
+						console.log(error)
+					})
 			},
+
 			change_county(data) { //选中区县,获取乡镇
 				for (var i = 0; i < this.countyData.length; i++) {
 					if (data == this.countyData[i].o_locationno) {
@@ -308,7 +411,7 @@
 				this.$refs[formName].validate((valid) => {
 					var self = this;
 					if (valid) {
-						this.submitLoad=true;
+						this.submitLoad = true;
 						if (self.dialogType == 'add') { //添加时候先获取编号
 							var url = AddBaseTablesBaseAttrs;
 							var data = {
@@ -320,14 +423,14 @@
 						} else {
 							var url = UpdateBaseTablesBaseAttrs;
 							var data = {
-								id: self.KeyNo_new,
+								id: self.KeyNo,
 								JsonStr: JSON.stringify(self.ruleForm)
 							};
 						}
 						url(data).then((res) => {
-							this.submitLoad=false;
+							this.submitLoad = false;
 							if (self.dialogType == 'add') {
-								this.KeyNo_new = res[0].Keyno;
+								this.KeyNo = res[0].Keyno;
 								this.$store.commit('jbqk/set_KeyNo', res[0].Keyno)
 							}
 							this.disabled = true;
@@ -338,11 +441,11 @@
 							})
 						}).catch((res) => {
 							console.log(res)
-							this.submitLoad=false;
-				
+							this.submitLoad = false;
+
 						})
 					} else {
-				
+
 						// self.loading = false;
 						return false;
 					}
