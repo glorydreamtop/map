@@ -1,6 +1,10 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+const TerserPlugin = require('terser-webpack-plugin');
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
+const CompressionPlugin = require('compression-webpack-plugin')
 
 function resolve(dir) {
     return path.join(__dirname, dir)
@@ -42,23 +46,9 @@ module.exports = {
         // provide the app's title in webpack's name field, so that
         // it can be accessed in index.html to inject the correct title.
         name: name,
-        optimization: {
-            chunkIds: 'natural'
-        },
-        module: {
-            rules: [{
-                test: /\.js$/,
-                include: '/src/',
-                use: [{
-                    loader: 'thread-loader',
-                    options: {
-                        workers: 3
-                    }
-                }]
-            }]
-        }
     },
     chainWebpack(config) {
+
         // it can improve the speed of the first screen, it is recommended to turn on preload
         // it can improve the speed of the first screen, it is recommended to turn on preload
         config.plugin('preload').tap(() => [{
@@ -88,19 +78,24 @@ module.exports = {
                         vendors: {
                             name: 'chunk-libs',
                             test: /[\\/]node_modules[\\/]/,
-                            priority: 10,
+                            priority: 5,
                             chunks: 'initial', // only package third parties that are initially dependent
                         },
                         elementUI: {
                             name: 'chunk-elementUI', // split elementUI into a single package
                             priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
                             test: /[\\/]node_modules[\\/]_?element-ui(.*)/, // in order to adapt to cnpm
-                        }
+                        },
                     },
                 })
                 // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
             config.optimization.runtimeChunk('single')
-                // config.plugin('progressBar').use(require('progress-bar-webpack-plugin')).end()
+            config.optimization.minimizer('terser').tap((args) => {
+                args[0].terserOptions.compress.drop_console = true
+                return args
+            })
+            config.module.rule('images').use('url-loader').loader('url-loader').tap(opt => Object.assign(opt, { limit: 10000 }))
+            config.plugin('hardsource').use(require('hard-source-webpack-plugin')).end()
             config.plugin('analyzer').use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin).end()
         })
     },
