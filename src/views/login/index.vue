@@ -78,7 +78,10 @@ export default {
         this.loading = true;
         await this.$store.dispatch("user/login", this.loginForm);
         this.loading = false;
-        evnetBus.$emit("selectStage");
+        let timer = setTimeout(()=>{
+          evnetBus.$emit("selectStage");
+          timer = null;
+        },1000)
       } catch (error) {
         this.loading = false;
         this.$message.error("用户名/密码 错误");

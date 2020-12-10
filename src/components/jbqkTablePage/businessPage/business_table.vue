@@ -28,7 +28,7 @@
 				</el-table-column>
 			</el-table>
 				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
-				  :page-size="formeData.PageSize" llayout="prev, pager, next"
+				  :page-size="formeData.PageSize"
 				 :total="total">
 				</el-pagination>
 

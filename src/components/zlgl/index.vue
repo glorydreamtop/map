@@ -64,7 +64,6 @@
           </el-table>
           <el-pagination
             class="margin-top-l"
-            layout="prev, pager, next,total"
             :total="currentTotal"
             small
             :page-size="5"
