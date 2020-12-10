@@ -79,7 +79,7 @@
 							</span>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="基础设施调查表" name="2">
+					<el-collapse-item title="基础设施调查表" name="2" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(1)" icon="el-icon-plus"></el-button>
 							<el-button title="修改" @click="editTableItem(1)" size="mini" icon="el-icon-edit" plain></el-button>
@@ -94,7 +94,7 @@
 							</el-table>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="防洪(其他)设施调查表" name="3">
+					<el-collapse-item title="防洪(其他)设施调查表" name="3" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(2)" icon="el-icon-plus"></el-button>
 							<el-button title="修改" @click="editTableItem(2)" size="mini" icon="el-icon-edit" plain></el-button>
@@ -114,7 +114,7 @@
 		</div>
 		<el-dialog :title="flyTitle" :append-to-body="true" @close="closeDialog" :visible.sync="showFlag" v-model="showFlag"
 		 class="newStyleDialog " center :custom-class="`cityTownAdd_dialog${flyIndex}`">
-			<component :is="`itemAdd${flyIndex}`" :dialog-type="flyType" v-on:showStudes="showStudescode" :dialog-form="flyForm"
+			<component :is="`itemAdd${flyIndex}`" :dialog-type="flyType" :dialog-table="flyIndex==1?tableItemData:tableItemData_else" v-on:showStudes="showStudescode" :dialog-form="flyForm"
 			 v-if="showFlag"></component>
 
 		</el-dialog>
