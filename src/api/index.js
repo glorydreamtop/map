@@ -312,3 +312,11 @@ export function DeleteQuotaItem(data) {
         data
     })
 }
+//获取数据字典树结构 GetDict
+export function GetDict(data) {
+    return request({
+        url: `${baseReflect}GetDict`,
+        method: 'post',
+        data
+    })
+}

@@ -56,7 +56,7 @@
 			
 				<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
 				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog">
-					<businessItemAdd :dialog-type="fly2_dialogType" v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></businessItemAdd>
+					<businessItemAdd :dialog-type="fly2_dialogType"  :dialog-table="tableItemData"  v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></businessItemAdd>
 				</el-dialog>
 			</div>
 			

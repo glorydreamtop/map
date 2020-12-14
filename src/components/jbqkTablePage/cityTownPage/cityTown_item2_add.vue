@@ -76,7 +76,7 @@
 		props: ['dialogType', 'dialogForm','dialogTable'],
 		mounted: function() {
 			this.GetJBQKDCBItemsInit();//项目层级化
-			console.log(this.dialogForm);
+			console.log(this.dialogTable);
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.ruleForm=this.dialogForm;
 				this.project1=this.dialogForm.value;
@@ -108,8 +108,9 @@
 							newRes.push(res[i])
 						}
 					}
-					console.log(newRes)
+					
 					var newData=this.setList(newRes,this.dialogTable);
+					console.log(newData)
 					this.postionArry=newData;
 					
 				})
@@ -119,20 +120,26 @@
 				})
 			},
 			setList(newData,oldData){
-						for(var j in oldData){
-							if(oldData[j]&&oldData[j].children&&oldData[j].children.length!=0){	
-								this.setList(newData[j].children,oldData[j].children);
-							}
-							else{
-								if(newData[j].SerialNumber==oldData[j].SerialNumber&&oldData[j].ClassName=='singleitem'){
-									newData[j].disabled=true;
-								}else{
-									newData[j].disabled=false;
+						for(var i in newData){
+							for(var j in oldData){
+								if(oldData[j]){
+									if(oldData[j]&&oldData[j].children&&oldData[j].children.length!=0){
+										this.setList(newData[i].children,oldData[j].children);
+									}
+									else{
+										if(newData[i].label==oldData[j].label&&oldData[j].ClassName=='singleitem'){
+											// console.log(newData[i].label,oldData[j].label,'相同')
+											newData[i].disabled=true;
+										}
+									}
 								}
 							}
+							
+							
 						}
+						 // console.log(newData)
 					return newData;
-				  // console.log(newData)
+				 
 			},
 			submitForm(formName) { //表单提交按钮
 				var self = this;

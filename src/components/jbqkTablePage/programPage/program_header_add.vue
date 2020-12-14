@@ -43,7 +43,7 @@
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m"  :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
 								<el-table-column prop="value" label="项目编码" align="center"></el-table-column>
-								<el-table-column prop="label" label="项目名称" width="150" align="center"></el-table-column>
+								<el-table-column prop="label" label="项目" width="150" align="center"></el-table-column>
 								<el-table-column prop="Target" label="指标" width="80" align="center"></el-table-column>
 								<el-table-column prop="Remarks" label="备注" align="center"></el-table-column>
 							</el-table>
@@ -55,7 +55,7 @@
 			
 				<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
 				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog">
-					<programHeaderAdd :dialog-type="fly2_dialogType" v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></programHeaderAdd>
+					<programHeaderAdd :dialog-type="fly2_dialogType"  :dialog-table="tableItemData"  v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></programHeaderAdd>
 				</el-dialog>
 			</div>
 			

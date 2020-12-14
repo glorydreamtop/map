@@ -2,19 +2,24 @@
 	<el-dialog :visible.sync="visible" :close-on-press-escape="false" width="70vw" v-loading="loadingtable" title="字典设置"
 	 custom-class="dictionary_dialog" @close="$emit('update:showDialog', false)" center>
 		<el-row :gutter="20">
-			<el-col :xs="8" :sm="6" :md="6" :lg="5" :xl="4">
+			<el-col :xs="8" :sm="8" :md="7" :lg="6" :xl="5">
 				<div class="treeMain">
 					<div class="header_table_title">
 						<el-button size="mini" @click="addClick('tree')" icon="el-icon-plus"></el-button>
 						<el-button title="修改" @click="editClick('tree')" size="mini" icon="el-icon-edit" plain></el-button>
 						<el-button title="删除" @click="delClick('tree')" size="mini" icon="el-icon-delete" plain></el-button>
 					</div>
+					<div style="margin-top: 15px;">
+					  <el-input placeholder="请输入内容" v-model="lookFor" class="input-with-select" clearable  @keyup.enter.native="lookFor_tree">
+					    <el-button slot="append" icon="el-icon-search" @click="lookFor_tree"></el-button>
+					  </el-input>
+					</div>
 					<div class="body_tree_mian">
-						<el-tree :data="treeData" :props="defaultProps" @node-click="handleNodeClick" default-expand-all></el-tree>
+						<el-tree :data="treeData" node-key='id'  ref="tree" :filter-node-method="filterNode" :props="defaultProps" @node-click="handleNodeClick" default-expand-all></el-tree>
 					</div>
 				</div>
 			</el-col>
-			<el-col :xs="16" :sm="18" :md="18" :lg="19" :xl="20">
+			<el-col :xs="16" :sm="16" :md="17" :lg="18" :xl="19">
 				<div class="tableMain">
 					<div class="header_table_title">
 						<el-button size="mini" @click="addClick('table')" icon="el-icon-plus"></el-button>
@@ -48,13 +53,8 @@
 </template>
 
 <script>
-	import {
-		mapGetters
-	} from 'vuex';
-	import {
-		GetAllBaseTablesBaseAttrs,
-		DeleteBaseTable
-	} from '@/api';
+	import {mapGetters	} from 'vuex';
+	import {GetDict} from '@/api';
 	import treeAdd from '@/components/dictionaryPage/dictionary_tree_add';
 	import tableAdd from '@/components/dictionaryPage/dictionary_table_add';
 	export default {
@@ -69,6 +69,7 @@
 		},
 		data() {
 			return {
+				lookFor:'',
 				tableData: [],
 				treeData: [],
 				dialogTitle: '', //弹出框标题
@@ -86,59 +87,54 @@
 				tableLoad: false,
 				defaultProps: {
 					children: 'children',
-					label: 'label'
+					label: 'uname'
 				}
 			};
 		},
 		created() {},
 		mounted() {
-			this.tableInit(); //表格初始化
+			// this.tableInit(); //表格初始化
 			this.treeInit(); //树形初始化
 		},
 		methods: {
+			lookFor_tree(){
+				console.log(111);
+				 this.$refs.tree.filter(this.lookFor);
+			},
+			filterNode(value, data,node) { //树形过滤筛选
+			  if (!value) {
+			    return true
+			  }
+			  let level = node.level
+			  let _array = [] //这里使用数组存储 只是为了存储值。
+			  this.getReturnNode(node, _array, value)
+			  let result = false
+			  _array.forEach(item => {
+			    result = result || item
+			  })
+			  return result
+			},
+			getReturnNode(node, _array, value) {
+			  let isPass = node.data && node.data.uname && node.data.uname.indexOf(value) !== -1
+			  isPass ? _array.push(isPass) : ''
+			  this.index++
+			  // console.log(this.index)
+			  if (!isPass && node.level != 1 && node.parent) {
+			    this.getReturnNode(node.parent, _array, value)
+			  }
+			},
 			treeInit() {
-				this.treeData = [{
-						label: '一级 1',
-						children: [{
-							label: '二级 1-1',
-							children: [{
-								label: '三级 1-1-1'
-							}]
-						}]
-					},
-					{
-						label: '一级 2',
-						children: [{
-								label: '二级 2-1',
-								children: [{
-									label: '三级 2-1-1'
-								}]
-							},
-							{
-								label: '二级 2-2',
-								children: [{
-									label: '三级 2-2-1'
-								}]
-							}
-						]
-					},
-					{
-						label: '一级 3',
-						children: [{
-								label: '二级 3-1',
-								children: [{
-									label: '三级 3-1-1'
-								}]
-							},
-							{
-								label: '二级 3-2',
-								children: [{
-									label: '三级 3-2-1'
-								}]
-							}
-						]
-					}
-				];
+				GetDict().then((res) => {
+					console.log(res)
+					// this.tableLoad=false;
+					this.treeData = res;
+					// this.total = res.total;
+				})
+				.catch((error) => {
+					this.tableData = [];
+					this.tableLoad=false;
+					console.log(error)
+				})
 			},
 			tableInit() {
 				var data = {
@@ -239,15 +235,22 @@
 <style scoped="scoped">
 	.tableMain {
 		width: 100%;
-		height: 50vh;
+		/* height: 50vh; */
 	}
 
 	.body_tree_mian {
 		margin-top: 1vh;
-		border: 1px solid;
-		height: 50vh;
+		/* border: 1px solid; */
+		height:45vh;
+		overflow-y: auto;
 	}
-
+    .treeMain,.tableMain{
+		    border: 1px solid;
+		    padding: 1vh 1vw 0vh;
+			height: 62vh;
+			overflow-y: auto;
+		
+	}
 	.body_table_mian {
 		margin-top: 1vh;
 	}
