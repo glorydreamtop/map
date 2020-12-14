@@ -184,12 +184,14 @@ export default {
   min-height: 600px;
   justify-content: space-between;
   .tree {
-    width: 400px;
+    width: 380px;
     height: 550px;
     overflow: auto;
+    background-color: rgba($primary, 0.5);
   }
   .datalist {
-    width: 950px;
+    flex-grow: 1;
+    margin-left: 20px;
     .el-pagination{
       margin: 20px auto;
     }
