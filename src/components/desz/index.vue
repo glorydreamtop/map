@@ -97,7 +97,7 @@
                   icon="el-icon-delete"
                   type="danger"
                   plain
-                  @click="delItem(scope.row)"
+                  @click="delItem(scope.row.KeyNo)"
                 ></el-button>
               </template>
             </el-table-column>
@@ -287,6 +287,7 @@ export default {
       this.currentType = parseInt(e.target.dataset.no);
       this.updateTable(1);
     },
+    // 添加还是修改
     async postItem(add, item) {
       if (this.currentType === 0) {
         this.$message.warning("请先选择一个具体的二级分类");

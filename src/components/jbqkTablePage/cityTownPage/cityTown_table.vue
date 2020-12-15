@@ -87,9 +87,9 @@
     <div>
       <el-dialog
         :title="dialogTitle"
-        :append-to-body="true"
         @close="closeDialog"
         :visible.sync="showFlag"
+        :append-to-body="true"
         v-model="showFlag"
         class="newStyleDialog"
         custom-class="jbqk_add_table1_dialog"
