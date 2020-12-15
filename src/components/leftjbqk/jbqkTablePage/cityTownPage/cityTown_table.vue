@@ -108,7 +108,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { GetAllBaseTablesBaseAttrs, DeleteBaseTable } from "@/api";
-import cityTownHeaderAdd from "@/components/jbqkTablePage/cityTownPage/cityTown_header_add"; //城市集镇基本情况调查表
+import cityTownHeaderAdd from "./cityTown_header_add"; //城市集镇基本情况调查表
 export default {
   name: "jbqlTable_home",
   props: {},

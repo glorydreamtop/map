@@ -122,8 +122,8 @@
 </template>
 
 <script>
-	import itemAdd1 from '@/components/jbqkTablePage/cityTownPage/cityTown_item_add'
-	import itemAdd2 from '@/components/jbqkTablePage/cityTownPage/cityTown_item2_add'
+	import itemAdd1 from './cityTown_item_add'
+	import itemAdd2 from './cityTown_item2_add'
 	import {
 		mapGetters
 	} from 'vuex'

@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import jbqkTableHome1 from "@/components/jbqkTablePage/villagePage/village_table.vue"; //基本情况表农村-更多操作
-import jbqkTableHome2 from "@/components/jbqkTablePage/cityTownPage/cityTown_table.vue"; //基本情况表城市-更多操作
-import jbqkTableHome3 from "@/components/jbqkTablePage/programPage/program_table.vue"; //基本情况表专业项目-更多操作
-import jbqkTableHome4 from "@/components/jbqkTablePage/businessPage/business_table.vue"; //基本情况表企事业-更多操作
+import jbqkTableHome1 from "./jbqkTablePage/villagePage/village_table.vue"; //基本情况表农村-更多操作
+import jbqkTableHome2 from "./jbqkTablePage/cityTownPage/cityTown_table.vue"; //基本情况表城市-更多操作
+import jbqkTableHome3 from "./jbqkTablePage/programPage/program_table.vue"; //基本情况表专业项目-更多操作
+import jbqkTableHome4 from "./jbqkTablePage/businessPage/business_table.vue"; //基本情况表企事业-更多操作
 export default {
   name: "Leftjbqk",
   props: {},
