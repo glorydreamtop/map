@@ -352,7 +352,6 @@ export function GetDiAddDictItemct(data) {
         data
     })
 }
-
 // 修改数据字典详细条目信息 EditDictItem
 export function EditDictItem(data) {
     return request({
@@ -362,10 +361,27 @@ export function EditDictItem(data) {
     })
 }
 
+// 添加数据字典详细条目信息 AddDictItem
+export function AddDictItem(data) {
+    return request({
+        url: `${baseReflect}AddDictItem`,
+        method: 'post',
+        data
+    })
+}
+
 // 删除数据字典详细条目信息 DelDictItem
 export function DelDictItem(data) {
     return request({
         url: `${baseReflect}DelDictItem`,
+        method: 'post',
+        data
+    })
+}
+//获取数据字典右侧详细条目树结构 GetDictItems
+export function GetDictItems(data) {
+    return request({
+        url: `${baseReflect}GetDictItems`,
         method: 'post',
         data
     })
