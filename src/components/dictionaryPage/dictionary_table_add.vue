@@ -3,19 +3,19 @@
 		<div class="element_main">
 			<div class="reyuan_form">
 				<el-form label-position="top"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-					<el-form-item label="父节点名称:">
+					<el-form-item label="父节点名称:" v-if="dialogType=='tableadd'">
 						  <el-cascader placeholder="请选择父节点" v-model="project1" filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
 						<!-- <el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input> -->
 					</el-form-item>
 					<el-form-item label="子节点名称:" >
-						<el-input v-model="ruleForm.Unit" :disabled="dialogType=='look'?true:false"></el-input>
+						<el-input v-model="ruleForm.uname" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					<el-form-item label="定额单位:" >
-						<el-input v-model="ruleForm.Unit" :disabled="dialogType=='look'?true:false"></el-input>
+						<el-input v-model="ruleForm.unit" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					
 					<el-form-item label="定额备注:" >
-						<el-input type="textarea"  :rows="5" v-model="ruleForm.Remarks" :disabled="dialogType=='look'?true:false"></el-input>
+						<el-input type="textarea"  :rows="5" v-model="ruleForm.remarks" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					
 				</el-form>
@@ -33,9 +33,7 @@
 	import {
 		mapGetters
 	} from 'vuex'
-	import {
-		GetJBQKDCBItems,AddBaseTablesListAttrs,UpdateBaseTablesListAttrs
-	} from '@/api'
+	import { GetDict,AddDictItem,EditDictItem} from '@/api'
 	
 	export default {
 		name: 'jbqk_table1_add_two',
@@ -45,11 +43,10 @@
 		data: function() {
 			return {
 				ruleForm: {
-					VirtualitemName: '',
-					VirtualitemDesc: '',
-					Unit: '',
-					AttrNum: '',
-					Remarks: '',
+                    id:'',
+					uname: '',
+					unit: '',
+					remarks: '',
 				},
 				project1:'',
 				postionArry:[],
@@ -65,8 +62,8 @@
 				},
 				defaultProps: {
 				  children: 'children',
-				  label: 'label',
-				  
+				  label: 'uname',
+				  value:'id',
 				}
 
 			}
@@ -78,22 +75,24 @@
 			},
 			deep: true //
 		},
-		activated() {
+		created() {
 			
 		},
 		components: {},
-		props: ['dialogType', 'dialogForm','dialogTable'],
+		props: ['dialogType', 'dialogForm','dialogTable','dialogFormTree'],
 		mounted: function() {
-			this.GetJBQKDCBItemsInit();//项目层级化
-			console.log(this.dialogForm);
-			if (this.dialogType == 'edit' || this.dialogType == 'look') {
-				this.ruleForm=this.dialogForm;
-				this.project1=this.dialogForm.value;
-				if(this.dialogType == 'look'){
+            console.log(this.dialogForm,this.dialogType,'kan');
+			if (this.dialogType == 'tableedit' || this.dialogType == 'tablelook') {	
+				this.ruleForm=this.dialogForm;		
+				if(this.dialogType == 'tablelook'){
 					this.disabled = true;
-				}
-				
+				}	
+			}else{
+				 console.log(this.dialogFormTree,'add');
+				this.project1=this.dialogFormTree.id;
+				this.ruleForm.id=this.dialogFormTree.id;
 			}
+			this.GetDictInit();//项目层级化
             
 		},
 
@@ -102,17 +101,17 @@
 			postionChange(data){
 				console.log(data)
 				var itemData=this.$refs["cascaderAddr"].getCheckedNodes();
-				this.ruleForm.VirtualitemDesc=itemData[0].label
-				this.ruleForm.VirtualitemName=itemData[0].value;
+				this.ruleForm.id=itemData[0].value
 				console.log(itemData)//获得当前节点，
 			},
-			GetJBQKDCBItemsInit(){//项目级层初始化
+			GetDictInit(){//项目级层初始化
 				var data = {
 					BaseType: this.BaseType,
 				};
-				GetJBQKDCBItems(data).then((res) => {	  
-					// var newData=res;
-					var newData=this.setList(res,this.dialogTable);
+				GetDict(data).then((res) => {	
+					console.log(res);
+					var newData=res;
+					// var newData=this.setList(res,this.dialogTable);
 					this.postionArry=newData;
 					
 				})
@@ -121,41 +120,25 @@
 					console.log(error)
 				})
 			},
-			setList(newData,oldData){
-						for(var j in oldData){
-							if(oldData[j]&&oldData[j].children&&oldData[j].children.length!=0){	
-								this.setList(newData[j].children,oldData[j].children);
-							}
-							else{
-								if(newData[j].SerialNumber==oldData[j].SerialNumber&&oldData[j].ClassName=='singleitem'){
-									newData[j].disabled=true;
-								}else{
-									newData[j].disabled=false;
-								}
-							}
-						}
-					return newData;
-				  // console.log(newData)
-			},
+			
 			submitForm(formName) { //表单提交按钮
 				var self = this;
+				
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						this.submitLoad=true;
-						
-						if (self.dialogType == 'edit') {
+						if (self.dialogType == 'tableedit') {
 							var data = {
-								id: self.dialogForm.KeyNo,
+								id: self.ruleForm.id,
 								JsonStr:JSON.stringify(self.ruleForm)   
 							};
-							var url = UpdateBaseTablesListAttrs;
+							var url=EditDictItem;
 						} else {
 							var data = {
-								id: self.KeyNo,
-								BaseType: self.BaseType,
+								id:self.ruleForm.id,
 								JsonStr:JSON.stringify(self.ruleForm)   
 							};
-							var url = AddBaseTablesListAttrs;
+							var url=AddDictItem;
 						}
 						url(data).then((res) => {
 							this.submitLoad=false;
