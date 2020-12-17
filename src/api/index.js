@@ -386,3 +386,36 @@ export function GetDictItems(data) {
         data
     })
 }
+
+//获取农专项设施基础信息 GetNCZXSS_BASE
+export function GetNCZXSS_BASE(data) {
+    return request({
+        url: `${baseReflect}GetNCZXSS_BASE`,
+        method: 'post',
+        data
+    })
+}
+//添加农专项设施基础信息 AddNCZXSS_BASE
+export function AddNCZXSS_BASE(data) {
+    return request({
+        url: `${baseReflect}AddNCZXSS_BASE`,
+        method: 'post',
+        data
+    })
+}
+//修改农专项设施基础信息 EditNCZXSS_BASE
+export function EditNCZXSS_BASE(data) {
+    return request({
+        url: `${baseReflect}EditNCZXSS_BASE`,
+        method: 'post',
+        data
+    })
+}
+//删除农专项设施基础信息 DelNCZXSS_BASE
+export function DelNCZXSS_BASE(data) {
+    return request({
+        url: `${baseReflect}DelNCZXSS_BASE`,
+        method: 'post',
+        data
+    })
+}

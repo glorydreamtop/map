@@ -1,0 +1,13 @@
+[
+    { "title": "项目名称", "value": "XMMC" },
+    { "title": "权属单位", "value": "QSDW" },
+    { "title": "建成年月", "value": "JCNY" },
+    { "title": "规模", "value": "GM" },
+    { "title": "年产值", "value": "NCZ" },
+    { "title": "年利润", "value": "NLR" },
+    { "title": "税金", "value": "SJ" },
+    { "title": "高程分布", "value": "GCFB" },
+    { "title": "固资投资", "value": "GZTZ" },
+    { "title": "从业人员", "value": "CYRY" },
+    { "title": "其他", "value": "QT" }
+]

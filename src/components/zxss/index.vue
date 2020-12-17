@@ -9,13 +9,14 @@
       <span>个体工商户</span>
     </div>
     <el-dialog
+    custom-class="el-dialog"
       :title="dialogTitle"
       append-to-body
       @close="closeDialog"
       :visible.sync="showFlag"
     >
       <!-- 动态组件 -->
-      <component :is="dialogType" :dialog-type="dialogType"></component>
+      <component class="box" :is="dialogType" :dialog-type="dialogType"></component>
     </el-dialog>
   </div>
 </template>
@@ -39,7 +40,7 @@ export default {
   methods: {
     zxssTable(e) {
       let map = [
-        { title: "小型专项及农副业设置", name: "zx" },
+        { title: "小型专项及农副业设施", name: "zx" },
         { title: "个体工商户", name: "gt" },
       ];
       this.dialogTitle = `建设征地农村${map[e].title}调查`;
@@ -55,6 +56,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.box{
+  min-height: 40vh;
+}
 .item {
   [class*="icon"] {
     font-size: 36px;
