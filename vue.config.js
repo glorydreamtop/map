@@ -91,12 +91,12 @@ module.exports = {
                 // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
             config.optimization.runtimeChunk('single')
             config.optimization.minimizer('terser').tap((args) => {
-                args[0].terserOptions.compress.drop_console = true
-                return args
-            })
-            config.module.rule('images').use('url-loader').loader('url-loader').tap(opt => Object.assign(opt, { limit: 12000 ,esModule:false}))
+                    args[0].terserOptions.compress.drop_console = true
+                    return args
+                })
+                // config.module.rule('images').use('url-loader').loader('url-loader').tap(opt => Object.assign(opt, { limit: 12000 }))
             config.plugin('hardsource').use(require('hard-source-webpack-plugin')).end()
-            config.plugin('analyzer').use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin).end()
+                // config.plugin('analyzer').use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin).end()
         })
     },
     css: {

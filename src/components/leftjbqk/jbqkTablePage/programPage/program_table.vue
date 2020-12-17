@@ -49,7 +49,7 @@
 	import {
 		GetAllBaseTablesBaseAttrs,DeleteBaseTable
 	} from '@/api'
-	import programHeaderAdd from '@/components/jbqkTablePage/programPage/program_header_add' //城市集镇基本情况调查表
+	import programHeaderAdd from './program_header_add' //城市集镇基本情况调查表
 	export default {
 		name: "jbqlTable_home",
 		props: {},

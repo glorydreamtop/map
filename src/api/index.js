@@ -312,10 +312,109 @@ export function DeleteQuotaItem(data) {
         data
     })
 }
-//获取数据字典树结构 GetDict
+// 获取数据字典树结构 GetDict
 export function GetDict(data) {
     return request({
         url: `${baseReflect}GetDict`,
+        method: 'post',
+        data
+    })
+}
+// 添加数据字典项(左侧树节点) AddDict
+export function AddDict(data) {
+    return request({
+        url: `${baseReflect}AddDict`,
+        method: 'post',
+        data
+    })
+}
+// 更新数据字典项(左侧树节点) EditDict
+export function EditDict(data) {
+    return request({
+        url: `${baseReflect}EditDict`,
+        method: 'post',
+        data
+    })
+}
+// 删除数据字典项(数据字典中的删除都用这个接口) DelDict
+export function DelDict(data) {
+    return request({
+        url: `${baseReflect}DelDict`,
+        method: 'post',
+        data
+    })
+}
+// 添加数据字典详细条目信息 AddDictItem
+export function GetDiAddDictItemct(data) {
+    return request({
+        url: `${baseReflect}AddDictItem`,
+        method: 'post',
+        data
+    })
+}
+// 修改数据字典详细条目信息 EditDictItem
+export function EditDictItem(data) {
+    return request({
+        url: `${baseReflect}EditDictItem`,
+        method: 'post',
+        data
+    })
+}
+
+// 添加数据字典详细条目信息 AddDictItem
+export function AddDictItem(data) {
+    return request({
+        url: `${baseReflect}AddDictItem`,
+        method: 'post',
+        data
+    })
+}
+
+// 删除数据字典详细条目信息 DelDictItem
+export function DelDictItem(data) {
+    return request({
+        url: `${baseReflect}DelDictItem`,
+        method: 'post',
+        data
+    })
+}
+//获取数据字典右侧详细条目树结构 GetDictItems
+export function GetDictItems(data) {
+    return request({
+        url: `${baseReflect}GetDictItems`,
+        method: 'post',
+        data
+    })
+}
+
+//获取农专项设施基础信息 GetNCZXSS_BASE
+export function GetNCZXSS_BASE(data) {
+    return request({
+        url: `${baseReflect}GetNCZXSS_BASE`,
+        method: 'post',
+        data
+    })
+}
+//添加农专项设施基础信息 AddNCZXSS_BASE
+export function AddNCZXSS_BASE(data) {
+    return request({
+        url: `${baseReflect}AddNCZXSS_BASE`,
+        method: 'post',
+        data
+    })
+}
+//修改农专项设施基础信息 EditNCZXSS_BASE
+export function EditNCZXSS_BASE(data) {
+    return request({
+        url: `${baseReflect}EditNCZXSS_BASE`,
+        method: 'post',
+        data
+    })
+}
+//删除农专项设施基础信息 DelNCZXSS_BASE
+export function DelNCZXSS_BASE(data) {
+    return request({
+        url: `${baseReflect}DelNCZXSS_BASE`,
         method: 'post',
         data
     })

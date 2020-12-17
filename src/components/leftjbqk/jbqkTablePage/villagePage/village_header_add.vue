@@ -5,8 +5,8 @@
 				<el-collapse v-model="activeFormIndex">
 					<el-collapse-item title="表基础信息" name="1">
 						<div class="formeHeader">
-							<el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
-								<el-form-item label="地区类型1:" prop="Region">
+							<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+								<el-form-item label="地区类型:" prop="Region">
 									<el-select v-model="ruleForm.Region" filterable :disabled="disabled" placeholder="请选择地区类型" 
 									 class="input-200">
 										<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
@@ -14,19 +14,37 @@
 										<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
 									</el-select>
 								</el-form-item>
-								<el-form-item label="高程范围:">
-									<el-input v-model="ruleForm.AltitudeStart" :disabled="disabled" class="input-90"></el-input>
-									<span>---</span>
-									<el-input v-model="ruleForm.AltitudeEnd" :disabled="disabled" class="input-90"></el-input>
-								</el-form-item>
-								<el-form-item label="区县:" >
+								<el-form-item label="区县:" prop="stationName">
 									<el-select v-model="ruleForm.County" filterable :disabled="disabled" placeholder="请选择区县" @change="change_county"
 									 class="input-200">
 										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in countyData">
 										</el-option>
 									</el-select>
 								</el-form-item>
-			
+
+								<el-form-item label="乡镇:" prop="stationName">
+									<el-select v-model="ruleForm.Town" filterable :disabled="disabled" placeholder="请选择区县" @change="change_town"
+									 class="input-200">
+										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
+										</el-option>
+									</el-select>
+
+								</el-form-item>
+								<el-form-item label="村民委:" prop="stationName">
+									<el-select v-model="ruleForm.Village" filterable :disabled="disabled" placeholder="请选择区县" @change="change_village"
+									 class="input-200">
+										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageData">
+										</el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="村民小组:" prop="stationName">
+									<el-select v-model="ruleForm.VillageGroup" filterable :disabled="disabled" placeholder="请选择区县" @change="change_VillageGroup"
+									 class="input-200">
+										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageGroupData">
+										</el-option>
+									</el-select>
+								</el-form-item>
+
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
 								<span class="btn_foot">
@@ -40,26 +58,27 @@
 							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
 							<el-button title="修改" @click="editTableItem" size="mini" icon="el-icon-edit" plain></el-button>
 							<el-button title="删除" @click="delTableItem" size="mini" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="28vh"
+							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="35vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
-								<el-table-column prop="value" label="编号" width="180" align="center"></el-table-column>
+								<el-table-column prop="value" label="编号" width="180" align="left"></el-table-column>
 								<el-table-column prop="label" label="项目"  align="center"></el-table-column>
-								<el-table-column prop="Target" label="指标"  align="center"></el-table-column>
+								<el-table-column prop="Unit" label="单位"  align="center"></el-table-column>
+								<el-table-column prop="AttrNum" label="数量" align="center"></el-table-column>
 								<el-table-column prop="Remarks" label="备注" align="center"></el-table-column>
 							</el-table>
 						</div>
-			
-			
+
+
 					</el-collapse-item>
 				</el-collapse>
-			
+
 				<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
-				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog">
-					<businessItemAdd :dialog-type="fly2_dialogType"  :dialog-table="tableItemData"  v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></businessItemAdd>
+				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog" >
+					<villageHeaderAdd :dialog-type="fly2_dialogType" :dialog-table="tableItemData" v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></villageHeaderAdd>
 				</el-dialog>
 			</div>
-			
+
 		</div>
 	</div>
 </template>
@@ -77,43 +96,53 @@
 		GetSerialNumber,
 		DeleteBaseTablesAttr
 	} from '@/api'
-	import businessItemAdd from '@/components/jbqkTablePage/businessPage/business_item_add' 
+	import villageHeaderAdd from './village_item_add' 
 	export default {
-		name: 'jbqk_table1_add',
-		components: {businessItemAdd},
+		name: 'jbqk_table1_add_two',
 		computed: {
 			...mapGetters(['projectNo','BaseType','KeyNo'])
 		},
-		data: function() {
+		components: {
+			villageHeaderAdd
+		},
+		data() {
 			return {
-				activeFormIndex:'1',
+				countyData: [], //区县数据
+				townData: [], //城镇数据
+				villageData: [], //村庄数据
+				villageGroupData: [], //村庄小组
+				dialogTitle: '', //弹出框标题
+				fly2_dialogForm: "", //弹出框表单
+				showFlag: false, //弹出框显隐状态
+				fly2_dialogType: '', //弹出框操作类型
+				activeFormIndex: ['1'], //当前手风琴默认打开
 				ruleForm: {
+					County: '',
+					Town: '',
+					Village: '',
+					VillageGroup: '',
+					Region: '',
+
 				},
-				fly2_dialogForm:'',
-				fly2_dialogType:'',
-				dialogTitle:'',
-				showFlag:false,
-				countyData:[],//地区数据
-				seenButton: false,
-				currentIndex: 0,
+				tableItemData: [], //数据项列表数据
 				tableData: [],
-				submitLoad: false,
+				loading: false,
 				disabled: false,
-				tableItemData:[],
 				rules: { //约定的验证规则
-					stationName: [{
+					Region: [{
 						required: true,
-						message: '请填写名称',
-						trigger: 'blur'
+						message: '请选择区县',
+						trigger: 'change'
 					}, ],
-					
+
 				},
+				tableLoad:false,
+				submitLoad:false,
 
 			}
 		},
-		
 		props: ['dialogType', 'dialogForm'],
-		mounted: function() {
+		mounted() {
 			console.log(this.dialogForm, '传参')
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				if (this.dialogType == 'look') {
@@ -122,62 +151,26 @@
 				this.ruleForm = this.dialogForm;
 				this.$store.commit('jbqk/set_KeyNo', this.dialogForm.KeyNo)
 				this.GetLocationInit(0, 'countyData'); //获取区县
+				this.GetLocationInit(this.dialogForm.County, 'townData'); //获取乡镇
+				this.GetLocationInit(this.dialogForm.Town, 'villageData'); //获取村委
+				this.GetLocationInit(this.dialogForm.Village, 'villageGroupData'); //获取村委组
 				this.GetJBQKDCBItemInit(); //获取数据项
 			} else {
 				this.$store.commit('jbqk/set_KeyNo', '')
 				this.GetLocationInit(0, 'countyData'); //获取地区
 			}
-
+			// this.GetJBQKDCBItemsInit();
 		},
+		created() {},
 
 		methods: {
-			GetJBQKDCBItemInit() {//获取数据项
-			    console.log(this.KeyNo)
-				var data = {id: this.KeyNo};
-				GetBaseTablesListAttrs(data).then((res) => {
-						 this.tableItemData = res;
-						 console.log(res, this.tableItemData, '获取数据项')
-				})
-				.catch((error) => {
-					this.tableItemData = [];
-					console.log(error)
-				})
-			},
-			closeDialog() { //关闭弹出框
-				this.GetJBQKDCBItemInit();
-			},
-			showStudescode(data) { //监听弹出框是关还是闭
-			   this.showFlag = data;
-			   this.GetJBQKDCBItemInit();
-			  
-			},
-			GetLocationInit(id, type) {
-				var data = {
-					Locationno: id,
-					ProjectNo: this.projectNo
-				};
-				GetLocations(data).then((res) => {
-					this[type]=res;
-				})
-				.catch((error) => {
-					this.tableData = [];
-					console.log(error)
-				})
-			},
-			change_county(data) { //选中区县,获取乡镇
-				for (var i = 0; i < this.countyData.length; i++) {
-					if (data == this.countyData[i].o_locationno) {
-						this.ruleForm.CountyDESC = this.countyData[i].o_locationdesc;
-					}
-				}
-			},
 			tableRowClassName({
 				row,
 				rowIndex
 			}) {
 				  return row.ClassName;
 			},
-			rowClick(row, column){//单击表格一行
+            rowClick(row, column){//单击表格一行
 				console.log(row, column);
 				if(row.ClassName=="singleitem"){
 					this.fly2_dialogForm=row;
@@ -240,6 +233,73 @@
 				}
 				
 			},
+			GetJBQKDCBItemInit() {//获取数据项
+			    console.log(this.KeyNo)
+				var data = {id: this.KeyNo};
+				GetBaseTablesListAttrs(data).then((res) => {
+						 this.tableItemData =res;
+						 console.log(res, this.tableItemData, '获取数据项')
+				})
+				.catch((error) => {
+					this.tableItemData = [];
+					console.log(error)
+				})
+			},
+			change_county(data) { //选中区县,获取乡镇
+				for (var i = 0; i < this.countyData.length; i++) {
+					if (data == this.countyData[i].o_locationno) {
+						this.ruleForm.CountyDESC = this.countyData[i].o_locationdesc;
+					}
+				}
+				this.GetLocationInit(data, 'townData'); //获取乡镇
+			},
+			change_town(data) { //选中乡镇,获取村委
+				for (var i = 0; i < this.townData.length; i++) {
+					if (data == this.townData[i].o_locationno) {
+						this.ruleForm.TownDESC = this.townData[i].o_locationdesc;
+					}
+				}
+				this.GetLocationInit(data, 'villageData'); //获取村委
+			},
+			change_village(data) { //选中村委,获取村委组
+				for (var i = 0; i < this.villageData.length; i++) {
+					if (data == this.villageData[i].o_locationno) {
+						this.ruleForm.VillageDESC = this.villageData[i].o_locationdesc;
+					}
+				}
+				this.GetLocationInit(data, 'villageGroupData'); //获取村委组
+			},
+			change_VillageGroup(data) { //选中村委组
+				for (var i = 0; i < this.villageGroupData.length; i++) {
+					if (data == this.villageGroupData[i].o_locationno) {
+						this.ruleForm.VillageGroupDESC = this.villageGroupData[i].o_locationdesc;
+
+					}
+				}
+
+			},
+			GetLocationInit(id, type) {
+				var data = {
+					Locationno: id,
+					ProjectNo: this.projectNo
+				};
+				GetLocations(data).then((res) => {
+					this[type]=res;
+				})
+				.catch((error) => {
+					this.tableData = [];
+					console.log(error)
+				})
+			},
+			
+			closeDialog() { //关闭弹出框
+				this.GetJBQKDCBItemInit();
+			},
+			showStudescode(data) { //监听弹出框是关还是闭
+			   this.showFlag = data;
+               this.GetJBQKDCBItemInit();
+			  
+			},
 			submitForm(formName) { //表单提交按钮
 				this.$refs[formName].validate((valid) => {
 					var self = this;
@@ -250,7 +310,7 @@
 							var data = {
 								ProjectNo: self.projectNo,
 								BaseType: this.BaseType,
-								id: self.ruleForm.County,
+								id: self.ruleForm.Village,
 								JsonStr: JSON.stringify(self.ruleForm)
 							};
 						} else {
@@ -274,14 +334,15 @@
 						}).catch((res) => {
 							console.log(res)
 							this.submitLoad=false;
-				
+
 						})
 					} else {
-				
+
 						// self.loading = false;
 						return false;
 					}
 				});
+				//
 			},
 
 		}
@@ -289,7 +350,7 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 70vh;
+		height: 80vh;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;

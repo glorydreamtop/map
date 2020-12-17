@@ -10,12 +10,13 @@
 						<el-button title="删除" @click="delClick('tree')" size="mini" icon="el-icon-delete" plain></el-button>
 					</div>
 					<div style="margin-top: 15px;">
-					  <el-input placeholder="请输入内容" v-model="lookFor" class="input-with-select" clearable  @keyup.enter.native="lookFor_tree">
-					    <el-button slot="append" icon="el-icon-search" @click="lookFor_tree"></el-button>
-					  </el-input>
+						<el-input placeholder="请输入内容" v-model="lookFor" class="input-with-select" clearable @keyup.enter.native="lookFor_tree">
+							<el-button slot="append" icon="el-icon-search" @click="lookFor_tree"></el-button>
+						</el-input>
 					</div>
 					<div class="body_tree_mian">
-						<el-tree :data="treeData" node-key='id'  ref="tree" :filter-node-method="filterNode" :props="defaultProps" @node-click="handleNodeClick" default-expand-all></el-tree>
+						<el-tree :data="treeData" node-key='id'  ref="tree" :filter-node-method="filterNode" :props="defaultProps" highlight-current	
+						 @node-click="handleNodeClick" :default-expanded-keys="treeExpandData"></el-tree>
 					</div>
 				</div>
 			</el-col>
@@ -29,23 +30,23 @@
 					<div class="body_table_mian">
 						<el-table v-loading="tableLoad" element-loading-text="客官请稍后" element-loading-spinner="el-icon-loading" class="fixTable49"
 						 element-loading-background="#022333" :data="tableData" row-key="id" :tree-props="{ children: 'children' }"
-						 border style="width: 100%" height="50vh">
-							<el-table-column prop="SerialNumber" label="项目名称" align="center"></el-table-column>
-							<el-table-column prop="Createdate" label="编码" align="center"></el-table-column>
-							<el-table-column prop="CountyDESC" label="单位" align="center"></el-table-column>
-							<el-table-column prop="Region" label="描述" align="center"></el-table-column>
+						 highlight-current-row border style="width: 100%" height="55vh" @row-click="rowClick">
+							<el-table-column prop="uname" label="项目名称" align="center"></el-table-column>
+							<el-table-column prop="ucode" label="编码" align="center"></el-table-column>
+							<el-table-column prop="unit" label="单位" align="center"></el-table-column>
+							<el-table-column prop="remarks" label="描述" align="center"></el-table-column>
 						</el-table>
-						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
+						<!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
 						 :page-size="formeData.PageSize" :total="total">
-						</el-pagination>
+						</el-pagination> -->
 					</div>
 				</div>
 			</el-col>
 			<div>
 				<el-dialog :title="dialogTitle" :append-to-body="true" @close="closeDialog" :visible.sync="showFlag" v-model="showFlag"
 				 class="newStyleDialog " center :custom-class="flyType + '_add_dialog'">
-					<treeAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag && flyType == 'tree'"></treeAdd>
-					<tableAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag && flyType == 'table'"></tableAdd>
+					<treeAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_tree" v-if="showFlag && flyType == 'tree'"></treeAdd>
+					<tableAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_table" :dialog-form-tree="dialogForm_tree" v-if="showFlag && flyType == 'table'"></tableAdd>
 				</el-dialog>
 			</div>
 		</el-row>
@@ -53,8 +54,14 @@
 </template>
 
 <script>
-	import {mapGetters	} from 'vuex';
-	import {GetDict} from '@/api';
+	import {
+		mapGetters
+	} from 'vuex';
+	import {
+		GetDict,
+		DelDict,
+		GetDictItems
+	} from '@/api';
 	import treeAdd from '@/components/dictionaryPage/dictionary_tree_add';
 	import tableAdd from '@/components/dictionaryPage/dictionary_table_add';
 	export default {
@@ -69,11 +76,13 @@
 		},
 		data() {
 			return {
-				lookFor:'',
+				lookFor: '',
+				treeExpandData:[], //自己定义的用于接收tree树id的数组
 				tableData: [],
 				treeData: [],
 				dialogTitle: '', //弹出框标题
-				dialogForm: '', //弹出框表单
+				dialogForm_tree: '', //弹出框表单
+				dialogForm_table: '', //弹出框表单
 				showFlag: false, //弹出框显隐状态
 				visible: true,
 				dialogType: '', //弹出框操作类型
@@ -88,67 +97,76 @@
 				defaultProps: {
 					children: 'children',
 					label: 'uname'
-				}
+				},
+				treeActive:'',
 			};
 		},
 		created() {},
 		mounted() {
 			// this.tableInit(); //表格初始化
-			this.treeInit(); //树形初始化
+			this.$nextTick(function(){
+				this.treeInit(); //树形初始化
+			})
+			
 		},
 		methods: {
-			lookFor_tree(){
-				console.log(111);
-				 this.$refs.tree.filter(this.lookFor);
+			lookFor_tree() {
+				
+				this.$refs.tree.filter(this.lookFor);
 			},
-			filterNode(value, data,node) { //树形过滤筛选
-			  if (!value) {
-			    return true
-			  }
-			  let level = node.level
-			  let _array = [] //这里使用数组存储 只是为了存储值。
-			  this.getReturnNode(node, _array, value)
-			  let result = false
-			  _array.forEach(item => {
-			    result = result || item
-			  })
-			  return result
+			filterNode(value, data, node) { //树形过滤筛选
+				if (!value) {
+					return true
+				}
+				let level = node.level
+				let _array = [] //这里使用数组存储 只是为了存储值。
+				this.getReturnNode(node, _array, value)
+				let result = false
+				_array.forEach(item => {
+					result = result || item
+				})
+				return result
 			},
 			getReturnNode(node, _array, value) {
-			  let isPass = node.data && node.data.uname && node.data.uname.indexOf(value) !== -1
-			  isPass ? _array.push(isPass) : ''
-			  this.index++
-			  // console.log(this.index)
-			  if (!isPass && node.level != 1 && node.parent) {
-			    this.getReturnNode(node.parent, _array, value)
-			  }
+				let isPass = node.data && node.data.uname && node.data.uname.indexOf(value) !== -1
+				isPass ? _array.push(isPass) : ''
+				this.index++
+				// console.log(this.index)
+				if (!isPass && node.level != 1 && node.parent) {
+					this.getReturnNode(node.parent, _array, value)
+				}
 			},
 			treeInit() {
+				var self=this;
 				GetDict().then((res) => {
-					console.log(res)
-					// this.tableLoad=false;
-					this.treeData = res;
-					// this.total = res.total;
-				})
-				.catch((error) => {
-					this.tableData = [];
-					this.tableLoad=false;
-					console.log(error)
-				})
+						console.log(res)
+						// this.tableLoad=false;
+						self.treeData = res;
+						
+						self.$nextTick(function() {
+							// console.log(this.dialogForm_tree)
+						  self.$refs.tree.setCurrentKey(self.dialogForm_tree.id?self.dialogForm_tree.id:res[0].id);
+						  self.treeExpandData=[self.dialogForm_tree.id?self.dialogForm_tree.id:res[0].id];
+						})
+					})
+					.catch((error) => {
+						self.tableData = [];
+						self.tableLoad = false;
+						console.log(error)
+					})
 			},
+			
 			tableInit() {
 				var data = {
-					BaseType: this.BaseType,
-					ProjectNo: this.projectNo,
-					...this.formeData
+					id: this.dialogForm_tree.id,
 				};
 				this.tableLoad = true;
-				GetAllBaseTablesBaseAttrs(data)
+				GetDictItems(data)
 					.then(res => {
-						console.log(res);
+						console.log(res,'表格');
 						this.tableLoad = false;
-						this.tableData = res.list;
-						this.total = res.total;
+						this.tableData = res;
+						// this.total = res.total;
 					})
 					.catch(error => {
 						this.tableData = [];
@@ -158,6 +176,15 @@
 			},
 			handleNodeClick(data) {
 				//点击树形
+				// console.log(data)
+				this.dialogForm_tree = data;
+				this.treeActive=data;
+				this.tableInit(); //表格初始化
+			},
+			rowClick(row) {
+				//单击表格一行
+				// console.log(row)
+				this.dialogForm_table = row;
 			},
 			handleSizeChange(val) {
 				//每页#条
@@ -177,56 +204,85 @@
 				this.dialogType = type + 'look';
 				this.showFlag = true;
 			},
-			delClick() {
-				var self = this;
-				this.$confirm('此操作将永久删除, 是否继续?', '提示', {
-						confirmButtonText: '确定',
-						cancelButtonText: '取消',
-						center: true,
-						type: 'warning'
-					})
-					.then(() => {
-						DeleteBaseTable({
-								id: row.KeyNo
-							})
-							.then(res => {
-								console.log(res);
-								self.$message({
-									message: '操作成功',
-									type: 'success',
-									center: true
+			delClick(type) {
+				
+				if (this[`dialogForm_${type}`]) {
+					console.log(this[`dialogForm_${type}`])
+					var self = this;
+					self.$confirm('此操作将永久删除, 是否继续?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							center: true,
+							type: 'warning'
+						})
+						.then(() => {
+							DelDict({
+									id: self[`dialogForm_${type}`].id
+								})
+								.then(res => {
+									self.$message({
+										message: '操作成功',
+										type: 'success',
+										center: true
+									});
+                                    self[`dialogForm_${type}`]='';
+									self.treeInit();
+									self.tableInit();
+								})
+								.catch(res => {
+									console.log(res);
 								});
-
-								self.tableInit();
-							})
-							.catch(res => {
-								console.log(res);
-							});
+						})
+						.catch(res => {
+							console.log(res)
+						});
+				} else {
+					this.$message({
+						message: '请选择要删除的节点',
+						type: 'error',
+						center: true
 					})
-					.catch(res => {});
+				}
+
+
+
 			},
 			editClick(type) {
+				console.log(this[`dialogForm_${type}`])
+				if (this[`dialogForm_${type}`]) {
+					this.flyType = type;
+					this.dialogTitle = '修改' + (type == 'tree' ? '项目树' : '数据项');
+					this.dialogType = type + 'edit';
+					this.showFlag = true;
+				} else {
+					this.$message({
+						message: '请选择要编辑的节点',
+						type: 'error',
+						center: true
+					})
+				}
 				//修改
-				this.flyType = type;
-				this.dialogForm = '';
-				this.dialogTitle = '修改' + (type == 'tree' ? '项目树' : '数据项');
-				this.dialogType = type + 'edit';
-				this.showFlag = true;
+
 			},
 			addClick(type) {
 				//添加
 				this.flyType = type;
-				this.dialogForm = '';
+				this[`dialogForm_${type}`] = '';
 				this.dialogTitle = '添加' + (type == 'tree' ? '项目树' : '数据项');
 				this.dialogType = type + 'add';
 				this.showFlag = true;
 			},
 			closeDialog() {
 				//关闭弹出框
+				this.treeInit();
 				this.tableInit();
 			},
 			showStudescode(data) {
 				//监听弹出框是关还是闭
+				console.log(data,'监听是关闭还是打开')
+				this.showFlag = data;
+				this.tableInit();
+				this.treeInit();
 			}
 		}
 	};
@@ -241,16 +297,20 @@
 	.body_tree_mian {
 		margin-top: 1vh;
 		/* border: 1px solid; */
-		height:45vh;
+		height: 50vh;
 		overflow-y: auto;
+		overflow-x: auto;
 	}
-    .treeMain,.tableMain{
-		    border: 1px solid;
-		    padding: 1vh 1vw 0vh;
-			height: 62vh;
-			overflow-y: auto;
-		
+
+	.treeMain,
+	.tableMain {
+		border: 1px solid;
+		padding: 1vh 1vw 0vh;
+		height: 62vh;
+		overflow-y: auto;
+
 	}
+
 	.body_table_mian {
 		margin-top: 1vh;
 	}

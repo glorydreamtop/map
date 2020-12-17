@@ -188,3 +188,6 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-pagination__total{
     margin-left: 20px;
 }
+.el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content{
+	background-color:#00BCD4;
+}

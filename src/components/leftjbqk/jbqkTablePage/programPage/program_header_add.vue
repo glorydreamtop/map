@@ -76,7 +76,7 @@
 		GetSerialNumber,
 		DeleteBaseTablesAttr
 	} from '@/api'
-	import programHeaderAdd from '@/components/jbqkTablePage/programPage/program_item_add' 
+	import programHeaderAdd from './program_item_add' 
 	export default {
 		name: 'jbqk_table1_add',
 		components: {programHeaderAdd},

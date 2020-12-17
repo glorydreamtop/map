@@ -1,50 +1,50 @@
 <template>
   <div>
     <div class="justify-between">
-    <div class="flex-col align-center item" @click="jbqkTable(1)">
-      <i class="al-icon-xiangmuguanli text-light"></i>
-      <span>农村</span>
+      <div class="flex-col align-center item" @click="jbqkTable(1)">
+        <i class="al-icon-xiangmuguanli text-light"></i>
+        <span>农村</span>
+      </div>
+      <div class="flex-col align-center item" @click="jbqkTable(2)">
+        <i class="al-icon-xiangmuguanli text-light"></i>
+        <span>城市集镇</span>
+      </div>
+      <div class="flex-col align-center item" @click="jbqkTable(3)">
+        <i class="al-icon-xiangmuguanli text-light"></i>
+        <span>专业项目</span>
+      </div>
+      <div class="flex-col align-center item" @click="jbqkTable(4)">
+        <i class="al-icon-xiangmuguanli text-light"></i>
+        <span>企事业单位</span>
+      </div>
     </div>
-    <div class="flex-col align-center item" @click="jbqkTable(2)">
-      <i class="al-icon-xiangmuguanli text-light"></i>
-      <span>城市集镇</span>
-    </div>
-    <div class="flex-col align-center item" @click="jbqkTable(3)">
-      <i class="al-icon-xiangmuguanli text-light"></i>
-      <span>专业项目</span>
-    </div>
-    <div class="flex-col align-center item" @click="jbqkTable(4)">
-      <i class="al-icon-xiangmuguanli text-light"></i>
-      <span>企事业单位</span>
-    </div>
-  </div>
-  <!--   :modal-append-to-body='false'  -->
-  <el-dialog
+    <!--   :modal-append-to-body='false'  -->
+    <el-dialog
       :title="dialogTitle"
-      :append-to-body="true" 
+      :append-to-body="true"
       @close="closeDialog"
       :visible.sync="showFlag"
       v-model="showFlag"
       class="newStyleDialog"
       custom-class="jbqkTable_dialog"
     >
-    <!-- 动态组件 -->
-    <component
+      <!-- 动态组件 -->
+      <component
         :is="`jbqkTableHome${dialogType}`"
         :dialog-type="dialogType"
         v-on:showStudes="showStudescode"
         :dialog-form="dialogForm"
-		v-if="showFlag"
+        v-if="showFlag"
       ></component>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import jbqkTableHome1 from "@/components/jbqkTablePage/villagePage/village_table.vue"; //基本情况表农村-更多操作
-import jbqkTableHome2 from "@/components/jbqkTablePage/cityTownPage/cityTown_table.vue"; //基本情况表城市-更多操作
-import jbqkTableHome3 from "@/components/jbqkTablePage/programPage/program_table.vue"; //基本情况表专业项目-更多操作
-import jbqkTableHome4 from "@/components/jbqkTablePage/businessPage/business_table.vue"; //基本情况表企事业-更多操作
+import jbqkTableHome1 from "./jbqkTablePage/villagePage/village_table.vue"; //基本情况表农村-更多操作
+import jbqkTableHome2 from "./jbqkTablePage/cityTownPage/cityTown_table.vue"; //基本情况表城市-更多操作
+import jbqkTableHome3 from "./jbqkTablePage/programPage/program_table.vue"; //基本情况表专业项目-更多操作
+import jbqkTableHome4 from "./jbqkTablePage/businessPage/business_table.vue"; //基本情况表企事业-更多操作
 export default {
   name: "Leftjbqk",
   props: {},
@@ -68,9 +68,9 @@ export default {
     jbqkTable(dialogType) {
       //基本情况调查表
       const titleList = ["农村", "城市集镇", "专业项目", "企事业单位"];
-	  const BaseType=['NONGCUN','CHENGSHI','ZHUANXIANG','QISHIYE'];
+      const BaseType = ["NONGCUN", "CHENGSHI", "ZHUANXIANG", "QISHIYE"];
       this.dialogTitle = `${titleList[dialogType - 1]}基本情况调查表`;
-	  this.$store.commit('jbqk/set_BaseType', BaseType[dialogType - 1])
+      this.$store.commit("jbqk/set_BaseType", BaseType[dialogType - 1]);
       this.showFlag = true;
       this.dialogForm = "";
       this.dialogType = dialogType;
@@ -87,8 +87,8 @@ export default {
 
 <style lang="scss" scoped>
 .item {
-    [class*="icon"] {
-      font-size: 36px;
-    }
+  [class*="icon"] {
+    font-size: 36px;
   }
+}
 </style>

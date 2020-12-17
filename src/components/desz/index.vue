@@ -4,58 +4,100 @@
       :visible.sync="visible"
       :close-on-press-escape="false"
       width="70vw"
-      v-loading="loading2"
-      element-loading-text="文件转码中..."
       title="定额设置"
       @close="$emit('update:showDialog', false)"
       center
     >
       <div class="box justify-between">
-        <div class="box-left">
-          <el-cascader class="margin-bottom-l" placeholder="选择地区" :props="selectorList"></el-cascader>
-          <el-collapse v-model="classify" accordion>
-            <el-collapse-item v-for="item in classifyNames" :title="item" :key="item" :name="item">
-              <div
-                :class="['typeList padding-left-l',currentType === item ?'active':'']"
-                v-for="item in 16"
+        <div class="box-left flex-col">
+          <el-cascader
+            class="margin-bottom-l"
+            placeholder="选择地区"
+            @change="selectArea"
+            :props="selectorList"
+          ></el-cascader>
+          <div @click.stop="checkLocation">
+            <el-collapse @change="getTypeList" v-model="classify" accordion>
+              <el-collapse-item
+                v-for="(item, index) in classifyNames"
+                :title="item"
                 :key="item"
-              >土木房屋结构</div>
-            </el-collapse-item>
-          </el-collapse>
+                :name="item"
+                :disabled="locationNo === 0"
+              >
+                <div class="margin-left-s">
+                  <el-button
+                    type="text"
+                    icon="el-icon-plus"
+                    @click="postQuota(item, true)"
+                  ></el-button>
+                  <el-button
+                    type="text"
+                    icon="el-icon-edit"
+                    @click="postQuota(item, false)"
+                  ></el-button>
+                  <el-button
+                    type="text"
+                    icon="el-icon-delete"
+                    @click="delQuota(item)"
+                  ></el-button>
+                </div>
+                <div class="flex-col" @click="setCurrentType">
+                  <span
+                    :class="[
+                      'typeList pointer padding-left-l',
+                      currentType === i.o_virtualitemno ? 'active' : '',
+                    ]"
+                    v-for="i in subList[index]"
+                    :key="i.o_virtualitemno"
+                    :data-no="i.o_virtualitemno"
+                  >
+                    {{ i.o_virtualitemdesc }}
+                  </span>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+          </div>
         </div>
         <div class="datalist margin-left-l">
           <el-button
-            title="上传"
+            title="添加"
             size="small"
             class="el-icon-plus margin-bottom-m"
-            @click="$refs.upload.dialogVisible = true"
+            @click="postItem(true)"
+          />
+          <desz-add
+            ref="add"
+            :currentType="currentType"
+            @update="updateTable"
           />
           <el-table :data="tableData">
-            <el-table-column prop="no" label="文件编号"></el-table-column>
-            <el-table-column prop="name" label="文件名"></el-table-column>
-            <el-table-column prop="type" label="文件类型"></el-table-column>
-            <el-table-column fixed="right" label="操作" width="230" class="justify-between">
+            <el-table-column
+              v-for="item in tableProps"
+              :key="item.value"
+              :prop="item.value"
+              :label="item.title"
+            ></el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="230"
+              class="justify-between"
+            >
               <template slot-scope="scope">
-                <el-button
-                  title="查看"
-                  icon="el-icon-view"
-                  type="primary"
-                  plain
-                  @click="lookClick(scope.row)"
-                ></el-button>
                 <el-button
                   title="更新"
                   icon="el-icon-edit"
                   type="warning"
                   plain
-                  @click="editClick(scope.row)"
+                  @click="postItem(false, scope.row)"
                 ></el-button>
                 <el-button
                   title="删除"
                   icon="el-icon-delete"
                   type="danger"
                   plain
-                  @click="delClick(scope.row)"
+                  @click="delItem(scope.row.KeyNo)"
                 ></el-button>
               </template>
             </el-table-column>
@@ -73,119 +115,208 @@
 </template>
 
 <script>
-import { GetQuotas, GetQuotaClassifyList } from "@/api";
+import {
+  GetQuotas,
+  GetQuotaClassifyList,
+  AddQuota,
+  EditQuota,
+  DeleteQuota,
+  GetQuotaItemList,
+  DeleteQuotaItem,
+} from "@/api";
 import { mapGetters } from "vuex";
+import deszAdd from "./edit";
 export default {
   name: "Desz",
   props: {
     showDialog: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  components: {},
+  components: { deszAdd },
   data() {
     return {
-      locationno: 0,
+      locationNo: 0, // 地点ID
       visible: false,
-      folders: [], //树的数据
+      tableProps: [
+        { title: "名称", value: "UNAME" },
+        { title: "条件", value: "Ucondition" },
+        { title: "单价", value: "UnitPrice" },
+        { title: "单位", value: "Unit" },
+        { title: "备注", value: "Remarks" },
+      ], // 表格表头
       tableData: [], //表格数据
       selectorList: {
         lazy: true,
-        async lazyload(node, resolve) {
-          const nodes = await this.getArea();
+        lazyLoad: async (node, resolve) => {
+          const { level } = node;
+          let nodes = (await this.getArea(node.value)).map((item) => ({
+            value: item.o_locationno,
+            label: item.o_locationdesc,
+            leaf: level > 1,
+          }));
           resolve(nodes);
-        }
+        },
       },
       classify: "",
       classifyNames: [
-        "土地补偿标准",
-        "房屋补偿标准",
-        "青苗补偿标准",
-        "地面附着物拆迁标准",
-        "专项设置标准",
-        "相关政策文件及标准"
+        "土地补偿",
+        "房屋及附属建筑物",
+        "青苗补偿",
+        "农村小型专项及农副业设施",
+        "个体工商户",
+        "文教卫设施",
+        "宗教设施",
+        "其他项目",
       ],
-      currentType: "",
-      currentTotal: 5,
+      subList: [[], [], [], [], [], []], // 二级分类列表
+      currentType: 0, // 当前选中二级分类id
+      currentTotal: 0,
       loading1: false,
       loading2: false,
-      updateFileId: 0 // 待更新文件id
+      updateFileId: 0, // 待更新文件id
     };
   },
   computed: {
-    ...mapGetters(["projectNo"])
+    ...mapGetters(["projectNo"]),
   },
   watch: {
     showDialog: {
       handler(newVal) {
         this.visible = newVal;
-        // newVal && this.getArea();
       },
-      immediate: true
-    }
+      immediate: true,
+    },
+    classify: {
+      handler(newVal) {
+        if (newVal) {
+          this.tableData = [];
+          this.currentTotal = 0;
+        }
+      },
+      immediate: true,
+    },
   },
   created() {},
   mounted() {},
   methods: {
-    async getArea() {
+    // 获取地区列表
+    async getArea(Locationno = 0) {
       const res = await GetQuotas({
         ProjectNo: this.projectNo,
-        Locationno: this.locationno
+        Locationno,
       });
-      return res.map(item => ({
-        value: item.o_locationno,
-        label: item.o_locationdesc,
-        leaf: !item.o_haschild
-      }));
+      return res;
     },
-    async getTypeList() {
-      await GetQuotaClassifyList();
+    // 判断是否选择地区了
+    checkLocation(e) {
+      if (this.locationNo === 0) {
+        this.$message.error("请先选择地区");
+        return false;
+      }
     },
-    async getList(currentPage = 1) {
-      const { list, total } = await GetDocsByFolderId({
-        folderid: this.currentNo,
-        CurrentPage: currentPage,
-        PageSize: 5
+    // 获取二级分类列表
+    async getTypeList(ClassifyName, force) {
+      // force强制刷新
+      const index = this.classifyNames.indexOf(ClassifyName);
+      if ((this.subList[index].length > 0 && !force) || ClassifyName === "")
+        return;
+      const { list } = await GetQuotaClassifyList({
+        LocationId: this.locationNo,
+        ClassifyName,
+        CurrentPage: 1,
+        PageSize: 200,
+      });
+      console.log(list);
+      this.$set(this.subList, index, list);
+    },
+    // 选择地区
+    selectArea(node) {
+      console.log(node);
+      this.locationNo = node[node.length - 1];
+    },
+    // 新增或修改二级分类,add为true添加false修改
+    async postQuota(ClassifyName, add) {
+      try {
+        const { value } = await this.$prompt(
+          "请输入项目名称",
+          add ? "新增" : "修改为",
+          {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+          }
+        );
+        add &&
+          (await AddQuota({
+            ClassifyName,
+            LocationId: this.locationNo,
+            Virtualitemdesc: value,
+          }));
+        !add &&
+          (await EditQuota({
+            Virtualitemno: this.currentType,
+            Virtualitemdesc: value,
+          }));
+        this.$message.success(`${add ? "添加" : "修改"}成功`);
+        this.getTypeList(ClassifyName, true);
+      } catch (error) {
+        if (error) {
+          this.$message.error(error);
+        }
+      }
+    },
+    // 删除一个二级分类
+    async delQuota(ClassifyName) {
+      try {
+        await this.$confirm("将删除条目及其下所有详细信息，确定继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        });
+        await DeleteQuota({ Virtualitemno: this.currentType });
+        this.getTypeList(ClassifyName, true);
+      } catch (error) {
+        if (error) {
+          this.$message.error(error);
+        }
+      }
+    },
+    // 选中一个二级分类
+    async setCurrentType(e) {
+      this.currentType = parseInt(e.target.dataset.no);
+      this.updateTable(1);
+    },
+    // 添加还是修改
+    async postItem(add, item) {
+      if (this.currentType === 0) {
+        this.$message.warning("请先选择一个具体的二级分类");
+        return;
+      }
+      this.$refs.add.add = add;
+      if (!add) {
+        this.$refs.add.form = item;
+      }
+      this.$refs.add.dialogVisible = true;
+    },
+    pageChange(e) {
+      this.updateTable(e);
+    },
+    async delItem(KeyNo) {
+      await DeleteQuotaItem({KeyNo})
+      this.$message.success("删除成功");
+      this.updateTable(1);
+    },
+    async updateTable(CurrentPage = 1) {
+      const { list, total } = await GetQuotaItemList({
+        Virtualitemno: this.currentType,
+        CurrentPage,
+        PageSize: 5,
       });
       this.tableData = list;
       this.currentTotal = total;
     },
-    handleNodeClick(e) {
-      this.currentNo = e.no;
-      this.getList(1);
-    },
-    pageChange(e) {
-      this.getList(e);
-    },
-    async lookClick(e) {
-      this.loading2 = true;
-      const Type = e.minetype.includes("doc") ? "word" : "excel";
-      const res1 = await GetDocumentByDocNo({ docid: e.no });
-      try {
-        const res2 = await GetWordOrExcelToPDF({ Type, Path: res1[0].url });
-        this.loading2 = false;
-        window.open(`http://aglostech1.yicp.io:9080/${res2[0].url}`);
-      } catch (error) {
-        this.loading2 = false;
-        this.$message.error("文件转换失败");
-      }
-    },
-    editClick(e) {
-      this.updateFileId = e.no;
-      this.$refs.upload.dialogVisible = true;
-    },
-    async delClick(e) {
-      await DelDoc({ docid: e.no });
-      this.$message.success("删除成功");
-      this.getList(1);
-    },
-    updateTable() {
-      // 释放“待更新文件”指针
-      this.updateFileId = 0;
-      this.getList(1);
-    }
-  }
+  },
 };
 </script>
 
@@ -210,7 +341,7 @@ export default {
   }
   .el-collapse {
     width: 300px;
-    height: 500px;
+    height: 540px;
     overflow: auto;
     .typeList:hover,
     .typeList.active {
