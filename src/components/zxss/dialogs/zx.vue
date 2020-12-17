@@ -15,6 +15,14 @@
           :model="form"
           label-width="80px"
         >
+        <el-form-item>
+          <el-cascader
+            class="margin-bottom-l"
+            placeholder="选择地区"
+            @change="selectArea"
+            :props="selectorList"
+          ></el-cascader>
+        </el-form-item>
           <el-form-item
             v-for="item in formProps"
             :key="item.value"
@@ -42,7 +50,7 @@
 </template>
 
 <script>
-import { AddNCZXSS_BASE } from "@/api";
+import { AddNCZXSS_BASE, GetLocations } from "@/api";
 import { mapGetters } from "vuex";
 import { deepClone } from "@/utils";
 export default {
@@ -55,6 +63,18 @@ export default {
       form: {},
       formProps: require("./tableProps.json"), // 表单内容
       rules: {}, // 表单验证规则
+      selectorList:{
+        lazy: true,
+        lazyLoad: async (node, resolve) => {
+          const { level } = node;
+          let nodes = (await this.getArea(node.value)).map((item) => ({
+            value: item.o_locationno,
+            label: item.o_locationdesc,
+            leaf: level > 1,
+          }));
+          resolve(nodes);
+        },
+      }
     };
   },
   computed: {
@@ -64,9 +84,13 @@ export default {
     this.formProps.forEach((item) => {
       this.rules[item.value] = { required: true };
     });
+    
   },
   methods: {
     handleClose() {},
+    async getArea(Locationno = 0){
+      return await GetLocations({ProjectNo:this.projectNo,Locationno})
+    },
     create() {
       let form = deepClone(this.form);
       this.$refs.form1.validate(async (valid) => {
@@ -84,6 +108,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-collapse{
+  min-height: 60vh;
+}
 .form-title {
   flex-wrap: wrap;
   position: relative;
