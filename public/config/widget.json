@@ -1,0 +1,305 @@
+{
+"widget": {
+    "debugger": false,
+    "version": "20190418",
+    "defaultOptions": {
+      "style": "dark",
+      "windowOptions": {
+        "skin": "layer-hchx-dialog animation-scale-up",
+        "position": {
+          "top": 50,
+          "right": 10
+        },
+        "maxmin": false,
+        "resize": true
+      },
+      "autoDisable": true,
+      "disableOhter": true
+    },
+    "widgetsAtStart":[
+            {
+                "name": "右上角工具栏",
+                "uri": "static/cesium-web-s/widgets/toolBarRight_hchx/widget.js",
+                "data": [
+                    { "name": "漫游", "icon": "fa fa-globe", "onclick": "hchx3d.widget.disableAll()", "visible": false },
+                    {
+                        "name": "视图工具",
+                        "icon": "fa fa-camera",
+                        "children": [
+                            { "name": "底图", "icon": "fa fa-map", "widget": "static/cesium-web-s/widgets/manageBasemaps/widget.js", "visible": true },
+                            { "name": "绕中心旋转", "icon": "fa fa-dot-circle-o", "widget": "static/cesium-web-s/widgets/roamCenter/widget.js", "visible": true },
+                            { "name": "四周旋转", "icon": "fa fa-circle-o", "widget": "static/cesium-web-s/widgets/aroundCenter/widget.js", "visible": true }
+                        ]
+                    },
+                    { "name": "图层", "icon": "fa fa-tasks", "widget": "static/cesium-web-s/widgets/manageLayers_hchx/widget.js" },
+                    {
+                        "name": "导出",
+                        "icon": "fa fa-file",
+                        "children": [
+                            { "name": "导出KML", "icon": "fa fa-file-excel-o", "onclick": "window.open('static/cesium-web-s/widgets/exportfiles/kml.kml')"},
+                          { "name": "导出DXF", "icon": "fa fa-file-pdf-o", "onclick": "window.open('static/cesium-web-s/widgets/exportfiles/dxf.dxf')"}
+                        ]
+                    }
+                ]
+            }
+        ],
+    "widgets": [
+      {
+        "name": "模板",
+        "type": "group",
+        "children": [
+          {
+            "name": "iframe弹窗模板",
+            "uri": "static/cesium-web-s/widgets/_example/widget.js",
+            "windowOptions": {
+              "width": 300,
+              "height": 400,
+              "position": {
+                "bottom": 10,
+                "right": 10
+              },
+              "maxmin": true,
+              "resize": true
+            },
+            "openAtStart": false
+          },
+          {
+            "name": "div弹窗模板",
+            "uri": "static/cesium-web-s/widgets/_example_divwin/widget.js"
+          },
+          {
+            "name": "append模板",
+            "uri": "static/cesium-web-s/widgets/_example_append/widget.js"
+          }
+        ]
+      },
+      {
+        "name": "地图工具",
+        "type": "group",
+        "children": [
+          {
+            "id": "manageBasemaps",
+            "name": "地图切换",
+            "uri": "static/cesium-web-s/widgets/manageBasemaps/widget.js",
+            "group": "forlayer",
+            "autoDisable": false,
+            "disableOhter": false
+          },
+          {
+            "name": "图层管理",
+            "uri": "static/cesium-web-s/widgets/manageLayers_hxhc/widget.js",
+            "group": "forlayer",
+            "autoCenter": true,
+            "windowOptions": {
+              "position": {
+                "top": 50,
+                "bottom": 30,
+                "right": 10
+              }
+            },
+            "autoDisable": false,
+            "disableOhter": false
+          },
+          {
+            "name": "图上量算",
+            "uri": "static/cesium-web-s/widgets/measure/widget.js",
+            "windowOptions": {
+              "position": {
+                "bottom": 30,
+                "right": 40
+              }
+            }
+          },
+          {
+            "name": "剖面分析",
+            "uri": "static/cesium-web-s/widgets/section/widget.js",
+            "windowOptions": {
+              "position": {
+                "bottom": 30,
+                "right": 10
+              }
+            }
+          },
+          {
+            "name": "剖面分析图表",
+            "uri": "static/cesium-web-s/widgets/sectionChars/widget.js",
+            "windowOptions": {
+              "noTitle": true,
+              "position": {
+                "top": 10,
+                "left": 10,
+                "right": 10
+              }
+            },
+            "disableOhter": false
+          },
+          {
+            "id":"flowLine",
+            "name":"流向线",
+            "uri":"static/cesium-web-s/widgets/flowLine/widget.js"
+          },
+          {
+            "id":"siteLabel",
+            "name":"项目气泡",
+            "uri":"static/cesium-web-s/widgets/siteLabel/widget.js"
+          },
+          {
+            "name": "视角书签",
+            "uri": "static/cesium-web-s/widgets/bookmark/widget.js"
+          },
+          {
+            "name": "坐标定位",
+            "uri": "static/cesium-web-s/widgets/centerXY/widget.js"
+          },
+          {
+            "name": "标记",
+            "uri": "static/cesium-web-s/widgets/addmarker/widget.js"
+          },
+          {
+            "name": "地区导航",
+            "uri": "static/cesium-web-s/widgets/navXZQH/widget.js"
+          },
+          {
+            "name": "漫游路线设置",
+            "uri": "static/cesium-web-s/widgets/roamLine/widget.js",
+            "windowOptions": {
+              "position": {
+                "top": 45,
+                "bottom": 30,
+                "right": 5
+              }
+            }
+          },
+          {
+            "name": "漫游路线",
+            "uri": "static/cesium-web-s/widgets/roamFly/widget.js",
+            "windowOptions": {
+              "position": {
+                "bottom": 60,
+                "right": 5
+              }
+            }
+          },
+          {
+            "name": "路线剖面",
+            "uri": "static/cesium-web-s/widgets/roamChars/widget.js",
+            "windowOptions": {
+              "noTitle": true,
+              "position": {
+                "top": 10,
+                "left": 10,
+                "right": 10
+              }
+            },
+            "disableOhter": false
+          },
+          {
+            "name": "双屏对比",
+            "uri": "static/cesium-web-s/widgets/mapCompareEx/widget.js",
+            "autoDisable": false,
+            "disableOhter": false
+          },
+          {
+            "name": "卷帘对比",
+            "uri": "static/cesium-web-s/widgets/mapSwipe/widget.js",
+            "autoDisable": false,
+            "disableOhter": false
+          },
+          {
+            "name": "粒子效果",
+            "uri": "static/cesium-web-s/widgets/particalSystem/widget.js"
+          },
+          {
+            "name": "街景",
+            "uri": "static/cesium-web-s/widgets/streetscape/widget.js"
+          },
+          {
+            "name": "标绘",
+            "uri": "static/cesium-web-s/widgets/plot/widget.js",
+            "windowOptions": {
+              "position": {
+                "top": 45,
+                "bottom": 30,
+                "right": 5
+              }
+            },
+            "openAtStart": false
+          },
+          {
+            "name": "打印",
+            "uri": "static/cesium-web-s/widgets/print/widget.js",
+            "autoDisable": false,
+            "disableOhter": false
+          },
+          {
+            "name": "分享当前地图位置",
+            "uri": "static/cesium-web-s/widgets/shareUrl/widget.js",
+            "windowOptions": {
+              "position": {
+                "top": 1,
+                "left": 250,
+                "right": 250
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "业务演示功能",
+        "type": "group",
+        "children": [
+          {
+            "name": "企业-地图点",
+            "uri": "static/cesium-web-s/widgetsTS/qyPoint/widget.js",
+            "autoDisable": false,
+            "disableOhter": false
+          },
+          {
+            "name": "企业详情",
+            "uri": "static/cesium-web-s/widgetsTS/qyDetailsView/widget.js",
+            "windowOptions": {
+              "skin": "layer-hchx-dialog2",
+              "position": {
+                "top": 50,
+                "bottom": 50,
+                "left": 120,
+                "right": 120
+              }
+            },
+            "disableOhter": false
+          },
+          {
+            "name": "企业视频监控",
+            "uri": "static/cesium-web-s/widgetsTS/qyVideo/widget.js",
+            "windowOptions": {
+              "skin": "layer-hchx-dialog2",
+              "position": {
+                "top": 50,
+                "bottom": 50,
+                "left": 120,
+                "right": 120
+              }
+            },
+            "disableOhter": false
+          },
+          {
+            "name": "企业查询",
+            "uri": "static/cesium-web-s/widgetsTS/qyListView/widget.js",
+            "windowOptions": {
+              "skin": "layer-hchx-dialog2",
+              "position": {
+                "top": 50,
+                "bottom": 5,
+                "right": 5
+              }
+            }
+          },
+          {
+            "name": "企业统计图表",
+            "uri": "static/cesium-web-s/widgetsTS/qyCharts/widget.js"
+          }
+        ]
+      }
+    ]
+  }
+}

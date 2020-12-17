@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GIS组件</title>
+</head>
+
+<body>
+    <style>
+        #centerDiv {
+            position: relative;
+            background-color: #999999;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .reportsdiv button,
+        .reportsdiv2 button,
+        .reportsdiv3 button,
+        .reportsdiv44 button,
+        .reportsdiv5 button {
+            background: url('./gis/center.png') repeat;
+            /*background: #003A5F;*/
+            list-style-type: none;
+            cursor: pointer;
+            color: #FFFFFF;
+            height: 32px;
+            opacity: 0.7;
+            border: none;
+            border-radius: 0px;
+            vertical-align: middle;
+        }
+
+        .reportsdiv button:hover,
+        .reportsdiv2 button:hover,
+        .reportsdiv3 button:hover,
+        .reportsdiv44 button:hover,
+        .reportsdiv5 button:hover {
+            background: url('./gis/center.png') repeat;
+            list-style-type: none;
+            text-decoration: underline;
+            cursor: pointer;
+            color: #FFFFFF;
+            height: 32px;
+            opacity: 0.7;
+            border: none;
+            border-radius: 0px;
+            vertical-align: middle;
+        }
+
+        .toolBarRight-leftCorner22 {
+            position: absolute;
+            top: 5px;
+            right: 670px;
+            width: 100px;
+            height: 6%;
+            z-index: 99;
+            list-style-type: none;
+            cursor: pointer;
+            color: #FFFFFF;
+            background: url('./gis/left.png') no-repeat;
+            width: 10px;
+            height: 32px;
+            border: none;
+            opacity: 0.7;
+            vertical-align: middle;
+        }
+
+        .toolBarRight-rightCorner22 {
+            position: absolute;
+            top: 5px;
+            right: 309px;
+            width: 100px;
+            height: 6%;
+            z-index: 99;
+            list-style-type: none;
+            cursor: pointer;
+            color: #FFFFFF;
+            background: url('./gis/right.png') no-repeat;
+            width: 10px;
+            height: 32px;
+            border: none;
+            opacity: 0.7;
+            vertical-align: middle;
+        }
+
+        .reportsdiv {
+            position: absolute;
+            top: 5px;
+            right: 570px;
+            width: 100px;
+            height: 6%;
+            z-index: 99;
+        }
+
+        .reportsdiv2 {
+            position: absolute;
+            top: 5px;
+            right: 528px;
+            width: 100px;
+            height: 6%;
+            z-index: 99;
+        }
+
+        .reportsdiv3 {
+            position: absolute;
+            top: 5px;
+            right: 462px;
+            width: 100px;
+            height: 6%;
+            z-index: 99;
+        }
+
+        .reportsdiv44 {
+            position: absolute;
+            top: 5px;
+            right: 396px;
+            width: 100px;
+            height: 6%;
+            z-index: 99;
+        }
+
+        .reportsdiv5 {
+            position: absolute;
+            top: 5px;
+            right: 297px;
+            width: 100px;
+            height: 6%;
+            z-index: 99;
+        }
+    </style>
+    <div id="centerDiv">
+        <div id="cesiumContainer" class="cesium-container">
+        </div>
+        <div>
+            <div class="toolBarRight-leftCorner22"></div>
+            <div class="toolBarRight-rightCorner22"></div>
+            <div class="reportsdiv">
+                <el-button type="primary" size="mini" @click="drawPoint" class="btn1">点</el-button>
+            </div>
+            <div class="reportsdiv2">
+                <el-button type="primary" size="mini" @click="drawPolyline('false')" class="btn1">空间线</el-button>
+            </div>
+            <div class="reportsdiv3">
+                <el-button type="primary" size="mini" @click="drawPolyline('true')" class="btn1">贴地线</el-button>
+            </div>
+            <div class="reportsdiv44">
+                <el-dropdown size="mini" type="primary" @command="measurelength">
+                    <el-button type="primary" size="mini" class="btn3">
+                        距离测量<i class="el-icon-arrow-down el-icon--right"></i>
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="false">空间距离</el-dropdown-item>
+                        <el-dropdown-item command="true">贴地距离</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+            <div class="reportsdiv5">
+                <el-button type="primary" size="mini" @click="measure_angle" class="btn1">角度测量</el-button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.14.1/index.min.js"></script>
+    <script type="text/javascript" src="./include-lib.js" libpath="./libs"
+        include="jquery,jquery.range,bootstrap,bootstrap-checkbox,font-awesome,web-icons,layer,haoutil,nprogress,toastr,admui,turf,cesium-hchx,echarts-gl"></script>
+   <script src="./libs/featureViewer.js"></script>
+   <script type="text/javascript">
+        const app = new Vue({
+            el: "#centerDiv",
+            methods: {
+                cesiumInit() {
+                    // 创建地图
+                    hchx3d.createMap({
+                        id: 'cesiumContainer',
+                        url: "./config/config.json",
+                        urlWidget: "./config/widget.json",
+                        success: (_viewer, gisdata, jsondata) => {//地图成功加载完成后执行
+                            window.viewer = _viewer;
+                            //开启阴影
+                            window.viewer.shadows = true;
+                            //开启太阳光
+                            window.viewer.scene.globe.enableLighting = true;
+                            //设置当前太阳光时间点
+                            window.viewer.clock.currentTime = new Date("2019-08-01 12:00:00");
+                            window.viewer.hchx.updateTerrainProvider(false);
+                            this.initWork();
+                            // featureViewer.install(window.viewer);
+                            // console.warn('得到GETLKFJDIDDDDD');
+                            // console.warn(document.getElementById('centerDiv'))
+                            //_this.widgetInit(_viewer,jsondata);
+                            hchx3d.widget.init(_viewer, jsondata.widget);
+                        }
+                    });
+                },
+                initWork() {
+                    window.viewer.terrainProvider = Cesium.createWorldTerrain();
+                    // No depth testing against the terrain to avoid z-fighting
+                    window.viewer.scene.globe.depthTestAgainstTerrain = false;
+                    window.viewer.scene.debugShowFramesPerSecond = true; //显示帧数
+
+                    var layers = window.viewer.imageryLayers;
+                    var earthAtNight = layers.addImageryProvider(new Cesium.IonImageryProvider({ assetId: 2 }));
+                    earthAtNight.splitDirection = Cesium.ImagerySplitDirection.LEFT; // Only show to the left of the slider.
+                    this.moveActive = false;
+                },
+                // 左键单击地图
+                onLeftClick_bim(event) {
+                    if (Cesium.defined(this.selected.feature)) {
+                        try {
+                            this.selected.feature.color = this.selected.originalColor;
+                        } catch (ex) { }
+                        this.selected.feature = undefined;
+                    }
+                    // Pick a new feature
+                    var pickedFeature = window.viewer.scene.pick(event.position);
+
+
+                    this.selected.feature = pickedFeature;
+
+                    // Save the selected feature's original color
+                    if (pickedFeature === this.highlighted.feature) {
+                        Cesium.Color.clone(this.highlighted.originalColor, this.selected.originalColor);
+                        this.highlighted.feature = undefined;
+                    } else {
+                        Cesium.Color.clone(pickedFeature.color, this.selected.originalColor);
+                    }
+
+                    // Highlight newly selected feature
+                    console.log(pickedFeature)
+                    pickedFeature.color = this.colorSelected;
+
+                    var names = pickedFeature._content.batchTable.getPropertyNames(pickedFeature._batchId);
+
+                    console.warn(names);
+
+                    var ModelArr = [];
+
+                    names.forEach((item) => {
+                        if (pickedFeature.hasProperty(item)) {
+                            var val = pickedFeature.getProperty(item);
+                            if (val !== null || val !== "") {
+                                ModelArr.push({ name: item, value: val });
+                            }
+                        }
+                    });
+
+                    let ModelId = null;
+
+                    ModelArr.forEach((item) => {
+                        if (item.name === "element") {
+                            ModelId = item.value.toString();
+                        }
+                    });
+                    let postData = {
+                        Tagname: ModelId
+                    }
+
+                    getModelsTag(postData, (res) => {
+                        console.log(res);
+                        this.attrsPanel_Data = res.data.ObjectList;
+                    }, (e) => {
+                        console.log(e);
+                    });
+
+                },
+                onMouseMove_bim() {
+                    if (Cesium.defined(this.highlighted.feature)) {
+                        try {
+                            this.highlighted.feature.color = this.highlighted.originalColor;
+                        } catch (ex) {
+                        }
+                        this.highlighted.feature = undefined;
+                    }
+                },
+                drawPoint() {
+                    const _this = this;
+                    let draw = new hchx3d.Draw(window.viewer, { hasEdit: false });
+                    draw.startDraw({
+                        type: "point",
+                        style: {
+                            pixelSize: 12,
+                            color: '#00E70D',
+                            outlineColor: '#00E70D'
+                        },
+                        success: (entity) => {
+                            //简单绘制时，绘制完成后回调，更多复杂回调可以注册事件监听
+                            var DrawJSON = draw.toGeoJSON();
+                            this.$confirm('将绘制图形, 是否确定?', '提示', {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'warning'
+                            }).then(() => {
+
+                            }).catch(() => {
+                                draw.clearDraw();
+                                _this.$message({
+                                    type: 'info',
+                                    message: '已取消绘制'
+                                });
+                            });
+                        }
+                    });
+                },
+                drawPolyline(command) {
+                    const _this = this;
+                    let draw = new hchx3d.Draw(window.viewer, { hasEdit: false });
+                    let flag = true;
+                    if (command == "false")
+                        flag = false;
+                    draw.startDraw({
+                        type: "polyline",
+                        style: {
+                            color: '#00E70D',
+                            outlineColor: '#00E70D',
+                            width: 3,
+                            clampToGround: flag,
+                        },
+                        success: function (entity) {
+                            //简单绘制时，绘制完成后回调，更多复杂回调可以注册事件监听
+                            var DrawJSON = draw.toGeoJSON();
+                            _this.$confirm('将绘制图形, 是否确定?', '提示', {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'warning'
+                            }).then(() => {
+
+                            }).catch(() => {
+                                draw.clearDraw();
+                                // _this.changebtn(false);
+                                _this.$message({
+                                    type: 'info',
+                                    message: '已取消绘制'
+                                });
+                            });
+                        }
+                    });
+                },
+                measurelength(command) {
+                    const _this = this;
+                    let flag = true;
+                    if (command == "false")
+                        flag = false;
+                    let measureControl = new hchx3d.Measure({
+                        viewer: window.viewer
+                    })
+                    let options = {
+                        unit: 'auto',
+                        terrain: flag,
+                        addHeight: 1,  //在绘制点基础自动增加高度（单位：米）
+                        calback: _this.showResult
+                    };
+                    measureControl.measuerLength(options);
+                },
+                measure_angle() {
+                    let measureControl = new hchx3d.Measure({
+                        viewer: window.viewer
+                    })
+                    let options = {
+                    };
+                    measureControl.measureAngle(options);
+                }
+            },
+            mounted() {
+                this.cesiumInit();
+            }
+        })
+    </script>
+
+</body>
+
+</html>
