@@ -98,6 +98,7 @@ export default {
     this.formProps.forEach((item) => {
       this.rules[item.value] = { required: true };
     });
+    
   },
   methods: {
     handleClose(done) {

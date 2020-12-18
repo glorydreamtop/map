@@ -1,21 +1,12 @@
 <template>
-  <div></div>
+<iframe src="#" frameborder="0" width="100%" height="100%"></iframe>
 </template>
-
 <script>
 export default {
-  name: 'Map',
-  props: {},
-  data() {
-    return {}
-  },
-  created() {},
-  mounted() {},
-  methods: {}
+ 
 }
 </script>
 
-<style lang="scss" scoped>
-  @import "@/assets/css/cesiumViewer.scss";
-  // @import "@/assets/css/index_visualization.scss";
+<style scoped>
+
 </style>
