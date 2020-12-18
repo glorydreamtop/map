@@ -13,13 +13,14 @@
       @change="change"
       class="box flex-col justify-between margin-left-l"
     >
-      <el-radio v-for="item in list" :key="item.o_projectno" :label="item.o_projectno">{{item.o_projectdesc}}</el-radio>
+      <el-radio v-for="item in list" :class="item.o_projectno === projectNo?'is-checked':''" :key="item.o_projectno" :label="item.o_projectno">{{item.o_projectdesc}}</el-radio>
     </el-radio-group>
   </el-dialog>
 </template>
 
 <script>
 import {GetSubProjects} from '@/api'
+import { mapGetters } from 'vuex';
 export default {
   name: "stageSelector",
   props: {
@@ -34,6 +35,9 @@ export default {
       list:[],
       visible:false
     };
+  },
+  computed:{
+    ...mapGetters(['projectNo'])
   },
   watch:{
     showDialog:{
@@ -71,6 +75,9 @@ export default {
   height: 180px;
   .el-input {
     width: 60%;
+  }
+  .is-checked{
+    color: $light;
   }
 }
 </style>

@@ -84,6 +84,7 @@ export default {
         ProjectNo: this.projectNo,
         CurrentPage: page,
         PageSize: 5,
+        TypeName:'农专项设施基础信息'
       });
       this.tableData = list;
       this.total = total;

@@ -10,7 +10,7 @@
       :visible.sync="leftDrawer"
       direction="ltr"
       :wrapperClosable="false"
-      :append-to-body="true"
+      append-to-body
     >
       <left />
     </el-drawer>
@@ -32,7 +32,7 @@ export default {
   name: "app",
   data() {
     return {
-      leftDrawer: false
+      leftDrawer: true
     };
   },
   components: {

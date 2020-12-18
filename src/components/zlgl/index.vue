@@ -32,11 +32,16 @@
             :updateFileId="updateFileId"
             ref="upload"
           />
-          <el-table :data="tableData">
+          <el-table :data="tableData" v-loading="loading3">
             <el-table-column prop="no" label="文件编号"></el-table-column>
             <el-table-column prop="name" label="文件名"></el-table-column>
             <el-table-column prop="type" label="文件类型"></el-table-column>
-            <el-table-column fixed="right" label="操作" width="230" class="justify-between">
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="230"
+              class="justify-between"
+            >
               <template slot-scope="scope">
                 <el-button
                   title="查看"
@@ -81,7 +86,7 @@ import {
   GetDocsByFolderId,
   GetDocumentByDocNo,
   GetWordOrExcelToPDF,
-  DelDoc
+  DelDoc,
 } from "@/api";
 import { mapGetters } from "vuex";
 import upload from "./upload";
@@ -90,8 +95,8 @@ export default {
   props: {
     showDialog: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: { upload },
   data() {
@@ -101,17 +106,18 @@ export default {
       tableData: [], //表格数据
       defaultProps: {
         children: "children",
-        label: "desc"
+        label: "desc",
       },
       currentNo: 0,
-      currentTotal:5,
+      currentTotal: 5,
       loading1: false,
       loading2: false,
-      updateFileId: 0 // 待更新文件id
+      loading3: false,
+      updateFileId: 0, // 待更新文件id
     };
   },
   computed: {
-    ...mapGetters(["projectNo"])
+    ...mapGetters(["projectNo"]),
   },
   watch: {
     showDialog: {
@@ -119,8 +125,8 @@ export default {
         this.visible = newVal;
         newVal && this.getFolders();
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   created() {},
   mounted() {},
@@ -131,15 +137,18 @@ export default {
       this.loading1 = false;
     },
     async getList(currentPage = 1) {
+      this.loading3 = true;
       const { list, total } = await GetDocsByFolderId({
         folderid: this.currentNo,
         CurrentPage: currentPage,
-        PageSize: 5
+        PageSize: 5,
       });
       this.tableData = list;
       this.currentTotal = total;
+      this.loading3 = false;
     },
     handleNodeClick(e) {
+      if(e.children.length>0)return
       this.currentNo = e.no;
       this.getList(1);
     },
@@ -172,8 +181,8 @@ export default {
       // 释放“待更新文件”指针
       this.updateFileId = 0;
       this.getList(1);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -192,7 +201,7 @@ export default {
   .datalist {
     flex-grow: 1;
     margin-left: 20px;
-    .el-pagination{
+    .el-pagination {
       margin: 20px auto;
     }
   }

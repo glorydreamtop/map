@@ -10,12 +10,10 @@ export default {
   props: {},
   data() {
     return {
-      show:false,
-      src:require('@/assets/imgs/展开.png')
+      show:true,
+      src:require('@/assets/imgs/收起.png')
     }
   },
-  created() {},
-  mounted() {},
   methods: {
     drawer(){
       this.$emit('click')
@@ -35,7 +33,7 @@ export default {
   position: absolute;
   left: 0;
   top: 45vh;
-  transform: translateX(0);
+  transform: translateX(25vw);
   transition: transform 0.3s ease 1ms;
 }
 </style>

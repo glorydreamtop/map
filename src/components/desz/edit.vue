@@ -19,7 +19,7 @@
         <el-input v-model="form.Unit"></el-input>
       </el-form-item>
       <el-form-item label="备注">
-        <el-input v-model="form.Remarks"></el-input>
+        <el-input type="textarea" v-model="form.Remarks"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -70,6 +70,7 @@ export default {
             JsonStr: JSON.stringify(form),
           });
         }
+        this.$refs.form.resetFields();
         this.$message.success(`${this.add ? "添加" : "修改"}成功`);
         this.$emit("update");
       } catch (error) {

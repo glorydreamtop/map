@@ -9,5 +9,10 @@
     { "title": "高程分布", "value": "GCFB" },
     { "title": "固资投资", "value": "GZTZ" },
     { "title": "从业人员", "value": "CYRY" },
-    { "title": "其他", "value": "QT" }
+    { "title": "其他", "value": "QT" },
+    { "title": "被调查人", "value": "BDCR" },
+    { "title": "工程类型", "value": "GCLX" },
+    { "title": "GCFW1", "value": "高程范围1" },
+    { "title": "GCFW2", "value": "高程范围2" },
+    { "title": "BZ", "value": "备注" }
 ]

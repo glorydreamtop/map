@@ -1,7 +1,7 @@
 import { getStage, setStage } from "@/utils/cookie"
 
 const state = {
-    projectNo: getStage()
+    projectNo: parseInt(getStage())
 }
 
 const mutations = {
