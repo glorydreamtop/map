@@ -419,3 +419,35 @@ export function DelNCZXSS_BASE(data) {
         data
     })
 }
+//获取主表下子项列表 GetNCZXSS_SUBS
+export function GetNCZXSS_SUBS(data) {
+    return request({
+        url: `${baseReflect}GetNCZXSS_SUBS`,
+        method: 'post',
+        data
+    })
+}
+//添加子项 AddNCZXSS_SUB
+export function AddNCZXSS_SUB(data) {
+    return request({
+        url: `${baseReflect}AddNCZXSS_SUB`,
+        method: 'post',
+        data
+    })
+}
+//修改子项 EditNCZXSS_SUB
+export function EditNCZXSS_SUB(data) {
+    return request({
+        url: `${baseReflect}EditNCZXSS_SUB`,
+        method: 'post',
+        data
+    })
+}
+//删除子项 DelNCZXSS_SUB
+export function DelNCZXSS_SUB(data) {
+    return request({
+        url: `${baseReflect}DelNCZXSS_SUB`,
+        method: 'post',
+        data
+    })
+}

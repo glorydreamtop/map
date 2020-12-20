@@ -30,7 +30,6 @@
       </el-tab-pane>
     </el-tabs>
     <!-- <div v-if="dialogType == 'open_jbqkTbale1'||dialogType == 'open_jbqkTbale2'||dialogType == 'open_jbqkTbale3'||dialogType == 'open_jbqkTbale4'"> -->
-    
     </div>
   </div>
 </template>
