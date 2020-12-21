@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "build": "vue-cli-service build",
+        "build": "vue-cli-service build && node deploy.js",
         "lint": "vue-cli-service lint",
         "deploy": "node deploy.js",
         "dev": "vue-cli-service serve",
@@ -12,10 +12,6 @@
     "dependencies": {
         "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
         "@vue/babel-plugin-transform-vue-jsx": "^1.2.1",
-        "cesium": "^1.75.0",
-        "cesium-navigation": "^1.0.0",
-        "clean-webpack-plugin": "^3.0.0",
-        "compression-webpack-plugin": "^7.0.0",
         "core-js": "^3.6.5",
         "css-loader": "^5.0.1",
         "element-ui": "^2.4.5",
