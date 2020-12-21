@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <navigation></navigation>
-    <ce-map></ce-map>
-    <el-drawer
+     <el-drawer
       :modal="false"
       title="左侧抽屉"
       ref="leftDrawer"
@@ -10,12 +8,14 @@
       :visible.sync="leftDrawer"
       direction="ltr"
       :wrapperClosable="false"
-      append-to-body
     >
       <left />
     </el-drawer>
     <bar @click="closeDrawer" />
     <right></right>
+    <navigation></navigation>
+    <ce-map></ce-map>
+   
     <login></login>
     <!-- <dragableDialog /> -->
   </div>
@@ -32,7 +32,7 @@ export default {
   name: "app",
   data() {
     return {
-      leftDrawer: true
+      leftDrawer: false
     };
   },
   components: {
@@ -62,6 +62,9 @@ export default {
   width: 25vw;
   right: 75vw;
   margin-right: 0;
+}
+.el-drawer{
+  z-index: 200;
 }
 .el-drawer.ltr {
   width: 25vw !important;
