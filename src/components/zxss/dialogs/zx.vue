@@ -8,7 +8,7 @@
   >
     <el-collapse ref="collapse" v-model="collapse" accordion>
       <el-collapse-item title="农村专项设施基础信息" name="1">
-        <form-title @success="createTitle" />
+        <form-title ref="formTitle" @success="createTitle" />
       </el-collapse-item>
       <el-collapse-item
         v-for="(item,index) in types"
@@ -33,13 +33,15 @@ export default {
   props: {},
   provide() {
     return {
-      keyNo: this.keyNo
+      KEYNO: ()=>this.keyNo,
+      ADD:()=>this.add
     };
   },
   data() {
     return {
       collapse: "1",
       dialogVisible: false,
+      add:true,
       keyNo: 0,
       types: ["农专项设施设备"]
     };
@@ -59,7 +61,9 @@ export default {
       done();
     },
     createTitle(e) {
-      this.keyNo = e;
+      if(e){
+        this.keyNo = e;
+      }
       this.$refs.collapse.handleItemClick({ name: "1" });
     },
     createForm(name) {

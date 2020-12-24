@@ -38,14 +38,14 @@
       :total="total"
       small
       :page-size="5"
-      @current-change="pageChange"
+      @current-change="getList"
     ></el-pagination>
   </div>
 </template>
 
 <script>
 import zx from "../dialogs/zx";
-import { GetNCZXSS_BASE } from "@/api";
+import { GetNCZXSS_BASE, DelNCZXSS_BASE } from "@/api";
 import { mapGetters } from "vuex";
 export default {
   name: "nczxTable",
@@ -89,17 +89,27 @@ export default {
       this.tableData = list;
       this.total = total;
     },
-    pageChange(e) {
-      this.getList(e);
-    },
     // 增改
-    postItem(add) {
-      if(add){
-        this.$refs.zx.dialogVisible = true;
-      }
+    postItem(add,e) {
+       this.$refs.zx.dialogVisible = true;
+        this.$refs.zx.add = add;
+        if(e){
+          this.$refs.zx.keyNo = e.KeyNo;
+          this.$nextTick(()=>{
+            this.$refs.zx.$refs.formTitle.form = e;
+          })
+        }
     },
     // 删除
-    delItem() {},
+    async delItem(id) {
+      try {
+        await DelNCZXSS_BASE({id})
+        this.$message.success('删除成功')
+        this.getList(1)
+      } catch (error) {
+        
+      }
+    },
   },
 };
 </script>

@@ -23,15 +23,11 @@
 </template>
 
 <script>
-import { AddNCZXSS_SUB } from "@/api";
+import { AddNCZXSS_SUB, EditNCZXSS_SUB } from "@/api";
 import { deepClone } from "@/utils";
 export default {
-  inject: ["keyNo"],
+  inject: ["KEYNO"],
   props: {
-    add: {
-      type: Boolean,
-      default: true
-    },
     idx: {
       type: Number,
       default: 0
@@ -43,11 +39,18 @@ export default {
   },
   data() {
     return {
+      add:true,
+      id:0, // 子项id
       dialogVisible: false,
       form: {},
       formProps: [],
       rules: {}
     };
+  },
+  computed:{
+    keyNo(){
+      return this.KEYNO()
+    }
   },
   created() {
     const all = require("./subTableProps.json");
@@ -62,6 +65,9 @@ export default {
     // 创建子项
     create() {
       let form = deepClone(this.form);
+      if(form.KeyNo){
+        delete form.KeyNo
+      }
       this.$refs.form.validate(async valid => {
         if (valid) {
           try {
@@ -71,6 +77,11 @@ export default {
                 TypeName: this.title,
                 JsonStr: JSON.stringify(form)
               });
+            }else{
+              await EditNCZXSS_SUB({
+                id: this.id,
+                JsonStr: JSON.stringify(form)
+              })
             }
             this.$emit("success");
             this.$refs.form.resetFields();

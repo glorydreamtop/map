@@ -3,10 +3,10 @@
     <div class="flex margin-bottom-l">
       <el-button icon="el-icon-plus" @click="postItem(true)"></el-button>
       <el-button icon="el-icon-edit" @click="postItem(false)"></el-button>
-      <el-button icon="el-icon-delete" @click="delItem"></el-button>
+      <el-button icon="el-icon-delete" @click="delItem()"></el-button>
     </div>
-    <sub-dialog ref="sub" :add="add" :idx="index" :title="type" />
-    <el-table :data="tableData" border>
+    <sub-dialog ref="sub" :idx="index" :title="type" @success="getList" />
+    <el-table :data="tableData" border highlight-current-row @current-change="handleCurrentChange">
       <el-table-column
         v-for="item in tableProps"
         :prop="item.value"
@@ -19,16 +19,16 @@
       :total="currentTotal"
       small
       :page-size="5"
-      @current-change="pageChange"
+      @current-change="getList"
     ></el-pagination>
   </div>
 </template>
 
 <script>
 import subDialog from "./subDialog";
-import { GetNCZXSS_SUBS } from "../../../api";
+import { GetNCZXSS_SUBS, DelNCZXSS_SUB } from "../../../api";
 export default {
-  inject: ["keyNo"],
+  inject: ["KEYNO"],
   props: {
     type: {
       type: String,
@@ -37,12 +37,18 @@ export default {
   },
   data() {
     return {
-      add: false,
       tableData: [],
       tableProps: [],
       index: 0,
-      currentTotal: 1
+      currentTotal: 1,
+      subId: 0, // 子项id
+      subForm: {} // 子项表单
     };
+  },
+  computed: {
+    keyNo() {
+      return this.KEYNO();
+    }
   },
   components: { subDialog },
   created() {
@@ -56,21 +62,39 @@ export default {
     ];
     this.index = types.indexOf(this.type);
     this.tableProps = allTableProps[this.index];
-    this.getList(1)
+    if (this.keyNo > 0) {
+      this.getList(1);
+    }
   },
   methods: {
     async getList(CurrentPage = 1) {
-      const {list,total} = await GetNCZXSS_SUBS({ CurrentPage, PageSize: 5, TypeName: this.type,id:this.keyNo });
+      const { list, total } = await GetNCZXSS_SUBS({
+        CurrentPage,
+        PageSize: 5,
+        TypeName: this.type,
+        id: this.keyNo
+      });
       this.tableData = list;
       this.currentTotal = total;
     },
-    postItem(add) {
-      this.add = add;
-      this.$refs.sub.dialogVisible = true;
+    handleCurrentChange(e) {
+      this.subId = parseInt(e.KeyNo);
+      this.subForm = e;
     },
-    delItem() {},
-    pageChange(e) {
-      this.getList(e);
+    postItem(add) {
+      this.$refs.sub.add = add;
+      this.$refs.sub.dialogVisible = true;
+      this.$refs.sub.id = this.subId;
+      this.$refs.sub.form = this.subForm;
+    },
+    async delItem() {
+      try {
+        await DelNCZXSS_SUB({ id:this.subId });
+        this.$message.success('删除成功');
+        this.getList(1);
+      } catch (error) {
+        
+      }
     }
   }
 };

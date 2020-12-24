@@ -29,13 +29,13 @@
     <el-button class="btn1" size="mini" type="primary" plain @click="create">立即创建</el-button>
   </el-form>
 </template>
-
 <script>
-import { AddNCZXSS_BASE, GetQuotas } from "@/api";
+import { AddNCZXSS_BASE, GetQuotas, EditNCZXSS_BASE } from "@/api";
 import { mapGetters } from "vuex";
 import { deepClone } from "@/utils";
 export default {
   name: "formTitle",
+  inject: ["KEYNO","ADD"],
   data() {
     return {
       form: {},
@@ -59,14 +59,21 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["projectNo"])
+    ...mapGetters(["projectNo"]),
+    keyNo(){
+      return this.KEYNO()
+    },
+    add(){
+      return this.ADD()
+    }
   },
-  created() {
-    const add = require("./formProps.json");
-    this.formProps = add[0]
+  created() {    
+    const all = require("./formProps.json");
+    this.formProps = all[0];
     this.formProps.forEach(item => {
       this.rules[item.value] = { required: true };
     });
+
   },
   methods: {
     // 获取地区列表
@@ -96,13 +103,21 @@ export default {
       this.$refs.form1.validate(async valid => {
         if (valid) {
           try {
-            let res = await AddNCZXSS_BASE({
-              ProjectNo: this.projectNo,
-              TypeName: "农专项设施基础信息",
-              JsonStr: JSON.stringify(form)
-            });
-            let keyNo = res[0].Keyno;
-            this.$emit('success',keyNo)
+            if (this.add) {
+              let res = await AddNCZXSS_BASE({
+                ProjectNo: this.projectNo,
+                TypeName: "农专项设施基础信息",
+                JsonStr: JSON.stringify(form)
+              });
+              let keyNo = res[0].Keyno;
+              this.$emit("success", keyNo);
+            } else {
+              await EditNCZXSS_BASE({
+                id:this.keyNo,
+                JsonStr:JSON.stringify(form)
+              })
+              this.$emit("success");
+            }
           } catch (error) {
             console.log(error);
           }
