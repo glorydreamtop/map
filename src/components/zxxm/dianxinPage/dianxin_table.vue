@@ -5,20 +5,24 @@
 		</div>
 		<div class="body_table_mian">
 			<el-table v-loading="tableLoad"  :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">
-				<el-table-column prop="SerialNumber" label="编号" width="150" align="center"> </el-table-column>
+				<el-table-column prop="DLBH" label="编号" width="150" align="center"> </el-table-column>
 				<el-table-column prop="Createdate" label="申请时间" align="center"> </el-table-column>
 				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
-				<el-table-column prop="Region" label="地区类型" align="center"> </el-table-column>
-				<el-table-column prop="" label="状态" width="100" align="center"> </el-table-column>
-				<el-table-column prop="TownDESC" label="乡镇" width="100" align="center"> </el-table-column>
-				<el-table-column prop="VillageDESC" label="村委会" align="center"> </el-table-column>
-				<el-table-column prop="VillageGroupDESC" label="村委小组"  align="center"> </el-table-column>
+				<el-table-column  label="高程范围" align="center"> 
+				   <el-table-column prop="GCFW1" label="范围1" width="100" align="center"> </el-table-column>
+				   <el-table-column prop="GCFW2" label="范围2" width="100" align="center"> </el-table-column>
+				</el-table-column>
+				<el-table-column prop="Region" label="工程类型" align="center"> </el-table-column>
+				<el-table-column prop="GTMC" label="线路名称" width="100" align="center"> </el-table-column>
+				<el-table-column prop="ZDMJ" label="起讫点" width="100" align="center"> </el-table-column>
+				<el-table-column prop="YDXZ" label="权属部门" align="center"> </el-table-column>
+				<el-table-column prop="YDHDFS" label="主管机构"  align="center"> </el-table-column>
+				<el-table-column prop="ZCD" label="总长度"  align="center"> </el-table-column>
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
 						<el-button title="查看" icon="el-icon-view" type="primary" plain @click="lookClick(scope.row)"></el-button>
 						<el-button title="修改" icon="el-icon-edit" type="warning" plain @click="editClick(scope.row)"></el-button>
 						<el-button title="删除" icon="el-icon-delete" type="danger" plain @click="delClick(scope.row)"></el-button>
-						<el-button title="发起审批" icon="el-icon-s-check" type="success" plain></el-button>
 
 					</template>
 				</el-table-column>
@@ -31,7 +35,7 @@
 		<div>
 			<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
 			 class="newStyleDialog " custom-class="jbqk_add_table1_dialog">
-				<villageHeaderAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag" ></villageHeaderAdd>
+				<dianxinHeaderAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag" ></dianxinHeaderAdd>
 			</el-dialog>
 		</div>
 	</div>
@@ -44,13 +48,13 @@
 	import {
 		GetAllBaseTablesBaseAttrs,DeleteBaseTable
 	} from '@/api'
-	// import villageHeaderAdd from './village_header_add' //农村基本情况调查表
+	import dianxinHeaderAdd from './dianxin_header_add' 
 	export default {
-		name: "jbqlTable_home",
+		name: "dianliTable",
 		props: {},
-		// components: {
-		// 	villageHeaderAdd,
-		// },
+		components: {
+			dianxinHeaderAdd,
+		},
 		computed: {
 			...mapGetters(['projectNo','BaseType'])
 		},
@@ -110,7 +114,7 @@
 			},
 			lookClick(row) { //查看
 				this.dialogForm = row;
-				this.dialogTitle = '查看农村基本情况调查表';
+				this.dialogTitle = '查看电力调查表';
 				this.dialogType = 'look';
 				this.showFlag = true;
 
@@ -144,14 +148,14 @@
 			},
 			editClick(row) { //修改
 				this.dialogForm = row;
-				this.dialogTitle = '编辑农村基本情况调查表';
+				this.dialogTitle = '编辑电力调查表';
 				this.dialogType = 'edit';
 				this.showFlag = true;
 
 			},
 			addClick() { //添加
 				this.dialogForm = '';
-				this.dialogTitle = '添加农村基本情况调查表';
+				this.dialogTitle = '添加电力调查表';
 				this.dialogType = 'add';
 				this.showFlag = true;
 

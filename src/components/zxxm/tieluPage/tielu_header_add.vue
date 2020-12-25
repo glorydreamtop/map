@@ -20,34 +20,26 @@
 										</el-option>
 									</el-select>
 								</el-form-item>
-                                <el-form-item label="线路名称:" prop="GTMC">
-                                	<el-input  class="input-200" v-model="ruleForm.GTMC" placeholder="请输入线路名称"></el-input>
+                                <el-form-item label="线路名称:" prop="XLMC">
+                                	<el-input  class="input-200" v-model="ruleForm.XLMC" placeholder="请输入线路名称"></el-input>
                                 </el-form-item>
-								<el-form-item label="起讫点:" prop="stationName">
-									<el-input  class="input-200" v-model="ruleForm.ZDMJ" placeholder="请输入起讫点"></el-input>
+								<el-form-item label="等级标准:" prop="DJBZ">
+									<el-input  class="input-200" v-model="ruleForm.DJBZ" placeholder="请输入等级标准"></el-input>
 								</el-form-item>
+								
 								<el-form-item label="权属部门:" prop="stationName">
-									<el-select v-model="ruleForm.Town" filterable :disabled="disabled" placeholder="请选择区县" @change="change_town"
+									<el-select v-model="ruleForm.GLDJ" filterable :disabled="disabled" placeholder="请选择区县" @change="change_town"
 									 class="input-200">
 										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
 										</el-option>
 									</el-select>
 
 								</el-form-item>
-								<el-form-item label="主管机构:" prop="stationName">
-									<el-select v-model="ruleForm.Village" filterable :disabled="disabled" placeholder="请选择区县" @change="change_village"
-									 class="input-200">
-										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageData">
-										</el-option>
-									</el-select>
+								
+								<el-form-item label="功能:" prop="stationName">
+									<el-input  class="input-200" v-model="ruleForm.GN" placeholder="请输入功能"></el-input>
 								</el-form-item>
-								<el-form-item label="等级:" prop="stationName">
-									<el-input  class="input-200" v-model="ruleForm.JYMJ" placeholder="请输入等级"></el-input>
-								</el-form-item>
-								<el-form-item label="建成年月:" prop="ZYCPPZ">
-									 <el-date-picker class="input-200"   v-model="ruleForm.ZYCPPZ"type="date" placeholder="请选择建成年月"> </el-date-picker>
-								</el-form-item>
-		
+								
 
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
@@ -57,114 +49,86 @@
 							</div>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="输电线路" name="2" >
+					<el-collapse-item title="铁路路段" name="2" >
 						<div class="formeBody">
-							<el-button size="mini" @click="addTableItem('sdxl',0)" icon="el-icon-plus"></el-button>
-							<el-button title="修改" @click="editTableItem('sdxl',0)" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" @click="delTableItem('sdxl',0)" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-button size="mini" @click="addTableItem('tlld',0)" icon="el-icon-plus"></el-button>
+							<el-button title="修改" @click="editTableItem('tlld',0)" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delTableItem('tlld',0)" size="mini" icon="el-icon-delete" plain></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
 								<el-table-column type="index" label="序号"  align="left"></el-table-column>
-								<el-table-column prop="YXXDMC" label="影响线段名称" align="center"></el-table-column>
-								<el-table-column prop="YXGLJG" label="运行管理机构" align="center"></el-table-column>
-								<el-table-column prop="GTCZJSL" label="杆塔材质及数量" align="center"></el-table-column>
-								<el-table-column prop="QQDJCD" label="起讫点及长度" align="center"></el-table-column>
-								<el-table-column prop="GCFB" label="高程分布" align="center"></el-table-column>
-								<el-table-column prop="DXXH" label="导线型号及截面积" align="center"></el-table-column>
-								<el-table-column prop="FSFS" label="敷设方式" align="center"></el-table-column>
-								<el-table-column prop="GDFW" label="供电范围" align="center"></el-table-column>
+								<el-table-column prop="MC" label="名称" align="center"></el-table-column>
+								<el-table-column prop="YXCD" label="影响长度" align="center"></el-table-column>
+								<el-table-column prop="QQDD" label="起讫地点" align="center"></el-table-column>
+								<el-table-column prop="XCJXJ" label="线材及线径" align="center"></el-table-column>
+								<el-table-column prop="GGXH" label="规格型号" align="center"></el-table-column>
+								<el-table-column prop="GZ" label="杆质" align="center"></el-table-column>
+								<el-table-column prop="QT" label="其他" align="center"></el-table-column>
+								
 							</el-table>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="变电设施" name="3" >
-						<div class="formeHeader">
-							<el-form :model="bianDian_form" :inline="true" :rules="rules" ref="bianDian_form" label-width="130px" class="demo-ruleForm">
-								
-						        <el-form-item label="名称:" prop="stationName">
-						        	<el-input  class="input-200" v-model="bianDian_form.MC" placeholder="请输入名称"></el-input>
-						        </el-form-item>
-								<el-form-item label="地点:" prop="stationName">
-									<el-input  class="input-200" v-model="bianDian_form.DD" placeholder="请输入地点"></el-input>
-								</el-form-item>
-								<el-form-item label="权属部门:" prop="stationName">
-									<el-select v-model="bianDian_form.QS" filterable :disabled="disabled" placeholder="请选择权属部门" @change="change_town"
-									 class="input-200">
-										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
-										</el-option>
-									</el-select>
-						
-								</el-form-item>
-								<el-form-item label="主管部门:" prop="stationName">
-									<el-select v-model="bianDian_form.ZGBM" filterable :disabled="disabled" placeholder="请选择主管部门" @change="change_village"
-									 class="input-200">
-										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageData">
-										</el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item label="电压等级:" prop="stationName">
-									<el-input  class="input-200" v-model="bianDian_form.DYDJ" placeholder="请输入电压等级"></el-input>
-								</el-form-item>
-								<el-form-item label="容量:" prop="stationName">
-									<el-input  class="input-200" v-model="bianDian_form.RL" placeholder="请输入容量"></el-input>
-								</el-form-item>
-								<el-form-item label="建成年月:" prop="stationName">
-									 <el-date-picker class="input-200"   v-model="bianDian_form.JCNY"type="date" placeholder="请选择日期"> </el-date-picker>
-								</el-form-item>
-								<el-form-item label="供电范围:" prop="stationName">
-									<el-input  class="input-200" v-model="bianDian_form.GDFW" placeholder="请输入供电范围"></el-input>
-								</el-form-item>
-								<el-form-item label="出线间隔:" prop="stationName">
-									<el-input  class="input-200" v-model="bianDian_form.CXJG" placeholder="请输入出线间隔"></el-input>
-								</el-form-item>
-								<el-form-item label="其他:" prop="stationName">
-									<el-input  class="input-200" v-model="bianDian_form.QT" placeholder=""></el-input>
-								</el-form-item>
-								
-						
-							</el-form>
-							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
-								<span class="btn_foot">
-									<el-button class="button-l" type="primary" plain @click="bianDaian_submitForm('bianDian_form')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
-								</span>
-							</div>
-						</div>
-				    </el-collapse-item>
-			        <el-collapse-item title="主要设备" name="4" >
-			        	<div class="formeBody">
-			        		<el-button size="mini" @click="addTableItem('zysb',1)" icon="el-icon-plus"></el-button>
-			        		<el-button title="修改" @click="editTableItem('zysb',1)" size="mini" icon="el-icon-edit" plain></el-button>
-			        		<el-button title="删除" @click="delTableItem('zysb',1)" size="mini" icon="el-icon-delete" plain></el-button>
-			        		<el-table :data="bianDian_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
-			        		 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
-			        		 default-expand-all @row-click="rowClick">
-			        			<el-table-column type="index" label="序号"  align="left"></el-table-column>
-			        			<el-table-column prop="MC" label="设备名称" align="center"></el-table-column>
-			        			<el-table-column prop="DD" label="规格型号" align="center"></el-table-column>
-			        			<el-table-column prop="ZGBM" label="单位" align="center"></el-table-column>
-			        			<el-table-column prop="QS" label="数量" align="center"></el-table-column>
-			        			<el-table-column prop="BZ" label="备注" align="center"></el-table-column>
-			        			
-			        		</el-table>
-			        	</div>
-			        </el-collapse-item>
-					<el-collapse-item title="建筑物/建构物" name="5" >
+					<el-collapse-item title="铁路房屋" name="3" >
 						<div class="formeBody">
-							<el-button size="mini" @click="addTableItem('jzw',2)" icon="el-icon-plus"></el-button>
-							<el-button title="修改" @click="editTableItem('jzw',2)" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" @click="delTableItem('jzw',2)" size="mini" icon="el-icon-delete" plain></el-button>
-							<el-table :data="jianZhu_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
+							<el-button size="mini" @click="addTableItem('tlfw',1)" icon="el-icon-plus"></el-button>
+							<el-button title="修改" @click="editTableItem('tlfw',1)" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delTableItem('tlfw',1)" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
 								<el-table-column type="index" label="序号"  align="left"></el-table-column>
 								<el-table-column prop="MC" label="名称" align="center"></el-table-column>
-								<el-table-column prop="JJ" label="结构" align="center"></el-table-column>
-								<el-table-column prop="JZMJHSL" label="建筑面积或数量" align="center"></el-table-column>
-								<el-table-column prop="BZ" label="备注" align="center"></el-table-column>
+								<el-table-column prop="DJ" label="等级" align="center"></el-table-column>
+								<el-table-column prop="QS" label="权属" align="center"></el-table-column>
+								<el-table-column prop="GM" label="规模" align="center"></el-table-column>
+								<el-table-column prop="JCSJ" label="建成时间" align="center"></el-table-column>
+								<el-table-column prop="DD" label="地点" align="center"></el-table-column>
+								<el-table-column prop="JGLX" label="机构类型" align="center"></el-table-column>
+								<el-table-column prop="JGSL" label="结构数量" align="center"></el-table-column>
+								
+							</el-table>
+						</div>
+				    </el-collapse-item>
+			        <el-collapse-item title="铁路设施设备" name="4" >
+			        	<div class="formeBody">
+			        		<el-button size="mini" @click="addTableItem('tlsssb',2)" icon="el-icon-plus"></el-button>
+			        		<el-button title="修改" @click="editTableItem('tlsssb',2)" size="mini" icon="el-icon-edit" plain></el-button>
+			        		<el-button title="删除" @click="delTableItem('tlsssb',2)" size="mini" icon="el-icon-delete" plain></el-button>
+			        		<el-table :data="bianDian_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
+			        		 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
+			        		 default-expand-all @row-click="rowClick">
+			        			<el-table-column type="index" label="序号"  align="left"></el-table-column>
+			        			<el-table-column prop="MC" label="名称" align="center"></el-table-column>
+			        			<el-table-column prop="DJ" label="隶属关系" align="center"></el-table-column>
+			        			<el-table-column prop="JGLX" label="结构类型" align="center"></el-table-column>
+			        			<el-table-column prop="JGSL" label="规格型号" align="center"></el-table-column>
+			        			<el-table-column prop="SL" label="数量" align="center"></el-table-column>
+			        			<el-table-column prop="RL" label="容量" align="center"></el-table-column>
+			        			
+			        		</el-table>
+			        	</div>
+			        </el-collapse-item>
+					<el-collapse-item title="铁路其他建筑物、构筑物" name="5" >
+						<div class="formeBody">
+							<el-button size="mini" @click="addTableItem('jzw',3)" icon="el-icon-plus"></el-button>
+							<el-button title="修改" @click="editTableItem('jzw',3)" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delTableItem('jzw',3)" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-table :data="bianDian_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
+							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
+							 default-expand-all @row-click="rowClick">
+								<el-table-column type="index" label="序号"  align="left"></el-table-column>
+								<el-table-column prop="MC" label="名称" align="center"></el-table-column>
+								<el-table-column prop="DJ" label="隶属关系" align="center"></el-table-column>
+								<el-table-column prop="JGLX" label="结构类型" align="center"></el-table-column>
+								<el-table-column prop="JGSL" label="规格型号" align="center"></el-table-column>
+								<el-table-column prop="SL" label="数量" align="center"></el-table-column>
+								<el-table-column prop="RL" label="容量" align="center"></el-table-column>
 								
 							</el-table>
 						</div>
 					</el-collapse-item>
+					
 				</el-collapse>
 
 				<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
@@ -192,20 +156,21 @@
 		GetSerialNumber,
 		DeleteBaseTablesAttr
 	} from '@/api'
-	import sdxl from './dianli_sdxl_add'//输电线路
-	import jzw from './dianli_jzw_add'//建筑物
-	import zysb from './dianli_zysb_add'//主要设备
+	import tlld from './tielu_tlld_add'//铁路路段
+	import tlfw from './tielu_tlfw_add'//铁路房屋
+	import tlsssb from './tielu_tlsssb_add'//铁路设施设备
+	import jzw from './tielu_jzw_add'//铁路建筑物
 	export default {
 		name: 'jbqk_table1_add_two',
 		computed: {
 			...mapGetters(['projectNo', 'BaseType', 'KeyNo'])
 		},
 		components: {
-			sdxl,jzw,zysb
+			tlld,tlfw,tlsssb,jzw
 		},
 		data() {
 			return {
-				title:['输电线路','主要设备','建筑物、建构物'],
+				title:['铁路线路','铁路房屋','铁路设施设备','铁路及其他建筑物、构筑物'],
 				countyData: [], //区县数据
 				townData: [], //城镇数据
 				villageData: [], //村庄数据

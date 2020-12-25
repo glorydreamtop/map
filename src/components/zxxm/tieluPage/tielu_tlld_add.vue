@@ -2,46 +2,32 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form :inline="true" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
-					<el-form-item label="影响线段名称:" >
-						<el-input v-model="ruleForm.YXXDMC" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+				<el-form   :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+					
+					<el-form-item label="路段名称:" >
+						<el-input v-model="ruleForm.LDMC" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="运行管理机构:">
-						  <el-cascader v-model="ruleForm.YXGLJG" filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" class="input-200" @change="postionChange"></el-cascader>
-						<!-- <el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input> -->
+					<el-form-item label="影响长度(km):" >
+						<el-input v-model="ruleForm.YXCD" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="单位:" >
-						<el-input v-model="ruleForm.Unit" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="影像起讫点:" >
+						<el-input v-model="ruleForm.QQD" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="杆塔材质及数量:" >
-						<el-input v-model="ruleForm.GTCZJSL" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="营运状态:" >
+						<el-input v-model="ruleForm.LMCL" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="起讫点及长度:" >
-						<el-input v-model="ruleForm.QQDJCD" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
-					</el-form-item>
-					<el-form-item label="高程分布:" >
-						<el-input v-model="ruleForm.GCFB" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
-					</el-form-item>
-					<el-form-item label="导线型号及截面积:" >
-						<el-input v-model="ruleForm.DXXH" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
-					</el-form-item>
-					<el-form-item label="敷设方式:" >
-						<el-input v-model="ruleForm.FSFS" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
-					</el-form-item>
-					<el-form-item label="供电范围:" >
-						<el-input v-model="ruleForm.GDFW" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="使用性质状况:" >
+						<el-input v-model="ruleForm.JXZWBJ" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					<el-form-item label="其他:" >
-						<el-input v-model="ruleForm.QT" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+						<el-input v-model="ruleForm.QT" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					
+					<el-form-item label="备注:" >
+						<el-input type="textarea"  :rows="5" v-model="ruleForm.BZ" :disabled="dialogType=='look'?true:false"></el-input>
+					</el-form-item>
 					
 				</el-form>
-				<el-form  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
-					<el-form-item label="备注:" >
-						<el-input type="textarea" class="input-560" :rows="5" v-model="ruleForm.Remarks" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
-			    </el-form>
+				
                 <div class="margin-top-l text-center " v-show="dialogType!='look'">
                 		<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
                 </div>
@@ -68,6 +54,10 @@
 		data: function() {
 			return {
 				ruleForm: {
+					VirtualitemName: '',
+					VirtualitemDesc: '',
+					Unit: '',
+					AttrNum: '',
 					Remarks: '',
 				},
 				project1:'',
@@ -208,12 +198,12 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height:55vh;
+		height:60vh;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;
 
 	}
-
+    
 	
 </style>

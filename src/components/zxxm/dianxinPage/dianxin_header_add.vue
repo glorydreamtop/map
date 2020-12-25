@@ -7,8 +7,7 @@
 						<div class="formeHeader">
 							<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
 								<el-form-item label="工程类型:" prop="Region">
-									<el-select v-model="ruleForm.Region" filterable :disabled="disabled" placeholder="请选择工程类型" 
-									 class="input-200">
+									<el-select v-model="ruleForm.Region" filterable :disabled="disabled" placeholder="请选择工程类型" class="input-200">
 										<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
 										<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
 										<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
@@ -21,8 +20,16 @@
 										</el-option>
 									</el-select>
 								</el-form-item>
-
-								<el-form-item label="乡镇:" prop="stationName">
+                                <el-form-item label="线路名称:" prop="GTMC">
+                                	<el-input  class="input-200" v-model="ruleForm.GTMC" placeholder="请输入线路名称"></el-input>
+                                </el-form-item>
+								<el-form-item label="线路类型:" prop="XLLX">
+									<el-input  class="input-200" v-model="ruleForm.XLLX" placeholder="请输入线路类型"></el-input>
+								</el-form-item>
+								<el-form-item label="起讫点:" prop="stationName">
+									<el-input  class="input-200" v-model="ruleForm.ZDMJ" placeholder="请输入起讫点"></el-input>
+								</el-form-item>
+								<el-form-item label="权属部门:" prop="stationName">
 									<el-select v-model="ruleForm.Town" filterable :disabled="disabled" placeholder="请选择区县" @change="change_town"
 									 class="input-200">
 										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
@@ -30,20 +37,20 @@
 									</el-select>
 
 								</el-form-item>
-								<el-form-item label="村民委:" prop="stationName">
+								<el-form-item label="主管机构:" prop="stationName">
 									<el-select v-model="ruleForm.Village" filterable :disabled="disabled" placeholder="请选择区县" @change="change_village"
 									 class="input-200">
 										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageData">
 										</el-option>
 									</el-select>
 								</el-form-item>
-								<el-form-item label="村民小组:" prop="stationName">
-									<el-select v-model="ruleForm.VillageGroup" filterable :disabled="disabled" placeholder="请选择区县" @change="change_VillageGroup"
-									 class="input-200">
-										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageGroupData">
-										</el-option>
-									</el-select>
+								<el-form-item label="总长度:" prop="stationName">
+									<el-input  class="input-200" v-model="ruleForm.ZCD" placeholder="请输入总长度"></el-input>
 								</el-form-item>
+								<el-form-item label="建成年月:" prop="ZYCPPZ">
+									 <el-date-picker class="input-200"   v-model="ruleForm.ZYCPPZ"type="date" placeholder="请选择建成年月"> </el-date-picker>
+								</el-form-item>
+		
 
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
@@ -53,29 +60,74 @@
 							</div>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="表数据信息" name="2" v-if="KeyNo">
+					<el-collapse-item title="电信线路" name="2" >
 						<div class="formeBody">
-							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
-							<el-button title="修改" @click="editTableItem" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" @click="delTableItem" size="mini" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="35vh"
+							<el-button size="mini" @click="addTableItem('dxxl',0)" icon="el-icon-plus"></el-button>
+							<el-button title="修改" @click="editTableItem('dxxl',0)" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delTableItem('dxxl',0)" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
-								<el-table-column prop="value" label="编号" width="180" align="left"></el-table-column>
-								<el-table-column prop="label" label="项目"  align="center"></el-table-column>
-								<el-table-column prop="Unit" label="单位"  align="center"></el-table-column>
-								<el-table-column prop="AttrNum" label="数量" align="center"></el-table-column>
-								<el-table-column prop="Remarks" label="备注" align="center"></el-table-column>
+								<el-table-column type="index" label="序号"  align="left"></el-table-column>
+								<el-table-column prop="MC" label="名称" align="center"></el-table-column>
+								<el-table-column prop="YXCD" label="影响长度" align="center"></el-table-column>
+								<el-table-column prop="QQDD" label="起讫地点" align="center"></el-table-column>
+								<el-table-column prop="XCJXJ" label="线材及线径" align="center"></el-table-column>
+								<el-table-column prop="GGXH" label="规格型号" align="center"></el-table-column>
+								<el-table-column prop="GZ" label="杆质" align="center"></el-table-column>
+								<el-table-column prop="QT" label="其他" align="center"></el-table-column>
+								
 							</el-table>
 						</div>
-
-
 					</el-collapse-item>
+					<el-collapse-item title="通信站、机房、信号塔" name="3" >
+						<div class="formeBody">
+							<el-button size="mini" @click="addTableItem('txz',0)" icon="el-icon-plus"></el-button>
+							<el-button title="修改" @click="editTableItem('txz',0)" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delTableItem('txz',0)" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
+							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
+							 default-expand-all @row-click="rowClick">
+								<el-table-column type="index" label="序号"  align="left"></el-table-column>
+								<el-table-column prop="MC" label="名称" align="center"></el-table-column>
+								<el-table-column prop="DJ" label="等级" align="center"></el-table-column>
+								<el-table-column prop="QS" label="权属" align="center"></el-table-column>
+								<el-table-column prop="GM" label="规模" align="center"></el-table-column>
+								<el-table-column prop="JCSJ" label="建成时间" align="center"></el-table-column>
+								<el-table-column prop="DD" label="地点" align="center"></el-table-column>
+								<el-table-column prop="JGLX" label="机构类型" align="center"></el-table-column>
+								<el-table-column prop="JGSL" label="结构数量" align="center"></el-table-column>
+								
+							</el-table>
+						</div>
+				    </el-collapse-item>
+			        <el-collapse-item title="附属设备" name="4" >
+			        	<div class="formeBody">
+			        		<el-button size="mini" @click="addTableItem('fssb',1)" icon="el-icon-plus"></el-button>
+			        		<el-button title="修改" @click="editTableItem('fssb',1)" size="mini" icon="el-icon-edit" plain></el-button>
+			        		<el-button title="删除" @click="delTableItem('fssb',1)" size="mini" icon="el-icon-delete" plain></el-button>
+			        		<el-table :data="bianDian_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
+			        		 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
+			        		 default-expand-all @row-click="rowClick">
+			        			<el-table-column type="index" label="序号"  align="left"></el-table-column>
+			        			<el-table-column prop="MC" label="名称" align="center"></el-table-column>
+			        			<el-table-column prop="DJ" label="隶属关系" align="center"></el-table-column>
+			        			<el-table-column prop="JGLX" label="结构类型" align="center"></el-table-column>
+			        			<el-table-column prop="JGSL" label="规格型号" align="center"></el-table-column>
+			        			<el-table-column prop="SL" label="数量" align="center"></el-table-column>
+			        			<el-table-column prop="RL" label="容量" align="center"></el-table-column>
+			        			
+			        		</el-table>
+			        	</div>
+			        </el-collapse-item>
+					
 				</el-collapse>
 
-				<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
-				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog" >
-					<villageHeaderAdd :dialog-type="fly2_dialogType" :dialog-table="tableItemData" v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></villageHeaderAdd>
+				<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
+				 class="newStyleDialog " :custom-class="`${fly2_dialogIndex}_dialog`">
+				 <components :is="fly2_dialogIndex" :dialog-type="fly2_dialogType" :dialog-table="tableItemData" v-on:showStudes="showStudescode"
+					 :dialog-form="fly2_dialogForm" v-if="showFlag"></components>
+				
 				</el-dialog>
 			</div>
 
@@ -96,23 +148,27 @@
 		GetSerialNumber,
 		DeleteBaseTablesAttr
 	} from '@/api'
-	import villageHeaderAdd from './village_item_add' 
+	import dxxl from './dianxin_dxxl_add'//电信线路
+	import txz from './dianxin_txz_add'//通信站
+	import fssb from './dianxin_fssb_add'//附属设备
 	export default {
 		name: 'jbqk_table1_add_two',
 		computed: {
-			...mapGetters(['projectNo','BaseType','KeyNo'])
+			...mapGetters(['projectNo', 'BaseType', 'KeyNo'])
 		},
 		components: {
-			villageHeaderAdd
+			dxxl,txz,fssb
 		},
 		data() {
 			return {
+				title:['电信线路','通信站、机房、信号塔','附属设备'],
 				countyData: [], //区县数据
 				townData: [], //城镇数据
 				villageData: [], //村庄数据
 				villageGroupData: [], //村庄小组
 				dialogTitle: '', //弹出框标题
 				fly2_dialogForm: "", //弹出框表单
+				fly2_dialogIndex:'',
 				showFlag: false, //弹出框显隐状态
 				fly2_dialogType: '', //弹出框操作类型
 				activeFormIndex: ['1'], //当前手风琴默认打开
@@ -124,7 +180,10 @@
 					Region: '',
 
 				},
+				bianDian_form:{},
 				tableItemData: [], //数据项列表数据
+				bianDian_tableData:[],
+				jianZhu_tableData:[],
 				tableData: [],
 				loading: false,
 				disabled: false,
@@ -136,8 +195,8 @@
 					}, ],
 
 				},
-				tableLoad:false,
-				submitLoad:false,
+				tableLoad: false,
+				submitLoad: false,
 
 			}
 		},
@@ -168,82 +227,89 @@
 				row,
 				rowIndex
 			}) {
-				  return row.ClassName;
+				return row.ClassName;
 			},
-            rowClick(row, column){//单击表格一行
+			rowClick(row, column) { //单击表格一行
 				console.log(row, column);
-				if(row.ClassName=="singleitem"){
-					this.fly2_dialogForm=row;
-					
+				if (row.ClassName == "singleitem") {
+					this.fly2_dialogForm = row;
+
 				}
 			},
-			addTableItem() { //添加项目
+			addTableItem(data,index) { //添加项目
+			  
 				this.fly2_dialogForm = '';
-				this.dialogTitle = '添加农村信息数据项';
+				this.dialogTitle =`添加${this.title[index]}`;
+				this.fly2_dialogIndex=data;
 				this.fly2_dialogType = 'add';
 				this.showFlag = true;
 			},
-			editTableItem(){//添加
-				if(this.fly2_dialogForm){
-					this.dialogTitle = '修改农村信息数据项';
+			editTableItem(data,index) { //添加
+				if (this.fly2_dialogForm) {
+					this.fly2_dialogIndex=data;
+					this.dialogTitle =`添加${this.title[index]}`;
 					this.fly2_dialogType = 'edit';
 					this.showFlag = true;
-				}else{
+				} else {
 					this.$message({
 						message: '请选择要编辑的数据项',
 						type: 'error',
 						center: true
 					})
 				}
-				
+
 			},
-			delTableItem(){//删除
-			console.log(this.fly2_dialogForm)
-			    if(this.fly2_dialogForm){
-					var self=this;
+			delTableItem(data,index) { //删除
+				console.log(this.fly2_dialogForm)
+				if (this.fly2_dialogForm) {
+					var self = this;
 					this.$confirm('此操作将永久删除, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
 						center: true,
 						type: 'warning'
 					}).then(() => {
-						DeleteBaseTablesAttr({id:this.fly2_dialogForm.KeyNo}).then((res) => {
+						DeleteBaseTablesAttr({
+							id: this.fly2_dialogForm.KeyNo
+						}).then((res) => {
 							console.log(res)
-								self.$message({
-									message: '操作成功',
-									type: 'success',
-									center: true
-								});
-								self.GetJBQKDCBItemInit();
-						
+							self.$message({
+								message: '操作成功',
+								type: 'success',
+								center: true
+							});
+							self.GetJBQKDCBItemInit();
+
 						}).catch((res) => {
 							console.log(res);
 						})
-					
-					
+
+
 					}).catch((res) => {
-						
+
 					})
-				}else{
+				} else {
 					this.$message({
 						message: '请选择要删除的数据项',
 						type: 'error',
 						center: true
 					})
 				}
-				
+
 			},
-			GetJBQKDCBItemInit() {//获取数据项
-			    console.log(this.KeyNo)
-				var data = {id: this.KeyNo};
+			GetJBQKDCBItemInit() { //获取数据项
+				console.log(this.KeyNo)
+				var data = {
+					id: this.KeyNo
+				};
 				GetBaseTablesListAttrs(data).then((res) => {
-						 this.tableItemData =res;
-						 console.log(res, this.tableItemData, '获取数据项')
-				})
-				.catch((error) => {
-					this.tableItemData = [];
-					console.log(error)
-				})
+						this.tableItemData = res;
+						console.log(res, this.tableItemData, '获取数据项')
+					})
+					.catch((error) => {
+						this.tableItemData = [];
+						console.log(error)
+					})
 			},
 			change_county(data) { //选中区县,获取乡镇
 				for (var i = 0; i < this.countyData.length; i++) {
@@ -284,27 +350,27 @@
 					ProjectNo: this.projectNo
 				};
 				GetLocations(data).then((res) => {
-					this[type]=res;
-				})
-				.catch((error) => {
-					this.tableData = [];
-					console.log(error)
-				})
+						this[type] = res;
+					})
+					.catch((error) => {
+						this.tableData = [];
+						console.log(error)
+					})
 			},
-			
+
 			closeDialog() { //关闭弹出框
 				this.GetJBQKDCBItemInit();
 			},
 			showStudescode(data) { //监听弹出框是关还是闭
-			   this.showFlag = data;
-               this.GetJBQKDCBItemInit();
-			  
+				this.showFlag = data;
+				this.GetJBQKDCBItemInit();
+
 			},
 			submitForm(formName) { //表单提交按钮
 				this.$refs[formName].validate((valid) => {
 					var self = this;
 					if (valid) {
-						this.submitLoad=true;
+						this.submitLoad = true;
 						if (self.dialogType == 'add') { //添加时候先获取编号
 							var url = AddBaseTablesBaseAttrs;
 							var data = {
@@ -321,7 +387,7 @@
 							};
 						}
 						url(data).then((res) => {
-							this.submitLoad=false;
+							this.submitLoad = false;
 							if (self.dialogType == 'add') {
 								this.$store.commit('jbqk/set_KeyNo', res[0].Keyno)
 							}
@@ -333,7 +399,7 @@
 							})
 						}).catch((res) => {
 							console.log(res)
-							this.submitLoad=false;
+							this.submitLoad = false;
 
 						})
 					} else {
