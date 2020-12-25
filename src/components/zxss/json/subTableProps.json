@@ -1,0 +1,134 @@
+[
+    [
+        {
+            "title": "设施设备编号",
+            "value": "SSSBBH",
+            "hide": true
+        },
+        {
+            "title": "设施设备名称",
+            "value": "SSSBMC"
+        },
+        {
+            "title": "结构类型",
+            "value": "JGLX"
+        },
+        {
+            "title": "规格型号",
+            "value": "GGXH"
+        },
+        {
+            "title": "计量单位",
+            "value": "JLDW"
+        },
+        {
+            "title": "数量",
+            "value": "SL"
+        },
+        {
+            "title": "单位",
+            "value": "DW"
+        },
+        {
+            "title": "备注",
+            "value": "BZ",
+            "textArea": true
+        }
+    ],
+    [
+        {
+            "title": "房屋编号",
+            "value": "GTBH",
+            "hide": true
+        },
+        {
+            "title": "名称",
+            "value": "GTMC"
+        },
+        {
+            "title": "结构",
+            "value": "ZDMJ"
+        },
+        {
+            "title": "单位",
+            "value": "YDXZ"
+        },
+        {
+            "title": "数量",
+            "value": "YDHDFS"
+        },
+        {
+            "title": "权属",
+            "value": "JYMJ"
+        },
+        {
+            "title": "备注",
+            "value": "BZ",
+            "textArea": true
+        }
+    ],
+    [
+        {
+            "title": "设备编号",
+            "value": "SBBH",
+            "hide": true
+        },
+        {
+            "title": "名称",
+            "value": "SBMC"
+        },
+        {
+            "title": "结构",
+            "value": "JG"
+        },
+        {
+            "title": "规格型号",
+            "value": "GGXH"
+        },
+        {
+            "title": "单位",
+            "value": "DW"
+        },
+        {
+            "title": "数量",
+            "value": "SL"
+        },
+        {
+            "title": "购买建成时间",
+            "value": "GMJCSJ"
+        },
+        {
+            "title": "备注",
+            "value": "BZ",
+            "textArea": true
+        }
+    ],
+    [
+        {
+            "title": "存货编号",
+            "value": "GTBH",
+            "hide": true
+        },
+        {
+            "title": "名称",
+            "value": "GTMC"
+        },
+        {
+            "title": "规格型号",
+            "value": "ZDMJ"
+        },
+        {
+            "title": "单位",
+            "value": "YDXZ"
+        },
+        {
+            "title": "数量",
+            "value": "YDHDFS"
+        },
+        {
+            "title": "备注",
+            "value": "BZ",
+            "textArea": true
+        }
+    ]
+]

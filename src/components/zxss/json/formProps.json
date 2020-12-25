@@ -64,5 +64,63 @@
             "title": "备注",
             "value": "BZ"
         }
+    ],
+    [
+        {
+            "title": "个体名称",
+            "value": "GTMC"
+        },
+        {
+            "title": "占地面积",
+            "value": "ZDMJ"
+        },
+        {
+            "title": "用地性质",
+            "value": "YDXZ"
+        },
+        {
+            "title": "用地取得方式",
+            "value": "YDHDFS"
+        },
+        {
+            "title": "经营面积",
+            "value": "JYMJ"
+        },
+        {
+            "title": "主要产品品种",
+            "value": "ZYCPPZ"
+        },
+        {
+            "title": "年产值",
+            "value": "NCZ"
+        },
+        {
+            "title": "年利润",
+            "value": "NLY"
+        },
+        {
+            "title": "税金",
+            "value": "SJ"
+        },
+        {
+            "title": "被调查人",
+            "value": "BDCR"
+        },
+        {
+            "title": "工程类型",
+            "value": "GCLX"
+        },
+        {
+            "title": "高程范围1",
+            "value": "GCFW1"
+        },
+        {
+            "title": "高程范围2",
+            "value": "GCFW2"
+        },
+        {
+            "title": "备注",
+            "value": "BZ"
+        }
     ]
 ]

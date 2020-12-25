@@ -30,12 +30,12 @@
   </el-form>
 </template>
 <script>
-import { AddNCZXSS_BASE, GetQuotas, EditNCZXSS_BASE } from "@/api";
+import { AddNCZXSS_BASE, GetLocations, EditNCZXSS_BASE } from "@/api";
 import { mapGetters } from "vuex";
 import { deepClone } from "@/utils";
 export default {
   name: "formTitle",
-  inject: ["KEYNO","ADD"],
+  inject: ["KEYNO", "ADD", "TOPINDEX"],
   data() {
     return {
       form: {},
@@ -60,25 +60,32 @@ export default {
   },
   computed: {
     ...mapGetters(["projectNo"]),
-    keyNo(){
-      return this.KEYNO()
+    keyNo() {
+      return this.KEYNO();
     },
-    add(){
-      return this.ADD()
+    add() {
+      return this.ADD();
+    },
+    topIndex() {
+      return this.TOPINDEX();
     }
   },
-  created() {    
-    const all = require("./formProps.json");
-    this.formProps = all[0];
-    this.formProps.forEach(item => {
-      this.rules[item.value] = { required: true };
-    });
-
+  watch: {
+    topIndex: {
+      handler(newVal) {
+        const all = require("../json/formProps.json");
+        this.formProps = all[newVal];
+        this.formProps.forEach(item => {
+          this.rules[item.value] = { required: true };
+        });
+      },
+      immediate:true
+    }
   },
   methods: {
     // 获取地区列表
     async getArea(Locationno = 0) {
-      return await GetQuotas({
+      return await GetLocations({
         ProjectNo: this.projectNo,
         Locationno
       });
@@ -113,9 +120,9 @@ export default {
               this.$emit("success", keyNo);
             } else {
               await EditNCZXSS_BASE({
-                id:this.keyNo,
-                JsonStr:JSON.stringify(form)
-              })
+                id: this.keyNo,
+                JsonStr: JSON.stringify(form)
+              });
               this.$emit("success");
             }
           } catch (error) {

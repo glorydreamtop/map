@@ -52,7 +52,7 @@ export default {
   },
   components: { subDialog },
   created() {
-    const allTableProps = require("./subTableProps.json");
+    const allTableProps = require("../json/subTableProps.json");
     let types = [
       "农专项设施设备",
       "农村个体房屋及构筑物",

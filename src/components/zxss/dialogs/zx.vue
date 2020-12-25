@@ -7,7 +7,7 @@
     :before-close="handleClose"
   >
     <el-collapse ref="collapse" v-model="collapse" accordion>
-      <el-collapse-item title="农村专项设施基础信息" name="1">
+      <el-collapse-item :title="currentType" name="1">
         <form-title ref="formTitle" @success="createTitle" />
       </el-collapse-item>
       <el-collapse-item
@@ -33,35 +33,42 @@ export default {
   props: {},
   provide() {
     return {
-      KEYNO: ()=>this.keyNo,
-      ADD:()=>this.add
+      KEYNO: () => this.keyNo,
+      ADD: () => this.add
     };
   },
+  inject: ["TOPINDEX"],
   data() {
     return {
       collapse: "1",
       dialogVisible: false,
-      add:true,
+      add: true,
       keyNo: 0,
-      types: ["农专项设施设备"]
+      types: ["农专项设施设备"],
+      currentType: ""
     };
   },
+  computed: {
+    topIndex() {
+      return this.TOPINDEX();
+    }
+  },
   components: { formTitle, formMain },
-  created() {
-    let types = [
-      "农专项设施设备",
-      "农村个体房屋及构筑物",
-      "农村个体专用房屋及构筑物",
-      "农村个体设施设备",
-      "农村个体存货"
-    ];
+  watch: {
+    topIndex: {
+      handler(newVal) {
+        let types = require("../json/formMain.json");
+        this.types = types[newVal];
+        this.currentType = ["农专项设施基础信息", "农村个体工商户调查基本信息"][newVal];
+      }
+    }
   },
   methods: {
     handleClose(done) {
       done();
     },
     createTitle(e) {
-      if(e){
+      if (e) {
         this.keyNo = e;
       }
       this.$refs.collapse.handleItemClick({ name: "1" });

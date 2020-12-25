@@ -12,18 +12,15 @@
     custom-class="el-dialog"
       :title="dialogTitle"
       append-to-body
-      @close="closeDialog"
       :visible.sync="showFlag"
     >
-      <!-- 动态组件 -->
-      <component class="box" :is="dialogType" :dialog-type="dialogType"></component>
+      <zx class="box" :dialog-type="dialogType"></zx>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import zx from './tables/zx'
-import gt from './tables/gt'
+import zx from './zx'
 export default {
   name: "Zxss",
   props: {},
@@ -34,7 +31,7 @@ export default {
       dialogType: "",
     };
   },
-  components:{zx,gt},
+  components:{zx},
   created() {},
   mounted() {},
   methods: {
@@ -46,9 +43,6 @@ export default {
       this.dialogTitle = `建设征地农村${map[e].title}调查`;
       this.dialogType = map[e].name;
       this.showFlag = true;
-    },
-    closeDialog() {
-      this.showFlag = false;
     },
     showStudescode() {},
   },

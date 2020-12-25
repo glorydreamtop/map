@@ -9,12 +9,7 @@
         :prop="item.value"
         :label="item.title"
       ></el-table-column>
-      <el-table-column
-        fixed="right"
-        label="操作"
-        width="230"
-        class="justify-between"
-      >
+      <el-table-column fixed="right" label="操作" width="230" class="justify-between">
         <template slot-scope="scope">
           <el-button
             title="更新"
@@ -44,39 +39,55 @@
 </template>
 
 <script>
-import zx from "../dialogs/zx";
+import zx from "./dialogs/zx";
 import { GetNCZXSS_BASE, DelNCZXSS_BASE } from "@/api";
 import { mapGetters } from "vuex";
 export default {
   name: "nczxTable",
+  provide() {
+    return {
+      TOPINDEX: () => this.index
+    };
+  },
+  props: {
+    dialogType: {
+      type: String,
+      required: true,
+      default: "zx"
+    }
+  },
   data() {
     return {
       tableData: [],
       total: 0,
-      tableProps: [
-        { title: "专项名称", value: "ZXMC" },
-        { title: "项目名称", value: "XMMC" },
-        { title: "权属单位", value: "QSDW" },
-        { title: "建成年月", value: "JCNY" },
-        { title: "规模", value: "GM" },
-        { title: "年产值", value: "NCZ" },
-        { title: "年利润", value: "NLR" },
-        { title: "税金", value: "SJ" },
-        { title: "高程分布", value: "GCFB" },
-        { title: "固定资产投资", value: "GDZCTZ" },
-        { title: "从业人员", value: "CYRY" },
-        { title: "其他", value: "QT" },
-      ], // 表格表头
+      index:0,
+      currentType: "",
+      tableProps: [] // 表格表头
     };
   },
   computed: {
-    ...mapGetters(["projectNo"]),
+    ...mapGetters(["projectNo"])
   },
   components: {
-    zx,
+    zx
   },
-  created() {
-    this.getList();
+  watch: {
+    dialogType: {
+      handler(newVal) {
+        const map = {
+          zx: 0,
+          gt: 1
+        };
+        const all = require("./json/formProps.json");
+        this.index = map[newVal];
+        this.tableProps = all[this.index];
+        this.currentType = ["农专项设施基础信息", "农村个体工商户调查基本信息"][
+          this.index
+        ];
+        this.getList();
+      },
+      immediate: true
+    }
   },
   methods: {
     async getList(page = 1) {
@@ -84,33 +95,31 @@ export default {
         ProjectNo: this.projectNo,
         CurrentPage: page,
         PageSize: 5,
-        TypeName:'农专项设施基础信息'
+        TypeName: this.currentType
       });
       this.tableData = list;
       this.total = total;
     },
     // 增改
-    postItem(add,e) {
-       this.$refs.zx.dialogVisible = true;
-        this.$refs.zx.add = add;
-        if(e){
-          this.$refs.zx.keyNo = e.KeyNo;
-          this.$nextTick(()=>{
-            this.$refs.zx.$refs.formTitle.form = e;
-          })
-        }
+    postItem(add, e) {
+      this.$refs.zx.dialogVisible = true;
+      this.$refs.zx.add = add;
+      if (e) {
+        this.$refs.zx.keyNo = e.KeyNo;
+        this.$nextTick(() => {
+          this.$refs.zx.$refs.formTitle.form = e;
+        });
+      }
     },
     // 删除
     async delItem(id) {
       try {
-        await DelNCZXSS_BASE({id})
-        this.$message.success('删除成功')
-        this.getList(1)
-      } catch (error) {
-        
-      }
-    },
-  },
+        await DelNCZXSS_BASE({ id });
+        this.$message.success("删除成功");
+        this.getList(1);
+      } catch (error) {}
+    }
+  }
 };
 </script>
 

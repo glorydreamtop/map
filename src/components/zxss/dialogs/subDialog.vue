@@ -53,7 +53,7 @@ export default {
     }
   },
   created() {
-    const all = require("./subTableProps.json");
+    const all = require("../json/subTableProps.json");
     this.formProps = all[this.idx];
     this.formProps.forEach(item => {
       if (!item.hide) {
