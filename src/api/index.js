@@ -500,16 +500,9 @@ export function getHouseClass(data) {
         data
     })
 }
-//获取类型列表 GetQuotaItemList
-export function GetQuotaItemList(data) {
-    return request({
-        url: `${baseReflect}getHouseClass`,
-        method: 'post',
-        data
-    })
-}
-//获取户下的子项信息 getHousehold_Subs
 
+
+//获取户下的子项信息 getHousehold_Subs
 export function getHousehold_Subs(data) {
     return request({
         url: `${baseReflect}getHousehold_Subs`,
