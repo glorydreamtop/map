@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" append-to-body :visible.sync="dialogVisible">
+  <el-dialog :title="title" append-to-body :visible.sync="dialogVisible" :before-close="handlerClose">
     <el-form class="flex" ref="form" :rules="rules" :model="form">
       <el-form-item
         v-for="item in formProps"
@@ -91,6 +91,10 @@ export default {
           }
         }
       });
+    },
+    handlerClose(done){
+      this.$refs.form.resetFields();
+      done()
     }
   }
 };

@@ -69,6 +69,38 @@
     ],
     [
         {
+            "title": "房屋编号",
+            "value": "GTBH",
+            "hide": true
+        },
+        {
+            "title": "名称",
+            "value": "GTMC"
+        },
+        {
+            "title": "结构",
+            "value": "ZDMJ"
+        },
+        {
+            "title": "单位",
+            "value": "YDXZ"
+        },
+        {
+            "title": "数量",
+            "value": "YDHDFS"
+        },
+        {
+            "title": "权属",
+            "value": "JYMJ"
+        },
+        {
+            "title": "备注",
+            "value": "BZ",
+            "textArea": true
+        }
+    ],
+    [
+        {
             "title": "设备编号",
             "value": "SBBH",
             "hide": true

@@ -5,6 +5,8 @@
         placeholder="选择地区"
         :show-all-levels="false"
         @change="selectArea"
+        ref="cascader"
+        :value="area"
         :props="selectorList"
       ></el-cascader>
     </el-form-item>
@@ -24,9 +26,11 @@
       :label="item.title"
       :prop="item.value"
     >
-      <el-input v-model="form[item.value]" placeholder="必填"></el-input>
+      <component :is="item.type" v-model="form[item.value]" placeholder="必填">
+        <template v-if="item.unit" slot="append">{{item.unit}}</template>
+      </component>
     </el-form-item>
-    <el-button class="btn1" size="mini" type="primary" plain @click="create">立即创建</el-button>
+    <el-button class="btn1" size="mini" type="primary" plain @click="create">{{`立即${add?"创建":"更新"}`}}</el-button>
   </el-form>
 </template>
 <script>
@@ -38,6 +42,8 @@ export default {
   inject: ["KEYNO", "ADD", "TOPINDEX"],
   data() {
     return {
+      comName:"elInput",
+      area: "",
       form: {},
       formProps: [], // 表单内容
       rules: {}, // 表单验证规则
@@ -76,10 +82,31 @@ export default {
         const all = require("../json/formProps.json");
         this.formProps = all[newVal];
         this.formProps.forEach(item => {
-          this.rules[item.value] = { required: true };
+          item.type = item.type || 'elInput'
+          this.rules[item.value] = { required: !item.notRequired };
         });
       },
-      immediate:true
+      immediate: true
+    }
+  },
+  mounted() {
+    if (!this.add) {
+      this.$nextTick(() => {
+        const e = this.form;
+        this.area = [
+          { name: e.CountyDESC, id: e.County },
+          { name: e.TownDESC, id: e.Town },
+          { name: e.VillageDESC, id: e.Village },
+          { name: e.VillageGroupDESC, id: e.VillageGroup }
+        ];
+        // this.area = [e.CountyDESC,e.TownDESC,e.VillageDESC,e.VillageGroupDESC]
+        console.log(123);
+
+        const cascader = this.$refs.cascader;
+        cascader.panel.activePath = [];
+        cascader.panel.loadCount = 0;
+        cascader.panel.lazyLoad();
+      });
     }
   },
   methods: {

@@ -2,7 +2,7 @@
   <div>
     <el-button icon="el-icon-plus" @click="postItem(true)"></el-button>
     <zx ref="zx" />
-    <el-table class="margin-top-l" :data="tableData">
+    <el-table class="margin-top-l" :data="tableData" v-loading="loading">
       <el-table-column
         v-for="item in tableProps"
         :key="item.value"
@@ -60,8 +60,9 @@ export default {
     return {
       tableData: [],
       total: 0,
-      index:0,
-      currentType: "",
+      index: 0,
+      loading: false,
+      currentType: "农专项设施基础信息",
       tableProps: [] // 表格表头
     };
   },
@@ -91,6 +92,7 @@ export default {
   },
   methods: {
     async getList(page = 1) {
+      this.loading = true;
       const { total, list } = await GetNCZXSS_BASE({
         ProjectNo: this.projectNo,
         CurrentPage: page,
@@ -99,6 +101,7 @@ export default {
       });
       this.tableData = list;
       this.total = total;
+      this.loading = false;
     },
     // 增改
     postItem(add, e) {

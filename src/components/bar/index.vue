@@ -32,6 +32,7 @@ export default {
   }
   position: absolute;
   left: 0;
+  z-index: 600;
   top: 45vh;
   transform: translateX(0);
   transition: transform 0.3s ease 1ms;

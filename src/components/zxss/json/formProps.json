@@ -10,7 +10,8 @@
         },
         {
             "title": "建成年月",
-            "value": "JCNY"
+            "value": "JCNY",
+            "type":"elDatePicker"
         },
         {
             "title": "规模",
@@ -18,15 +19,18 @@
         },
         {
             "title": "年产值",
-            "value": "NCZ"
+            "value": "NCZ",
+            "unit":"万元"
         },
         {
             "title": "年利润",
-            "value": "NLR"
+            "value": "NLR",
+            "unit":"万元"
         },
         {
             "title": "税金",
-            "value": "SJ"
+            "value": "SJ",
+            "unit":"万元"
         },
         {
             "title": "高程分布",
@@ -34,15 +38,18 @@
         },
         {
             "title": "固资投资",
-            "value": "GZTZ"
+            "value": "GDZCTZ",
+            "unit":"万元"
         },
         {
             "title": "从业人员",
-            "value": "CYRY"
+            "value": "CYRY",
+            "unit":"人"
         },
         {
             "title": "其他",
-            "value": "QT"
+            "value": "QT",
+            "notRequired":true
         },
         {
             "title": "被调查人",
@@ -54,15 +61,18 @@
         },
         {
             "title": "高程范围1",
-            "value": "GCFW1"
+            "value": "GCFW1",
+            "unit":"米"
         },
         {
             "title": "高程范围2",
-            "value": "GCFW2"
+            "value": "GCFW2",
+            "unit":"米"
         },
         {
             "title": "备注",
-            "value": "BZ"
+            "value": "BZ",
+            "notRequired":true
         }
     ],
     [

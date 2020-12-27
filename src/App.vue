@@ -64,7 +64,10 @@ export default {
   margin-right: 0;
 }
 .el-drawer{
-  z-index: 200;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 600;
 }
 .el-drawer.ltr {
   width: 25vw !important;

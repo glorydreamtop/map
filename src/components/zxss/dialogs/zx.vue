@@ -45,7 +45,7 @@ export default {
       add: true,
       keyNo: 0,
       types: ["农专项设施设备"],
-      currentType: ""
+      currentType: "农专项设施基础信息"
     };
   },
   computed: {
@@ -59,12 +59,16 @@ export default {
       handler(newVal) {
         let types = require("../json/formMain.json");
         this.types = types[newVal];
-        this.currentType = ["农专项设施基础信息", "农村个体工商户调查基本信息"][newVal];
-      }
+        this.currentType = ["农专项设施基础信息", "农村个体工商户调查基本信息"][
+          newVal
+        ];
+      },
+      immediate: true
     }
   },
   methods: {
     handleClose(done) {
+      this.$refs.formTitle.$refs.form1.resetFields()
       done();
     },
     createTitle(e) {
