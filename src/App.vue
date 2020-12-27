@@ -14,8 +14,7 @@
     <bar @click="closeDrawer" />
     <right></right>
     <navigation></navigation>
-    <ce-map></ce-map>
-   
+    <!-- <ce-map></ce-maAp> -->
     <login></login>
     <!-- <dragableDialog /> -->
   </div>

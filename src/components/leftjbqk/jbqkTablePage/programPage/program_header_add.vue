@@ -6,8 +6,8 @@
 					<el-collapse-item title="表基础信息" name="1">
 						<div class="formeHeader">
 							<el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
-								<el-form-item label="地区类型:" prop="Region">
-									<el-select v-model="ruleForm.Region" filterable :disabled="disabled" placeholder="请选择地区类型" 
+								<el-form-item label="工程类型:" prop="Region">
+									<el-select v-model="ruleForm.Region" filterable :disabled="disabled" placeholder="请选择工程类型" 
 									 class="input-200">
 										<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
 										<el-option key="2" label="水库影响区" value="水库影响区"></el-option>

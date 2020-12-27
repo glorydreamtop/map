@@ -5,5 +5,7 @@ const getters = {
     projectNo: (state) => state.info.projectNo,
 	KeyNo: (state) => state.jbqk.KeyNo,
 	BaseType: (state) => state.jbqk.BaseType,
+	parcelId: (state) => state.hxx.parcelId,
+	Locationno: (state) => state.hxx.Locationno,
 }
 export default getters

@@ -2,17 +2,24 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form label-position="top"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+				<el-form   :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
 					<el-form-item label="项目:">
 						  <el-cascader v-model="project1" filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
 						<!-- <el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input> -->
 					</el-form-item>
+					<el-form-item label="名称:" >
+						<el-input v-model="ruleForm.MC" :disabled="dialogType=='look'?true:false"></el-input>
+					</el-form-item>
+					<el-form-item label="结构:" >
+						<el-input v-model="ruleForm.JJ" :disabled="dialogType=='look'?true:false"></el-input>
+					</el-form-item>
 					<el-form-item label="单位:" >
-						<el-input v-model="ruleForm.Unit" :disabled="dialogType=='look'?true:false"></el-input>
+						<el-input v-model="ruleForm.DW" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="数量:" >
-						<el-input v-model="ruleForm.AttrNum" :disabled="dialogType=='look'?true:false"></el-input>
+					<el-form-item label="建筑面积或数量:" >
+						<el-input v-model="ruleForm.JZMJHSL" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
+					
 					<el-form-item label="备注:" >
 						<el-input type="textarea"  :rows="5" v-model="ruleForm.Remarks" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
@@ -188,7 +195,7 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 65vh;
+		height: 55vh;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;

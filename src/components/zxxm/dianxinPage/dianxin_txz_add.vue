@@ -2,46 +2,46 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form :inline="true" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
-					<el-form-item label="影响线段名称:" >
-						<el-input v-model="ruleForm.YXXDMC" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+				<el-form :inline="true"  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+					
+					<el-form-item label="名称:" >
+						<el-input v-model="ruleForm.MC" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="运行管理机构:">
-						  <el-cascader v-model="ruleForm.YXGLJG" filterable clearable  ref="cascaderAddr"  :options="postionArry" :props="defaultProps" class="input-200" @change="postionChange"></el-cascader>
-						<!-- <el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false"></el-input> -->
+					<el-form-item label="等级:" >
+						<el-input v-model="ruleForm.DJ" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="单位:" >
-						<el-input v-model="ruleForm.Unit" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="权属:" >
+						<el-input v-model="ruleForm.QS" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="杆塔材质及数量:" >
-						<el-input v-model="ruleForm.GTCZJSL" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="规模:" >
+						<el-input v-model="ruleForm.GM" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="起讫点及长度:" >
-						<el-input v-model="ruleForm.QQDJCD" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="建成时间:" >
+						<el-input v-model="ruleForm.JCSJ" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="高程分布:" >
-						<el-input v-model="ruleForm.GCFB" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="地点:" >
+						<el-input v-model="ruleForm.DD" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="导线型号及截面积:" >
-						<el-input v-model="ruleForm.DXXH" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="结构类型:" >
+						<el-input v-model="ruleForm.JGLX" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="敷设方式:" >
-						<el-input v-model="ruleForm.FSFS" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="结构数量:" >
+						<el-input v-model="ruleForm.JGSL" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="供电范围:" >
-						<el-input v-model="ruleForm.GDFW" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="占地面积:" >
+						<el-input v-model="ruleForm.ZDMJ" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="其他:" >
-						<el-input v-model="ruleForm.QT" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
+					<el-form-item label="数量:" >
+						<el-input v-model="ruleForm.SL" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					
 					
 				</el-form>
-				<el-form  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
+				<el-form   :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
 					<el-form-item label="备注:" >
-						<el-input type="textarea" class="input-560" :rows="5" v-model="ruleForm.Remarks" :disabled="dialogType=='look'?true:false"></el-input>
+						<el-input type="textarea" class="input-595"  :rows="5" v-model="ruleForm.BZ" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-			    </el-form>
+				</el-form>
                 <div class="margin-top-l text-center " v-show="dialogType!='look'">
                 		<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
                 </div>
@@ -68,6 +68,10 @@
 		data: function() {
 			return {
 				ruleForm: {
+					VirtualitemName: '',
+					VirtualitemDesc: '',
+					Unit: '',
+					AttrNum: '',
 					Remarks: '',
 				},
 				project1:'',
@@ -214,6 +218,8 @@
 		overflow-x: hidden;
 
 	}
-
+    .input-595{
+    	width:595px;
+    }
 	
 </style>

@@ -5,7 +5,7 @@
 				<el-collapse v-model="activeFormIndex">
 					<el-collapse-item title="表基础信息" name="1">
 						<el-form :inline="true" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
-							<el-form-item label="地区类型:" prop="Region">
+							<el-form-item label="工程类型:" prop="Region">
 								<el-select v-model="ruleForm.Region" filterable placeholder="请选择调查表类型" class="input-200" :disabled="dialogType=='look'?true:false">
 									<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
 									<el-option key="2" label="水库影响区" value="水库影响区"></el-option>

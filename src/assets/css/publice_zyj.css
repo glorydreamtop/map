@@ -37,6 +37,51 @@
 	min-width:400px;
 	height:50vh;
 }
+.sdxl_dialog{
+	width: 42%!important;
+	min-width:900px;
+	height:65vh;
+}
+.zysb_dialog{
+	width: 40%!important;
+	min-width: 750px;
+	height:65vh;
+}
+.jzw_dialog{
+	width: 40%!important;
+	min-width: 750px;
+	height:60vh;
+}
+.dxxl_dialog{
+	width: 45%!important;
+	min-width: 750px;
+	height:60vh;
+}
+.txz_dialog{
+	width: 45%!important;
+	min-width: 750px;
+	height:68vh;
+}
+.tlld_dialog{
+	width:35%!important;
+	min-width:550px;
+	height:72vh;
+}
+.tlfw_dialog{
+	width:35%!important;
+	min-width:550px;
+	height:60vh;
+}
+.tlsssb_dialog{
+	width:35%!important;
+	min-width:550px;
+	height:60vh;
+}
+.fssb_dialog{
+	width:35%!important;
+	min-width:550px;
+	height:75vh;
+}
 .jbqk_add_table3_dialog {
     width: 40%!important;
     min-width: 750px;

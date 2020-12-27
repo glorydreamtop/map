@@ -25,7 +25,7 @@
         align="center"
       >
       </el-table-column>
-      <el-table-column prop="Region" label="地区类型" align="center">
+      <el-table-column prop="Region" label="工程类型" align="center">
       </el-table-column>
       <el-table-column prop="" label="状态" width="100" align="center">
       </el-table-column>

@@ -451,3 +451,86 @@ export function DelNCZXSS_SUB(data) {
         data
     })
 }
+//获取区域的户信息 GetHouseholds
+export function GetHouseholds(data) {
+    return request({
+        url: `${baseReflect}GetHouseholds`,
+        method: 'post',
+        data
+    })
+}
+//添加户信息 AddHousehold
+export function AddHousehold(data) {
+    return request({
+        url: `${baseReflect}AddHousehold`,
+        method: 'post',
+        data
+    })
+}
+//修改户信息 EditHousehold
+export function EditHousehold(data) {
+    return request({
+        url: `${baseReflect}EditHousehold`,
+        method: 'post',
+        data
+    })
+}
+//删除户信息 DelHousehold
+
+export function DelHousehold(data) {
+    return request({
+        url: `${baseReflect}DelHousehold`,
+        method: 'post',
+        data
+    })
+}
+//获取区域的地块信息 GetParcels
+export function GetParcels(data) {
+    return request({
+        url: `${baseReflect}GetParcels`,
+        method: 'post',
+        data
+    })
+}
+//获取种类列表 getHouseClass
+export function getHouseClass(data) {
+    return request({
+        url: `${baseReflect}getHouseClass`,
+        method: 'post',
+        data
+    })
+}
+
+
+//获取户下的子项信息 getHousehold_Subs
+export function getHousehold_Subs(data) {
+    return request({
+        url: `${baseReflect}getHousehold_Subs`,
+        method: 'post',
+        data
+    })
+}
+//添加户下的子项 AddHousehold_Sub
+export function AddHousehold_Sub(data) {
+    return request({
+        url: `${baseReflect}AddHousehold_Sub`,
+        method: 'post',
+        data
+    })
+}
+//修改户下的子项 EditHousehold_Sub
+export function EditHousehold_Sub(data) {
+    return request({
+        url: `${baseReflect}EditHousehold_Sub`,
+        method: 'post',
+        data
+    })
+}
+//删除户下的子项 DelHousehold_Sub
+export function DelHousehold_Sub(data) {
+    return request({
+        url: `${baseReflect}DelHousehold_Sub`,
+        method: 'post',
+        data
+    })
+}

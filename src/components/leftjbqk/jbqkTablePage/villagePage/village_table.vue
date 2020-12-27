@@ -8,7 +8,7 @@
 				<el-table-column prop="SerialNumber" label="编号" width="150" align="center"> </el-table-column>
 				<el-table-column prop="Createdate" label="申请时间" align="center"> </el-table-column>
 				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
-				<el-table-column prop="Region" label="地区类型" align="center"> </el-table-column>
+				<el-table-column prop="Region" label="工程类型" align="center"> </el-table-column>
 				<el-table-column prop="" label="状态" width="100" align="center"> </el-table-column>
 				<el-table-column prop="TownDESC" label="乡镇" width="100" align="center"> </el-table-column>
 				<el-table-column prop="VillageDESC" label="村委会" align="center"> </el-table-column>
