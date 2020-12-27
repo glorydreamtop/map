@@ -1,6 +1,7 @@
 const state = {
     parcelId: '',//地块ID
 	Locationno:'',//区域id 
+	householdId:'',//户信息id
 }
 
 const mutations = {
@@ -9,6 +10,9 @@ const mutations = {
     },
 	SET_LOCATIONNO: (state, inFor) => {
         state.Locationno = inFor
+    },
+	SET_HOUSEHOLDID: (state, inFor) => {
+        state.householdId = inFor
     },
 }
 

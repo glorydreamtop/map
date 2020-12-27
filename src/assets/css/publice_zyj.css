@@ -90,7 +90,7 @@
 .hxx_add_dialog{
 	width:80%!important;
 	min-width:800px;
-	height:800px;
+	height:80vh;
 }
 .huxinxidiaochaFlyAdd_dialog{
 	width: 30%!important;
@@ -100,22 +100,22 @@
 .renkouxinxiFlyAdd_dialog{
 	width: 30%!important;
 	min-width: 750px;
-	height:700px;
+	height:70vh;
 }
 .fangwuxinxiFlyAdd_dialog{
 	width: 50%!important;
 	min-width: 750px;
-	height:550px;
+	height:65vh;
 }
 .fushuwuFlyAdd_dialog{
   width: 50%!important;
   min-width: 750px;
-  height:500px;	
+  height:65vh;	
 }
 .lingxingguomuFlyAdd_dialog{
 	width:30%!important;
 	min-width:500px;
-	height:450px;
+	height:80vh;
 }
 .jbqk_add2_table1_dialog {
     width: 30%!important;

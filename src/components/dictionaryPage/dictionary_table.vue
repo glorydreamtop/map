@@ -36,9 +36,6 @@
 							<el-table-column prop="unit" label="单位" align="center"></el-table-column>
 							<el-table-column prop="remarks" label="描述" align="center"></el-table-column>
 						</el-table>
-						<!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
-						 :page-size="formeData.PageSize" :total="total">
-						</el-pagination> -->
 					</div>
 				</div>
 			</el-col>
@@ -110,8 +107,7 @@
 			
 		},
 		methods: {
-			lookFor_tree() {
-				
+			lookFor_tree() {		
 				this.$refs.tree.filter(this.lookFor);
 			},
 			filterNode(value, data, node) { //树形过滤筛选

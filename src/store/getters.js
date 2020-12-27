@@ -7,5 +7,6 @@ const getters = {
 	BaseType: (state) => state.jbqk.BaseType,
 	parcelId: (state) => state.hxx.parcelId,
 	Locationno: (state) => state.hxx.Locationno,
+	householdId: (state) => state.hxx.householdId,
 }
 export default getters

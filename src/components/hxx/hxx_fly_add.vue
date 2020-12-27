@@ -5,99 +5,115 @@
 			<div class="reyuan_form">
 				<el-collapse v-model="activeFormIndex">
 					<el-collapse-item title="户信息调查" name="1">
-						<div class="formeBody">
-							<el-button size="mini" @click="addItem('huxinxidiaochaFlyAdd','添加户信息调查')" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini" @click="editItem('huxinxidiaochaFlyAdd','修改户信息调查')" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini" @click="delItem(1)"  icon="el-icon-delete" plain></el-button>
-							<!-- {{parcelData}} -->
-							<el-table :data="parcelData" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
-								<el-table-column type="index" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="HZ" label="户主姓名" width="180" align="center"></el-table-column>
-								<el-table-column prop="DCRY" label="调查人" width="180" align="center"></el-table-column>
-								<el-table-column prop="DCSJ" label="调查时间" width="180" align="center"></el-table-column>
-								<el-table-column prop="GCLX" label="工程类型" width="180" align="center"></el-table-column>
-								<el-table-column  label="高程范围" width="200" align="center">
-									<el-table-column prop="GCFW1" label="范围1" width="100" align="center"></el-table-column>
-									<el-table-column prop="GCFW2" label="范围2" width="100" align="center"></el-table-column>
-								</el-table-column>
-								<el-table-column prop="XXDZ" label="家庭住址"  align="center"></el-table-column>
-								<!-- <el-table-column prop="BZ" label="备注" align="center"></el-table-column> -->
-
-							</el-table>
-						</div>
-
+							<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+								<el-form-item label="工程类型:" prop="GCLX">
+									<el-select v-model="ruleForm.GCLX" filterable placeholder="请选择调查表类型" class="input-200" :disabled="disabled">
+										<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
+										<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
+										<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="高程范围:">
+									<el-input v-model="ruleForm.GCFW1" :disabled="disabled" class="input-90"></el-input>
+									<span>---</span>
+									<el-input v-model="ruleForm.GCFW2" :disabled="disabled" class="input-90"></el-input>
+								</el-form-item>
+								<el-form-item label="户主姓名:" prop="HZ">
+									<el-input v-model="ruleForm.HZ" :disabled="disabled" class="input-200"></el-input>
+								</el-form-item>
+								<el-form-item label="调查人:" v-if="dialogType=='edit'">
+									<el-input v-model="ruleForm.DCRY" :disabled="dialogType=='edit'?'disabled':''" class="input-200"></el-input>
+								</el-form-item>
+								<el-form-item label="调查时间:" v-if="dialogType=='edit'">
+									<el-input v-model="ruleForm.DCSJ"  class="input-200" :disabled="dialogType=='edit'?'disabled':''"></el-input>
+								</el-form-item>
+							</el-form>
+							<el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+								<el-form-item label="家庭住址:" prop="XXDZ">
+									<el-input v-model="ruleForm.XXDZ" :disabled="disabled" ></el-input>
+								</el-form-item>
+								<el-form-item label="备注:">
+									<el-input v-model="ruleForm.BZ" :rows="4" type="textarea" :disabled="disabled" ></el-input>
+								</el-form-item>
+							</el-form>
+							<div class="margin-top-l text-center " v-show="!disabled">
+								<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
+							</div>
 					</el-collapse-item>
-					<el-collapse-item title="人口信息" name="2">
+					<el-collapse-item title="人口信息" name="2" >
 						<div class="formeBody">
 							<el-button size="mini" @click="addItem('renkouxinxiFlyAdd','添加人口信息调查')" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini"  @click="editItem('renkouxinxiFlyAdd','修改人口信息调查')" icon="el-icon-edit" plain></el-button>
+							<el-button title="修改" size="mini" @click="editItem('renkouxinxiFlyAdd','修改人口信息调查')" icon="el-icon-edit" plain></el-button>
 							<el-button title="删除" size="mini" @click="delItem(2)" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableData_renkou" border highlight-current-row style="width: 100%" class="margin-top-m">
-								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="name" label="姓名" width="180" align="center"></el-table-column>
-								<el-table-column prop="length" label="性别" width="80" align="center"></el-table-column>
-								<el-table-column prop="length" label="民族" width="80" align="center"></el-table-column>
-								<el-table-column prop="unit" label="与户主关系" width="130" align="center"></el-table-column>
-								<el-table-column prop="length" label="出生年月" width="180" align="center"></el-table-column>
-								<el-table-column prop="address" label="文化程度" align="center"></el-table-column>
-								<el-table-column prop="length" label="从事职业" width="130" align="center"></el-table-column>
-								<el-table-column prop="address" label="户口性质" align="center"></el-table-column>
-								<el-table-column prop="address" label="户籍所在地" align="center"></el-table-column>
-								<el-table-column prop="address" label="身份证号码" align="center"></el-table-column>
+							<el-table :data="tableData0" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick"> 
+								<el-table-column prop="RKBH" label="编号"  align="center"></el-table-column>
+								<el-table-column prop="XM" label="姓名" width="180" align="center"></el-table-column>
+								<el-table-column prop="XB" label="性别" width="100" align="center"></el-table-column>
+								<el-table-column prop="MZ" label="民族" width="100" align="center"></el-table-column>
+								<el-table-column prop="YHZGX" label="与户主关系" width="130" align="center"></el-table-column>
+								<el-table-column prop="CSNY" label="出生年月" width="180" align="center"></el-table-column>
+								<el-table-column prop="HKSZD" label="户籍所在地" align="center"></el-table-column>
+								<el-table-column prop="SFZH" label="身份证号码" align="center"></el-table-column>
 							</el-table>
 						</div>
 
 
 					</el-collapse-item>
-					<el-collapse-item title="房屋信息" name="3">
+					<el-collapse-item title="房屋信息" name="3"  v-if="householdId">
 						<div class="formeBody">
 							<el-button size="mini" @click="addItem('fangwuxinxiFlyAdd','添加房屋信息调查')" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini"  @click="editItem('fangwuxinxiFlyAdd','修改房屋信息调查')" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini"  @click="delItem(3)" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableData_fangwu" border highlight-current-row style="width: 100%" class="margin-top-m">
-								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="name" label="房屋名称" width="180" align="center"></el-table-column>
-								<el-table-column prop="length" label="用途" width="80" align="center"></el-table-column>
-								<el-table-column prop="length" label="结构类型" width="80" align="center"></el-table-column>
-								<el-table-column prop="unit" label="建筑风格或形式" width="130" align="center"></el-table-column>
-								<el-table-column prop="length" label="屋面材料" width="180" align="center"></el-table-column>
-								<el-table-column prop="address" label="层数" align="center"></el-table-column>
-								<el-table-column prop="length" label="层高" width="130" align="center"></el-table-column>
-								<el-table-column prop="address" label="丈量尺寸(m×m)" align="center"></el-table-column>
-								<el-table-column prop="address" label="建筑面积(㎡)" align="center"></el-table-column>
-								<el-table-column prop="address" label="备注" align="center"></el-table-column>
+							<el-button title="修改" size="mini" @click="editItem('fangwuxinxiFlyAdd','修改房屋信息调查')" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" size="mini" @click="delItem(3)" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableData1" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
+								<el-table-column prop="FWBH" label="编号"  align="center"></el-table-column>
+								<el-table-column prop="FWMC" label="房屋名称" width="180" align="center"></el-table-column>
+								<el-table-column prop="JGLX" label="结构类型" width="100" align="center"></el-table-column>
+								<el-table-column prop="DEDM" label="定额名称"  align="center"></el-table-column>
+								<!-- <el-table-column prop="WMCL" label="屋面材料" align="center"></el-table-column> -->
+								<el-table-column prop="CS" label="层数" width="90"  align="center"></el-table-column>
+								<el-table-column prop="CGM	" label="层高(m)"  width="90"  align="center"></el-table-column>
+								<el-table-column prop="ZLCCMM" label="丈量尺寸(m×m)" width="110"  align="center"></el-table-column>
+								<el-table-column prop="JZMJM2" label="建筑面积(㎡)" width="90"  align="center"></el-table-column>
+								
 							</el-table>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="附属物信息" name="4">
+					<el-collapse-item title="附属物信息" name="4"  v-if="householdId">
 						<div class="formeBody">
 							<el-button size="mini" @click="addItem('fushuwuFlyAdd','添加附属物信息')" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini"  @click="editItem('fushuwuFlyAdd','修改附属物信息')" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini"  @click="delItem(4)" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableData_fushuwu" border highlight-current-row style="width: 100%" class="margin-top-m">
-								<el-table-column prop="code" label="编号" width="80" align="center"></el-table-column>
-								<el-table-column prop="name" label="项目" width="180" align="center"></el-table-column>
-								<el-table-column prop="length" label="单位" width="80" align="center"></el-table-column>
-								<el-table-column prop="length" label="结构材料" width="80" align="center"></el-table-column>
-								<el-table-column prop="unit" label="规格" width="130" align="center"></el-table-column>
-								<el-table-column prop="length" label="丈量尺寸(m×m)" width="180" align="center"></el-table-column>
-								<el-table-column prop="address" label="数量" align="center"></el-table-column>
-								<el-table-column prop="address" label="备注" align="center"></el-table-column>
+							<el-button title="修改" size="mini" @click="editItem('fushuwuFlyAdd','修改附属物信息')" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" size="mini" @click="delItem(4)" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableData2" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
+								<el-table-column prop="FSWBH" label="编号"  align="center"></el-table-column>
+								<el-table-column prop="FWWMC" label="附属物名称	" width="180" align="center"></el-table-column>
+								<el-table-column prop="FSWDEDM" label="附属物定额代码"  align="center"></el-table-column>
+								<el-table-column prop="FSWJGCL" label="结构材料" align="center" width="110"></el-table-column>
+								<el-table-column prop="ZLCC" label="丈量尺寸(m×m)" width="140" align="center"></el-table-column>
+								<el-table-column prop="FSWGG" label="规格" width="110"  align="center"></el-table-column>
+								<el-table-column prop="DW" label="单位" width="80" align="center"></el-table-column>
+								<el-table-column prop="FSWSL" label="数量" width="100" align="center"></el-table-column>
+								<el-table-column prop="DEDJ" label="定额单价	"  width="100" align="center"></el-table-column>
+								<el-table-column prop="DWHJ" label="单位合计" width="110" align="center"></el-table-column>
+								
 							</el-table>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="零星果木" name="5">
+					<el-collapse-item title="零星果木" name="5"  v-if="householdId">
 						<div class="formeBody">
 							<el-button size="mini" @click="addItem('lingxingguomuFlyAdd','添加零星果木')" icon="el-icon-plus"></el-button>
-							<el-button title="修改"   @click="editItem('lingxingguomuFlyAdd','修改零星果木')" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除"  @click="delItem(5)" size="mini" icon="el-icon-delete" plain></el-button>
-							<el-table :data="tableData_lingxingguomu" border highlight-current-row style="width: 100%" class="margin-top-m">
-								<el-table-column prop="code" label="编号" width="200" align="center"></el-table-column>
-								<el-table-column prop="name" label="类别" align="center"></el-table-column>
-								<el-table-column prop="length" label="品种" width="200" align="center"></el-table-column>
-								<el-table-column prop="length" label="规格" width="200" align="center"></el-table-column>
-								<el-table-column prop="unit" label="数量" width="200" align="center"></el-table-column>
-								<el-table-column prop="address" label="备注" align="center"></el-table-column>
+							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd','修改零星果木')" size="mini" icon="el-icon-edit" plain></el-button>
+							<el-button title="删除" @click="delItem(5)" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
+								<el-table-column prop="GMBH" label="编号"  align="center"></el-table-column>
+								<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>
+								<el-table-column prop="GMLB" label="类别" align="center"></el-table-column>
+								<el-table-column prop="GMPZ" label="品种"  align="center"></el-table-column>
+								<el-table-column prop="GMGG" label="规格" width="120"  align="center"></el-table-column>
+								<el-table-column prop="GMSL" label="数量" width="100" align="center"></el-table-column>
+								<el-table-column prop="GMDW" label="单位" width="100" align="center"></el-table-column>
+								<el-table-column prop="GMDJ" label="单价" width="100" align="center"></el-table-column>
+								<el-table-column prop="GMGJ" label="合计" width="120" align="center"></el-table-column>
+								<!-- <el-table-column prop="address" label="备注" align="center"></el-table-column> -->
 
 							</el-table>
 						</div>
@@ -105,7 +121,7 @@
 				</el-collapse>
 
 				<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
-				 class="newStyleDialog " :custom-class="componentOpen+'_dialog'">
+				 class="newStyleDialog " :custom-class="componentOpen+'_dialog'" v-if="showFlag">
 					<!-- 动态组件 -->
 					<component :is="componentOpen" :dialog-type="dialogType_two" v-on:showStudes="showStudescode" :dialog-form="dialogForm_two"></component>
 				</el-dialog>
@@ -120,7 +136,12 @@
 		mapGetters
 	} from 'vuex';
 	import {
-		GetHouseholds,DelHousehold
+		GetHouseholds,
+		DelHousehold,
+		AddHousehold,
+		EditHousehold,
+		getHousehold_Subs,
+		DelHousehold_Sub
 	} from '@/api';
 	import fangwuxinxiFlyAdd from '@/components/hxx/fangwuxinxi_fly_add' //房屋信息添加
 	import fushuwuFlyAdd from '@/components/hxx/fushuwu_fly_add' //附属物添加
@@ -130,7 +151,7 @@
 	export default {
 		name: 'jbqk_table1_add_two',
 		computed: {
-			...mapGetters(['projectNo','parcelId','Locationno'])
+			...mapGetters(['projectNo', 'parcelId', 'Locationno', 'householdId'])
 		},
 		components: {
 			fangwuxinxiFlyAdd,
@@ -141,18 +162,30 @@
 		},
 		data() {
 			return {
+				ruleForm: {},
+				disabled:false,
 				dialogTitle: '', //弹出框标题
 				dialogForm_two: "", //弹出框表单
 				showFlag: false, //弹出框显隐状态
 				dialogType_two: '', //弹出框操作类型
 				activeFormIndex: ['1'], //当前手风琴默认打开
-				tableData_hu: [], //户信息数据
-				tableData_renkou: [], //人口信息
-				tableData_fangwu: [], //房屋信息
-				tableData_fushuwu: [], //附属物信息
-				tableData_lingxingguomu: [], //零星果木信息
+				tableData0: [], //户信息数据
+				tableData1: [], //人口信息
+				tableData2: [], //房屋信息
+				tableData3: [], //附属物信息
+				tableData4: [], //零星果木信息
 				componentOpen: '', //当前打开添加组件名
-				parcelData:[],//户信息
+				parcelData: [], //户信息
+				ouseholdhId:'',
+				loading: false,
+				rules: { //约定的验证规则
+					stationName: [{
+						required: true,
+						message: '请填写名称',
+						trigger: 'blur'
+					}, ],
+
+				},
 
 			}
 		},
@@ -165,18 +198,98 @@
 		},
 		props: ['dialogType', 'dialogForm'],
 		mounted: function() {
-			// if (this.dialogType == 'edit' || this.dialogType == 'look') {
-			// 	// this.dialogForm.sysName=[];
-			// 	this.disabled = true;
-			// }
-			this.GetHouseholdsInit(); //户信息数据
+			if (this.dialogType == 'edit' ) {
+				this.ruleForm = JSON.parse(JSON.stringify(this.dialogForm));
+				this.$store.commit('hxx/SET_HOUSEHOLDID',this.ruleForm.KeyNo);
+				// console.log(this.ruleForm)
+				if(this.ruleForm.KeyNo){
+					this.getHousehold_SubsInit(0);//人口信息初始化
+					this.getHousehold_SubsInit(1);//房屋信息初始化
+					this.getHousehold_SubsInit(2);//附属物信息初始化
+					this.getHousehold_SubsInit(3);//零星果木初始化
+				}
+			}
+			// this.GetHouseholdsInit(); //户信息数据
 
 		},
 
 		methods: {
-			rowClick(row, column){//单击表格一行
-				console.log(row, column);		
-				this.dialogForm_two=row;
+			submitForm(formName) { //表单提交按钮
+				var self = this;
+				// self.loading = true;
+				this.$refs[formName].validate((valid) => {
+					// alert(1);
+					var self = this;
+					if (valid) {
+						if(self.dialogType=='add'){
+							var url = AddHousehold;
+							var data = {
+								ProjectNo: self.projectNo,
+								id: self.parcelId,
+								JsonStr: JSON.stringify(self.ruleForm)
+							}
+						}else{
+							var url = EditHousehold;
+							var data = {
+								id: self.dialogForm.KeyNo,
+								JsonStr: JSON.stringify(self.ruleForm)
+							}
+						}
+						
+						url(data).then((res) => {
+							self.loading = false;
+							if (self.dialogType == 'add') {
+								this.$store.commit('hxx/SET_HOUSEHOLDID', res[0].Keyno)
+							}
+							this.disabled = true;
+							this.$message({
+								message: '添加户基础信息成功',
+								type: 'success',
+								center: true
+							})
+							self.getHousehold_SubsInit(0);//人口信息初始化
+							self.getHousehold_SubsInit(1);//房屋信息初始化
+							self.getHousehold_SubsInit(2);//附属物信息初始化
+							self.getHousehold_SubsInit(3);//零星果木初始化
+						}).catch((res) => {
+							console.log(res)
+							self.loading = false;
+							this.$message({
+								message: '操作失败，请确定后提交',
+								type: 'error',
+								center: true
+							})
+						})
+					} else {
+
+						// self.loading = false;
+						return false;
+					}
+				});
+				//
+			},
+			getHousehold_SubsInit(index){//获取人口等初始化数据
+				var typeArry=['人口信息','房屋信息','附属物信息','零星果木'];
+				var data={
+					id:this.householdId,
+					TypeName:typeArry[index],
+					CurrentPage:1,
+					PageSize:1000
+				};
+				getHousehold_Subs(data).then((res) => {
+					// console.log(res, typeArry[index])
+					this[`tableData${index}`]=res.list;
+			
+				})
+				.catch((error) => {
+					this[`tableData${index}`] = [];
+					// console.log( this[`tableData${index}`] )
+				})
+				
+			},
+			rowClick(row, column) { //单击表格一行
+				// console.log(row, column);
+				this.dialogForm_two = row;
 			},
 			addItem(type, title) { //添加项目
 				this.dialogTitle = title;
@@ -185,48 +298,52 @@
 				this.showFlag = true;
 				this.dialogForm_two = '';
 			},
-			editItem(index, title) { //添加项目
-			    // var urlData=['DelHousehold']
-			    if(this.dialogForm_two){
+			editItem(type, title) { //添加项目
+				if (this.dialogForm_two) {
 					this.dialogTitle = title;
 					this.componentOpen = type;
 					this.dialogType_two = 'edit';
 					this.showFlag = true;
-				}else{
+				} else {
 					this.$message({
-					  message: '请选择要修改的户信息',
-					  type: 'warning'
+						message: '请选择要修改的户信息',
+						type: 'warning'
 					});
 				}
-				
+
 			},
-			delItem(url){
-				if(this.dialogForm_two){
-					var self=this;
+			delItem(url) {
+				if (this.dialogForm_two) {
+					var self = this;
 					this.$confirm('此操作将永久删除, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
 						center: true,
 						type: 'warning'
 					}).then(() => {
-						DelHousehold({id:this.dialogForm_two.KeyNo}).then((res) => {
+						DelHousehold_Sub({
+							id: this.dialogForm_two.KeyNo
+						}).then((res) => {
 							console.log(res)
-								self.$message({
-									message: '操作成功',
-									type: 'success',
-									center: true
-								});
-								self.GetHouseholdsInit();
-						
+							self.$message({
+								message: '操作成功',
+								type: 'success',
+								center: true
+							});
+							this.getHousehold_SubsInit(0);//人口信息初始化
+							this.getHousehold_SubsInit(1);//房屋信息初始化
+							this.getHousehold_SubsInit(2);//附属物信息初始化
+							this.getHousehold_SubsInit(3);//零星果木初始化
+
 						}).catch((res) => {
 							console.log(res);
 						})
-					
-					
+
+
 					}).catch((res) => {
-						
+
 					})
-				}else{
+				} else {
 					this.$message({
 						message: '请选择要删除的数据项',
 						type: 'error',
@@ -235,16 +352,19 @@
 				}
 			},
 			closeDialog() { //关闭弹出框
-
+             
 			},
 			showStudescode(data) { //监听弹出框是关还是闭
 				this.showFlag = data;
-				this.GetHouseholdsInit();
+				this.getHousehold_SubsInit(0);
+				this.getHousehold_SubsInit(1);
+				this.getHousehold_SubsInit(2);
+				this.getHousehold_SubsInit(3);
 
 			},
 			GetHouseholdsInit() {
-                var data={
-					Locationno:this.Locationno,
+				var data = {
+					Locationno: this.Locationno,
 					CurrentPage: 1,
 					PageSize: 10
 				};
@@ -264,11 +384,10 @@
 	}
 </script>
 <style scoped="scoped">
-	.reyuan_form {
-		height: 630px;
-		margin: 0%;
-		overflow-y: auto;
-		overflow-x: hidden;
-
-	}
+ .reyuan_form {
+ 	height:70vh;
+ 	margin: 0%;
+ 	overflow-y: auto;
+ 	overflow-x: hidden;
+ }
 </style>
