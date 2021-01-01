@@ -7,16 +7,16 @@
 					<el-form-item label="附属物名称:" prop="FWWMC">
 						<el-input v-model="ruleForm.FWWMC" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
 					</el-form-item>
-					<el-form-item label="结构类型:" prop="JGLX">
-						<el-select v-model="ruleForm.JGLX" @change="change_type" ref="JGLX" filterable placeholder="请选择结构类型" class="input-250"
+					<el-form-item label="结构类型:" prop="JGLX_DESC">
+						<el-select v-model="ruleForm.JGLX_DESC" @change="change_type"  filterable placeholder="请选择结构类型" class="input-250"
 						 :disabled="dialogType=='look'?true:false">
 							<el-option :key="item.o_virtualitemno" :label="item.o_virtualitemdesc" :value="item.o_virtualitemdesc" v-for="item in typeData">
 							</el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="定额名称:" prop="FSWDEDM">
-						<el-select v-model="ruleForm.FSWDEDM" filterable placeholder="请选择定额名称" class="input-250" :disabled="dialogType=='look'?true:false">
-							<el-option :key="item.KeyNo" :label="item.msg" :value="item.msg" v-for="item in dingeData">
+						<el-select v-model="ruleForm.FSWDEDM" @change="change_DEDM" filterable placeholder="请选择定额名称" class="input-250" :disabled="dialogType=='look'?true:false">
+							<el-option :key="item.KeyNo" :label="item.msg" :value="item.KeyNo" v-for="item in dingeData">
 							</el-option>
 						</el-select>
 					</el-form-item>
@@ -31,16 +31,16 @@
 						<el-input v-model="ruleForm.ZLCC" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
 					</el-form-item>
 					<el-form-item label="数量:" prop="FSWSL">
-						<el-input v-model="ruleForm.FSWSL" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
+						<el-input-number v-model="ruleForm.FSWSL" :min="0" :disabled="dialogType=='look'?true:false" class="input-250"></el-input-number>
 					</el-form-item>
 					<el-form-item label="结构材料:" prop="FSWJGCL">
 						<el-input v-model="ruleForm.FSWJGCL" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
 					</el-form-item>
 					<el-form-item label="定额单价:" prop="DEDJ">
-						<el-input v-model="ruleForm.DEDJ" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
+						<el-input v-model="ruleForm.DEDJ" :disabled="true" class="input-250"></el-input>
 					</el-form-item>
 					<el-form-item label="单位合计:" prop="DWHJ">
-						<el-input v-model="ruleForm.DWHJ" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
+						<el-input v-model="ruleForm.DWHJ" :disabled="true" class="input-250"></el-input>
 					</el-form-item>
 
 
@@ -104,11 +104,25 @@
 		},
 		components: {},
 		props: ['dialogType', 'dialogForm'],
+		watch: {
+			ruleForm: {
+				handler(val, old) {
+					if (val.DEDJ && val.FSWSL) {						
+						val.DWHJ = Math.floor(val.DEDJ * val.FSWSL * 100) / 100;
+					}else{
+						val.DWHJ =0;
+					}
+					// console.log(val);
+				},
+				deep: true,
+			},
+		},
 		mounted: function() {
+			// console.log(this.dialogForm)
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.disabled = true;
 				this.ruleForm = JSON.parse(JSON.stringify(this.dialogForm));
-
+                this.ruleForm.FSWDEDM=this.ruleForm.FSWDEDM?this.ruleForm.FSWDEDM.toString():'';
 			}
 			this.getHouseClassInit(); //种类类型
 		},
@@ -116,19 +130,28 @@
 		methods: {
 			change_type(data) {
 				for (var i in this.typeData) {
-					if (this.typeData[i].o_virtualitemdesc === data) {
-						this.ruleForm.DEDM_no = this.typeData[i].o_virtualitemno;
+					if (this.typeData[i].o_virtualitemdesc=== data) {
+						this.ruleForm.JGLX = this.typeData[i].o_virtualitemno;
 					}
 				}
-				this.$set(this.ruleForm, 'DEDM', '')
+				this.$set(this.ruleForm, 'FSWDEDM', '')
 				// this.ruleForm.DEDM='';
 				this.dingeInit();
 
 
 			},
+			change_DEDM(data){//定额名称选中
+				for (var i in this.dingeData) {
+					if (this.dingeData[i].KeyNo === data) {
+						// console.log(this.dingeData[i])
+						this.ruleForm.FSWDEDM_DESC = this.dingeData[i].msg;
+						this.ruleForm.DEDJ = this.dingeData[i].UnitPrice;
+					}
+				}
+			},
 			dingeInit() {
 				var data = {
-					Virtualitemno: this.ruleForm.DEDM_no,
+					Virtualitemno: this.ruleForm.JGLX,
 					CurrentPage: 1,
 					PageSize: 1000
 				};
@@ -155,10 +178,10 @@
 				};
 				getHouseClass(data).then((res) => {
 						this.typeData = res;
-						if (this.ruleForm.DEDM) {
+						if (this.ruleForm.FSWDEDM) {
 							for (var i in this.typeData) {
-								if (this.typeData[i].o_virtualitemdesc === this.ruleForm.JGLX) {
-									this.ruleForm.DEDM_no = this.typeData[i].o_virtualitemno;
+								if (this.typeData[i].o_virtualitemdesc === this.ruleForm.JGLX_DESC) {
+									this.ruleForm.JGLX = this.typeData[i].o_virtualitemno;
 								}
 							}
 							this.dingeInit();

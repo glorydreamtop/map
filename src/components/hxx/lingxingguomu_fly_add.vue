@@ -9,16 +9,16 @@
 					<el-form-item label="规格:" prop="GMGG">
 						<el-input v-model="ruleForm.GMGG" :disabled="dialogType=='look'?true:false" ></el-input>
 					</el-form-item>
-					<el-form-item label="品种:" prop="GMPZ">
-						<el-select v-model="ruleForm.GMPZ" @change="change_type" ref="JGLX" filterable placeholder="请选择类别" 
+					<el-form-item label="类别:" prop="GMLB">
+						<el-select v-model="ruleForm.GMLB" @change="change_type" filterable placeholder="请选择类别" 
 						 :disabled="dialogType=='look'?true:false" style="width: 100%;">
-							<el-option :key="item.o_virtualitemno" :label="item.o_virtualitemdesc" :value="item.o_virtualitemdesc" v-for="item in typeData">
+							<el-option :key="item.o_virtualitemno" :label="item.o_virtualitemdesc" :value="item.o_virtualitemno" v-for="item in typeData">
 							</el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item label="类别:" prop="GMLB">
-						<el-select v-model="ruleForm.GMLB" filterable placeholder="请选择品种:" @change="change_GMLB"  :disabled="dialogType=='look'?true:false" style="width: 100%;">
-							<el-option :key="item.KeyNo" :label="item.msg" :value="item.msg" v-for="item in dingeData">
+					<el-form-item label="品种:" prop="GMPZ">
+						<el-select v-model="ruleForm.GMPZ" filterable placeholder="请选择品种:" @change="change_GMPZ"  :disabled="dialogType=='look'?true:false" style="width: 100%;">
+							<el-option :key="item.KeyNo" :label="item.msg" :value="item.KeyNo" v-for="item in dingeData">
 							</el-option>
 						</el-select>
 					</el-form-item>
@@ -29,11 +29,11 @@
 						<el-input v-model="ruleForm.GMDJ" :disabled="true"></el-input>
 					</el-form-item>
 					<el-form-item label="数量:" prop="GMSL">
-						<el-input v-model="ruleForm.GMSL" :disabled="dialogType=='look'?true:false" ></el-input>
+						<el-input-number v-model="ruleForm.GMSL" :min="0" :disabled="dialogType=='look'?true:false" class="input-250"></el-input-number>
 					</el-form-item>
 					
 					<el-form-item label="单项合计:" prop="GMGJ">
-						<el-input v-model="ruleForm.GMGJ" :disabled="dialogType=='look'?true:false" ></el-input>
+						<el-input v-model="ruleForm.GMGJ" :disabled="true" ></el-input>
 					</el-form-item>
 					<el-form-item label="备注:" prop="BZ">
 						<el-input v-model="ruleForm.BZ" type="textarea" :rows='4' :disabled="dialogType=='look'?true:false" ></el-input>
@@ -84,12 +84,18 @@
 
 			}
 		},
-		dialogType: {
-			handler: function(val, oldval) {
-				this.dialogType = val;
-				this.init();
+		watch: {
+			ruleForm: {
+				handler(val, old) {
+					if (val.GMDJ && val.GMSL) {						
+						val.GMGJ = Math.floor(val.GMDJ * val.GMSL * 100) / 100;
+					}else{
+						val.GMGJ =0;
+					}
+					// console.log(val);
+				},
+				deep: true,
 			},
-			deep: true //
 		},
 		components: {},
 		props: ['dialogType', 'dialogForm'],
@@ -106,22 +112,22 @@
 		methods: {
 			change_type(data) {
 				for (var i in this.typeData) {
-					if (this.typeData[i].o_virtualitemdesc === data) {
-						this.ruleForm.GMPZ_no = this.typeData[i].o_virtualitemno;
-						this.ruleForm.GMDW=this.typeData[i].Unit;
-						this.ruleForm.GMDJ= this.typeData[i].UnitPrice;
+					if (this.typeData[i].o_virtualitemno === data) {						
+						this.ruleForm.GMLB_DESC = this.typeData[i].o_virtualitemdesc;
 						
 					}
 				}
 				
-				this.$set(this.ruleForm, 'GMLB', '')
+				this.$set(this.ruleForm, 'GMPZ', '')
 				this.dingeInit();
 			
 			
 			},
-			change_GMLB(data){
+			change_GMPZ(data){
 				for (var i in this.dingeData) {
-					if (this.dingeData[i].msg === data) {
+					if (this.dingeData[i].KeyNo === data) {
+						console.log(this.dingeData[i])
+						this.ruleForm.DEDM_DESC=this.dingeData[i].msg;
 						this.ruleForm.GMDW=this.dingeData[i].Unit;
 						this.ruleForm.GMDJ= this.dingeData[i].UnitPrice;	
 					}
@@ -130,13 +136,12 @@
 			},
 			dingeInit() {
 				var data = {
-					Virtualitemno: this.ruleForm.GMPZ_no,
+					Virtualitemno: this.ruleForm.GMLB,
 					CurrentPage: 1,
 					PageSize: 1000
 				};
 				GetQuotaItemList(data).then((res) => {
 						var newData = res.list;
-			
 						for (var i in newData) {
 							newData[i].msg = newData[i].UNAME + `(单价：${newData[i].UnitPrice}${newData[i].Unit})` +
 								`${newData[i].Ucondition}`

@@ -40,7 +40,7 @@
 								<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
 							</div>
 					</el-collapse-item>
-					<el-collapse-item title="人口信息" name="2" >
+					<el-collapse-item title="人口信息" name="2" v-if="householdId">
 						<div class="formeBody">
 							<el-button size="mini" @click="addItem('renkouxinxiFlyAdd','添加人口信息调查')" icon="el-icon-plus"></el-button>
 							<el-button title="修改" size="mini" @click="editItem('renkouxinxiFlyAdd','修改人口信息调查')" icon="el-icon-edit" plain></el-button>
@@ -56,8 +56,6 @@
 								<el-table-column prop="SFZH" label="身份证号码" align="center"></el-table-column>
 							</el-table>
 						</div>
-
-
 					</el-collapse-item>
 					<el-collapse-item title="房屋信息" name="3"  v-if="householdId">
 						<div class="formeBody">
@@ -67,13 +65,15 @@
 							<el-table :data="tableData1" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="FWBH" label="编号"  align="center"></el-table-column>
 								<el-table-column prop="FWMC" label="房屋名称" width="180" align="center"></el-table-column>
-								<el-table-column prop="JGLX" label="结构类型" width="100" align="center"></el-table-column>
-								<el-table-column prop="DEDM" label="定额名称"  align="center"></el-table-column>
-								<!-- <el-table-column prop="WMCL" label="屋面材料" align="center"></el-table-column> -->
+								<el-table-column prop="JGLX_DESC" label="结构类型" width="100" align="center"></el-table-column>
+								<el-table-column prop="DEDM_DESC" label="定额名称"  align="center"></el-table-column>
+								<el-table-column prop="WMCL" label="屋面材料" align="center"></el-table-column>
 								<el-table-column prop="CS" label="层数" width="90"  align="center"></el-table-column>
 								<el-table-column prop="CGM	" label="层高(m)"  width="90"  align="center"></el-table-column>
-								<el-table-column prop="ZLCCMM" label="丈量尺寸(m×m)" width="110"  align="center"></el-table-column>
+								<el-table-column prop="ZLCCMM" label="丈量尺寸(m×m)" width="90"  align="center"></el-table-column>
 								<el-table-column prop="JZMJM2" label="建筑面积(㎡)" width="90"  align="center"></el-table-column>
+								<el-table-column prop="DEDJ" label="定额单价	"  width="100" align="center"></el-table-column>
+								<el-table-column prop="DXHJ" label="单位合计" width="110" align="center"></el-table-column>
 								
 							</el-table>
 						</div>
@@ -86,7 +86,8 @@
 							<el-table :data="tableData2" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="FSWBH" label="编号"  align="center"></el-table-column>
 								<el-table-column prop="FWWMC" label="附属物名称	" width="180" align="center"></el-table-column>
-								<el-table-column prop="FSWDEDM" label="附属物定额代码"  align="center"></el-table-column>
+								<el-table-column prop="JGLX_DESC" label="结构类型" width="100" align="center"></el-table-column>
+								<el-table-column prop="FSWDEDM_DESC" label="附属物定额代码"  align="center"></el-table-column>
 								<el-table-column prop="FSWJGCL" label="结构材料" align="center" width="110"></el-table-column>
 								<el-table-column prop="ZLCC" label="丈量尺寸(m×m)" width="140" align="center"></el-table-column>
 								<el-table-column prop="FSWGG" label="规格" width="110"  align="center"></el-table-column>
@@ -106,8 +107,8 @@
 							<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="GMBH" label="编号"  align="center"></el-table-column>
 								<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>
-								<el-table-column prop="GMLB" label="类别" align="center"></el-table-column>
-								<el-table-column prop="GMPZ" label="品种"  align="center"></el-table-column>
+								<el-table-column prop="GMLB_DESC" label="类别" align="center"></el-table-column>
+								<el-table-column prop="DEDM_DESC" label="品种"  align="center"></el-table-column>
 								<el-table-column prop="GMGG" label="规格" width="120"  align="center"></el-table-column>
 								<el-table-column prop="GMSL" label="数量" width="100" align="center"></el-table-column>
 								<el-table-column prop="GMDW" label="单位" width="100" align="center"></el-table-column>
@@ -209,6 +210,7 @@
 					this.getHousehold_SubsInit(3);//零星果木初始化
 				}
 			}
+			console.log(this.householdId)
 			// this.GetHouseholdsInit(); //户信息数据
 
 		},

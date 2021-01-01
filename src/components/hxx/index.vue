@@ -12,8 +12,10 @@
 					</el-option>
 				</el-select>
 			</div>
-			<div class="margin-top-m" v-if="HouseholdData.length!=0">
-				<el-input v-model="search" placeholder="请搜索户信息" prefix-icon="el-icon-search"></el-input>
+			<div class="margin-top-m" >
+				<el-input v-model="Name" placeholder="请搜索户信息" clearable>
+					<el-button slot="append" icon="el-icon-search" @click="lookSearch"></el-button>
+				</el-input>
 			</div>
 
 			<div class="margin-top-m" v-if="Locationno">
@@ -21,8 +23,8 @@
 				<el-button title="修改户信息" @click="editClick()" size="mini" icon="el-icon-edit" plain></el-button>
 				<el-button title="删除户信息" @click="delClick()" size="mini" icon="el-icon-delete" plain></el-button>
 			</div>
-			<div v-if="HouseholdData.length!=0">
-				<div class="margin-top-m cardMain">
+			<div >
+				<div class="margin-top-m cardMain" v-if="HouseholdData.length!=0">
 					<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="6" v-for="(item,index) in HouseholdData">
 						<div class="leftMain" :class="buttonIndex===index?'activeRow':''" @click="rowClick(index,item)">
 							<div class="item flex-col align-center">
@@ -34,6 +36,7 @@
 
 					</el-col>
 				</div>
+				<p class="margin-top-m  text-center" v-if="HouseholdData.length==0">暂无数据</p>
 
 			</div>
 
@@ -74,7 +77,7 @@
 				newparcelId: '', //块id
 				parcelData: [], //块区域
 				HouseholdData: [], //户列表数据
-				search: '',
+				Name: '',
 				dialogTitle: '', //弹出框标题
 				dialogForm: "", //弹出框表单
 				showFlag: false, //弹出框显隐状态
@@ -177,7 +180,8 @@
 				var data = {
 					Locationno: this.Locationno_parent,
 					CurrentPage: 1,
-					PageSize: 10
+					PageSize: 10,
+					Name:this.Name,
 				};
 				GetHouseholds(data).then((res) => {
 						this.HouseholdData = res.list;
@@ -188,6 +192,9 @@
 						this.tableLoad = false;
 						console.log(error)
 					})
+			},
+			lookSearch(){//搜索
+				this.GetHouseholdsInit();
 			},
 			GetLocationInit() {
 				var data = {
@@ -265,6 +272,7 @@
 					this.dialogTitle = '添加户信息';
 					this.dialogType = 'add';
 					this.showFlag = true;
+					this.$store.commit('hxx/SET_HOUSEHOLDID','');
 				} else {
 					this.$message({
 						message: '请选择地块',
