@@ -27,8 +27,9 @@
 									 class="input-200">
 										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
 										</el-option>
+										
 									</el-select>
-
+                                     
 								</el-form-item>
 								<el-form-item label="村民委:" prop="stationName">
 									<el-select v-model="ruleForm.Village" filterable :disabled="disabled" placeholder="请选择区县" @change="change_village"
