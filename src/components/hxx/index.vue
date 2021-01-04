@@ -94,7 +94,14 @@
 		created() {},
 		mounted() {
 			// this.GetLocationInit(); //初始化地区
-
+            //select手动点击lable 获取值
+            setInterval(function() {
+            	document.querySelectorAll(".el-cascader-node__label").forEach(el => {
+            		el.onclick = function() {
+            			if (this.previousElementSibling) this.previousElementSibling.click();
+            		};
+            	});
+            }, 1000);
 		},
 		methods: {
 			lazyLoad(node, resolve) {
@@ -299,10 +306,7 @@
 		}
 	}
 
-	.activeRow {
-		background: #00BCD4;
-	}
-
+	
 	.cardMain {
 		border: 1px solid $white;
 		min-height: 200px;
