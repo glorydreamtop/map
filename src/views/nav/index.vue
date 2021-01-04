@@ -158,7 +158,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 19;
+  z-index: 29;
 }
 .nav {
   height: 60px;
