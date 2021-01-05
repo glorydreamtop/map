@@ -1,6 +1,6 @@
 <template>
   <div>
-    <iframe src="http://aglostech1.yicp.io:9099/pc/ceMap/index.html" frameborder="0" width="100%" height="100%" id="map"></iframe>
+    <!-- <iframe src="http://aglostech1.yicp.io:9099/pc/ceMap/index.html" frameborder="0" width="100%" height="100%" id="map"></iframe> -->
     <!-- <iframe src="#" frameborder="0" width="100%" height="100%"></iframe> -->
     <div id="message">{{message}}</div>
   </div>

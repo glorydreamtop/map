@@ -158,8 +158,8 @@ export default {
     async lookClick(e) {
       this.loading2 = true;
       const Type = e.minetype.includes("doc") ? "word" : "excel";
-      const res1 = await GetDocumentByDocNo({ docid: e.no });
       try {
+        const res1 = await GetDocumentByDocNo({ docid: e.no });
         const res2 = await GetWordOrExcelToPDF({ Type, Path: res1[0].url });
         this.loading2 = false;
         window.open(`http://aglostech1.yicp.io:9080/${res2[0].url}`);
