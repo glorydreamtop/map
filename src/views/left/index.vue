@@ -71,7 +71,7 @@ export default {
   left: 0;
   top: 70px;
   bottom: 0;
-  width: 25vw;
+  width: 20vw;
 }
 
 ::v-deep .el-tabs__item {

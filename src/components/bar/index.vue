@@ -19,7 +19,7 @@ export default {
       this.$emit('click')
       this.show = !this.show;
       this.src = require(`@/assets/imgs/${this.show?'收起':'展开'}.png`)
-      this.$el.style.transform = this.show?"translateX(25vw)":"translateX(0)";
+      this.$el.style.transform = this.show?"translateX(20vw)":"translateX(0)";
     }
   }
 }

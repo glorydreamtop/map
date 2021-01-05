@@ -12,9 +12,12 @@
       <left />
     </el-drawer>
     <bar @click="closeDrawer" />
-    <right></right>
+	<div class="right">
+		<right></right>
+	</div>
+    
     <navigation></navigation>
-    <ce-map></ce-map>
+    <!-- <ce-map></ce-map> -->
     <login></login>
     <!-- <dragableDialog /> -->
   </div>
@@ -58,7 +61,7 @@ export default {
 @import "./assets/css/publice_zyj.css";
 @import "./assets/icon/iconfont.css";
 .el-drawer__wrapper {
-  width: 25vw;
+  width: 20vw;
   right: 75vw;
   margin-right: 0;
 }
