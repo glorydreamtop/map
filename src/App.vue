@@ -8,14 +8,29 @@
       :visible.sync="leftDrawer"
       direction="ltr"
       :wrapperClosable="false"
+	   :custom-class="leftDrawer"
     >
       <left />
     </el-drawer>
-    <bar @click="closeDrawer" />
-	<div class="right">
+	<bar @click="closeDrawer_left"  position="left"/>
+	<div class="rightDrawerDiv">
+		<el-drawer
+		  :modal="false"
+		  title="右侧抽屉"
+		  ref="rightDrawer"
+		  :with-header="false"
+		  :visible.sync="rightDrawer"
+		  direction="rtl"
+		  :wrapperClosable="false"
+		  custom-class="rightDrawer"
+		  
+		>
 		<right></right>
+		
+		</el-drawer>
+		<bar @click="closeDrawer_right" position="right"/>
 	</div>
-    
+	
     <navigation></navigation>
     <!-- <ce-map></ce-map> -->
     <login></login>
@@ -34,7 +49,8 @@ export default {
   name: "app",
   data() {
     return {
-      leftDrawer: false
+      leftDrawer: false,
+	  rightDrawer:false,
     };
   },
   components: {
@@ -46,9 +62,13 @@ export default {
     bar
   },
   methods: {
-    closeDrawer() {
+    closeDrawer_left() {
       this.leftDrawer = !this.leftDrawer;
-    }
+    },
+	closeDrawer_right(){
+		console.log(111)
+		this.rightDrawer = !this.rightDrawer;
+	},
   }
 };
 </script>
@@ -71,8 +91,19 @@ export default {
   bottom: 0;
   z-index: 600;
 }
-.el-drawer.ltr {
+.rightDrawer {
+	width: 15vw !important;
+	overflow: visible !important;
+}
+.rightDrawerDiv{
+	position: absolute;
+	right: 0;
+	width: 15vw;
+	
+}
+.leftDrawer {
   width: 25vw !important;
   overflow: visible !important;
 }
+
 </style>
