@@ -18,16 +18,17 @@
       >
         <form-main :type="item" @success="createForm((index + 2).toString())" />
       </el-collapse-item>
+       <el-collapse-item title="关联文档" :name="(types.length+2).toString()">
+        <files :id="keyNo" />
+      </el-collapse-item>
     </el-collapse>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-    </span>
   </el-dialog>
 </template>
 
 <script>
 import formTitle from "./formTitle";
 import formMain from "./formMain";
+import files from "@/components/files"
 export default {
   name: "nczxDialog",
   props: {},
@@ -45,7 +46,8 @@ export default {
       add: true,
       keyNo: 0,
       types: ["农专项设施设备"],
-      currentType: "农专项设施基础信息"
+      currentType: "农专项设施基础信息",
+      docId:0
     };
   },
   computed: {
@@ -53,7 +55,7 @@ export default {
       return this.TOPINDEX();
     }
   },
-  components: { formTitle, formMain },
+  components: { formTitle, formMain,files },
   watch: {
     topIndex: {
       handler(newVal) {

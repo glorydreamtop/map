@@ -534,3 +534,12 @@ export function DelHousehold_Sub(data) {
         data
     })
 }
+
+//获取主表下的关联文档 GetDocs
+export function GetDocs(data) {
+    return request({
+        url: `${baseReflect}GetDocs`,
+        method: 'post',
+        data
+    })
+}

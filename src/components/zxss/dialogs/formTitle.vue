@@ -99,9 +99,6 @@ export default {
           { name: e.VillageDESC, id: e.Village },
           { name: e.VillageGroupDESC, id: e.VillageGroup }
         ];
-        // this.area = [e.CountyDESC,e.TownDESC,e.VillageDESC,e.VillageGroupDESC]
-        console.log(123);
-
         const cascader = this.$refs.cascader;
         cascader.panel.activePath = [];
         cascader.panel.loadCount = 0;
