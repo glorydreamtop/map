@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <iframe src="http://aglostech1.yicp.io:9099/pc/ceMap/index.html" frameborder="0" width="100%" height="100%" id="map"></iframe> -->
+    <iframe src="http://aglostech1.yicp.io:9099/ceMap/index.html" frameborder="0" width="100%" height="100%" id="map"></iframe>
     <!-- <iframe src="#" frameborder="0" width="100%" height="100%"></iframe> -->
     <div id="message">{{message}}</div>
   </div>
@@ -14,6 +14,9 @@ export default {
   },
   mounted() {
       this.getMessage()
+      this.$eventBus.$on('testchild',(e)=>{
+        console.log(e);
+      })
   },
   destroyed(){
       window.removeEventListener("message");
@@ -24,6 +27,7 @@ export default {
         if (e.origin !== "http://aglostech1.yicp.io:9099") return;
         const params = e.data;
         this.message = JSON.stringify(params);
+        this.$eventBus.$emit(params.eventName,params.params);
       };
       window.addEventListener("message", receive, false);
     },

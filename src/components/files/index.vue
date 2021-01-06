@@ -11,12 +11,13 @@
         <span>{{item.name}}</span>
       </div>
     </div>
+    <upload />
   </div>
 </template>
 
 <script>
 import {GetDocs} from '@/api'
-import upload from "@/components/zlgl/upload";
+import upload from "./upload";
 export default {
   name: "Files",
   props: {

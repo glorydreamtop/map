@@ -2,19 +2,19 @@
   <div>
     <div class="justify-between">
       <div class="flex-col align-center item" @click="jbqkTable(1)">
-        <i class="al-icon-xiangmuguanli text-light"></i>
+        <i class="al-icon-nongcun text-light"></i>
         <span>农村</span>
       </div>
       <div class="flex-col align-center item" @click="jbqkTable(2)">
-        <i class="al-icon-xiangmuguanli text-light"></i>
+        <i class="al-icon-chengshijizhen text-light"></i>
         <span>城市集镇</span>
       </div>
       <div class="flex-col align-center item" @click="jbqkTable(3)">
-        <i class="al-icon-xiangmuguanli text-light"></i>
+        <i class="al-icon-zhuanyexiangmu text-light"></i>
         <span>专业项目</span>
       </div>
       <div class="flex-col align-center item" @click="jbqkTable(4)">
-        <i class="al-icon-xiangmuguanli text-light"></i>
+        <i class="al-icon-qishiyedanwei text-light"></i>
         <span>企事业单位</span>
       </div>
     </div>

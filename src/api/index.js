@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { getToken } from '@/utils/cookie';
 
 const baseReflect = '/ReflectInvoke/Invoke?assebleUrlEn=GDYZCBusiness.dll&classUrlEn=GDYZCBusiness.HCProject.Project&functionUrlEn='
-    // 登录
+// 登录
 export function login(user, pwd) {
     const str = btoa(`${user}:${pwd}`);
     return request({
@@ -539,6 +539,14 @@ export function DelHousehold_Sub(data) {
 export function GetDocs(data) {
     return request({
         url: `${baseReflect}GetDocs`,
+        method: 'post',
+        data
+    })
+}
+//创建文件信息 CreateDoc
+export function CreateDoc(data) {
+    return request({
+        url: `${baseReflect}CreateDoc`,
         method: 'post',
         data
     })

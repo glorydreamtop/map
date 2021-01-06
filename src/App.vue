@@ -13,7 +13,7 @@
     >
       <left />
     </el-drawer>
-    <bar @click="closeDrawer_left" position="left" />
+    <bar ref="leftBar" @click="closeDrawer_left" position="left" />
     <el-drawer
       size="15vw"
       :modal="false"
@@ -27,7 +27,7 @@
     >
       <right></right>
     </el-drawer>
-    <bar @click="closeDrawer_right" position="right" />
+    <bar ref="rightBar" @click="closeDrawer_right" position="right" />
 
     <navigation></navigation>
     <!-- <ce-map></ce-map> -->
@@ -59,10 +59,16 @@ export default {
     login,
     bar
   },
-  mounted(){
+  mounted() {
+    this.$eventBus.$on("rightDrawer", params => {
+      this.$refs.rightBar.drawer();
+      console.log(params);
+    });
     // 缩小左右抽屉的渲染范围，防止彼此覆盖
-    document.querySelector('.right').parentElement.parentElement.style.left = '85vw';
-    document.querySelector('.left').parentElement.parentElement.style.right = '80vw';
+    document.querySelector(".right").parentElement.parentElement.style.left =
+      "85vw";
+    document.querySelector(".left").parentElement.parentElement.style.right =
+      "80vw";
   },
   methods: {
     closeDrawer_left() {
@@ -79,7 +85,17 @@ export default {
 @import "./assets/css/common";
 @import "./assets/css/reset";
 @import "./assets/css/publice_zyj.css";
-@import "./assets/icon/iconfont.css";
+// @import "./assets/icon/iconfont.css";
+@import url("http://at.alicdn.com/t/font_2213681_kgvxkhswc8.css");
+[class^="al-icon"],
+[class*=" al-icon"] {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .el-drawer {
   position: absolute;
   bottom: 0;
