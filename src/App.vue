@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-     <el-drawer
+    <el-drawer
+      size="20vw"
       :modal="false"
       title="左侧抽屉"
       ref="leftDrawer"
@@ -8,29 +9,26 @@
       :visible.sync="leftDrawer"
       direction="ltr"
       :wrapperClosable="false"
-	   :custom-class="leftDrawer"
+      :custom-class="leftDrawer"
     >
       <left />
     </el-drawer>
-	<bar @click="closeDrawer_left"  position="left"/>
-	<div class="rightDrawerDiv">
-		<el-drawer
-		  :modal="false"
-		  title="右侧抽屉"
-		  ref="rightDrawer"
-		  :with-header="false"
-		  :visible.sync="rightDrawer"
-		  direction="rtl"
-		  :wrapperClosable="false"
-		  custom-class="rightDrawer"
-		  
-		>
-		<right></right>
-		
-		</el-drawer>
-		<bar @click="closeDrawer_right" position="right"/>
-	</div>
-	
+    <bar @click="closeDrawer_left" position="left" />
+    <el-drawer
+      size="15vw"
+      :modal="false"
+      title="右侧抽屉"
+      ref="rightDrawer"
+      :with-header="false"
+      :visible.sync="rightDrawer"
+      direction="rtl"
+      :wrapperClosable="false"
+      custom-class="rightDrawer"
+    >
+      <right></right>
+    </el-drawer>
+    <bar @click="closeDrawer_right" position="right" />
+
     <navigation></navigation>
     <!-- <ce-map></ce-map> -->
     <login></login>
@@ -50,7 +48,7 @@ export default {
   data() {
     return {
       leftDrawer: false,
-	  rightDrawer:false,
+      rightDrawer: false
     };
   },
   components: {
@@ -65,45 +63,34 @@ export default {
     closeDrawer_left() {
       this.leftDrawer = !this.leftDrawer;
     },
-	closeDrawer_right(){
-		console.log(111)
-		this.rightDrawer = !this.rightDrawer;
-	},
+    closeDrawer_right() {
+      this.rightDrawer = !this.rightDrawer;
+    }
   }
 };
 </script>
 
 <style lang="scss">
-@import "./assets/css/cesiumViewer";
-@import "./assets/css/bimPage";
 @import "./assets/css/common";
 @import "./assets/css/reset";
 @import "./assets/css/publice_zyj.css";
 @import "./assets/icon/iconfont.css";
-.el-drawer__wrapper {
-  width: 20vw;
-  right: 75vw;
-  margin-right: 0;
+.el-drawer__wrapper{
+  position: relative!important;
 }
-.el-drawer{
+.el-drawer {
   position: absolute;
-  left: 0;
   bottom: 0;
   z-index: 600;
 }
-.rightDrawer {
-	width: 15vw !important;
-	overflow: visible !important;
-}
-.rightDrawerDiv{
-	position: absolute;
-	right: 0;
-	width: 15vw;
-	
-}
-.leftDrawer {
-  width: 25vw !important;
-  overflow: visible !important;
-}
-
+// .leftDrawer {
+//   left: 0;
+// }
+// .rightDrawer {
+//   right: 0;
+// }
+// .leftDrawer {
+//   width: 25vw !important;
+//   overflow: visible !important;
+// }
 </style>
