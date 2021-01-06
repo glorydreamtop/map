@@ -14,17 +14,12 @@ export default {
       src: require("@/assets/imgs/展开.png")
     };
   },
-  mounted() {
-    console.log(this.position);
-  },
   methods: {
     drawer() {
-      console.log("click", this.position);
       this.$emit("click");
       this.show = !this.show;
       this.src = require(`@/assets/imgs/${this.show ? "收起" : "展开"}.png`);
       if (this.position == "left") {
-        console.log(this.position);
         this.$el.style.transform = this.show
           ? "translateX(20vw)"
           : "translateX(0)";
@@ -40,9 +35,9 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  width: 20px;
+  width: 24px;
   img {
-    width: 20px;
+    width: 24px;
   }
   position: absolute;
   z-index: 600;

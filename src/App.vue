@@ -8,8 +8,8 @@
       :with-header="false"
       :visible.sync="leftDrawer"
       direction="ltr"
+      custom-class="left"
       :wrapperClosable="false"
-      :custom-class="leftDrawer"
     >
       <left />
     </el-drawer>
@@ -22,8 +22,8 @@
       :with-header="false"
       :visible.sync="rightDrawer"
       direction="rtl"
+      custom-class="right"
       :wrapperClosable="false"
-      custom-class="rightDrawer"
     >
       <right></right>
     </el-drawer>
@@ -59,6 +59,11 @@ export default {
     login,
     bar
   },
+  mounted(){
+    // 缩小左右抽屉的渲染范围，防止彼此覆盖
+    document.querySelector('.right').parentElement.parentElement.style.left = '85vw';
+    document.querySelector('.left').parentElement.parentElement.style.right = '80vw';
+  },
   methods: {
     closeDrawer_left() {
       this.leftDrawer = !this.leftDrawer;
@@ -75,22 +80,9 @@ export default {
 @import "./assets/css/reset";
 @import "./assets/css/publice_zyj.css";
 @import "./assets/icon/iconfont.css";
-.el-drawer__wrapper{
-  position: relative!important;
-}
 .el-drawer {
   position: absolute;
   bottom: 0;
   z-index: 600;
 }
-// .leftDrawer {
-//   left: 0;
-// }
-// .rightDrawer {
-//   right: 0;
-// }
-// .leftDrawer {
-//   width: 25vw !important;
-//   overflow: visible !important;
-// }
 </style>
