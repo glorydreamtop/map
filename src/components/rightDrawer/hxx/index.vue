@@ -4,7 +4,7 @@
 			<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="6" v-for="(item,index) in 6">
 				<div class="leftMain" :class="buttonIndex===index?'activeRow':''" @click="rowClick(index,item)">
 					<div class="item flex-col align-center">
-						<i class="al-icon-xiangmuguanli text-light"></i>
+						<i class="al-icon-zhuanyexiangmu text-light"></i>
 						<span>李勇{{index}}</span>
 					</div>
 		

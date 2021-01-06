@@ -69,8 +69,6 @@
 								<el-table-column prop="Remarks" label="备注" align="center"></el-table-column>
 							</el-table>
 						</div>
-
-
 					</el-collapse-item>
 				</el-collapse>
 
