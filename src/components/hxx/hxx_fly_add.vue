@@ -119,6 +119,10 @@
 							</el-table>
 						</div>
 					</el-collapse-item>
+					<el-collapse-item title="相关文档" name="6" v-if="householdId">
+						
+						<files :id="householdId" />
+					</el-collapse-item>
 				</el-collapse>
 
 				<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
@@ -149,6 +153,7 @@
 	import huxinxidiaochaFlyAdd from '@/components/hxx/huxinxidiaocha_fly_add' //户信息调查添加
 	import lingxingguomuFlyAdd from '@/components/hxx/lingxingguomu_fly_add' //零星果木添加
 	import renkouxinxiFlyAdd from '@/components/hxx/renkouxinxi_fly_add' //零星果木添加
+	import files from "@/components/files"
 	export default {
 		name: 'jbqk_table1_add_two',
 		computed: {
@@ -160,6 +165,7 @@
 			huxinxidiaochaFlyAdd,
 			lingxingguomuFlyAdd,
 			renkouxinxiFlyAdd,
+			files
 		},
 		data() {
 			return {

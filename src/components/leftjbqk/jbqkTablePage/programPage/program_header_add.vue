@@ -51,6 +51,10 @@
 			
 			
 					</el-collapse-item>
+					<el-collapse-item title="相关文档" name="3" v-if="KeyNo">
+						
+						<files :id="KeyNo" />
+					</el-collapse-item>
 				</el-collapse>
 			
 				<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
@@ -76,10 +80,11 @@
 		GetSerialNumber,
 		DeleteBaseTablesAttr
 	} from '@/api'
+	import files from "@/components/files"
 	import programHeaderAdd from './program_item_add' 
 	export default {
 		name: 'jbqk_table1_add',
-		components: {programHeaderAdd},
+		components: {programHeaderAdd,files},
 		computed: {
 			...mapGetters(['projectNo','BaseType','KeyNo'])
 		},

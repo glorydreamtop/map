@@ -107,6 +107,10 @@
 							</el-table>
 						</div>
 					</el-collapse-item>
+					<el-collapse-item title="相关文档" name="4" v-if="KeyNo">
+						
+						<files :id="KeyNo" />
+					</el-collapse-item>
 
 				</el-collapse>
 
@@ -124,6 +128,7 @@
 <script>
 	import itemAdd1 from './cityTown_item_add'
 	import itemAdd2 from './cityTown_item2_add'
+	import files from "@/components/files"
 	import {
 		mapGetters
 	} from 'vuex'
@@ -140,7 +145,8 @@
 		name: 'jbqk_table1_add',
 		components: {
 			itemAdd2,
-			itemAdd1
+			itemAdd1,
+			files
 		},
 		computed: {
 			...mapGetters(['projectNo', 'BaseType', 'KeyNo'])
