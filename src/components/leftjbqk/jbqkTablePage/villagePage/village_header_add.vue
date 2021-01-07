@@ -70,6 +70,10 @@
 							</el-table>
 						</div>
 					</el-collapse-item>
+					<el-collapse-item title="相关文档" name="3" v-if="KeyNo">
+						
+						<files :id="KeyNo" />
+					</el-collapse-item>
 				</el-collapse>
 
 				<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
@@ -83,6 +87,7 @@
 </template>
 
 <script>
+	
 	import {
 		mapGetters
 	} from 'vuex'
@@ -95,6 +100,7 @@
 		GetSerialNumber,
 		DeleteBaseTablesAttr
 	} from '@/api'
+	import files from "@/components/files"
 	import villageHeaderAdd from './village_item_add' 
 	export default {
 		name: 'jbqk_table1_add_two',
@@ -102,7 +108,7 @@
 			...mapGetters(['projectNo','BaseType','KeyNo'])
 		},
 		components: {
-			villageHeaderAdd
+			villageHeaderAdd,files
 		},
 		data() {
 			return {
