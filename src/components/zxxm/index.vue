@@ -3,7 +3,7 @@
 		<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="6" v-for="item in titleData">
 			<div class="leftMain">
 				<div class="item flex-col align-center" @click="openDetail(item)">
-					<i class="al-icon-xiangmuguanli text-light"></i>
+					<i class="text-light" :class="item.icon"></i>
 					<span>{{item.name}}</span>
 				</div>
 			</div>
@@ -54,47 +54,47 @@
 				titleData: [{
 						name: '电力',
 						index: 'dianliTable',
-						icon: 'al-icon-xiangmuguanli'
+						icon: 'al-icon-dianli'
 					},
 					{
 						name: '电信',
 						index: 'dianxinTable',
-						icon: 'al-icon-xiangmuguanli'
+						icon: 'al-icon-dianxin'
 					},
 					{
 						name: '铁路',
 						index: 'tieluTable',
-						icon: 'al-icon-xiangmuguanli'
+						icon: 'al-icon-tielu'
 					},
 					{
 						name: '公路',
 						index: 'gongluTable',
-						icon: 'al-icon-xiangmuguanli'
+						icon: 'al-icon-gonglu'
 					},
 					{
 						name: '水运',
 						index: 'shuiyunTable',
-						icon: 'al-icon-xiangmuguanli'
+						icon: 'al-icon-shuiyun'
 					},
 					{
 						name: '水利水电',
 						index: 'shuidianTable',
-						icon: 'al-icon-xiangmuguanli'
+						icon: 'al-icon-shuilishuidian'
 					},
 					{
 						name: '文物',
 						index: 'wenwuTable',
-						icon: 'al-icon-xiangmuguanli'
+						icon: 'al-icon-wenwu'
 					},
 					{
 						name: '广播电视',
 						index: 'guangboTable',
-						icon: 'al-icon-xiangmuguanli'
+						icon: 'al-icon-guangbodianshi'
 					},
 					{
 						name: '农村文教',
 						index: 'zongjiaoTable',
-						icon: 'al-icon-xiangmuguanli'
+						icon: 'al-icon-nongcunwenjiao'
 					},
 				],
 			}
