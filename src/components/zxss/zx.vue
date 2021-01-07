@@ -42,6 +42,7 @@
 import zx from "./dialogs/zx";
 import { GetNCZXSS_BASE, DelNCZXSS_BASE } from "@/api";
 import { mapGetters } from "vuex";
+import { deepClone } from '../../utils';
 export default {
   name: "nczxTable",
   provide() {
@@ -110,7 +111,7 @@ export default {
       if (e) {
         this.$refs.zx.keyNo = e.KeyNo;
         this.$nextTick(() => {
-          this.$refs.zx.$refs.formTitle.form = e;
+          this.$refs.zx.$refs.formTitle.form = deepClone(e);
         });
       }
     },

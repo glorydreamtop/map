@@ -1,5 +1,12 @@
 <template>
-  <el-dialog title="上传" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+  <el-dialog
+    title="上传"
+    append-to-body
+    :visible.sync="dialogVisible"
+    v-if="dialogVisible"
+    width="30%"
+    :before-close="handleClose"
+  >
     <el-upload
       ref="upload"
       class="upload"
@@ -11,22 +18,25 @@
       multiple
     >
       <i class="el-icon-upload"></i>
-      <div class="el-upload__text">
-        将文件拖到此处，或
-        <em>点击上传</em>
-      </div>
-      <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+      <div class="el-upload__text">将文件拖到此处，或点击上传</div>
     </el-upload>
   </el-dialog>
 </template>
 
 <script>
-import { GetSubTypeTempdefns, CreateDoc, GetUpdateDocId } from "@/api";
+import { GetUploadFileType, CreateDoc, GetUpdateDocId } from "@/api";
+import { getToken } from "@/utils/cookie";
 export default {
+  props: {
+    id: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
+      add:false,
       dialogVisible: false,
-      typeList: [],
       uploadUrl: "",
       updateFileId: 0
     };
@@ -36,17 +46,23 @@ export default {
       return { token: getToken() };
     }
   },
+  watch: {
+    dialogVisible: {
+      handler(newVal) {
+        newVal && this.getTypeList();
+      },
+      immediate: true
+    }
+  },
   methods: {
-    async getTypeList() {
-      this.typeList = await GetSubTypeTempdefns();
-    },
     async beforeUpload(file) {
+      console.log(file);
       let itemno;
       try {
-        if (this.updateFileId > 0) {
-          itemno = await this.update(file);
-        } else {
+        if (this.add) {
           itemno = await this.create(file);
+        } else {
+          itemno = await this.update(file);
         }
         this.uploadUrl = `http://aglostech1.yicp.io:9080/Document/UploadDocFile?itemno=${itemno}`;
         return true;
@@ -55,12 +71,19 @@ export default {
         return false;
       }
     },
+    getType(type){
+      if(/officedocument/i.test(type)){
+        return 1
+      }else if(/image/i.test(type)){
+        return 2
+      }
+    },
     // 创建
     async create(file) {
-      !this.currentType && this.$message.error("请先选择文件类型");
       const res = await CreateDoc({
-        folderid: this.folderid,
-        tempdefno: this.currentType,
+        ProjectNo:this.$store.getters.projectNo,
+        id: this.id,
+        tempdefno: this.getType(file.type),
         docname: file.name
       });
       return res[0].docno;
@@ -68,14 +91,16 @@ export default {
     // 更新
     async update(file) {
       const res = await GetUpdateDocId({
-        docid: this.updateFileId,
-        tempdefno: this.currentType,
+        docid: this.id,
+        tempdefno: this.getType(file.type),
         docname: file.name
       });
       return res[0].docno;
     },
     onSuccess() {
       this.$refs.upload.clearFiles();
+      this.$emit('update')
+      this.dialogVisible = false;
     },
     handleClose(done) {
       done();
@@ -85,4 +110,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .el-upload{
+  width: 100%;
+}
+::v-deep .el-upload-dragger {
+  width: 100%;
+  background: transparent;
+  margin: 0;
+}
 </style>

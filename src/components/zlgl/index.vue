@@ -157,12 +157,19 @@ export default {
     },
     async lookClick(e) {
       this.loading2 = true;
-      const Type = e.minetype.includes("doc") ? "word" : "excel";
+      console.log(e.minetype);
+      const minetype = e.minetype;
+      const Type = minetype.includes("doc") ? "word" :minetype.includes("xls")? "excel":"img";
       try {
         const res1 = await GetDocumentByDocNo({ docid: e.no });
-        const res2 = await GetWordOrExcelToPDF({ Type, Path: res1[0].url });
+        if(Type!=='img'){
+          const res2 = await GetWordOrExcelToPDF({ Type, Path: res1[0].url });
+          window.open(`http://aglostech1.yicp.io:9080/${res2[0].url}`);
+        }else{
+          window.open(`http://aglostech1.yicp.io:9080/${res1[0].url}`);
+        }
         this.loading2 = false;
-        window.open(`http://aglostech1.yicp.io:9080/${res2[0].url}`);
+        
       } catch (error) {
         this.loading2 = false;
         this.$message.error("文件转换失败");

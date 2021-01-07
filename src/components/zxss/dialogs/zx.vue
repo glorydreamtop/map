@@ -5,6 +5,7 @@
     width="50%"
     append-to-body
     :before-close="handleClose"
+    v-if="dialogVisible"
   >
     <el-collapse ref="collapse" v-model="collapse" accordion>
       <el-collapse-item :title="currentType" name="1">

@@ -1,11 +1,11 @@
 <template>
   <div class="justify-around">
     <div class="flex-col align-center item" @click="zxssTable(0)">
-      <i class="al-icon-xiangmuguanli text-light"></i>
+      <i class="al-icon-xiaoxingzhuanxiangjinongfuye text-light"></i>
       <span>小型专项及农副业</span>
     </div>
     <div class="flex-col align-center item" @click="zxssTable(1)">
-      <i class="al-icon-xiangmuguanli text-light"></i>
+      <i class="al-icon-getigongshanghu text-light"></i>
       <span>个体工商户</span>
     </div>
     <el-dialog
@@ -13,6 +13,7 @@
       :title="dialogTitle"
       append-to-body
       :visible.sync="showFlag"
+      v-if="showFlag"
     >
       <zx class="box" :dialog-type="dialogType"></zx>
     </el-dialog>
