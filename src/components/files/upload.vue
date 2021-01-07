@@ -15,7 +15,7 @@
       :headers="headers"
       :before-upload="beforeUpload"
       :on-success="onSuccess"
-      multiple
+      :multiple="docId===0"
     >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或点击上传</div>
@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       add:false,
+      docId:0,
       dialogVisible: false,
       uploadUrl: "",
       updateFileId: 0
@@ -44,14 +45,6 @@ export default {
   computed: {
     headers() {
       return { token: getToken() };
-    }
-  },
-  watch: {
-    dialogVisible: {
-      handler(newVal) {
-        newVal && this.getTypeList();
-      },
-      immediate: true
     }
   },
   methods: {
@@ -91,7 +84,7 @@ export default {
     // 更新
     async update(file) {
       const res = await GetUpdateDocId({
-        docid: this.id,
+        docid: this.docId,
         tempdefno: this.getType(file.type),
         docname: file.name
       });
@@ -99,7 +92,7 @@ export default {
     },
     onSuccess() {
       this.$refs.upload.clearFiles();
-      this.$emit('update')
+      this.$emit('update',1,true)
       this.dialogVisible = false;
     },
     handleClose(done) {
