@@ -32,7 +32,8 @@
         {
             "title": "备注",
             "value": "BZ",
-            "textArea": true
+            "type":"elTextArea",
+            "notRequired":true
         }
     ],
     [
@@ -64,7 +65,8 @@
         {
             "title": "备注",
             "value": "BZ",
-            "textArea": true
+            "type":"elTextArea",
+            "notRequired":true
         }
     ],
     [
@@ -96,7 +98,8 @@
         {
             "title": "备注",
             "value": "BZ",
-            "textArea": true
+            "type":"elTextArea",
+            "notRequired":true
         }
     ],
     [
@@ -127,12 +130,14 @@
         },
         {
             "title": "购买建成时间",
-            "value": "GMJCSJ"
+            "value": "GMJCSJ",
+            "type":"elDatePicker"
         },
         {
             "title": "备注",
             "value": "BZ",
-            "textArea": true
+            "textArea": true,
+            "notRequired":true
         }
     ],
     [
@@ -160,7 +165,8 @@
         {
             "title": "备注",
             "value": "BZ",
-            "textArea": true
+            "textArea": true,
+            "notRequired":true
         }
     ]
 ]

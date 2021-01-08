@@ -6,7 +6,7 @@
       <el-button title="修改" size="small" class="el-icon-edit" @click="upload(false)" />
       <el-button title="删除" size="small" class="el-icon-delete" @click="del" />
     </div>
-    <div class="justify-start list" v-infinite-scroll="getList">
+    <div class="justify-start list" v-infinite-scroll="getList" :infinite-scroll-immediate="false">
       <div
         :class="['flex-col align-center justify-between item',currentFile.no===item.no?'selected':'']"
         v-for="item in list"
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { GetDocs, GetDocumentByDocNo, DelDoc } from "@/api";
+import { GetDocs, GetDocumentByDocNo,GetWordOrExcelToPDF, DelDoc } from "@/api";
 import upload from "./upload";
 export default {
   name: "Files",
@@ -35,14 +35,15 @@ export default {
   },
   data() {
     return {
-      loading:false,
+      loading: false,
       list: [],
       currentFile: {
         type: "img",
         no: 0,
         url: ""
       },
-      currentPage: 1
+      currentPage: 1,
+      total: -1
     };
   },
   components: { upload },
@@ -50,13 +51,15 @@ export default {
     this.getList();
   },
   methods: {
-    async getList(CurrentPage = this.currentPage, update) {
+    async getList(CurrentPage = this.currentPage, update=false) {
+      if (this.list.length <= this.total && !update) return;
+      this.loading = true;
       const { list, total } = await GetDocs({
         CurrentPage,
         PageSize: 10,
         id: this.id
       });
-      this.currentPage++;
+      this.currentPage = this.currentPage + 1;
       const plist = [];
       for (let i = 0; i < list.length; i++) {
         const element = list[i];
@@ -82,7 +85,7 @@ export default {
       };
       const resList = picList.map(element => {
         let a = element.value.url;
-        const name =decodeURI(a.split("/")[2]);
+        const name = decodeURI(a.split("/")[2]);
         return {
           name,
           no: element.value.no,
@@ -92,34 +95,45 @@ export default {
       });
       this.list = update ? resList : this.list.concat(resList);
       this.total = total;
+      this.loading = false;
     },
     upload(add) {
       this.$refs.upload.dialogVisible = true;
       this.$refs.upload.add = add;
       if (!add) {
-        this.$refs.upload.docId = this.docId;
+        this.$refs.upload.docId = this.currentFile.no;
       }
     },
     async del() {
-      if (this.docId === 0) {
+      if (this.currentFile.no === 0) {
         this.$message.error("请选择一个文件");
         return;
       }
       try {
-        await DelDoc({ docid: this.docId });
+        await DelDoc({ docid: this.currentFile.no });
         this.$message.success("删除成功");
-        this.list = [];
-        this.getList(1);
+        this.getList(1,true);
       } catch (error) {
         this.$message.error(error);
       }
     },
     preview() {
-      if (this.docId === 0) {
+      if (this.currentFile.no === 0) {
         this.$message.error("请选择一个文件");
         return;
       }
       this.loading = true;
+      const getView = async Type => {
+        try {
+          const res1 = await GetDocumentByDocNo({ docid: this.currentFile.no });
+          const res2 = await GetWordOrExcelToPDF({ Type, Path: res1[0].url });
+          window.open(`${appConfig.baseIp}/${res2[0].url}`);
+          this.loading = false;
+        } catch (error) {
+          this.loading = false;
+          this.$message.error("文件转换失败");
+        }
+      };
       switch (this.currentFile.type) {
         case "doc":
           getView("word");
@@ -132,17 +146,6 @@ export default {
           this.loading = false;
           break;
       }
-      const getView = async Type => {
-        try {
-          const res1 = await GetDocumentByDocNo({ docid: this.currentFile.no });
-          const res2 = await GetWordOrExcelToPDF({ Type, Path: res1[0].url });
-          window.open(`${appConfig.baseIp}/${res2[0].url}`);
-          this.loading = false;
-        } catch (error) {
-          this.loading = false;
-          this.$message.error("文件转换失败");
-        }
-      };
     },
     select(e) {
       this.currentFile = e;
@@ -159,7 +162,7 @@ export default {
   flex-wrap: wrap;
 }
 .al-icon-canyushixiang {
-  font-size: 36px;
+  font-size: 56px;
 }
 .pic {
   max-height: 100px;

@@ -72,6 +72,7 @@ export default {
   methods: {
     handleClose(done) {
       this.$refs.formTitle.$refs.form1.resetFields()
+      this.collapse = "1"
       done();
     },
     createTitle(e) {
