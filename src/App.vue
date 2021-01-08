@@ -30,7 +30,7 @@
     <bar ref="rightBar" @click="closeDrawer_right" position="right" />
 
     <navigation></navigation>
-    <!-- <ce-map></ce-map> -->
+    <ce-map></ce-map>
     <login></login>
     <!-- <dragableDialog /> -->
   </div>

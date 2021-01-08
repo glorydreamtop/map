@@ -57,7 +57,7 @@ export default {
         } else {
           itemno = await this.update(file);
         }
-        this.uploadUrl = `http://aglostech1.yicp.io:9080/Document/UploadDocFile?itemno=${itemno}`;
+        this.uploadUrl = `${appConfig.baseIp}/Document/UploadDocFile?itemno=${itemno}`;
         return true;
       } catch (error) {
         console.log(error);

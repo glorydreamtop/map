@@ -195,7 +195,7 @@ export function UploadDocFile(data) {
     formdata.append('upFiles_1', file, file.name)
     console.log(formdata);
     return Axios({
-        url: `http://aglostech1.yicp.io:9080/Document/UploadDocFile?itemno=${itemno}`,
+        url: `${appConfig.baseIp}/Document/UploadDocFile?itemno=${itemno}`,
         method: 'post',
         headers: {
             'Content-Type': 'multipart/form-data',

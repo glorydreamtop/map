@@ -164,9 +164,9 @@ export default {
         const res1 = await GetDocumentByDocNo({ docid: e.no });
         if(Type!=='img'){
           const res2 = await GetWordOrExcelToPDF({ Type, Path: res1[0].url });
-          window.open(`http://aglostech1.yicp.io:9080/${res2[0].url}`);
+          window.open(`${appConfig.baseIp}/${res2[0].url}`);
         }else{
-          window.open(`http://aglostech1.yicp.io:9080/${res1[0].url}`);
+          window.open(`${appConfig.baseIp}/${res1[0].url}`);
         }
         this.loading2 = false;
         
