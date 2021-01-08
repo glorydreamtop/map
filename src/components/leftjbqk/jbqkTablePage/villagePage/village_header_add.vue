@@ -56,9 +56,9 @@
 					</el-collapse-item>
 					<el-collapse-item title="表数据信息" name="2" v-if="KeyNo">
 						<div class="formeBody">
-							<el-button size="mini" @click="addTableItem" icon="el-icon-plus"></el-button>
-							<el-button title="修改" @click="editTableItem" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" @click="delTableItem" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-button size="mini" @click="addTableItem" icon="al-icon-tianjia"></el-button>
+							<el-button title="修改" @click="editTableItem" size="mini" icon="al-icon-xiugai" plain></el-button>
+							<el-button title="删除" @click="delTableItem" size="mini" icon="al-icon-shanchu" plain></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="35vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">

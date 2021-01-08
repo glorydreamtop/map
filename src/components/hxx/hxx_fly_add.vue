@@ -42,9 +42,9 @@
 					</el-collapse-item>
 					<el-collapse-item title="人口信息" name="2" v-if="householdId">
 						<div class="formeBody">
-							<el-button size="mini" @click="addItem('renkouxinxiFlyAdd','添加人口信息调查')" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini" @click="editItem('renkouxinxiFlyAdd','修改人口信息调查')" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini" @click="delItem(2)" icon="el-icon-delete" plain></el-button>
+							<el-button size="mini" @click="addItem('renkouxinxiFlyAdd','添加人口信息调查')" icon="al-icon-tianjia"></el-button>
+							<el-button title="修改" size="mini" @click="editItem('renkouxinxiFlyAdd','修改人口信息调查')" icon="al-icon-xiugai" plain></el-button>
+							<el-button title="删除" size="mini" @click="delItem(2)" icon="al-icon-shanchu" plain></el-button>
 							<el-table :data="tableData0" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick"> 
 								<el-table-column prop="RKBH" label="编号"  align="center"></el-table-column>
 								<el-table-column prop="XM" label="姓名" width="180" align="center"></el-table-column>
@@ -59,9 +59,9 @@
 					</el-collapse-item>
 					<el-collapse-item title="房屋信息" name="3"  v-if="householdId">
 						<div class="formeBody">
-							<el-button size="mini" @click="addItem('fangwuxinxiFlyAdd','添加房屋信息调查')" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini" @click="editItem('fangwuxinxiFlyAdd','修改房屋信息调查')" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini" @click="delItem(3)" icon="el-icon-delete" plain></el-button>
+							<el-button size="mini" @click="addItem('fangwuxinxiFlyAdd','添加房屋信息调查')" icon="al-icon-tianjia"></el-button>
+							<el-button title="修改" size="mini" @click="editItem('fangwuxinxiFlyAdd','修改房屋信息调查')" icon="al-icon-xiugai" plain></el-button>
+							<el-button title="删除" size="mini" @click="delItem(3)" icon="al-icon-shanchu" plain></el-button>
 							<el-table :data="tableData1" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="FWBH" label="编号"  align="center"></el-table-column>
 								<el-table-column prop="FWMC" label="房屋名称" width="180" align="center"></el-table-column>
@@ -80,9 +80,9 @@
 					</el-collapse-item>
 					<el-collapse-item title="附属物信息" name="4"  v-if="householdId">
 						<div class="formeBody">
-							<el-button size="mini" @click="addItem('fushuwuFlyAdd','添加附属物信息')" icon="el-icon-plus"></el-button>
-							<el-button title="修改" size="mini" @click="editItem('fushuwuFlyAdd','修改附属物信息')" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" size="mini" @click="delItem(4)" icon="el-icon-delete" plain></el-button>
+							<el-button size="mini" @click="addItem('fushuwuFlyAdd','添加附属物信息')" icon="al-icon-tianjia"></el-button>
+							<el-button title="修改" size="mini" @click="editItem('fushuwuFlyAdd','修改附属物信息')" icon="al-icon-xiugai" plain></el-button>
+							<el-button title="删除" size="mini" @click="delItem(4)" icon="al-icon-shanchu" plain></el-button>
 							<el-table :data="tableData2" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="FSWBH" label="编号"  align="center"></el-table-column>
 								<el-table-column prop="FWWMC" label="附属物名称	" width="180" align="center"></el-table-column>
@@ -101,9 +101,9 @@
 					</el-collapse-item>
 					<el-collapse-item title="零星果木" name="5"  v-if="householdId">
 						<div class="formeBody">
-							<el-button size="mini" @click="addItem('lingxingguomuFlyAdd','添加零星果木')" icon="el-icon-plus"></el-button>
-							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd','修改零星果木')" size="mini" icon="el-icon-edit" plain></el-button>
-							<el-button title="删除" @click="delItem(5)" size="mini" icon="el-icon-delete" plain></el-button>
+							<el-button size="mini" @click="addItem('lingxingguomuFlyAdd','添加零星果木')" icon="al-icon-tianjia"></el-button>
+							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd','修改零星果木')" size="mini" icon="al-icon-xiugai" plain></el-button>
+							<el-button title="删除" @click="delItem(5)" size="mini" icon="al-icon-shanchu" plain></el-button>
 							<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="GMBH" label="编号"  align="center"></el-table-column>
 								<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>

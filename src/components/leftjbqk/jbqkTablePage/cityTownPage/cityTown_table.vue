@@ -1,6 +1,6 @@
 <template>
   <div class="tableMain">
-    <el-button icon="el-icon-plus" @click="addClick()" plain />
+    <el-button icon="al-icon-tianjia" @click="addClick()" plain />
     <el-table
       :data="tableData"
       border
@@ -53,7 +53,7 @@
           ></el-button>
           <el-button
             title="修改"
-            icon="el-icon-edit"
+            icon="al-icon-xiugai"
             type="warning"
             plain
             @click="editClick(scope.row)"
@@ -61,7 +61,7 @@
           </el-button>
           <el-button
             title="删除"
-            icon="el-icon-delete"
+            icon="al-icon-shanchu"
             type="danger"
             plain
             @click="delClick(scope.row)"
