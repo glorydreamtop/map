@@ -23,7 +23,7 @@
           <el-button
             title="上传"
             size="small"
-            class="el-icon-plus margin-bottom-m"
+            class="al-icon-tianjia margin-bottom-m"
             @click="$refs.upload.dialogVisible = true"
           />
           <upload
@@ -52,14 +52,14 @@
                 ></el-button>
                 <el-button
                   title="更新"
-                  icon="el-icon-edit"
+                  icon="al-icon-xiugai"
                   type="warning"
                   plain
                   @click="editClick(scope.row)"
                 ></el-button>
                 <el-button
                   title="删除"
-                  icon="el-icon-delete"
+                  icon="al-icon-shanchu"
                   type="danger"
                   plain
                   @click="delClick(scope.row)"

@@ -1,7 +1,7 @@
 <template>
 	<div class="tableMain">
 		<div class="header_table_title">
-			<el-button icon="el-icon-plus"  @click="addClick()" plain>  </el-button>
+			<el-button icon="al-icon-tianjia"  @click="addClick()" plain>  </el-button>
 		</div>
 		<div class="body_table_mian">
 			<el-table v-loading="tableLoad" element-loading-text="客官请稍后" element-loading-spinner="el-icon-loading" class="fixTable49"
@@ -20,8 +20,8 @@
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
 						<el-button title="查看" icon="el-icon-view" type="primary" plain @click="lookClick(scope.row)"></el-button>
-						<el-button title="修改" icon="el-icon-edit" type="warning" plain @click="editClick(scope.row)"></el-button>
-						<el-button title="删除" icon="el-icon-delete" type="danger" plain @click="delClick(scope.row)"></el-button>
+						<el-button title="修改" icon="al-icon-xiugai" type="warning" plain @click="editClick(scope.row)"></el-button>
+						<el-button title="删除" icon="al-icon-shanchu" type="danger" plain @click="delClick(scope.row)"></el-button>
 						<el-button title="发起审批" icon="el-icon-s-check" type="success" plain></el-button>
 			
 					</template>

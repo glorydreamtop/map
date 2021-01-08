@@ -28,17 +28,17 @@
                 <div class="margin-left-s">
                   <el-button
                     type="text"
-                    icon="el-icon-plus"
+                    icon="al-icon-tianjia"
                     @click="postQuota(item, true)"
                   ></el-button>
                   <el-button
                     type="text"
-                    icon="el-icon-edit"
+                    icon="al-icon-xiugai"
                     @click="postQuota(item, false)"
                   ></el-button>
                   <el-button
                     type="text"
-                    icon="el-icon-delete"
+                    icon="al-icon-shanchu"
                     @click="delQuota(item)"
                   ></el-button>
                 </div>
@@ -63,7 +63,7 @@
           <el-button
             title="添加"
             size="small"
-            class="el-icon-plus margin-bottom-m"
+            class="al-icon-tianjia margin-bottom-m"
             @click="postItem(true)"
           />
           <desz-add
@@ -87,14 +87,14 @@
               <template slot-scope="scope">
                 <el-button
                   title="更新"
-                  icon="el-icon-edit"
+                  icon="al-icon-xiugai"
                   type="warning"
                   plain
                   @click="postItem(false, scope.row)"
                 ></el-button>
                 <el-button
                   title="删除"
-                  icon="el-icon-delete"
+                  icon="al-icon-shanchu"
                   type="danger"
                   plain
                   @click="delItem(scope.row.KeyNo)"

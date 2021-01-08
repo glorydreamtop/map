@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button icon="el-icon-plus" @click="postItem(true)"></el-button>
+    <el-button icon="al-icon-tianjia" @click="postItem(true)"></el-button>
     <zx ref="zx" />
     <el-table class="margin-top-l" :data="tableData" v-loading="loading">
       <el-table-column
@@ -13,14 +13,14 @@
         <template slot-scope="scope">
           <el-button
             title="更新"
-            icon="el-icon-edit"
+            icon="al-icon-xiugai"
             type="warning"
             plain
             @click="postItem(false, scope.row)"
           ></el-button>
           <el-button
             title="删除"
-            icon="el-icon-delete"
+            icon="al-icon-shanchu"
             type="danger"
             plain
             @click="delItem(scope.row.KeyNo)"

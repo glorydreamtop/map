@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="flex margin-bottom-l">
-      <el-button icon="el-icon-plus" @click="postItem(true)"></el-button>
-      <el-button icon="el-icon-edit" @click="postItem(false)"></el-button>
-      <el-button icon="el-icon-delete" @click="delItem()"></el-button>
+      <el-button icon="al-icon-tianjia" @click="postItem(true)"></el-button>
+      <el-button icon="al-icon-xiugai" @click="postItem(false)"></el-button>
+      <el-button icon="al-icon-shanchu" @click="delItem()"></el-button>
     </div>
     <sub-dialog ref="sub" :idx="index" :title="type" @success="getList" />
     <el-table :data="tableData" border highlight-current-row @current-change="handleCurrentChange">

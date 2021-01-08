@@ -86,7 +86,7 @@ export default {
 @import "./assets/css/reset";
 @import "./assets/css/publice_zyj.css";
 // @import "./assets/icon/iconfont.css";
-@import url("http://at.alicdn.com/t/font_2213681_kgvxkhswc8.css");
+@import url("http://at.alicdn.com/t/font_2213681_3xp4apnz6tf.css");
 [class^="al-icon"],
 [class*=" al-icon"] {
   font-family: "iconfont" !important;

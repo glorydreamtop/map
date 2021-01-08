@@ -1,10 +1,10 @@
 <template>
   <div v-loading="loading">
     <div class="align-center margin-bottom-m">
-      <el-button title="上传" size="small" class="el-icon-view" @click="preview" />
-      <el-button title="上传" size="small" class="el-icon-upload" @click="upload(true)" />
-      <el-button title="修改" size="small" class="el-icon-edit" @click="upload(false)" />
-      <el-button title="删除" size="small" class="el-icon-delete" @click="del" />
+      <el-button title="查看" size="small" class="el-icon-view" @click="preview" />
+      <el-button title="上传" size="small" class="al-icon-shangchuan" @click="upload(true)" />
+      <el-button title="修改" size="small" class="al-icon-xiugai" @click="upload(false)" />
+      <el-button title="删除" size="small" class="al-icon-shanchu" @click="del" />
     </div>
     <div class="justify-start list" v-infinite-scroll="getList">
       <div
