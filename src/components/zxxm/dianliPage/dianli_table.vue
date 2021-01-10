@@ -20,7 +20,7 @@
 				<el-table-column prop="JYMJ" label="等级"  align="center"> </el-table-column>
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
-						<el-button title="查看" icon="el-icon-view" type="primary" plain @click="lookClick(scope.row)"></el-button>
+						<el-button title="查看" icon="al-icon-yulan" type="primary" plain @click="lookClick(scope.row)"></el-button>
 						<el-button title="修改" icon="al-icon-xiugai" type="warning" plain @click="editClick(scope.row)"></el-button>
 						<el-button title="删除" icon="al-icon-shanchu" type="danger" plain @click="delClick(scope.row)"></el-button>
 

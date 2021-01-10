@@ -13,7 +13,7 @@
         <el-input v-model="form.Ucondition"></el-input>
       </el-form-item>
       <el-form-item label="单价">
-        <el-input v-model.number="form.UnitPrice"></el-input>
+        <el-input v-model="form.UnitPrice"></el-input>
       </el-form-item>
       <el-form-item label="单位">
         <el-input v-model="form.Unit"></el-input>

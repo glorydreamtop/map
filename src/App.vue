@@ -95,10 +95,4 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-.el-drawer {
-  position: absolute;
-  bottom: 0;
-  z-index: 600;
-}
 </style>

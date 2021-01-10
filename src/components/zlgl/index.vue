@@ -24,14 +24,9 @@
             title="上传"
             size="small"
             class="al-icon-tianjia margin-bottom-m"
-            @click="$refs.upload.dialogVisible = true"
+            @click="addFile"
           />
-          <upload
-            @update="updateTable"
-            :folderid="currentNo"
-            :updateFileId="updateFileId"
-            ref="upload"
-          />
+          <upload ref="upload" :id="currentNo" @update="getList" />
           <el-table :data="tableData" v-loading="loading3">
             <el-table-column prop="no" label="文件编号"></el-table-column>
             <el-table-column prop="name" label="文件名"></el-table-column>
@@ -45,7 +40,7 @@
               <template slot-scope="scope">
                 <el-button
                   title="查看"
-                  icon="el-icon-view"
+                  icon="al-icon-yulan"
                   type="primary"
                   plain
                   @click="lookClick(scope.row)"
@@ -89,7 +84,7 @@ import {
   DelDoc,
 } from "@/api";
 import { mapGetters } from "vuex";
-import upload from "./upload";
+import upload from "@/components/files/upload";
 export default {
   name: "Zlgl",
   props: {
@@ -112,8 +107,7 @@ export default {
       currentTotal: 5,
       loading1: false,
       loading2: false,
-      loading3: false,
-      updateFileId: 0, // 待更新文件id
+      loading3: false
     };
   },
   computed: {
@@ -175,20 +169,20 @@ export default {
         this.$message.error("文件转换失败");
       }
     },
-    editClick(e) {
-      this.updateFileId = e.no;
+    addFile(){
       this.$refs.upload.dialogVisible = true;
+      this.$refs.upload.add = true;
+    },
+    editClick(e) {
+      this.$refs.upload.dialogVisible = true;
+      this.$refs.upload.docId = e.no;
+      this.$refs.upload.add = false;
     },
     async delClick(e) {
       await DelDoc({ docid: e.no });
       this.$message.success("删除成功");
       this.getList(1);
-    },
-    updateTable() {
-      // 释放“待更新文件”指针
-      this.updateFileId = 0;
-      this.getList(1);
-    },
+    }
   },
 };
 </script>
@@ -203,6 +197,7 @@ export default {
     width: 380px;
     height: 550px;
     overflow: auto;
+    border: 1px solid $white;
     background-color: rgba($primary, 0.5);
   }
   .datalist {

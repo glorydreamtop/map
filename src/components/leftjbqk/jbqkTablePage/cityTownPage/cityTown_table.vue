@@ -46,7 +46,7 @@
         <template slot-scope="scope">
           <el-button
             title="查看"
-            icon="el-icon-view"
+            icon="al-icon-yulan"
             type="primary"
             plain
             @click="lookClick(scope.row)"

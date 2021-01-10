@@ -71,7 +71,7 @@
             :currentType="currentType"
             @update="updateTable"
           />
-          <el-table :data="tableData">
+          <el-table :data="tableData" border>
             <el-table-column
               v-for="item in tableProps"
               :key="item.value"
@@ -325,16 +325,7 @@ export default {
   width: 100%;
   min-height: 600px;
   .box-left {
-    position: relative;
     background-color: rgba($primary, 0.5);
-  }
-  .box-left::after {
-    content: "\e6dc";
-    font-family: element-icons;
-    position: absolute;
-    top: 45%;
-    right: -40px;
-    font-size: 36px;
   }
   .el-cascader {
     width: 300px;

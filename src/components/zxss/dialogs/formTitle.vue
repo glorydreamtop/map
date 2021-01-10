@@ -131,6 +131,12 @@ export default {
     // 创建基本信息
     create() {
       let form = deepClone(this.form);
+      for(let key in form){
+        // 非数字、字符串类型转换
+        if(form[key] instanceof Date){
+          form[key] = new Date(form[key]).getTime()
+        }
+      }
       this.$refs.form1.validate(async valid => {
         if (valid) {
           try {

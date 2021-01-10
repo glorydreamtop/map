@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { GetUploadFileType, CreateDoc, GetUpdateDocId } from "@/api";
+import { GetUploadFileType, CreateDoc, GetUpdateDocId,GetCreateDocId } from "@/api";
 import { getToken } from "@/utils/cookie";
 export default {
   props: {
@@ -35,8 +35,8 @@ export default {
   },
   data() {
     return {
-      add:false,
-      docId:0,
+      add: false,
+      docId: 0,
       dialogVisible: false,
       uploadUrl: "",
       updateFileId: 0
@@ -64,21 +64,30 @@ export default {
         return false;
       }
     },
-    getType(type){
-      if(/officedocument/i.test(type)){
-        return 1
-      }else if(/image/i.test(type)){
-        return 2
+    getType(type) {
+      if (/(officedocument|pdf)/i.test(type)) {
+        return 1;
+      } else if (/image/i.test(type)) {
+        return 2;
       }
     },
     // 创建
     async create(file) {
-      const res = await CreateDoc({
-        ProjectNo:this.$store.getters.projectNo,
-        id: this.id,
-        tempdefno: this.getType(file.type),
-        docname: file.name
-      });
+      let res;
+      if (this.$parent.$parent.$options.name === "Zlgl") {
+        res = await GetCreateDocId({
+          folderid: this.id,
+          tempdefno: this.getType(file.type),
+          docname: file.name
+        });
+      } else {
+        res = await CreateDoc({
+          ProjectNo: this.$store.getters.projectNo,
+          id: this.id,
+          tempdefno: this.getType(file.type),
+          docname: file.name
+        });
+      }
       return res[0].docno;
     },
     // 更新
@@ -92,7 +101,7 @@ export default {
     },
     onSuccess() {
       this.$refs.upload.clearFiles();
-      this.$emit('update',1,true)
+      this.$emit("update", 1, true);
       this.dialogVisible = false;
     },
     handleClose(done) {
@@ -103,7 +112,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-upload{
+::v-deep .el-upload {
   width: 100%;
 }
 ::v-deep .el-upload-dragger {
