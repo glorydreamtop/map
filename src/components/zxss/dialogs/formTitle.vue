@@ -93,16 +93,15 @@ export default {
     if (!this.add) {
       this.$nextTick(() => {
         const e = this.form;
-        this.area = [
-          { name: e.CountyDESC, id: e.County },
-          { name: e.TownDESC, id: e.Town },
-          { name: e.VillageDESC, id: e.Village },
-          { name: e.VillageGroupDESC, id: e.VillageGroup }
-        ];
+        // this.area = e.VillageGroupDESC
+        // this.area = [
+        //   { name: e.CountyDESC, id: e.County },
+        //   { name: e.TownDESC, id: e.Town },
+        //   { name: e.VillageDESC, id: e.Village },
+        //   { name: e.VillageGroupDESC, id: e.VillageGroup }
+        // ];
         const cascader = this.$refs.cascader;
-        cascader.panel.activePath = [];
-        cascader.panel.loadCount = 0;
-        cascader.panel.lazyLoad();
+        cascader.presentText = e.VillageGroupDESC;
       });
     }
   },
@@ -134,7 +133,7 @@ export default {
       for(let key in form){
         // 非数字、字符串类型转换
         if(form[key] instanceof Date){
-          form[key] = new Date(form[key]).getTime()
+          form[key] = new Date(form[key]).toLocaleDateString()
         }
       }
       this.$refs.form1.validate(async valid => {

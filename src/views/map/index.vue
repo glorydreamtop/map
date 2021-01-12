@@ -26,7 +26,7 @@ export default {
   methods: {
     getMessage() {
       const receive = e => {
-        if (e.origin !== "http://aglostech1.yicp.io:9099") return;
+        if (e.origin !== appConfig.mapIp) return;
         const params = e.data;
         this.message = JSON.stringify(params);
         this.$eventBus.$emit(params.eventName,params.params);
@@ -38,7 +38,7 @@ export default {
     ) {
       document
         .getElementById("map")
-        .contentWindow.postMessage(message, "http://aglostech1.yicp.io:9099");
+        .contentWindow.postMessage(message, appConfig.mapIp);
     }
   }
 };

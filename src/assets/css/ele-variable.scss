@@ -130,8 +130,17 @@ $--font-path: "~element-ui/lib/theme-chalk/fonts";
   border: none;
 }
 
-.el-button--default [class^="al-icon"]{
-  font-size: 34px;
+.el-button--default{
+  [class^="al-icon"],[class^="el-icon"]{
+    font-size: 30px;
+  }
+}
+
+.el-button.is-plain{
+  padding:8px 14px;
+  // [class^="al-icon"],[class^="el-icon"]{
+  //   font-size: 26px;
+  // }
 }
 
 .el-collapse-item__header {

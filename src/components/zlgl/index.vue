@@ -8,7 +8,6 @@
       element-loading-text="文件转码中..."
       title="资料管理"
       @close="$emit('update:showDialog', false)"
-      center
     >
       <div class="box">
         <el-tree
@@ -195,12 +194,15 @@ export default {
   justify-content: space-between;
   .tree {
     width: 380px;
-    height: 550px;
+    height: 600px;
     overflow: auto;
     border: 1px solid $white;
     background-color: rgba($primary, 0.5);
   }
   .datalist {
+    height: 600px;
+    padding: 20px;
+    border: 1px solid $white;
     flex-grow: 1;
     margin-left: 20px;
     .el-pagination {
