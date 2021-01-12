@@ -551,3 +551,67 @@ export function CreateDoc(data) {
         data
     })
 }
+//获取主表基础信息 GetSpecialprojects_BASE
+export function GetSpecialprojects_BASE(data) {
+    return request({
+        url: `${baseReflect}GetSpecialprojects_BASE`,
+        method: 'post',
+        data
+    })
+}
+//添加主表基础信息 AddSpecialprojects_BASE
+export function AddSpecialprojects_BASE(data) {
+    return request({
+        url: `${baseReflect}AddSpecialprojects_BASE`,
+        method: 'post',
+        data
+    })
+}
+//修改主表基础信息 EditSpecialprojects_BASE
+export function EditSpecialprojects_BASE(data) {
+    return request({
+        url: `${baseReflect}EditSpecialprojects_BASE`,
+        method: 'post',
+        data
+    })
+}
+//删除主表及其子项 DelSpecialprojects_BASE
+export function DelSpecialprojects_BASE(data) {
+    return request({
+        url: `${baseReflect}DelSpecialprojects_BASE`,
+        method: 'post',
+        data
+    })
+}
+//获取主表下子项列表 GetSpecialprojects_SUBS
+export function GetSpecialprojects_SUBS(data) {
+    return request({
+        url: `${baseReflect}GetSpecialprojects_SUBS`,
+        method: 'post',
+        data
+    })
+}
+//添加子项 AddSpecialprojects_SUB
+export function AddSpecialprojects_SUB(data) {
+    return request({
+        url: `${baseReflect}AddSpecialprojects_SUB`,
+        method: 'post',
+        data
+    })
+}
+//修改子项 EditSpecialprojects_SUB
+export function EditSpecialprojects_SUB(data) {
+    return request({
+        url: `${baseReflect}EditSpecialprojects_SUB`,
+        method: 'post',
+        data
+    })
+}
+//删除子项 DelSpecialprojects_SUB
+export function DelSpecialprojects_SUB(data) {
+    return request({
+        url: `${baseReflect}DelSpecialprojects_SUB`,
+        method: 'post',
+        data
+    })
+}

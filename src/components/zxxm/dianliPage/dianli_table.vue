@@ -46,7 +46,7 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		GetAllBaseTablesBaseAttrs,DeleteBaseTable
+		GetSpecialprojects_BASE,DeleteBaseTable
 	} from '@/api'
 	import dianliHeaderAdd from './dianli_header_add' 
 	export default {
@@ -56,7 +56,7 @@
 			dianliHeaderAdd,
 		},
 		computed: {
-			...mapGetters(['projectNo','BaseType'])
+			...mapGetters(['projectNo','TypeName'])
 		},
 		data() {
 			return {
@@ -86,12 +86,12 @@
 		methods: {
 			tableInit() {
 				var data = {
-					BaseType: this.BaseType,
+					TypeName: this.TypeName,
 					ProjectNo: this.projectNo,
 					...this.formeData
 				};
 				this.tableLoad=true;
-				GetAllBaseTablesBaseAttrs(data).then((res) => {
+				GetSpecialprojects_BASE(data).then((res) => {
 					console.log(res)
 					this.tableLoad=false;
 					this.tableData = res.list;

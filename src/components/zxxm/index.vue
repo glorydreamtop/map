@@ -54,12 +54,14 @@
 				titleData: [{
 						name: '电力',
 						index: 'dianliTable',
-						icon: 'al-icon-dianli'
+						icon: 'al-icon-dianli',
+						title:'电力基础信息'
 					},
 					{
 						name: '电信',
 						index: 'dianxinTable',
-						icon: 'al-icon-dianxin'
+						icon: 'al-icon-dianxin',
+						title:'电信基础信息'
 					},
 					{
 						name: '铁路',
@@ -108,6 +110,7 @@
 				this.dialogForm = "";
 				this.dialogType = 'table';
 				this.dialogIndex=data.index;
+				this.$store.commit("zxxm/SET_TYPENAME", data.title);
 			},
 			closeDialog() {
 			  //关闭弹出框

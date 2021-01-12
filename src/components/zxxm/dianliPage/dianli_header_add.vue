@@ -190,7 +190,9 @@
 		AddBaseTablesBaseAttrs,
 		GetJBQKDCBItems,
 		GetSerialNumber,
-		DeleteBaseTablesAttr
+		DeleteBaseTablesAttr,
+		AddSpecialprojects_BASE,
+		EditSpecialprojects_BASE
 	} from '@/api'
 	import sdxl from './dianli_sdxl_add'//输电线路
 	import jzw from './dianli_jzw_add'//建筑物
@@ -198,7 +200,7 @@
 	export default {
 		name: 'jbqk_table1_add_two',
 		computed: {
-			...mapGetters(['projectNo', 'BaseType', 'KeyNo'])
+			...mapGetters(['projectNo', 'TypeName', 'KeyNo'])
 		},
 		components: {
 			sdxl,jzw,zysb
@@ -416,15 +418,14 @@
 					if (valid) {
 						this.submitLoad = true;
 						if (self.dialogType == 'add') { //添加时候先获取编号
-							var url = AddBaseTablesBaseAttrs;
+							var url = AddSpecialprojects_BASE;
 							var data = {
 								ProjectNo: self.projectNo,
-								BaseType: this.BaseType,
-								id: self.ruleForm.Village,
+								TypeName: this.TypeName,
 								JsonStr: JSON.stringify(self.ruleForm)
 							};
 						} else {
-							var url = UpdateBaseTablesBaseAttrs;
+							var url = EditSpecialprojects_BASE;
 							var data = {
 								id: self.KeyNo,
 								JsonStr: JSON.stringify(self.ruleForm)

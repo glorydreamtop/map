@@ -10,7 +10,7 @@
 							<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item label="高程范围:" >
+					<el-form-item label="高程范围:">
 						<el-input v-model="ruleForm.GCFW1" :disabled="dialogType=='look'?true:false" class="input-90"></el-input>
 						<span>---</span>
 						<el-input v-model="ruleForm.GCFW2" :disabled="dialogType=='look'?true:false" class="input-90"></el-input>
@@ -19,9 +19,6 @@
 						<el-input v-model="ruleForm.HZ" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
 					</el-form-item>
 
-				<!-- 	<el-form-item label="家庭人口:" prop="stationName">
-						<el-input v-model="ruleForm.stationName" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
-					</el-form-item> -->
 					<el-form-item label="家庭住址:" prop="XXDZ">
 						<el-input v-model="ruleForm.XXDZ" :disabled="dialogType=='look'?true:false" class="input-500"></el-input>
 					</el-form-item>
@@ -43,7 +40,8 @@
 
 <script>
 	import {
-		AddHousehold,EditHousehold
+		AddHousehold,
+		EditHousehold
 	} from '@/api';
 	import {
 		mapGetters
@@ -51,7 +49,7 @@
 	export default {
 		name: 'huxinxidiaocha_fly_add',
 		computed: {
-			...mapGetters(['projectNo','parcelId'])
+			...mapGetters(['projectNo', 'parcelId'])
 		},
 		data: function() {
 			return {
@@ -84,7 +82,7 @@
 			console.log(this.dialogForm)
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.disabled = true;
-				this.ruleForm=JSON.parse(JSON.stringify(this.dialogForm));
+				this.ruleForm = JSON.parse(JSON.stringify(this.dialogForm));
 			}
 
 		},
@@ -103,28 +101,28 @@
 
 						if (self.dialogType == 'edit') {
 							var url = EditHousehold;
-							var data={
-								id:self.dialogForm.KeyNo,
-								JsonStr:JSON.stringify(self.ruleForm)
+							var data = {
+								id: self.dialogForm.KeyNo,
+								JsonStr: JSON.stringify(self.ruleForm)
 							}
 						} else {
 							var url = AddHousehold;
-							var data={
-								ProjectNo:self.projectNo,
-								id:self.parcelId,
-								JsonStr:JSON.stringify(self.ruleForm)
+							var data = {
+								ProjectNo: self.projectNo,
+								id: self.parcelId,
+								JsonStr: JSON.stringify(self.ruleForm)
 							}
 						}
-						
-						url(data).then((res) => {
-								self.loading = false;
-								self.$emit('showStudes', false);
-								self.$message({
-									message: '操作成功',
-									type: 'success',
-									center: true,
 
-								});						
+						url(data).then((res) => {
+							self.loading = false;
+							self.$emit('showStudes', false);
+							self.$message({
+								message: '操作成功',
+								type: 'success',
+								center: true,
+
+							});
 						}).catch((res) => {
 							console.log(res)
 							self.loading = false;
