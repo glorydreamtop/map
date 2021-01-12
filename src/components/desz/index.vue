@@ -6,7 +6,6 @@
       width="70vw"
       title="定额设置"
       @close="$emit('update:showDialog', false)"
-      center
     >
       <div class="box justify-between">
         <div class="box-left flex-col">
@@ -340,10 +339,11 @@ export default {
     }
   }
   .datalist {
+    height: 600px;
+    padding: 20px;
+    border: 1px solid $white;
     max-width: 950px;
     flex-grow: 1;
-    .opreation {
-    }
   }
 }
 </style>

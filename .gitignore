@@ -3,6 +3,7 @@ node_modules
 /dist
 /pc
 /ceMap
+pc.zip
 
 # local env files
 .env.local
