@@ -5,47 +5,44 @@
 				<el-collapse v-model="activeFormIndex">
 					<el-collapse-item title="表基础信息" name="1">
 						<div class="formeHeader">
-							<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
-								<el-form-item label="工程类型:" prop="Region">
-									<el-select v-model="ruleForm.Region" filterable :disabled="disabled" placeholder="请选择工程类型" 
-									 class="input-200">
-										<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
-										<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
-										<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item label="区县:" prop="stationName">
-									<el-select v-model="ruleForm.County" filterable :disabled="disabled" placeholder="请选择区县" @change="change_county"
-									 class="input-200">
-										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in countyData">
-										</el-option>
-									</el-select>
-								</el-form-item>
-
-								<el-form-item label="乡镇:" prop="stationName">
-									<el-select v-model="ruleForm.Town" filterable :disabled="disabled" placeholder="请选择区县" @change="change_town"
-									 class="input-200">
-										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
-										</el-option>
-										
-									</el-select>
-                                     
-								</el-form-item>
-								<el-form-item label="村民委:" prop="stationName">
-									<el-select v-model="ruleForm.Village" filterable :disabled="disabled" placeholder="请选择区县" @change="change_village"
-									 class="input-200">
-										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageData">
-										</el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item label="村民小组:" prop="stationName">
-									<el-select v-model="ruleForm.VillageGroup" filterable :disabled="disabled" placeholder="请选择区县" @change="change_VillageGroup"
-									 class="input-200">
-										<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageGroupData">
-										</el-option>
-									</el-select>
-								</el-form-item>
-
+							<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+								<el-row :gutter="20">
+									<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+										<el-form-item label="工程类型:" prop="Region">
+											<el-select v-model="ruleForm.Region" filterable :disabled="disabled" placeholder="请选择工程类型">
+												<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
+												<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
+												<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
+											</el-select>
+										</el-form-item>
+										<el-form-item label="乡镇:" prop="stationName">
+											<el-select v-model="ruleForm.Town" filterable :disabled="disabled" placeholder="请选择区县" @change="change_town">
+												<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
+												</el-option>
+											</el-select>
+										</el-form-item>
+										<el-form-item label="村民小组:" prop="stationName">
+											<el-select v-model="ruleForm.VillageGroup" filterable :disabled="disabled" placeholder="请选择区县" @change="change_VillageGroup">
+												<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageGroupData">
+												</el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+									<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+										<el-form-item label="区县:" prop="stationName">
+											<el-select v-model="ruleForm.County" filterable :disabled="disabled" placeholder="请选择区县" @change="change_county">
+												<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in countyData">
+												</el-option>
+											</el-select>
+										</el-form-item>
+										<el-form-item label="村民委:" prop="stationName">
+											<el-select v-model="ruleForm.Village" filterable :disabled="disabled" placeholder="请选择区县" @change="change_village">
+												<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in villageData">
+												</el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+								</el-row>
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
 								<span class="btn_foot">
@@ -63,22 +60,23 @@
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
 								<el-table-column prop="value" label="编号" width="180" align="left"></el-table-column>
-								<el-table-column prop="label" label="项目"  align="center"></el-table-column>
-								<el-table-column prop="Unit" label="单位"  align="center"></el-table-column>
+								<el-table-column prop="label" label="项目" align="center"></el-table-column>
+								<el-table-column prop="Unit" label="单位" align="center"></el-table-column>
 								<el-table-column prop="AttrNum" label="数量" align="center"></el-table-column>
 								<el-table-column prop="Remarks" label="备注" align="center"></el-table-column>
 							</el-table>
 						</div>
 					</el-collapse-item>
 					<el-collapse-item title="相关文档" name="3" v-if="KeyNo">
-						
+
 						<files :id="KeyNo" />
 					</el-collapse-item>
 				</el-collapse>
 
-				<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
-				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog" >
-					<villageHeaderAdd :dialog-type="fly2_dialogType" :dialog-table="tableItemData" v-on:showStudes="showStudescode" :dialog-form="fly2_dialogForm" v-if="showFlag"></villageHeaderAdd>
+				<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
+				 class="newStyleDialog " custom-class="jbqk_add2_table1_dialog">
+					<villageHeaderAdd :dialog-type="fly2_dialogType" :dialog-table="tableItemData" v-on:showStudes="showStudescode"
+					 :dialog-form="fly2_dialogForm" v-if="showFlag"></villageHeaderAdd>
 				</el-dialog>
 			</div>
 
@@ -87,7 +85,6 @@
 </template>
 
 <script>
-	
 	import {
 		mapGetters
 	} from 'vuex'
@@ -101,14 +98,15 @@
 		DeleteBaseTablesAttr
 	} from '@/api'
 	import files from "@/components/files"
-	import villageHeaderAdd from './village_item_add' 
+	import villageHeaderAdd from './village_item_add'
 	export default {
 		name: 'jbqk_table1_add_two',
 		computed: {
-			...mapGetters(['projectNo','BaseType','KeyNo'])
+			...mapGetters(['projectNo', 'BaseType', 'KeyNo'])
 		},
 		components: {
-			villageHeaderAdd,files
+			villageHeaderAdd,
+			files
 		},
 		data() {
 			return {
@@ -141,8 +139,8 @@
 					}, ],
 
 				},
-				tableLoad:false,
-				submitLoad:false,
+				tableLoad: false,
+				submitLoad: false,
 
 			}
 		},
@@ -173,13 +171,13 @@
 				row,
 				rowIndex
 			}) {
-				  return row.ClassName;
+				return row.ClassName;
 			},
-            rowClick(row, column){//单击表格一行
+			rowClick(row, column) { //单击表格一行
 				console.log(row, column);
-				if(row.ClassName=="singleitem"){
-					this.fly2_dialogForm=row;
-					
+				if (row.ClassName == "singleitem") {
+					this.fly2_dialogForm = row;
+
 				}
 			},
 			addTableItem() { //添加项目
@@ -188,67 +186,71 @@
 				this.fly2_dialogType = 'add';
 				this.showFlag = true;
 			},
-			editTableItem(){//添加
-				if(this.fly2_dialogForm){
+			editTableItem() { //添加
+				if (this.fly2_dialogForm) {
 					this.dialogTitle = '修改农村信息数据项';
 					this.fly2_dialogType = 'edit';
 					this.showFlag = true;
-				}else{
+				} else {
 					this.$message({
 						message: '请选择要编辑的数据项',
 						type: 'error',
 						center: true
 					})
 				}
-				
+
 			},
-			delTableItem(){//删除
-			console.log(this.fly2_dialogForm)
-			    if(this.fly2_dialogForm){
-					var self=this;
+			delTableItem() { //删除
+				console.log(this.fly2_dialogForm)
+				if (this.fly2_dialogForm) {
+					var self = this;
 					this.$confirm('此操作将永久删除, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
 						center: true,
 						type: 'warning'
 					}).then(() => {
-						DeleteBaseTablesAttr({id:this.fly2_dialogForm.KeyNo}).then((res) => {
+						DeleteBaseTablesAttr({
+							id: this.fly2_dialogForm.KeyNo
+						}).then((res) => {
 							console.log(res)
-								self.$message({
-									message: '操作成功',
-									type: 'success',
-									center: true
-								});
-								self.GetJBQKDCBItemInit();
-						
+							self.$message({
+								message: '操作成功',
+								type: 'success',
+								center: true
+							});
+							self.GetJBQKDCBItemInit();
+
 						}).catch((res) => {
 							console.log(res);
 						})
-					
-					
+
+
 					}).catch((res) => {
-						
+
 					})
-				}else{
+				} else {
 					this.$message({
 						message: '请选择要删除的数据项',
 						type: 'error',
 						center: true
 					})
 				}
-				
+
 			},
-			GetJBQKDCBItemInit() {//获取数据项
-			    console.log(this.KeyNo)
-				var data = {id: this.KeyNo};
+			GetJBQKDCBItemInit() { //获取数据项
+				console.log(this.KeyNo)
+				var data = {
+					id: this.KeyNo
+				};
 				GetBaseTablesListAttrs(data).then((res) => {
-						 this.tableItemData =res;
-						 console.log(res, this.tableItemData, '获取数据项')
-				})
-				.catch((error) => {
-					this.tableItemData = [];
-					console.log(error)
-				})
+						this.tableItemData = res;
+						console.log(res, this.tableItemData, '获取数据项')
+					})
+					.catch((error) => {
+						this.tableItemData = [];
+						console.log(error)
+					})
 			},
 			change_county(data) { //选中区县,获取乡镇
 				for (var i = 0; i < this.countyData.length; i++) {
@@ -289,27 +291,27 @@
 					ProjectNo: this.projectNo
 				};
 				GetLocations(data).then((res) => {
-					this[type]=res;
-				})
-				.catch((error) => {
-					this.tableData = [];
-					console.log(error)
-				})
+						this[type] = res;
+					})
+					.catch((error) => {
+						this.tableData = [];
+						console.log(error)
+					})
 			},
-			
+
 			closeDialog() { //关闭弹出框
 				this.GetJBQKDCBItemInit();
 			},
 			showStudescode(data) { //监听弹出框是关还是闭
-			   this.showFlag = data;
-               this.GetJBQKDCBItemInit();
-			  
+				this.showFlag = data;
+				this.GetJBQKDCBItemInit();
+
 			},
 			submitForm(formName) { //表单提交按钮
 				this.$refs[formName].validate((valid) => {
 					var self = this;
 					if (valid) {
-						this.submitLoad=true;
+						this.submitLoad = true;
 						if (self.dialogType == 'add') { //添加时候先获取编号
 							var url = AddBaseTablesBaseAttrs;
 							var data = {
@@ -326,7 +328,7 @@
 							};
 						}
 						url(data).then((res) => {
-							this.submitLoad=false;
+							this.submitLoad = false;
 							if (self.dialogType == 'add') {
 								this.$store.commit('jbqk/set_KeyNo', res[0].Keyno)
 							}
@@ -338,7 +340,7 @@
 							})
 						}).catch((res) => {
 							console.log(res)
-							this.submitLoad=false;
+							this.submitLoad = false;
 
 						})
 					} else {

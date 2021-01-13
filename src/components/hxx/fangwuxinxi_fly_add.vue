@@ -2,55 +2,59 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
-					<el-form-item label="房屋名称:" prop="FWMC">
-						<el-input v-model="ruleForm.FWMC" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-
-					<el-form-item label="结构类型:" prop="JGLX_DESC">
-						<el-select v-model="ruleForm.JGLX_DESC" @change="change_type" ref="JGLX" filterable placeholder="请选择结构类型" class="input-250"
-						 :disabled="dialogType=='look'?true:false">
-							<el-option :key="item.o_virtualitemno" :label="item.o_virtualitemdesc" :value="item.o_virtualitemdesc" v-for="item in typeData">
-							</el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item label="定额名称:" prop="DEDM">
-						<el-select v-model="ruleForm.DEDM" @change="change_DEDM" filterable placeholder="请选择定额名称" class="input-250"
-						 :disabled="dialogType=='look'?true:false">
-							<el-option :key="item.KeyNo" :label="item.msg" :value="item.KeyNo" v-for="item in dingeData">
-							</el-option>
-						</el-select>
-					</el-form-item>
-
-					<el-form-item label="建筑风格或形式:" prop="JZFGHXS">
-						<el-input v-model="ruleForm.JZFGHXS" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="屋面材料:" prop="WMCL">
-						<el-input v-model="ruleForm.WMCL" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="层数:" prop="CS">
-						<el-input v-model="ruleForm.CS" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="层高(m):" prop="CGM">
-						<el-input v-model="ruleForm.CGM" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="丈量尺寸(m×m):" prop="ZLCCMM">
-						<el-input v-model="ruleForm.ZLCCMM" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="建筑面积(㎡):" prop="JZMJM2">
-						<el-input-number v-model="ruleForm.JZMJM2" :min="0" :disabled="dialogType=='look'?true:false" class="input-250"></el-input-number>
-						<!-- <el-input v-model="ruleForm.JZMJM2" :disabled="dialogType=='look'?true:false" class="input-250"></el-input> -->
-					</el-form-item>
-					<el-form-item label="定额单价(元):" prop="DEDJ">
-						<el-input v-model="ruleForm.DEDJ" :disabled="true" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="单位合计(元):" prop="DXHJ">
-						<el-input v-model="ruleForm.DXHJ" :disabled="true" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="备注:" prop="BZ">
-						<el-input v-model="ruleForm.BZ" type="textarea" :rows='4' :disabled="dialogType=='look'?true:false" class="input-600"></el-input>
-					</el-form-item>
-
+				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
+					<el-row :gutter="20">
+						<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+							<el-form-item label="房屋名称:" prop="FWMC">
+								<el-input v-model="ruleForm.FWMC" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="定额名称:" prop="DEDM">
+								<el-select v-model="ruleForm.DEDM" @change="change_DEDM" filterable placeholder="请选择定额名称" :disabled="dialogType=='look'?true:false">
+									<el-option :key="item.KeyNo" :label="item.msg" :value="item.KeyNo" v-for="item in dingeData">
+									</el-option>
+								</el-select>
+							</el-form-item>
+							<el-form-item label="屋面材料:" prop="WMCL">
+								<el-input v-model="ruleForm.WMCL" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="层高(m):" prop="CGM">
+								<el-input v-model="ruleForm.CGM" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="建筑面积(㎡):" prop="JZMJM2">
+								<el-input-number v-model="ruleForm.JZMJM2" :min="0" :disabled="dialogType=='look'?true:false"></el-input-number>
+								<!-- <el-input v-model="ruleForm.JZMJM2" :disabled="dialogType=='look'?true:false" ></el-input> -->
+							</el-form-item>
+							<el-form-item label="单位合计(元):" prop="DXHJ">
+								<el-input v-model="ruleForm.DXHJ" :disabled="true"></el-input>
+							</el-form-item>
+						</el-col>
+						<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+							<el-form-item label="结构类型:" prop="JGLX_DESC">
+								<el-select v-model="ruleForm.JGLX_DESC" @change="change_type" ref="JGLX" filterable placeholder="请选择结构类型"
+								 :disabled="dialogType=='look'?true:false">
+									<el-option :key="item.o_virtualitemno" :label="item.o_virtualitemdesc" :value="item.o_virtualitemdesc" v-for="item in typeData">
+									</el-option>
+								</el-select>
+							</el-form-item>
+							<el-form-item label="建筑风格或形式:" prop="JZFGHXS">
+								<el-input v-model="ruleForm.JZFGHXS" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="层数:" prop="CS">
+								<el-input v-model="ruleForm.CS" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="丈量尺寸(m):" prop="ZLCCMM">
+								<el-input v-model="ruleForm.ZLCCMM" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="定额单价(元):" prop="DEDJ">
+								<el-input v-model="ruleForm.DEDJ" :disabled="true"></el-input>
+							</el-form-item>
+						</el-col>
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-form-item label="备注:" prop="BZ">
+								<el-input v-model="ruleForm.BZ" type="textarea" :rows='3' :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+						</el-col>
+					</el-row>
 				</el-form>
 				<div class="margin-top-l text-center " v-show="dialogType!='look'">
 					<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
@@ -75,7 +79,7 @@
 		name: 'huxinxidiaocha_fly_add',
 		computed: {
 			...mapGetters(['householdId', 'parcelId', 'projectNo', 'Locationno']),
-			
+
 		},
 		data: function() {
 			return {
@@ -101,8 +105,8 @@
 					if (val.DEDJ && val.JZMJM2) {
 						// console.log('看')
 						val.DXHJ = Math.floor(val.DEDJ * val.JZMJM2 * 100) / 100
-					}else{
-						val.DXHJ =0;
+					} else {
+						val.DXHJ = 0;
 					}
 					// console.log(val);
 				},
@@ -116,7 +120,7 @@
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.disabled = true;
 				this.ruleForm = JSON.parse(JSON.stringify(this.dialogForm));
-				this.ruleForm.DEDM=this.ruleForm.DEDM?this.ruleForm.DEDM.toString():'';
+				this.ruleForm.DEDM = this.ruleForm.DEDM ? this.ruleForm.DEDM.toString() : '';
 			}
 			this.getHouseClassInit(); //种类类型
 		},
@@ -134,7 +138,7 @@
 				this.dingeInit();
 			},
 			change_DEDM(data) { //定额代码选中
-			
+
 				for (var i in this.dingeData) {
 					if (this.dingeData[i].KeyNo === data) {
 						console.log(this.dingeData[i])

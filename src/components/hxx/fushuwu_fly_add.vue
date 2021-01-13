@@ -2,55 +2,68 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
+				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+					<el-row :gutter="20">
+						<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+							<el-form-item label="附属物名称:" prop="FWWMC">
+								<el-input v-model="ruleForm.FWWMC" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="定额名称:" prop="FSWDEDM">
+								<el-select v-model="ruleForm.FSWDEDM" @change="change_DEDM" filterable placeholder="请选择定额名称" :disabled="dialogType=='look'?true:false">
+									<el-option :key="item.KeyNo" :label="item.msg" :value="item.KeyNo" v-for="item in dingeData">
+									</el-option>
+								</el-select>
+							</el-form-item>
+							<el-form-item label="规格:" prop="FSWGG">
+								<el-input v-model="ruleForm.FSWGG" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="数量:" prop="FSWSL">
+								<el-input-number v-model="ruleForm.FSWSL" :min="0" :disabled="dialogType=='look'?true:false"></el-input-number>
+							</el-form-item>
+							<el-form-item label="定额单价:" prop="DEDJ">
+								<el-input v-model="ruleForm.DEDJ" :disabled="true"></el-input>
+							</el-form-item>
+						</el-col>
+						<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+							<el-form-item label="结构类型:" prop="JGLX_DESC">
+								<el-select v-model="ruleForm.JGLX_DESC" @change="change_type" filterable placeholder="请选择结构类型" :disabled="dialogType=='look'?true:false">
+									<el-option :key="item.o_virtualitemno" :label="item.o_virtualitemdesc" :value="item.o_virtualitemdesc" v-for="item in typeData">
+									</el-option>
+								</el-select>
+							</el-form-item>
+							<el-form-item label="单位:" prop="DW">
+								<el-input v-model="ruleForm.DW" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="丈量尺寸(m):" prop="ZLCC">
+								<el-input v-model="ruleForm.ZLCC" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="结构材料:" prop="FSWJGCL">
+								<el-input v-model="ruleForm.FSWJGCL" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+							<el-form-item label="单位合计:" prop="DWHJ">
+								<el-input v-model="ruleForm.DWHJ" :disabled="true"></el-input>
+							</el-form-item>
+						</el-col>
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-form-item label="备注:" prop="BZ">
+								<el-input v-model="ruleForm.BZ" :rows='4' type="textarea" :disabled="dialogType=='look'?true:false"></el-input>
+							</el-form-item>
+						</el-col>
 
-					<el-form-item label="附属物名称:" prop="FWWMC">
-						<el-input v-model="ruleForm.FWWMC" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="结构类型:" prop="JGLX_DESC">
-						<el-select v-model="ruleForm.JGLX_DESC" @change="change_type"  filterable placeholder="请选择结构类型" class="input-250"
-						 :disabled="dialogType=='look'?true:false">
-							<el-option :key="item.o_virtualitemno" :label="item.o_virtualitemdesc" :value="item.o_virtualitemdesc" v-for="item in typeData">
-							</el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item label="定额名称:" prop="FSWDEDM">
-						<el-select v-model="ruleForm.FSWDEDM" @change="change_DEDM" filterable placeholder="请选择定额名称" class="input-250" :disabled="dialogType=='look'?true:false">
-							<el-option :key="item.KeyNo" :label="item.msg" :value="item.KeyNo" v-for="item in dingeData">
-							</el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item label="单位:" prop="DW">
-						<el-input v-model="ruleForm.DW" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-
-					<el-form-item label="规格:" prop="FSWGG">
-						<el-input v-model="ruleForm.FSWGG" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="丈量尺寸(m×m):" prop="ZLCC">
-						<el-input v-model="ruleForm.ZLCC" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="数量:" prop="FSWSL">
-						<el-input-number v-model="ruleForm.FSWSL" :min="0" :disabled="dialogType=='look'?true:false" class="input-250"></el-input-number>
-					</el-form-item>
-					<el-form-item label="结构材料:" prop="FSWJGCL">
-						<el-input v-model="ruleForm.FSWJGCL" :disabled="dialogType=='look'?true:false" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="定额单价:" prop="DEDJ">
-						<el-input v-model="ruleForm.DEDJ" :disabled="true" class="input-250"></el-input>
-					</el-form-item>
-					<el-form-item label="单位合计:" prop="DWHJ">
-						<el-input v-model="ruleForm.DWHJ" :disabled="true" class="input-250"></el-input>
-					</el-form-item>
+					</el-row>
 
 
 
 
-				</el-form>
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
-					<el-form-item label="备注:" prop="BZ">
-						<el-input v-model="ruleForm.BZ" :rows='4' type="textarea" :disabled="dialogType=='look'?true:false"></el-input>
-					</el-form-item>
+
+
+
+
+
+
+
+
+
 				</el-form>
 
 				<div class="margin-top-l text-center " v-show="dialogType!='look'">
@@ -75,7 +88,7 @@
 	export default {
 		name: 'huxinxidiaocha_fly_add',
 		computed: {
-			...mapGetters(['householdId','parcelId','projectNo','Locationno'])
+			...mapGetters(['householdId', 'parcelId', 'projectNo', 'Locationno'])
 		},
 		data: function() {
 			return {
@@ -107,10 +120,10 @@
 		watch: {
 			ruleForm: {
 				handler(val, old) {
-					if (val.DEDJ && val.FSWSL) {						
+					if (val.DEDJ && val.FSWSL) {
 						val.DWHJ = Math.floor(val.DEDJ * val.FSWSL * 100) / 100;
-					}else{
-						val.DWHJ =0;
+					} else {
+						val.DWHJ = 0;
 					}
 					// console.log(val);
 				},
@@ -122,7 +135,7 @@
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.disabled = true;
 				this.ruleForm = JSON.parse(JSON.stringify(this.dialogForm));
-                this.ruleForm.FSWDEDM=this.ruleForm.FSWDEDM?this.ruleForm.FSWDEDM.toString():'';
+				this.ruleForm.FSWDEDM = this.ruleForm.FSWDEDM ? this.ruleForm.FSWDEDM.toString() : '';
 			}
 			this.getHouseClassInit(); //种类类型
 		},
@@ -130,7 +143,7 @@
 		methods: {
 			change_type(data) {
 				for (var i in this.typeData) {
-					if (this.typeData[i].o_virtualitemdesc=== data) {
+					if (this.typeData[i].o_virtualitemdesc === data) {
 						this.ruleForm.JGLX = this.typeData[i].o_virtualitemno;
 					}
 				}
@@ -140,7 +153,7 @@
 
 
 			},
-			change_DEDM(data){//定额名称选中
+			change_DEDM(data) { //定额名称选中
 				for (var i in this.dingeData) {
 					if (this.dingeData[i].KeyNo === data) {
 						// console.log(this.dingeData[i])

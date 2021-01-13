@@ -5,38 +5,48 @@
 			<div class="reyuan_form">
 				<el-collapse v-model="activeFormIndex">
 					<el-collapse-item title="户信息调查" name="1">
-						<el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm form-hxx">
-							<el-form-item label="工程类型:" prop="GCLX">
-								<el-select v-model="ruleForm.GCLX" filterable placeholder="请选择调查表类型" :disabled="disabled">
-									<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
-									<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
-									<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
-								</el-select>
-							</el-form-item>
-							<el-form-item label="高程范围1:">
-								<el-input v-model="ruleForm.GCFW1" :disabled="disabled" ></el-input>		
-							</el-form-item>
-							<el-form-item label="高程范围2:">
-								<el-input v-model="ruleForm.GCFW2" :disabled="disabled"></el-input>
-							</el-form-item>
-							<el-form-item label="户主姓名:" prop="HZ">
-								<el-input v-model="ruleForm.HZ" :disabled="disabled"></el-input>
-							</el-form-item>
-							<el-form-item label="调查人:" v-if="dialogType=='edit'">
-								<el-input v-model="ruleForm.DCRY" :disabled="dialogType=='edit'?'disabled':''"></el-input>
-							</el-form-item>
-							<el-form-item label="调查时间:" v-if="dialogType=='edit'">
-								<el-input v-model="ruleForm.DCSJ" :disabled="dialogType=='edit'?'disabled':''"></el-input>
-							</el-form-item>
+						
+						<el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+							<el-col :span="8">
+								<el-form-item label="工程类型:" prop="GCLX">
+									<el-select v-model="ruleForm.GCLX" filterable placeholder="请选择调查表类型" :disabled="disabled">
+										<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
+										<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
+										<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="户主姓名:" prop="HZ">
+									<el-input v-model="ruleForm.HZ" :disabled="disabled"></el-input>
+								</el-form-item>
+							</el-col>
+						    <el-col :span="8">
+						    	<el-form-item label="高程范围1:">
+						    		<el-input v-model="ruleForm.GCFW1" :disabled="disabled"></el-input>
+						    	</el-form-item>
+								<el-form-item label="调查人:" v-if="dialogType=='edit'">
+									<el-input v-model="ruleForm.DCRY" :disabled="dialogType=='edit'?'disabled':''"></el-input>
+								</el-form-item>
+						    </el-col>
+							<el-col :span="8">
+								<el-form-item label="高程范围2:">
+									<el-input v-model="ruleForm.GCFW2" :disabled="disabled"></el-input>
+								</el-form-item>
+								<el-form-item label="调查时间:" v-if="dialogType=='edit'">
+									<el-input v-model="ruleForm.DCSJ" :disabled="dialogType=='edit'?'disabled':''"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="24">
+								<el-form-item label="家庭住址:" prop="XXDZ">
+									<el-input v-model="ruleForm.XXDZ" :disabled="disabled"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="24">
+								<el-form-item label="备注:">
+									<el-input v-model="ruleForm.BZ" :rows="6" type="textarea" :disabled="disabled"></el-input>
+								</el-form-item>
+							</el-col>
 						</el-form>
-						<el-form :model="ruleForm"  :rules="rules" ref="ruleForm"  label-width="130px" class="demo-ruleForm hxx-remark" >
-							<el-form-item label="家庭住址:" prop="XXDZ">
-								<el-input v-model="ruleForm.XXDZ" :disabled="disabled"></el-input>
-							</el-form-item>
-							<el-form-item label="备注:">
-								<el-input v-model="ruleForm.BZ" :rows="6" type="textarea" :disabled="disabled"></el-input>
-							</el-form-item>
-						</el-form>
+
 						<div class="margin-top-l text-center " v-show="!disabled">
 							<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
 						</div>
@@ -399,45 +409,39 @@
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
-    .hxx-remark{
-		// flex-wrap: wrap;
-		position: relative;
-		margin: 0 40px 0px 40px;
-		.el-form-item {
-			width: 100%;
-			// display: flex;
-			// justify-content: flex-end;
-			// margin-right: 0;
-		   .el-form-item__content{
-		   	// margin-left: 0!important;
-		   	// width: 100%;
-			.el-input,
-			.el-cascader,
-			.el-select {
-				width: 100%;
-			}
-		   }
-			
-			
-		}
-		
-		
-	}
-	.form-hxx {
-		display: flex;
-		flex-wrap: wrap;
-		position: relative;
-		margin: 0 40px 0px 40px;
-		.el-form-item {
-			width:25%;
-			display: flex;
-			justify-content: flex-end;
-			margin-right: 0;
-			.el-input,
-			.el-cascader,
-			.el-select {
-				width: 100%;
-			}
-		}
-	}
+
+	// .hxx-remark {
+	// 	position: relative;
+	// 	margin: 0 40px 0px 40px;
+	// 	.el-form-item {
+	// 		width: 100%;
+	// 		.el-form-item__content {
+	// 			.el-input,
+	// 			.el-cascader,
+	// 			.el-select {
+	// 				width: 100%;
+	// 			}
+	// 		}
+	// 	}
+
+
+	// }
+
+	// .formNew {
+	// 	display: flex;
+	// 	flex-wrap: wrap;
+	// 	position: relative;
+	// 	margin: 0 40px 0px 40px;
+	// 	.el-form-item {
+	// 		width: 25%;
+	// 		display: flex;
+	// 		justify-content: flex-end;
+	// 		margin-right: 0;
+	// 		.el-input,
+	// 		.el-cascader,
+	// 		.el-select {
+	// 			width: 100%;
+	// 		}
+	// 	}
+	// }
 </style>
