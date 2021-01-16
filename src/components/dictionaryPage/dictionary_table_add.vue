@@ -10,11 +10,11 @@
 					<el-form-item label="子节点名称:" >
 						<el-input v-model="ruleForm.uname" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
-					<el-form-item label="定额单位:" >
+					<el-form-item label="单位:" >
 						<el-input v-model="ruleForm.unit" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					
-					<el-form-item label="定额备注:" >
+					<el-form-item label="备注:" >
 						<el-input type="textarea"  :rows="5" v-model="ruleForm.remarks" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 					

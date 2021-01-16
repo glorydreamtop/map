@@ -31,9 +31,9 @@
 						<el-table v-loading="tableLoad" element-loading-text="客官请稍后" element-loading-spinner="el-icon-loading" class="fixTable49"
 						 element-loading-background="#022333" :data="tableData" row-key="id" :tree-props="{ children: 'children' }"
 						 highlight-current-row border style="width: 100%" height="55vh" @row-click="rowClick">
-							<el-table-column prop="uname" label="项目名称" align="center"></el-table-column>
-							<el-table-column prop="ucode" label="编码" align="center"></el-table-column>
-							<el-table-column prop="unit" label="单位" align="center"></el-table-column>
+							<el-table-column prop="uname" label="项目名称" align="left"></el-table-column>
+							<el-table-column prop="ucode" label="编码" align="center" width="130"></el-table-column>
+							<el-table-column prop="unit" label="单位" align="center " width="100"></el-table-column>
 							<el-table-column prop="remarks" label="描述" align="center"></el-table-column>
 						</el-table>
 					</div>

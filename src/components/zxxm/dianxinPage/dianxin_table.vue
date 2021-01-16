@@ -46,7 +46,7 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		GetAllBaseTablesBaseAttrs,DeleteBaseTable
+		GetSpecialprojects_BASE,DeleteBaseTable
 	} from '@/api'
 	import dianxinHeaderAdd from './dianxin_header_add' 
 	export default {
@@ -91,7 +91,7 @@
 					...this.formeData
 				};
 				this.tableLoad=true;
-				GetAllBaseTablesBaseAttrs(data).then((res) => {
+				GetSpecialprojects_BASE(data).then((res) => {
 					console.log(res)
 					this.tableLoad=false;
 					this.tableData = res.list;

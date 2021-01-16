@@ -2,7 +2,7 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+				<el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 					<el-form-item label="果木名称:" prop="GMMC">
 						<el-input v-model="ruleForm.GMMC" :disabled="dialogType=='look'?true:false" ></el-input>
 					</el-form-item>
@@ -36,7 +36,7 @@
 						<el-input v-model="ruleForm.GMGJ" :disabled="true" ></el-input>
 					</el-form-item>
 					<el-form-item label="备注:" prop="BZ">
-						<el-input v-model="ruleForm.BZ" type="textarea" :rows='4' :disabled="dialogType=='look'?true:false" ></el-input>
+						<el-input v-model="ruleForm.BZ" type="textarea" :rows='7' :disabled="dialogType=='look'?true:false" ></el-input>
 					</el-form-item>
 
 				</el-form>

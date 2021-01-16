@@ -5,19 +5,19 @@
 		</div>
 		<div class="body_table_mian">
 			<el-table v-loading="tableLoad"  :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">
-				<el-table-column prop="DLBH" label="编号" width="150" align="center"> </el-table-column>
-				<el-table-column prop="Createdate" label="申请时间" align="center"> </el-table-column>
+				<el-table-column prop="DLBH" label="编号" width="200" align="center"> </el-table-column>
+				<el-table-column prop="ZYCPPZ" label="建成年月" align="center" width="160"> </el-table-column>
 				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
 				<el-table-column  label="高程范围" align="center"> 
-				   <el-table-column prop="GCFW1" label="范围1" width="100" align="center"> </el-table-column>
-				   <el-table-column prop="GCFW2" label="范围2" width="100" align="center"> </el-table-column>
+				   <el-table-column prop="GCFW1" label="范围1" width="80" align="center"> </el-table-column>
+				   <el-table-column prop="GCFW2" label="范围2" width="80" align="center"> </el-table-column>
 				</el-table-column>
-				<el-table-column prop="Region" label="工程类型" align="center"> </el-table-column>
+				<el-table-column prop="GCLX" label="工程类型" align="center"> </el-table-column>
 				<el-table-column prop="GTMC" label="线路名称" width="100" align="center"> </el-table-column>
 				<el-table-column prop="ZDMJ" label="起讫点" width="100" align="center"> </el-table-column>
 				<el-table-column prop="YDXZ" label="权属部门" align="center"> </el-table-column>
 				<el-table-column prop="YDHDFS" label="主管机构"  align="center"> </el-table-column>
-				<el-table-column prop="JYMJ" label="等级"  align="center"> </el-table-column>
+				<!-- <el-table-column prop="JYMJ" label="等级"  align="center"> </el-table-column> -->
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
 						<el-button title="查看" icon="al-icon-yulan" type="primary" plain @click="lookClick(scope.row)"></el-button>
@@ -46,7 +46,7 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		GetAllBaseTablesBaseAttrs,DeleteBaseTable
+		GetSpecialprojects_BASE,DeleteBaseTable
 	} from '@/api'
 	import dianliHeaderAdd from './dianli_header_add' 
 	export default {
@@ -56,7 +56,7 @@
 			dianliHeaderAdd,
 		},
 		computed: {
-			...mapGetters(['projectNo','BaseType'])
+			...mapGetters(['projectNo','TypeName'])
 		},
 		data() {
 			return {
@@ -86,12 +86,12 @@
 		methods: {
 			tableInit() {
 				var data = {
-					BaseType: this.BaseType,
+					TypeName: this.TypeName,
 					ProjectNo: this.projectNo,
 					...this.formeData
 				};
 				this.tableLoad=true;
-				GetAllBaseTablesBaseAttrs(data).then((res) => {
+				GetSpecialprojects_BASE(data).then((res) => {
 					console.log(res)
 					this.tableLoad=false;
 					this.tableData = res.list;

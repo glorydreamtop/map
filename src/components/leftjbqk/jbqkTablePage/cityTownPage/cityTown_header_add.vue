@@ -4,74 +4,79 @@
 			<div class="reyuan_form">
 				<el-collapse v-model="activeFormIndex">
 					<el-collapse-item title="表基础信息" name="1">
-						<el-form :inline="true" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
-							<el-form-item label="工程类型:" prop="Region">
-								<el-select v-model="ruleForm.Region" filterable placeholder="请选择调查表类型" class="input-200" :disabled="dialogType=='look'?true:false">
-									<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
-									<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
-									<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
-								</el-select>
-							</el-form-item>
-							<el-form-item label="高程范围:">
-								<el-input v-model="ruleForm.AltitudeStart" :disabled="dialogType=='look'?true:false" class="input-90"></el-input>
-								<span>---</span>
-								<el-input v-model="ruleForm.AltitudeEnd" :disabled="dialogType=='look'?true:false" class="input-90"></el-input>
-							</el-form-item>
-							<el-form-item label="区县:">
-								<el-select v-model="ruleForm.County" filterable :disabled="disabled" placeholder="请选择区县" @change="change_county"
-								 class="input-200">
-									<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in countyData">
-									</el-option>
-								</el-select>
-							</el-form-item>
+						<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
+							<el-row :gutter="20">
+								<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+									<el-form-item label="工程类型:" prop="Region">
+										<el-select v-model="ruleForm.Region" filterable placeholder="请选择调查表类型" :disabled="dialogType=='look'?true:false">
+											<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
+											<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
+											<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
+										</el-select>
+									</el-form-item>
+									<el-form-item label="区县:">
+										<el-select v-model="ruleForm.County" filterable :disabled="disabled" placeholder="请选择区县" @change="change_county">
+											<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in countyData">
+											</el-option>
+										</el-select>
+									</el-form-item>
+									<el-form-item label="隶属关系:">
+										<el-input v-model="ruleForm.Affiliation" :disabled="dialogType=='look'?true:false"></el-input>
+									</el-form-item>
+									<el-form-item label="其他:">
+										<el-input v-model="ruleForm.Other" :disabled="dialogType=='look'?true:false"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+									<el-form-item label="高程范围:">
+										<el-input v-model="ruleForm.AltitudeStart" :disabled="dialogType=='look'?true:false" style="width: 45%;"></el-input>
+										<span>---</span>
+										<el-input v-model="ruleForm.AltitudeEnd" :disabled="dialogType=='look'?true:false" style="width: 45%;"></el-input>
+									</el-form-item>
+									<el-form-item label="城市集镇:">
+										<el-select v-model="ruleForm.CityTownName" filterable :disabled="disabled" placeholder="请选择区县" @change="change_town">
+											<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
+											</el-option>
+										</el-select>
 
-							<el-form-item label="城市集镇:">
-								<el-select v-model="ruleForm.CityTownName" filterable :disabled="disabled" placeholder="请选择区县" @change="change_town"
-								 class="input-200">
-									<el-option :key="item.o_locationno" :label="item.o_locationdesc" :value="item.o_locationno" v-for="item in townData">
-									</el-option>
-								</el-select>
-
-							</el-form-item>
-							<el-form-item label="隶属关系:">
-								<el-input v-model="ruleForm.Affiliation" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
-							</el-form-item>
-							<el-form-item label="等级:">
-								<el-input v-model="ruleForm.Grade" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
-							</el-form-item>
-							<el-form-item label="其他:">
-								<el-input v-model="ruleForm.Other" :disabled="dialogType=='look'?true:false" class="input-200"></el-input>
-							</el-form-item>
-							<div>
-								<div class="addTable border">
-									<div class="tableHeader flex border-bottom">
-										<span class="border-right rowWidth1">项目</span>
-										<span class="border-right rowWidth2">单位</span>
-										<span class="border-right rowWidth3">总计</span>
-										<span class="border-right rowWidth4">征地范围内</span>
-										<span class="border-right rowWidth5">备注</span>
-									</div>
-									<div class="tableBody">
-										<div class="table_row flex border-bottom" v-for="item in peopleItem">
-											<span class=" rowInput border-right rowWidth1">{{item.title}}</span>
-											<span class=" rowInput border-right rowWidth2">
-												<input v-model="ruleForm[item.params[0]]" :disabled="dialogType=='look'?true:false" class="border-none" />
-											</span>
-											<span class=" rowInput border-right rowWidth3">
-												<input v-model="ruleForm[item.params[1]]" :disabled="dialogType=='look'?true:false" class="border-none" />
-											</span>
-											<span class=" rowInput border-right rowWidth4">
-												<input v-model="ruleForm[item.params[2]]" :disabled="dialogType=='look'?true:false" class="border-none" />
-											</span>
-											<span class=" rowInput border-right rowWidth5">
-												<input v-model="ruleForm[item.params[3]]" :disabled="dialogType=='look'?true:false" class="border-none" />
-											</span>
+									</el-form-item>
+									<el-form-item label="等级:">
+										<el-input v-model="ruleForm.Grade" :disabled="dialogType=='look'?true:false"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+									<div class="addTable border">
+										<div class="tableHeader flex border-bottom">
+											<span class="border-right rowWidth1">项目</span>
+											<span class="border-right rowWidth2">单位</span>
+											<span class="border-right rowWidth3">总计</span>
+											<span class="border-right rowWidth4">征地范围内</span>
+											<span class="border-right rowWidth5">备注</span>
 										</div>
-
-
+										<div class="tableBody">
+											<div class="table_row flex border-bottom" v-for="item in peopleItem">
+												<span class=" rowInput border-right rowWidth1">{{item.title}}</span>
+												<span class=" rowInput border-right rowWidth2">
+													<input v-model="ruleForm[item.params[0]]" :disabled="dialogType=='look'?true:false" class="border-none" />
+												</span>
+												<span class=" rowInput border-right rowWidth3">
+													<input v-model="ruleForm[item.params[1]]" :disabled="dialogType=='look'?true:false" class="border-none" />
+												</span>
+												<span class=" rowInput border-right rowWidth4">
+													<input v-model="ruleForm[item.params[2]]" :disabled="dialogType=='look'?true:false" class="border-none" />
+												</span>
+												<span class=" rowInput border-right rowWidth5">
+													<input v-model="ruleForm[item.params[3]]" :disabled="dialogType=='look'?true:false" class="border-none" />
+												</span>
+											</div>
+									
+									
+										</div>
 									</div>
-								</div>
-							</div>
+																
+								</el-col>
+							</el-row>
+						
 						</el-form>
 						<div class="dialog_foot margin-top-l" v-show="dialogType!='look'&&!disabled">
 							<span class="btn_foot">
@@ -108,7 +113,7 @@
 						</div>
 					</el-collapse-item>
 					<el-collapse-item title="相关文档" name="4" v-if="KeyNo">
-						
+
 						<files :id="KeyNo" />
 					</el-collapse-item>
 
@@ -118,8 +123,8 @@
 		</div>
 		<el-dialog :title="flyTitle" :append-to-body="true" @close="closeDialog" :visible.sync="showFlag" v-model="showFlag"
 		 class="newStyleDialog " center :custom-class="`cityTownAdd_dialog${flyIndex}`">
-			<component :is="`itemAdd${flyIndex}`" :dialog-type="flyType" :dialog-table="flyIndex==1?tableItemData:tableItemData_else" v-on:showStudes="showStudescode" :dialog-form="flyForm"
-			 v-if="showFlag"></component>
+			<component :is="`itemAdd${flyIndex}`" :dialog-type="flyType" :dialog-table="flyIndex==1?tableItemData:tableItemData_else"
+			 v-on:showStudes="showStudescode" :dialog-form="flyForm" v-if="showFlag"></component>
 
 		</el-dialog>
 	</div>
@@ -314,7 +319,7 @@
 					})
 				}
 			},
-			
+
 			delTableItem(index) { //删除
 				if (this.flyForm) {
 					var self = this;
