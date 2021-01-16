@@ -1,10 +1,10 @@
 <template>
   <div v-loading="loading">
     <div class="align-center margin-bottom-m">
-      <el-button title="查看" size="small" class="al-icon-yulan" @click="preview" />
-      <el-button title="上传" size="small" class="al-icon-shangchuan" @click="upload(true)" />
-      <el-button title="修改" size="small" class="al-icon-xiugai" @click="upload(false)" />
-      <el-button title="删除" size="small" class="al-icon-shanchu" @click="del" />
+      <el-button title="查看" icon="al-icon-yulan" @click="preview" />
+      <el-button title="上传" icon="al-icon-shangchuan" @click="upload(true)" />
+      <el-button title="修改" icon="al-icon-xiugai" @click="upload(false)" />
+      <el-button title="删除" icon="al-icon-shanchu" @click="del" />
     </div>
     <div class="justify-start list" v-infinite-scroll="getList" :infinite-scroll-immediate="false">
       <div
@@ -23,7 +23,12 @@
 </template>
 
 <script>
-import { GetDocs, GetDocumentByDocNo,GetWordOrExcelToPDF, DelDoc } from "@/api";
+import {
+  GetDocs,
+  GetDocumentByDocNo,
+  GetWordOrExcelToPDF,
+  DelDoc
+} from "@/api";
 import upload from "./upload";
 export default {
   name: "Files",
@@ -31,6 +36,10 @@ export default {
     id: {
       type: Number,
       default: 0
+    },
+    init: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -48,54 +57,61 @@ export default {
   },
   components: { upload },
   mounted() {
-    this.getList();
+    this.init && this.getList();
   },
   methods: {
-    async getList(CurrentPage = this.currentPage, update=false) {
+    async getList(CurrentPage = this.currentPage, update = false) {
       if (this.list.length <= this.total && !update) return;
       this.loading = true;
-      const { list, total } = await GetDocs({
-        CurrentPage,
-        PageSize: 10,
-        id: this.id
-      });
-      this.currentPage = this.currentPage + 1;
-      const plist = [];
-      for (let i = 0; i < list.length; i++) {
-        const element = list[i];
-        plist.push(
-          new Promise(async (resolve, reject) => {
-            const res = await GetDocumentByDocNo({ docid: element.no });
-            resolve({ url: res[0].url, no: element.no });
-          })
-        );
-      }
-      const picList = await Promise.allSettled(plist);
-      const getType = name => {
-        const minetype = name.split(".")[1];
-        if (["png", "jpg", "jpeg", "webp", "bmp", "gif"].includes(minetype)) {
-          return "img";
-        } else if (/doc/i.test(minetype)) {
-          return "doc";
-        } else if (/xls/i.test(minetype)) {
-          return "xls";
-        } else {
-          return "other";
-        }
-      };
-      const resList = picList.map(element => {
-        let a = element.value.url;
-        const name = decodeURI(a.split("/")[2]);
-        return {
-          name,
-          no: element.value.no,
-          type: getType(name),
-          url: `${appConfig.baseIp}/${a}`
+      try {
+        const { list, total } = await GetDocs({
+          CurrentPage,
+          PageSize: 10,
+          id: this.id
+        });
+        this.currentPage = this.currentPage + 1;
+        const plist = [];
+        // 解析文件格式
+        const getType = name => {
+          const minetype = name.split(".")[1];
+          if (["png", "jpg", "jpeg", "webp", "bmp", "gif"].includes(minetype)) {
+            return "img";
+          } else if (/doc/i.test(minetype)) {
+            return "doc";
+          } else if (/xls/i.test(minetype)) {
+            return "xls";
+          } else {
+            return "other";
+          }
         };
-      });
-      this.list = update ? resList : this.list.concat(resList);
-      this.total = total;
-      this.loading = false;
+        // 创建promise
+        const createP = async element => {
+          await GetDocumentByDocNo({ docid: element.no });
+          return { url: res[0].url, no: element.no };
+        };
+        // 创建并发数组
+        for (let i = 0; i < list.length; i++) {
+          const element = list[i];
+          plist.push(createP(element));
+        }
+        const picList = await Promise.allSettled(plist);
+        const resList = picList.map(element => {
+          let a = element.value.url;
+          const name = decodeURI(a.split("/")[2]);
+          return {
+            name,
+            no: element.value.no,
+            type: getType(name),
+            url: `${appConfig.baseIp}/${a}`
+          };
+        });
+        this.list = update ? resList : this.list.concat(resList);
+        this.total = total;
+        this.loading = false;
+      } catch (error) {
+        this.loading = false;
+        console.log(error);
+      }
     },
     upload(add) {
       this.$refs.upload.dialogVisible = true;
@@ -112,7 +128,7 @@ export default {
       try {
         await DelDoc({ docid: this.currentFile.no });
         this.$message.success("删除成功");
-        this.getList(1,true);
+        this.getList(1, true);
       } catch (error) {
         this.$message.error(error);
       }

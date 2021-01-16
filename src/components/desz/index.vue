@@ -324,6 +324,8 @@ export default {
   width: 100%;
   min-height: 600px;
   .box-left {
+    border: 1px solid $white;
+    padding: 20px;
     background-color: rgba($primary, 0.5);
   }
   .el-cascader {
@@ -339,7 +341,7 @@ export default {
     }
   }
   .datalist {
-    height: 600px;
+    height: 640px;
     padding: 20px;
     border: 1px solid $white;
     max-width: 950px;

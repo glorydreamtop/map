@@ -4,7 +4,6 @@ const defaultSettings = require('./src/settings.js')
 const TerserPlugin = require('terser-webpack-plugin');
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const smp = new SpeedMeasurePlugin();
-const CompressionPlugin = require('compression-webpack-plugin')
 
 function resolve(dir) {
     return path.join(__dirname, dir)
@@ -38,10 +37,11 @@ module.exports = {
         open: true,
         overlay: {
             warnings: false,
-            errors: true,
+            errors: false,
         },
         disableHostCheck: true,
     },
+    lintOnSave: false,
     configureWebpack: {
         // provide the app's title in webpack's name field, so that
         // it can be accessed in index.html to inject the correct title.

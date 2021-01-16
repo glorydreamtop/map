@@ -551,3 +551,52 @@ export function CreateDoc(data) {
         data
     })
 }
+
+// 获取所有用户 AllUsers
+export function AllUsers(data) {
+    return request({
+        url: `/User/AllUsers`,
+        method: 'get',
+        data
+    })
+}
+// 导出报告管理 ReportManagementExport
+export function ReportManagementExport(data) {
+    return request({
+        url: `${baseReflect}ReportManagementExport`,
+        method: 'post',
+        data
+    })
+}
+// 获取报告管理信息 GetReportManagements
+export function GetReportManagements(data) {
+    return request({
+        url: `${baseReflect}GetReportManagements`,
+        method: 'post',
+        data
+    })
+}
+// 添加报告管理 AddReportManagement
+export function AddReportManagement(data) {
+    return request({
+        url: `${baseReflect}AddReportManagement`,
+        method: 'post',
+        data
+    })
+}
+// 修改报告管理 EditReportManagement
+export function EditReportManagement(data) {
+    return request({
+        url: `${baseReflect}EditReportManagement`,
+        method: 'post',
+        data
+    })
+}
+// 删除报告管理 DelReportManagement
+export function DelReportManagement(data) {
+    return request({
+        url: `${baseReflect}DelReportManagement`,
+        method: 'post',
+        data
+    })
+}
