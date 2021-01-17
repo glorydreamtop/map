@@ -46,7 +46,7 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		GetSpecialprojects_BASE,DeleteBaseTable
+		GetSpecialprojects_BASE,DelSpecialprojects_BASE
 	} from '@/api'
 	import dianliHeaderAdd from './dianli_header_add' 
 	export default {
@@ -127,7 +127,7 @@
 					center: true,
 					type: 'warning'
 				}).then(() => {
-					DeleteBaseTable({id:row.KeyNo}).then((res) => {
+					DelSpecialprojects_BASE({id:row.KeyNo}).then((res) => {
 						console.log(res)
 							self.$message({
 								message: '操作成功',
