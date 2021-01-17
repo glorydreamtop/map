@@ -249,9 +249,12 @@
 							}
 						} else {
 							var url = EditHousehold;
+							var  newData=JSON.parse(JSON.stringify(self.ruleForm));
+							delete newData.DCSJ;
+							delete newData.DCRY;
 							var data = {
 								id: self.dialogForm.KeyNo,
-								JsonStr: JSON.stringify(self.ruleForm)
+								JsonStr: JSON.stringify(newData)
 							}
 						}
 

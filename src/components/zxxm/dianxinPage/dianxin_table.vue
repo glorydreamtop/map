@@ -5,18 +5,18 @@
 		</div>
 		<div class="body_table_mian">
 			<el-table v-loading="tableLoad"  :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">
-				<el-table-column prop="DLBH" label="编号" width="150" align="center"> </el-table-column>
-				<el-table-column prop="Createdate" label="申请时间" align="center"> </el-table-column>
+				<el-table-column prop="DXBH" label="编号" width="150" align="center"> </el-table-column>
+				<el-table-column prop="JCNY" label="建成年月" align="center"> </el-table-column>
 				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
 				<el-table-column  label="高程范围" align="center"> 
 				   <el-table-column prop="GCFW1" label="范围1" width="100" align="center"> </el-table-column>
 				   <el-table-column prop="GCFW2" label="范围2" width="100" align="center"> </el-table-column>
 				</el-table-column>
-				<el-table-column prop="Region" label="工程类型" align="center"> </el-table-column>
-				<el-table-column prop="GTMC" label="线路名称" width="100" align="center"> </el-table-column>
-				<el-table-column prop="ZDMJ" label="起讫点" width="100" align="center"> </el-table-column>
-				<el-table-column prop="YDXZ" label="权属部门" align="center"> </el-table-column>
-				<el-table-column prop="YDHDFS" label="主管机构"  align="center"> </el-table-column>
+				<el-table-column prop="GCLX" label="工程类型" align="center"> </el-table-column>
+				<el-table-column prop="XLMC" label="线路名称" width="100" align="center"> </el-table-column>
+				<el-table-column prop="QQD" label="起讫点" width="100" align="center"> </el-table-column>
+				<el-table-column prop="QS" label="权属部门" align="center"> </el-table-column>
+				
 				<el-table-column prop="ZCD" label="总长度"  align="center"> </el-table-column>
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
@@ -46,7 +46,7 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		GetSpecialprojects_BASE,DeleteBaseTable
+			GetSpecialprojects_BASE,DelSpecialprojects_BASE
 	} from '@/api'
 	import dianxinHeaderAdd from './dianxin_header_add' 
 	export default {
@@ -56,7 +56,7 @@
 			dianxinHeaderAdd,
 		},
 		computed: {
-			...mapGetters(['projectNo','BaseType'])
+			...mapGetters(['projectNo','TypeName'])
 		},
 		data() {
 			return {
@@ -86,7 +86,7 @@
 		methods: {
 			tableInit() {
 				var data = {
-					BaseType: this.BaseType,
+					TypeName: this.TypeName,
 					ProjectNo: this.projectNo,
 					...this.formeData
 				};
@@ -127,7 +127,7 @@
 					center: true,
 					type: 'warning'
 				}).then(() => {
-					DeleteBaseTable({id:row.KeyNo}).then((res) => {
+					DelSpecialprojects_SUB({id:row.KeyNo}).then((res) => {
 						console.log(res)
 							self.$message({
 								message: '操作成功',

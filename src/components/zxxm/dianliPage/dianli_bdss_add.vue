@@ -2,45 +2,48 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+				<el-form  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="formNew">
 					<el-row :gutter="20">
 						<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-							<el-form-item label="名称:">
-								<el-input v-model="ruleForm.MC" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="名称:" prop="MC">
+								<el-input v-model="ruleForm.MC" placeholder="请输入名称"></el-input>
 							</el-form-item>
-							<el-form-item label="权属:">
-								<el-input v-model="ruleForm.QS" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="权属部门:" prop="stationName">
+								<el-input v-model="ruleForm.QS" placeholder="请输入名称"></el-input>
+							
 							</el-form-item>
-							<el-form-item label="建成时间:">
-								<el-input v-model="ruleForm.JCSJ" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="电压等级:" prop="stationName">
+								<el-input v-model="ruleForm.DYDJ" placeholder="请输入电压等级"></el-input>
 							</el-form-item>
-							<el-form-item label="结构类型:">
-								<el-input v-model="ruleForm.JGLX" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="供电范围:" prop="stationName">
+								<el-input v-model="ruleForm.GDFW" placeholder="请输入供电范围"></el-input>
 							</el-form-item>
-							<el-form-item label="占地面积:">
-								<el-input v-model="ruleForm.ZDMJ" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="出线间隔:" prop="stationName">
+								<el-input v-model="ruleForm.CXJG" placeholder="请输入出线间隔"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-							<el-form-item label="等级:">
-								<el-input v-model="ruleForm.DJ" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="地点:" prop="stationName">
+								<el-input v-model="ruleForm.DD" placeholder="请输入地点"></el-input>
 							</el-form-item>
-							<el-form-item label="规模:">
-								<el-input v-model="ruleForm.GM" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="主管部门:" prop="stationName">
+								<el-input v-model="ruleForm.ZGBM" placeholder="请输入名称"></el-input>
 							</el-form-item>
-							<el-form-item label="地点:">
-								<el-input v-model="ruleForm.DD" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="容量:" prop="stationName">
+								<el-input v-model="ruleForm.RL" placeholder="请输入容量"></el-input>
 							</el-form-item>
-							<el-form-item label="结构数量:">
-								<el-input v-model="ruleForm.JGSL" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="建成年月:" prop="stationName">
+								<el-date-picker v-model="ruleForm.JCNY" type="date" placeholder="请选择日期">
+								</el-date-picker>
 							</el-form-item>
-							<el-form-item label="数量:">
-								<el-input v-model="ruleForm.SL" :disabled="dialogType=='look'?true:false"></el-input>
+							<el-form-item label="其他:" prop="stationName">
+								<el-input v-model="ruleForm.QT" placeholder=""></el-input>
 							</el-form-item>
+							
 						</el-col>
 						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 							<el-form-item label="备注:">
-								<el-input type="textarea" :rows="5" v-model="ruleForm.BZ" :disabled="dialogType=='look'?true:false"></el-input>
+								<el-input type="textarea"  :rows="5" v-model="ruleForm.Remarks" :disabled="dialogType=='look'?true:false"></el-input>
 							</el-form-item>
 						</el-col>
 					</el-row>
@@ -73,10 +76,6 @@
 		data: function() {
 			return {
 				ruleForm: {
-					VirtualitemName: '',
-					VirtualitemDesc: '',
-					Unit: '',
-					AttrNum: '',
 					Remarks: '',
 				},
 				project1: '',
@@ -84,7 +83,7 @@
 				submitLoad: false,
 				disabled: false,
 				rules: { //约定的验证规则
-					stationName: [{
+					MC: [{
 						required: true,
 						message: '请填写名称',
 						trigger: 'blur'
@@ -99,20 +98,11 @@
 
 			}
 		},
-		dialogType: {
-			handler: function(val, oldval) {
-				this.dialogType = val;
-				this.init();
-			},
-			deep: true //
-		},
-		activated() {
-
-		},
 		components: {},
-		props: ['dialogType', 'dialogForm', 'dialogTable', 'typeName'],
+		props: ['dialogType', 'dialogForm', 'dialogTable','typeName'],
 		mounted: function() {
 			
+			console.log(this.dialogType,this.typeName);
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.ruleForm = this.dialogForm;
 				this.project1 = this.dialogForm.value;
@@ -125,6 +115,7 @@
 		},
 
 		methods: {
+			
 			submitForm(formName) { //表单提交按钮
 				var self = this;
 				this.$refs[formName].validate((valid) => {
@@ -176,9 +167,5 @@
 		overflow-y: auto;
 		overflow-x: hidden;
 
-	}
-
-	.input-595 {
-		width: 595px;
 	}
 </style>

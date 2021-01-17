@@ -3,7 +3,6 @@
 		<div class="element_main">
 			<div class="reyuan_form">
 				<el-form   :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
-					
 					<el-form-item label="名称:" >
 						<el-input v-model="ruleForm.MC" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
@@ -42,7 +41,8 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		GetJBQKDCBItems,AddBaseTablesListAttrs,UpdateBaseTablesListAttrs
+		AddSpecialprojects_SUB,
+		EditSpecialprojects_SUB
 	} from '@/api'
 	
 	export default {
@@ -79,20 +79,10 @@
 
 			}
 		},
-		dialogType: {
-			handler: function(val, oldval) {
-				this.dialogType = val;
-				this.init();
-			},
-			deep: true //
-		},
-		activated() {
-			
-		},
 		components: {},
-		props: ['dialogType', 'dialogForm','dialogTable'],
+		props: ['dialogType', 'dialogForm', 'dialogTable', 'typeName'],
 		mounted: function() {
-			this.GetJBQKDCBItemsInit();//项目层级化
+
 			console.log(this.dialogForm);
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.ruleForm=this.dialogForm;
@@ -106,51 +96,6 @@
 		},
 
 		methods: {
-			
-			postionChange(data){
-				console.log(data)
-				var itemData=this.$refs["cascaderAddr"].getCheckedNodes();
-				this.ruleForm.VirtualitemDesc=itemData[0].label
-				this.ruleForm.VirtualitemName=itemData[0].value;
-				console.log(itemData)//获得当前节点，
-			},
-			GetJBQKDCBItemsInit(){//项目级层初始化
-				var data = {
-					BaseType: this.BaseType,
-				};
-				GetJBQKDCBItems(data).then((res) => {	  
-					// var newData=res;
-					var newData=this.setList(res,this.dialogTable);
-					this.postionArry=newData;
-					
-				})
-				.catch((error) => {
-					this.postionArry = [];
-					console.log(error)
-				})
-			},
-			setList(newData,oldData){
-						for(var i in newData){
-							for(var j in oldData){
-								if(oldData[j]){
-									if(oldData[j]&&oldData[j].children&&oldData[j].children.length!=0){
-										this.setList(newData[i].children,oldData[j].children);
-									}
-									else{
-										if(newData[i].label==oldData[j].label&&oldData[j].ClassName=='singleitem'){
-											console.log(newData[i].label,oldData[j].label,'相同')
-											newData[i].disabled=true;
-										}
-									}
-								}
-							}
-							
-							
-						}
-						 console.log(newData)
-					return newData;
-				 
-			},
 			submitForm(formName) { //表单提交按钮
 				var self = this;
 				this.$refs[formName].validate((valid) => {
@@ -162,14 +107,14 @@
 								id: self.dialogForm.KeyNo,
 								JsonStr:JSON.stringify(self.ruleForm)   
 							};
-							var url = UpdateBaseTablesListAttrs;
+							var url = EditSpecialprojects_SUB;
 						} else {
 							var data = {
 								id: self.KeyNo,
-								BaseType: self.BaseType,
+								TypeName: self.typeName,
 								JsonStr:JSON.stringify(self.ruleForm)   
 							};
-							var url = AddBaseTablesListAttrs;
+							var url = AddSpecialprojects_SUB ;
 						}
 						url(data).then((res) => {
 							this.submitLoad=false;
