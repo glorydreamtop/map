@@ -203,6 +203,7 @@ export default {
     height: 600px;
     padding: 20px;
     border: 1px solid $white;
+    max-width: 950px;
     flex-grow: 1;
     margin-left: 20px;
     .el-pagination {

@@ -28,7 +28,7 @@
           </el-dropdown-item>
           <el-dropdown-item>
             <i class="al-icon-baogaoguanli"></i>
-            <span>报告管理</span>
+            <span @click="show('bggl')">报告管理</span>
           </el-dropdown-item>
           <el-dropdown-item>
             <i class="al-icon-jinduguanli"></i>
@@ -89,10 +89,10 @@
             <i class="al-icon-quanxianguanli"></i>
             <span>权限管理</span>
           </el-dropdown-item>
-		  <el-dropdown-item>
-		    <i class="el-icon-s-management"></i>
-		    <span @click="show('dictionary')">字典设置</span>
-		  </el-dropdown-item>
+          <el-dropdown-item>
+            <i class="el-icon-s-management"></i>
+            <span @click="show('dictionary')">字典设置</span>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <div class="admin text-l border-left padding-left-l">
@@ -109,6 +109,7 @@ import search from "@/components/search";
 import stageSelector from "@/components/stageSelector";
 import dictionary from "@/components/dictionaryPage/dictionary_table";
 import zlgl from "@/components/zlgl";
+import bggl from "@/components/bggl";
 import desz from "@/components/desz";
 import evnetBus from "@/utils/eventBus";
 
@@ -126,7 +127,8 @@ export default {
     stageSelector,
     zlgl,
     desz,
-	dictionary
+    bggl,
+	  dictionary
   },
   watch:{
     showDialog:{
@@ -143,7 +145,6 @@ export default {
     });
   },
   methods: {
-    handleSelect() {},
     show(name) {
       this.currentCompoent = name;
       this.showDialog = true;

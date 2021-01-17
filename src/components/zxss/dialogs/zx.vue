@@ -20,7 +20,7 @@
         <form-main :type="item" @success="createForm((index + 2).toString())" />
       </el-collapse-item>
        <el-collapse-item title="关联文档" :name="(types.length+2).toString()">
-        <files :id="keyNo" />
+        <files :id="keyNo" :init="!add" />
       </el-collapse-item>
     </el-collapse>
   </el-dialog>
@@ -73,6 +73,7 @@ export default {
     handleClose(done) {
       this.$refs.formTitle.$refs.form1.resetFields()
       this.collapse = "1"
+      this.$emit("update")
       done();
     },
     createTitle(e) {
