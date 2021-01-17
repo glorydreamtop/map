@@ -49,7 +49,7 @@
           </el-dropdown-item>
           <el-dropdown-item>
             <i class="al-icon-anzhiquguihua"></i>
-            <span>安置区规划</span>
+            <span>安置规划</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
