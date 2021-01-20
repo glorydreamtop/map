@@ -76,7 +76,9 @@
               :key="item.value"
               :prop="item.value"
               :label="item.title"
-            ></el-table-column>
+            >
+            
+            </el-table-column>
             <el-table-column
               fixed="right"
               label="操作"
@@ -125,6 +127,7 @@ import {
 } from "@/api";
 import { mapGetters } from "vuex";
 import deszAdd from "./edit";
+import more from "@/components/more"
 export default {
   name: "Desz",
   props: {
@@ -133,7 +136,7 @@ export default {
       default: false,
     },
   },
-  components: { deszAdd },
+  components: { deszAdd,more },
   data() {
     return {
       locationNo: 0, // 地点ID

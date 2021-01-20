@@ -23,6 +23,20 @@ export default {
     editor.config.onchange = newHtml => {
       this.$emit("input", newHtml);
     };
+    editor.config.menus = [
+      "undo",
+      "redo",
+      "bold",
+      "head",
+      "link",
+      "italic",
+      "underline",
+      "indent",
+      "foreColor",
+      "backColor",
+      "justify"
+    ];
+    editor.config.showFullScreen = false
     // 创建编辑器
     editor.create();
     this.editor = editor;
@@ -47,6 +61,6 @@ export default {
   font-size: 28px;
 }
 ::v-deep .w-e-text-container {
-  background-color: rgba($primary,0.5);
+  background-color: rgba($primary, 0.5);
 }
 </style>

@@ -5,6 +5,7 @@
       v-if="visible"
       :close-on-press-escape="false"
       width="70vw"
+      :before-close="close"
       append-to-body
       v-loading="loading2"
       element-loading-text="文件转码中..."
@@ -22,6 +23,8 @@
             :value="item.value"
           ></el-option>
         </el-select>
+        <el-button class="save" @click="submit">保存</el-button>
+        <el-button class="save" @click="submit">导出</el-button>
       </div>
       <editor id="zceditor" v-model="form.ReportContent"/>
     </el-dialog>
@@ -32,6 +35,7 @@
 import { GetDict,AddReportManagement } from "@/api";
 import { mapGetters } from "vuex";
 import editor from "@/components/edtor"
+import { deepClone } from '../../utils';
 export default {
   name: "Bggl",
   data() {
@@ -68,9 +72,22 @@ export default {
       });
     },
     async submit() {
-      await AddReportManagement()
+      const form = deepClone(this.form)      
+      if(Object.values(form).includes("")){
+        this.$message.error('请检查必填项')
+        return
+      }
+      await AddReportManagement({ProjectNo:this.projectNo,JsonStr:JSON.stringify(form)})
+      this.close()
     },
-    downLoad() {}
+    close(done){
+      Object.keys(this.form).forEach(key=>this.form[key]="")
+      this.$emit('update')
+      if(done)done()
+    },
+    downLoad() {
+
+    }
   }
 };
 </script>
@@ -80,6 +97,9 @@ export default {
 .el-select {
   width: 300px;
   margin-right: 20px;
+}
+.save{
+  margin-left: auto;
 }
 #zceditor{
   margin-top: 20px;
