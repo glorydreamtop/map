@@ -1,5 +1,11 @@
 <template>
-  <el-dialog :title="title" append-to-body :visible.sync="dialogVisible" :before-close="handlerClose">
+  <el-dialog
+    :title="title"
+    append-to-body
+    :visible.sync="dialogVisible"
+    v-if="dialogVisible"
+    :before-close="handlerClose"
+  >
     <el-form class="flex" ref="form" :rules="rules" :model="form">
       <el-form-item
         v-for="item in formProps"
@@ -7,12 +13,14 @@
         :prop="item.value"
         :label="item.title"
       >
-        <el-input
+        <component
+          :is="item.type"
           v-model="form[item.value]"
           :placeholder="item.hide?'自动生成':'必填'"
-          :disabled="item.hide"
-          :type="item.textArea?'textarea':'input'"
-        ></el-input>
+          v-bind="item.props"
+        >
+          <template v-if="item.unit" slot="append">{{item.unit}}</template>
+        </component>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -25,6 +33,7 @@
 <script>
 import { AddNCZXSS_SUB, EditNCZXSS_SUB } from "@/api";
 import { deepClone } from "@/utils";
+import selector from "@/components/rewrite-eleUI/selector";
 export default {
   inject: ["KEYNO"],
   props: {
@@ -39,34 +48,41 @@ export default {
   },
   data() {
     return {
-      add:true,
-      id:0, // 子项id
+      add: true,
+      id: 0, // 子项id
       dialogVisible: false,
       form: {},
       formProps: [],
       rules: {}
     };
   },
-  computed:{
-    keyNo(){
-      return this.KEYNO()
+  computed: {
+    keyNo() {
+      return this.KEYNO();
     }
   },
-  created() {
-    const all = require("../json/subTableProps.json");
-    this.formProps = all[this.idx];
-    this.formProps.forEach(item => {
-      if (!item.hide) {
-        this.rules[item.value] = { required: true };
+  components: { selector },
+  watch: {
+    dialogVisible: {
+      async handler(newVal) {
+        if (!newVal) return;
+        const { all } = await import("../json/subTableProps.js");
+        this.formProps = all[this.idx];
+        this.formProps.forEach(item => {
+          item.task && item.task();
+          item.type = item.type || "elInput";
+          this.rules[item.value] = { required: item.required };
+        });
       }
-    });
+    },
+    immediate: true
   },
   methods: {
     // 创建子项
     create() {
       let form = deepClone(this.form);
-      if(form.KeyNo){
-        delete form.KeyNo
+      if (form.KeyNo) {
+        delete form.KeyNo;
       }
       this.$refs.form.validate(async valid => {
         if (valid) {
@@ -77,11 +93,11 @@ export default {
                 TypeName: this.title,
                 JsonStr: JSON.stringify(form)
               });
-            }else{
+            } else {
               await EditNCZXSS_SUB({
                 id: this.id,
                 JsonStr: JSON.stringify(form)
-              })
+              });
             }
             this.$emit("success");
             this.$refs.form.resetFields();
@@ -92,9 +108,9 @@ export default {
         }
       });
     },
-    handlerClose(done){
+    handlerClose(done) {
       this.$refs.form.resetFields();
-      done()
+      done();
     }
   }
 };

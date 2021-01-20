@@ -10,23 +10,13 @@
         :props="selectorList"
       ></el-cascader>
     </el-form-item>
-    <el-form-item label="专项名称">
-      <el-select v-model="form.ZXMC" placeholder="请选择">
-        <el-option
-          v-for="item in ['水库淹没区', '水库影响区', '枢纽工程建设区']"
-          :key="item"
-          :label="item"
-          :value="item"
-        ></el-option>
-      </el-select>
-    </el-form-item>
     <el-form-item
       v-for="item in formProps"
       :key="item.value"
       :label="item.title"
       :prop="item.value"
     >
-      <component :is="item.type" v-model="form[item.value]" placeholder="必填">
+      <component :is="item.type" v-model="form[item.value]" placeholder="必填" v-bind="item.props">
         <template v-if="item.unit" slot="append">{{item.unit}}</template>
       </component>
     </el-form-item>
@@ -37,6 +27,7 @@
 import { AddNCZXSS_BASE, GetLocations, EditNCZXSS_BASE } from "@/api";
 import { mapGetters } from "vuex";
 import { deepClone } from "@/utils";
+import selector from '@/components/rewrite-eleUI/selector'
 export default {
   name: "formTitle",
   inject: ["KEYNO", "ADD", "TOPINDEX"],
@@ -78,17 +69,19 @@ export default {
   },
   watch: {
     topIndex: {
-      handler(newVal) {
-        const all = require("../json/formProps.json");
+      async handler(newVal) {
+        const {all} = await import("../json/formProps.js");
         this.formProps = all[newVal];
         this.formProps.forEach(item => {
+          item.task && item.task()
           item.type = item.type || 'elInput'
-          this.rules[item.value] = { required: !item.notRequired };
+          this.rules[item.value] = { required: item.required };
         });
       },
       immediate: true
     }
   },
+  components:{selector},
   mounted() {
     if (!this.add) {
       this.$nextTick(() => {

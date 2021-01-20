@@ -33,8 +33,6 @@ export default {
     };
   },
   components:{zx},
-  created() {},
-  mounted() {},
   methods: {
     zxssTable(e) {
       let map = [

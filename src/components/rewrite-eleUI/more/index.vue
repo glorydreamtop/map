@@ -1,8 +1,9 @@
 <template>
-  <el-popover placement="top-start" :title="title" width="300" trigger="hover" :content="info">
+  <el-popover placement="top-start" :title="title" trigger="click">
+    <div class="content">{{info}}</div>
     <div slot="reference">
       <slot>
-        <span class="text">{{info}}</span>
+        <div class="text">{{info}}</div>
       </slot>
     </div>
   </el-popover>
@@ -34,5 +35,12 @@ export default {
 .text {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 6em;
+  height: 20px;
+  line-height: 20px;
+}
+.content {
+  max-width: 200px;
 }
 </style>

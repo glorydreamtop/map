@@ -25,21 +25,9 @@
                 :disabled="locationNo === 0"
               >
                 <div class="margin-left-s">
-                  <el-button
-                    type="text"
-                    icon="al-icon-tianjia"
-                    @click="postQuota(item, true)"
-                  ></el-button>
-                  <el-button
-                    type="text"
-                    icon="al-icon-xiugai"
-                    @click="postQuota(item, false)"
-                  ></el-button>
-                  <el-button
-                    type="text"
-                    icon="al-icon-shanchu"
-                    @click="delQuota(item)"
-                  ></el-button>
+                  <el-button type="text" icon="al-icon-tianjia" @click="postQuota(item, true)"></el-button>
+                  <el-button type="text" icon="al-icon-xiugai" @click="postQuota(item, false)"></el-button>
+                  <el-button type="text" icon="al-icon-shanchu" @click="delQuota(item)"></el-button>
                 </div>
                 <div class="flex-col" @click="setCurrentType">
                   <span
@@ -50,9 +38,7 @@
                     v-for="i in subList[index]"
                     :key="i.o_virtualitemno"
                     :data-no="i.o_virtualitemno"
-                  >
-                    {{ i.o_virtualitemdesc }}
-                  </span>
+                  >{{ i.o_virtualitemdesc }}</span>
                 </div>
               </el-collapse-item>
             </el-collapse>
@@ -65,11 +51,7 @@
             class="al-icon-tianjia margin-bottom-m"
             @click="postItem(true)"
           />
-          <desz-add
-            ref="add"
-            :currentType="currentType"
-            @update="updateTable"
-          />
+          <desz-add ref="add" :currentType="currentType" @update="updateTable" />
           <el-table :data="tableData" border>
             <el-table-column
               v-for="item in tableProps"
@@ -77,14 +59,12 @@
               :prop="item.value"
               :label="item.title"
             >
-            
+              <template slot-scope="scope">
+                <more v-if="item.title==='备注'" :info="scope.row[item.value]" :title="item.title" />
+                <span v-else>{{scope.row[item.value]}}</span>
+              </template>
             </el-table-column>
-            <el-table-column
-              fixed="right"
-              label="操作"
-              width="230"
-              class="justify-between"
-            >
+            <el-table-column fixed="right" label="操作" width="230" class="justify-between">
               <template slot-scope="scope">
                 <el-button
                   title="更新"
@@ -123,20 +103,19 @@ import {
   EditQuota,
   DeleteQuota,
   GetQuotaItemList,
-  DeleteQuotaItem,
+  DeleteQuotaItem
 } from "@/api";
 import { mapGetters } from "vuex";
 import deszAdd from "./edit";
-import more from "@/components/more"
 export default {
   name: "Desz",
   props: {
     showDialog: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  components: { deszAdd,more },
+  components: { deszAdd },
   data() {
     return {
       locationNo: 0, // 地点ID
@@ -146,20 +125,20 @@ export default {
         { title: "条件", value: "Ucondition" },
         { title: "单价", value: "UnitPrice" },
         { title: "单位", value: "Unit" },
-        { title: "备注", value: "Remarks" },
+        { title: "备注", value: "Remarks" }
       ], // 表格表头
       tableData: [], //表格数据
       selectorList: {
         lazy: true,
         lazyLoad: async (node, resolve) => {
           const { level } = node;
-          let nodes = (await this.getArea(node.value)).map((item) => ({
+          let nodes = (await this.getArea(node.value)).map(item => ({
             value: item.o_locationno,
             label: item.o_locationdesc,
-            leaf: level > 1,
+            leaf: level > 1
           }));
           resolve(nodes);
-        },
+        }
       },
       classify: "",
       classifyNames: [
@@ -170,25 +149,25 @@ export default {
         "个体工商户",
         "文教卫设施",
         "宗教设施",
-        "其他项目",
+        "其他项目"
       ],
       subList: [[], [], [], [], [], []], // 二级分类列表
       currentType: 0, // 当前选中二级分类id
       currentTotal: 0,
       loading1: false,
       loading2: false,
-      updateFileId: 0, // 待更新文件id
+      updateFileId: 0 // 待更新文件id
     };
   },
   computed: {
-    ...mapGetters(["projectNo"]),
+    ...mapGetters(["projectNo"])
   },
   watch: {
     showDialog: {
       handler(newVal) {
         this.visible = newVal;
       },
-      immediate: true,
+      immediate: true
     },
     classify: {
       handler(newVal) {
@@ -197,8 +176,8 @@ export default {
           this.currentTotal = 0;
         }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   created() {},
   mounted() {},
@@ -207,7 +186,7 @@ export default {
     async getArea(Locationno = 0) {
       const res = await GetQuotas({
         ProjectNo: this.projectNo,
-        Locationno,
+        Locationno
       });
       return res;
     },
@@ -228,7 +207,7 @@ export default {
         LocationId: this.locationNo,
         ClassifyName,
         CurrentPage: 1,
-        PageSize: 200,
+        PageSize: 200
       });
       console.log(list);
       this.$set(this.subList, index, list);
@@ -246,19 +225,19 @@ export default {
           add ? "新增" : "修改为",
           {
             confirmButtonText: "确定",
-            cancelButtonText: "取消",
+            cancelButtonText: "取消"
           }
         );
         add &&
           (await AddQuota({
             ClassifyName,
             LocationId: this.locationNo,
-            Virtualitemdesc: value,
+            Virtualitemdesc: value
           }));
         !add &&
           (await EditQuota({
             Virtualitemno: this.currentType,
-            Virtualitemdesc: value,
+            Virtualitemdesc: value
           }));
         this.$message.success(`${add ? "添加" : "修改"}成功`);
         this.getTypeList(ClassifyName, true);
@@ -274,7 +253,7 @@ export default {
         await this.$confirm("将删除条目及其下所有详细信息，确定继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning",
+          type: "warning"
         });
         await DeleteQuota({ Virtualitemno: this.currentType });
         this.getTypeList(ClassifyName, true);
@@ -305,7 +284,7 @@ export default {
       this.updateTable(e);
     },
     async delItem(KeyNo) {
-      await DeleteQuotaItem({KeyNo})
+      await DeleteQuotaItem({ KeyNo });
       this.$message.success("删除成功");
       this.updateTable(1);
     },
@@ -313,12 +292,12 @@ export default {
       const { list, total } = await GetQuotaItemList({
         Virtualitemno: this.currentType,
         CurrentPage,
-        PageSize: 5,
+        PageSize: 5
       });
       this.tableData = list;
       this.currentTotal = total;
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -8,7 +8,12 @@
         :key="item.value"
         :prop="item.value"
         :label="item.title"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <more v-if="item.value==='BZ'" :info="scope.row[item.value]" :title="item.title" />
+          <span v-else>{{scope.row[item.value]}}</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="230" class="justify-between">
         <template slot-scope="scope">
           <el-button
@@ -42,7 +47,8 @@
 import zx from "./dialogs/zx";
 import { GetNCZXSS_BASE, DelNCZXSS_BASE } from "@/api";
 import { mapGetters } from "vuex";
-import { deepClone } from '../../utils';
+import { deepClone } from "../../utils";
+
 export default {
   name: "nczxTable",
   provide() {
@@ -75,12 +81,9 @@ export default {
   },
   watch: {
     dialogType: {
-      handler(newVal) {
-        const map = {
-          zx: 0,
-          gt: 1
-        };
-        const all = require("./json/formProps.json");
+      async handler(newVal) {
+        const map = { zx: 0, gt: 1 };
+        const { all } = await import("./json/formProps.js");
         this.index = map[newVal];
         this.tableProps = all[this.index];
         this.currentType = ["农专项设施基础信息", "农村个体工商户调查基本信息"][

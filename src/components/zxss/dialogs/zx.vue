@@ -59,8 +59,8 @@ export default {
   components: { formTitle, formMain,files },
   watch: {
     topIndex: {
-      handler(newVal) {
-        let types = require("../json/formMain.json");
+      async handler(newVal) {
+        let {types} = await import("../json/formMain.js");
         this.types = types[newVal];
         this.currentType = ["农专项设施基础信息", "农村个体工商户调查基本信息"][
           newVal

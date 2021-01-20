@@ -12,7 +12,12 @@
         :prop="item.value"
         :label="item.title"
         :key="item.value"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <more v-if="item.value==='BZ'" :info="scope.row[item.value]" :title="item.title" />
+          <span v-else>{{scope.row[item.value]}}</span>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       class="margin-top-l"
@@ -51,8 +56,8 @@ export default {
     }
   },
   components: { subDialog },
-  created() {
-    const allTableProps = require("../json/subTableProps.json");
+  async created() {
+    const { all } = await import("../json/subTableProps.js");
     let types = [
       "农专项设施设备",
       "农村个体房屋及构筑物",
@@ -61,7 +66,7 @@ export default {
       "农村个体存货"
     ];
     this.index = types.indexOf(this.type);
-    this.tableProps = allTableProps[this.index];
+    this.tableProps = all[this.index];
     if (this.keyNo > 0) {
       this.getList(1);
     }
@@ -89,12 +94,10 @@ export default {
     },
     async delItem() {
       try {
-        await DelNCZXSS_SUB({ id:this.subId });
-        this.$message.success('删除成功');
+        await DelNCZXSS_SUB({ id: this.subId });
+        this.$message.success("删除成功");
         this.getList(1);
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
   }
 };

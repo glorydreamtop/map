@@ -1,4 +1,4 @@
-[
+export const types = [
     [
         "农专项设施设备"
     ],
