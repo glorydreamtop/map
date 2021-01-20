@@ -99,10 +99,18 @@
 		methods: {
 			
 			postionChange(data){
-				console.log(data)
+				
 				var itemData=this.$refs["cascaderAddr"].getCheckedNodes();
-				this.ruleForm.VirtualitemDesc=itemData[0].label
-				this.ruleForm.VirtualitemName=itemData[0].value;
+				if(itemData[0]){
+					this.ruleForm.VirtualitemDesc=itemData[0].label
+					this.ruleForm.VirtualitemName=itemData[0].value;
+					this.ruleForm.Unit=itemData[0].data?itemData[0].data.Unit:'';
+				}else{
+					this.ruleForm.VirtualitemDesc='';
+					this.ruleForm.VirtualitemName='';
+					this.ruleForm.Unit='';
+				}
+				
 				console.log(itemData)//获得当前节点，
 			},
 			GetJBQKDCBItemsInit(){//项目级层初始化
