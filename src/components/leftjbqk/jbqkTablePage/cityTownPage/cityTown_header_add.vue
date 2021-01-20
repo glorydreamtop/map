@@ -161,7 +161,24 @@
 				activeFormIndex: '1',
 				countyData: [], //区县集合
 				townData: [], //城镇集合
-				ruleForm: {},
+				ruleForm: {
+					PopulationUnit:'人',
+					ResidentUnit:'人',
+					NotRegisteredUnit:'人',
+					CommuterUnit:'人',
+					MobileUnti:'人',
+					TownPlanningAreaUnit:'h㎡或㎡',
+					BuiltUpAreaUnit:'h㎡或㎡',
+					DevelopmentPlanUnit:'h㎡或㎡',
+					VillagersCommitteeUnit:'个',
+					VillagerGroupUnit:'个',
+					AdministrativeUnit:'个',
+					PublicInstitutionsUnit:'个',
+					EnterpriseUnit:'个',
+					SelfEmployedUnit:'个',
+
+					
+				},
 				tableItemData: [],
 				tableItemData_else: [],
 				peopleItem: [{
@@ -177,7 +194,7 @@
 					{
 						title: '无户籍常住人口',
 						unit: '人',
-						params: ['NotRegisteredUnit	', 'NotRegisteredTotal', 'NotRegisteredLandRange', 'NotRegisteredRemarks']
+						params: ['NotRegisteredUnit', 'NotRegisteredTotal', 'NotRegisteredLandRange', 'NotRegisteredRemarks']
 					},
 					{
 						title: '通勤人口',
@@ -421,6 +438,8 @@
 			submitForm(formName) { //表单提交按钮
 				this.$refs[formName].validate((valid) => {
 					var self = this;
+					console.log(self.ruleForm);
+					return;
 					if (valid) {
 						this.submitLoad = true;
 						if (self.dialogType == 'add') { //添加时候先获取编号
