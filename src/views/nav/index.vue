@@ -34,6 +34,10 @@
             <i class="al-icon-jinduguanli"></i>
             <span>进度管理</span>
           </el-dropdown-item>
+          <el-dropdown-item>
+            <i class="al-icon-dingeshezhi"></i>
+            <span @click="show('tjxx')">统计信息</span>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <el-dropdown placement="bottom" class="text-l text-white">
