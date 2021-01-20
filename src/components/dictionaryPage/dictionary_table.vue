@@ -172,7 +172,7 @@
 			},
 			handleNodeClick(data) {
 				//点击树形
-				// console.log(data)
+				console.log(data.ucode,'点击树形')
 				this.dialogForm_tree = data;
 				this.treeActive=data;
 				this.tableInit(); //表格初始化

@@ -38,7 +38,9 @@
 								<el-input v-model="ruleForm.ZLCC" :disabled="dialogType=='look'?true:false"></el-input>
 							</el-form-item>
 							<el-form-item label="结构材料:" prop="FSWJGCL">
-								<el-input v-model="ruleForm.FSWJGCL" :disabled="dialogType=='look'?true:false"></el-input>
+								<el-select v-model="ruleForm.FSWJGCL" filterable placeholder="请选择结构材料" :disabled="dialogType=='look'?true:false" clearable>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.jiegoucailiao"></el-option>
+								</el-select>
 							</el-form-item>
 							<el-form-item label="单位合计:" prop="DWHJ">
 								<el-input v-model="ruleForm.DWHJ" :disabled="true"></el-input>
@@ -80,7 +82,8 @@
 		AddHousehold_Sub,
 		EditHousehold_Sub,
 		getHouseClass,
-		GetQuotaItemList
+		GetQuotaItemList,
+		GetDictItemsByUcode
 	} from '@/api';
 	import {
 		mapGetters
@@ -95,12 +98,38 @@
 				ruleForm: {},
 				typeData: [], //结构类型
 				dingeData: [], //定额代码
+				optionData:{},
 				loading: false,
 				disabled: false,
 				rules: { //约定的验证规则
-					stationName: [{
+					FWWMC: [{
 						required: true,
-						message: '请填写名称',
+						message: '请填写附属物名称',
+						trigger: 'blur'
+					}, ],
+					JGLX_DESC: [{
+						required: true,
+						message: '请选择结构类型',
+						trigger: 'blur'
+					}, ],
+					DWHJ: [{
+						required: true,
+						message: '请选择单位',
+						trigger: 'blur'
+					}, ],
+					FSWJGCL: [{
+						required: true,
+						message: '请选择结构材料',
+						trigger: 'blur'
+					}, ],
+					ZLCC: [{
+						required: true,
+						message: '请填写丈量尺寸',
+						trigger: 'blur'
+					}, ],
+					FSWSL: [{
+						required: true,
+						message: '请填写数量',
 						trigger: 'blur'
 					}, ],
 
@@ -138,9 +167,23 @@
 				this.ruleForm.FSWDEDM = this.ruleForm.FSWDEDM ? this.ruleForm.FSWDEDM.toString() : '';
 			}
 			this.getHouseClassInit(); //种类类型
+			this.zidianInit("10050008", 'jiegouleixing',1); //结构类型
+			this.zidianInit("10050009", 'jiegoucailiao',1); //结构材料
 		},
 
 		methods: {
+			zidianInit(ucode, data,level) {
+				GetDictItemsByUcode({
+					ucode: ucode,
+					level: level
+				}).then((res) => {
+					this.$set(this.optionData, data, res)
+					console.log(this.optionData)
+				}).catch((res) => {
+					console.log(res)
+			
+				})
+			},
 			change_type(data) {
 				for (var i in this.typeData) {
 					if (this.typeData[i].o_virtualitemdesc === data) {
