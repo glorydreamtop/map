@@ -74,9 +74,24 @@
 				loading: false,
 				disabled: false,
 				rules: { //约定的验证规则
-					stationName: [{
+					GMMC: [{
 						required: true,
-						message: '请填写名称',
+						message: '请填写果木名称',
+						trigger: 'blur'
+					}, ],
+					GMGG: [{
+						required: true,
+						message: '请填写规格',
+						trigger: 'blur'
+					}, ],
+					GMLB: [{
+						required: true,
+						message: '请选择类别',
+						trigger: 'blur'
+					}, ],
+					GMPZ: [{
+						required: true,
+						message: '请选择品种',
 						trigger: 'blur'
 					}, ],
 

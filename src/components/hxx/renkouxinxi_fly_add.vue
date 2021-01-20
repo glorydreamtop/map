@@ -9,9 +9,8 @@
 								<el-input v-model="ruleForm.XM" :disabled="dialogType=='look'?true:false"></el-input>
 							</el-form-item>
 							<el-form-item label="性别:" prop="XB">
-								<el-select v-model="ruleForm.XB" filterable placeholder="请选择性别" :disabled="dialogType=='look'?true:false">
-									<el-option key="1" label="男" value="男"></el-option>
-									<el-option key="2" label="女" value="女"></el-option>
+								<el-select v-model="ruleForm.XB" filterable placeholder="请选择性别" :disabled="dialogType=='look'?true:false" clearable>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.xingbie"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="出生年月:" prop="CSNY">
@@ -19,23 +18,21 @@
 								 value-format="yyyy-MM-dd"> </el-date-picker>
 							</el-form-item>
 							<el-form-item label="文化程度:" prop="WHCD">
-								<el-select v-model="ruleForm.WHCD" filterable placeholder="请选择文化程度" :disabled="dialogType=='look'?true:false">
-									<el-option key="1" label="初中及以下" value="初中及以下"></el-option>
-									<el-option key="2" label="高中" value="高中"></el-option>
-									<el-option key="3" label="大专" value="大专"></el-option>
-									<el-option key="4" label="本科" value="本科"></el-option>
-									<el-option key="5" label="研究生" value="研究生"></el-option>
-									<el-option key="6" label="博士" value="博士"></el-option>
+								<el-select v-model="ruleForm.WHCD" filterable placeholder="请选择文化程度" :disabled="dialogType=='look'?true:false" clearable>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.wenhuachengdu"></el-option>
 								</el-select>
-						
 							</el-form-item>
 							<el-form-item label="户籍性质:" prop="HKXZ">
-								<el-input v-model="ruleForm.HKXZ" :disabled="dialogType=='look'?true:false"></el-input>
+								<el-select v-model="ruleForm.HKXZ" filterable placeholder="请选择户籍性质" :disabled="dialogType=='look'?true:false" clearable>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.hujixingzhi"></el-option>
+								</el-select>
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
 							<el-form-item label="与户主关系:" prop="YHZGX">
-								<el-input v-model="ruleForm.YHZGX" :disabled="dialogType=='look'?true:false"></el-input>
+								<el-select v-model="ruleForm.YHZGX" filterable placeholder="请选择与户主关系" :disabled="dialogType=='look'?true:false" clearable>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.huzhuguanxi"></el-option>
+								</el-select>
 							</el-form-item>
 							<el-form-item label="民族:" prop="MZ">
 								<el-input v-model="ruleForm.MZ" :disabled="dialogType=='look'?true:false"></el-input>
@@ -44,7 +41,10 @@
 								<el-input v-model="ruleForm.SFZH" :disabled="dialogType=='look'?true:false"></el-input>
 							</el-form-item>
 							<el-form-item label="从事职业:" prop="CSZY">
-								<el-input v-model="ruleForm.CSZY" :disabled="dialogType=='look'?true:false"></el-input>
+								<el-select v-model="ruleForm.CSZY" filterable placeholder="请选择从事职业" :disabled="dialogType=='look'?true:false" clearable>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.congshizhiye"></el-option>
+								</el-select>
+								
 							</el-form-item>
 							<el-form-item label="户口所在地:" prop="HKSZD">
 								<el-input v-model="ruleForm.HKSZD" :disabled="dialogType=='look'?true:false"></el-input>
@@ -73,7 +73,8 @@
 <script>
 	import {
 		AddHousehold_Sub,
-		EditHousehold_Sub
+		EditHousehold_Sub,
+		GetDictItemsByUcode
 	} from '@/api';
 	import {
 		mapGetters
@@ -87,13 +88,55 @@
 			return {
 				ruleForm: {
 					stationName: '',
+					
 				},
+				optionData:{},
 				loading: false,
 				disabled: false,
 				rules: { //约定的验证规则
-					stationName: [{
+					XM: [{
 						required: true,
-						message: '请填写名称',
+						message: '请填写姓名',
+						trigger: 'blur'
+					}, ],
+					YHZGX: [{
+						required: true,
+						message: '请选择与户主关系',
+						trigger: 'change'
+					}, ],
+					XB: [{
+						required: true,
+						message: '请选择性别',
+						trigger: 'change'
+					}, ],
+					MZ: [{
+						required: true,
+						message: '请选择民族',
+						trigger: 'blur'
+					}, ],
+					CSNY: [{
+						required: true,
+						message: '请选择出生年月',
+						trigger: 'change'
+					}, ],
+					WHCD: [{
+						required: true,
+						message: '请选择文化程度',
+						trigger: 'change'
+					}, ],
+					HKXZ: [{
+						required: true,
+						message: '请选择户籍性质',
+						trigger: 'change'
+					}, ],
+					HKSZD: [{
+						required: true,
+						message: '请填写户口所在地',
+						trigger: 'blur'
+					}, ],
+					SFZH: [{
+						required: true,
+						message: '请填写身份证',
 						trigger: 'blur'
 					}, ],
 
@@ -101,14 +144,16 @@
 
 			}
 		},
-		dialogType: {
-			handler: function(val, oldval) {
-				this.dialogType = val;
-				this.init();
-			},
-			deep: true //
-		},
+		
 		components: {},
+		created() {
+			this.zidianInit("10050001",'huzhuguanxi');//与户主关系
+			this.zidianInit("10050002",'xingbie');//性别
+			this.zidianInit("10050003",'minzu');//民族
+			this.zidianInit("10050004",'wenhuachengdu');//文化程度
+			this.zidianInit("10050005",'hujixingzhi');//户籍性质
+			this.zidianInit("10050010",'congshizhiye');//从事职业
+		},
 		props: ['dialogType', 'dialogForm'],
 		mounted: function() {
 			console.log(this.dialogType)
@@ -117,10 +162,20 @@
 				this.ruleForm = this.dialogForm;
 				console.log(this.ruleForm)
 			}
-
+            
+			
 		},
 
 		methods: {
+			zidianInit(ucode,data){
+				GetDictItemsByUcode({ucode:ucode,level:1}).then((res) => {
+					    this.$set(this.optionData,data,res)
+							console.log(this.optionData)
+						}).catch((res) => {
+							console.log(res)
+							
+						})
+			},
 			change_tableType(data) { //选择表类型
 
 			},

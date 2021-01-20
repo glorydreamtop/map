@@ -15,10 +15,13 @@
 								</el-select>
 							</el-form-item>
 							<el-form-item label="屋面材料:" prop="WMCL">
-								<el-input v-model="ruleForm.WMCL" :disabled="dialogType=='look'?true:false"></el-input>
+								<el-select v-model="ruleForm.WMCL" filterable placeholder="请选择屋面材料" :disabled="dialogType=='look'?true:false" clearable>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.wumiancailiao"></el-option>
+								</el-select>
 							</el-form-item>
 							<el-form-item label="层高(m):" prop="CGM">
 								<el-input v-model="ruleForm.CGM" :disabled="dialogType=='look'?true:false"></el-input>
+								
 							</el-form-item>
 							<el-form-item label="建筑面积(㎡):" prop="JZMJM2">
 								<el-input-number v-model="ruleForm.JZMJM2" :min="0" :disabled="dialogType=='look'?true:false"></el-input-number>
@@ -40,7 +43,9 @@
 								<el-input v-model="ruleForm.JZFGHXS" :disabled="dialogType=='look'?true:false"></el-input>
 							</el-form-item>
 							<el-form-item label="层数:" prop="CS">
-								<el-input v-model="ruleForm.CS" :disabled="dialogType=='look'?true:false"></el-input>
+								<el-select v-model="ruleForm.CS" filterable placeholder="请选择层数" :disabled="dialogType=='look'?true:false" clearable>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.cengshu"></el-option>
+								</el-select>
 							</el-form-item>
 							<el-form-item label="丈量尺寸(m):" prop="ZLCCMM">
 								<el-input v-model="ruleForm.ZLCCMM" :disabled="dialogType=='look'?true:false"></el-input>
@@ -70,7 +75,8 @@
 		AddHousehold_Sub,
 		EditHousehold_Sub,
 		getHouseClass,
-		GetQuotaItemList
+		GetQuotaItemList,
+		GetDictItemsByUcode
 	} from '@/api';
 	import {
 		mapGetters
@@ -87,11 +93,37 @@
 				typeData: [], //结构类型
 				dingeData: [], //定额代码
 				loading: false,
+				optionData:{},
 				disabled: false,
 				rules: { //约定的验证规则
-					stationName: [{
+					FWMC: [{
 						required: true,
-						message: '请填写名称',
+						message: '请填写房屋名称',
+						trigger: 'blur'
+					}, ],
+					JGLX_DESC: [{
+						required: true,
+						message: '请选择结构类型',
+						trigger: 'change'
+					}, ],
+					CS: [{
+						required: true,
+						message: '请选择层数',
+						trigger: 'change'
+					}, ],
+					CGM: [{
+						required: true,
+						message: '请选择层高',
+						trigger: 'change'
+					}, ],
+					ZLCCMM: [{
+						required: true,
+						message: '请填写丈量尺寸',
+						trigger: 'blur'
+					}, ],
+					JZMJM2: [{
+						required: true,
+						message: '请填写建筑面积',
 						trigger: 'blur'
 					}, ],
 
@@ -123,9 +155,23 @@
 				this.ruleForm.DEDM = this.ruleForm.DEDM ? this.ruleForm.DEDM.toString() : '';
 			}
 			this.getHouseClassInit(); //种类类型
+			this.zidianInit("10050006", 'wumiancailiao',1); //屋面材料
+			this.zidianInit("10050007", 'cengshu',1); //层数
 		},
 
 		methods: {
+			zidianInit(ucode, data,level) {
+				GetDictItemsByUcode({
+					ucode: ucode,
+					level: level
+				}).then((res) => {
+					this.$set(this.optionData, data, res)
+					console.log(this.optionData)
+				}).catch((res) => {
+					console.log(res)
+
+				})
+			},
 			change_type(data) { //选中结构类型
 				for (var i in this.typeData) {
 					if (this.typeData[i].o_virtualitemdesc === data) {
