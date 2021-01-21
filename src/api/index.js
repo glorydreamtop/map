@@ -675,4 +675,36 @@ export function GetDictItemsByUcode(data) {
         data
     })
 }
+//获取土地调查树结构 GetEntitiesTree
+export function GetEntitiesTree(data) {
+    return request({
+        url: `${baseReflect}GetEntitiesTree`,
+        method: 'post',
+        data
+    })
+}
 
+//添加地块 AddParcel
+export function AddParcel(data) {
+    return request({
+        url: `${baseReflect}AddParcel`,
+        method: 'post',
+        data
+    })
+}
+//修改地块 EditParcel
+export function EditParcel(data) {
+    return request({
+        url: `${baseReflect}EditParcel`,
+        method: 'post',
+        data
+    })
+}
+//删除地块 DelParcel
+export function DelParcel(data) {
+    return request({
+        url: `${baseReflect}DelParcel`,
+        method: 'post',
+        data
+    })
+}

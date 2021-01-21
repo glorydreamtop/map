@@ -107,7 +107,11 @@
 	min-width: 800px;
 	height: 80vh;
 }
-
+.td_add_dialog{
+	width:40% !important;
+	min-width:400px;
+	height:38vh;
+}
 .huxinxidiaochaFlyAdd_dialog {
 	width: 30% !important;
 	min-width: 750px;

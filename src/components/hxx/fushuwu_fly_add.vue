@@ -39,7 +39,7 @@
 							</el-form-item>
 							<el-form-item label="结构材料:" prop="FSWJGCL">
 								<el-select v-model="ruleForm.FSWJGCL" filterable placeholder="请选择结构材料" :disabled="dialogType=='look'?true:false" clearable>
-									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.jiegoucailiao"></el-option>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.ucode" v-for="item in optionData.jiegoucailiao"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="单位合计:" prop="DWHJ">

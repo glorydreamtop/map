@@ -6,13 +6,7 @@
 				<el-cascader placeholder="开始定位" :options="locationData" ref="sysCascader" @change="handleChange($event)" :props="prop"
 				 filterable style="width: 100%;"></el-cascader>
 			</div>
-			<!-- <div class="margin-top-m" v-if="Locationno">
-				<el-select v-model="newparcelId" placeholder="请选中块信息" @change="parcelChange" style="width: 100%;">
-					<el-option v-for="item in parcelData" :key="item.KeyNo" :label="item.UNAME" :value="item.KeyNo">
-					</el-option>
-				</el-select>
-			</div> -->
-			<div class="margin-top-m" >
+			<div class="margin-top-m">
 				<el-input v-model="Name" placeholder="请搜索地块信息" clearable>
 					<el-button slot="append" icon="el-icon-search" @click="lookSearch"></el-button>
 				</el-input>
@@ -22,30 +16,30 @@
 				<el-button icon="al-icon-hutianjia" @click="addClick()" size="mini" plain title="添加户信息"> </el-button>
 				<el-button title="修改户信息" @click="editClick()" size="mini" icon="al-icon-huxiugai" plain></el-button>
 				<el-button title="删除户信息" @click="delClick()" size="mini" icon="al-icon-shanchu" plain></el-button>
-				<el-button title="关联地块"  size="mini" icon="el-icon-paperclip" plain></el-button>
+				<el-button title="关联地块" size="mini" icon="el-icon-paperclip" plain></el-button>
 			</div>
-			<div >
-				<div class="margin-top-m cardMain" v-if="HouseholdData.length!=0">
-					<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="6" v-for="(item,index) in HouseholdData">
+			<div>
+				<div class="margin-top-m cardMain" v-if="parcelData.length!=0">
+					<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="6" v-for="(item,index) in parcelData">
 						<div class="leftMain" :class="buttonIndex===index?'activeRow':''" @click="rowClick(index,item)">
 							<div class="item flex-col align-center">
 								<i class="al-icon-yonghu text-light"></i>
-								<span>{{item.HZ}}</span>
+								<span>{{item.UNAME}}</span>
 							</div>
 
 						</div>
 
 					</el-col>
 				</div>
-				<p class="margin-top-m  text-center" v-if="HouseholdData.length==0">暂无数据</p>
+				<p class="margin-top-m  text-center" v-if="parcelData.length==0">暂无数据</p>
 
 			</div>
 
 
 		</div>
 		<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
-		 class="newStyleDialog " custom-class="hxx_add_dialog">
-			<!-- <hxxAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag"></hxxAdd> -->
+		 class="newStyleDialog " custom-class="td_add_dialog">
+			<tdAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag"></tdAdd>
 		</el-dialog>
 	</div>
 </template>
@@ -54,18 +48,20 @@
 	import {
 		mapGetters
 	} from 'vuex';
-	// import hxxAdd from '@/components/hxx/hxx_fly_add' //城市集镇基本情况调查表
+	import tdAdd from '@/components/td/td_fly_add' //城市集镇基本情况调查表
 	import {
 		GetLocations,
 		GetHouseholds,
 		GetParcels,
-		DelHousehold
+		DelHousehold,
+		GetEntitiesTree,
+		DelParcel
 	} from '@/api';
 	export default {
 		name: 'Hxx',
 		props: {},
 		components: {
-			// hxxAdd
+			tdAdd
 		},
 		computed: {
 			...mapGetters(['projectNo', 'parcelId', 'Locationno'])
@@ -85,60 +81,26 @@
 				dialogType: '', //弹出框操作类型
 				Locationno_parent: 0,
 				prop: {
-					lazy: true,
+					lazy: false,
 					checkStrictly: true,
-
-					lazyLoad: this.lazyLoad
+					label: 'desc',
+					value: 'no',
 				},
 			}
 		},
 		created() {},
 		mounted() {
-			// this.GetLocationInit(); //初始化地区
-            //select手动点击lable 获取值
-            setInterval(function() {
-            	document.querySelectorAll(".el-cascader-node__label").forEach(el => {
-            		el.onclick = function() {
-            			if (this.previousElementSibling) this.previousElementSibling.click();
-            		};
-            	});
-            }, 1000);
+			this.GetLocationInit(); //初始化地区
+			//select手动点击lable 获取值
+			setInterval(function() {
+				document.querySelectorAll(".el-cascader-node__label").forEach(el => {
+					el.onclick = function() {
+						if (this.previousElementSibling) this.previousElementSibling.click();
+					};
+				});
+			}, 1000);
 		},
 		methods: {
-			lazyLoad(node, resolve) {
-				var self = this;
-				// console.log(node, resolve)
-				// setTimeout(() => {
-				if (node.level < 4) {
-					var data = {
-						ProjectNo: self.projectNo,
-						Locationno: node.value ? node.value : 0
-					};
-					GetLocations(data).then(res => {
-							// console.log(res,'看这里');
-							var newLosation = [];
-							for (var i in res) {
-								newLosation.push({
-									value: res[i].o_locationno,
-									label: res[i].o_locationdesc,
-									leaf: node.level >= 3
-								})
-							}
-							// console.log(newLosation)
-							// 通过调用resolve将子节点数据返回，通知组件数据加载完成
-							resolve(newLosation);
-						})
-						.catch(err => {
-							console.log(err);
-						});
-				} else {
-					resolve([]);
-					console.log('zou2131')
-					return;
-				}
-				// }, 1000);
-
-			},
 			rowClick(index, item) {
 				console.log(this.buttonIndex)
 				this.buttonIndex = index;
@@ -162,13 +124,10 @@
 				let pathvalue = this.$refs.sysCascader.getCheckedNodes()[0];
 				this.Locationno_parent = event[event.length - 1];
 				this.$store.commit("hxx/SET_LOCATIONNO", event[event.length - 1]);
-				this.GetHouseholdsInit(); //户信息初始化
-				this.GetParcelsInit();
-				console.log(event, pathvalue, this.Locationno)
-
-
+				this.tableListInit();
 			},
-			GetParcelsInit() {
+			tableListInit() {
+				// alert (1);
 				var data = {
 					Locationno: this.Locationno_parent,
 					CurrentPage: 1,
@@ -184,34 +143,18 @@
 						console.log(error)
 					})
 			},
-			GetHouseholdsInit() {
-				var data = {
-					Locationno: this.Locationno_parent,
-					CurrentPage: 1,
-					PageSize: 10,
-					Name:this.Name,
-				};
-				GetHouseholds(data).then((res) => {
-						this.HouseholdData = res.list;
-						// console.log(res,'huxinxi')
-					})
-					.catch((error) => {
-						this.HouseholdData = [];
-						this.tableLoad = false;
-						console.log(error)
-					})
-			},
-			lookSearch(){//搜索
-				this.GetHouseholdsInit();
+			
+			lookSearch() { //搜索
+				this.tableListInit();
 			},
 			GetLocationInit() {
 				var data = {
 					ProjectNo: this.projectNo,
-					Locationno: this.Locationno_parent
+					// Locationno: this.Locationno_parent
 				};
-				GetLocations(data).then((res) => {
+				GetEntitiesTree(data).then((res) => {
 						this.locationData = res;
-						console.log(res)
+						console.log(res, '看这里')
 
 					})
 					.catch((error) => {
@@ -224,7 +167,7 @@
 			editClick(item) {
 				var self = this;
 				if (this.dialogForm) {
-					this.dialogTitle = '修改户信息';
+					this.dialogTitle = '修改土地信息';
 					this.dialogType = 'edit';
 					this.showFlag = true;
 				} else {
@@ -245,8 +188,7 @@
 						center: true,
 						type: 'warning'
 					}).then(() => {
-
-						DelHousehold({
+						DelParcel({
 							id: self.dialogForm.KeyNo
 						}).then((res) => {
 							console.log(res)
@@ -255,7 +197,7 @@
 								type: 'success',
 								center: true
 							});
-							self.GetHouseholdsInit();
+							self.tableListInit();
 
 						}).catch((res) => {
 							console.log(res);
@@ -277,10 +219,10 @@
 			addClick() { //添加户信息
 				if (this.newparcelId) {
 					this.dialogForm = '';
-					this.dialogTitle = '添加户信息';
+					this.dialogTitle = '添加土地信息';
 					this.dialogType = 'add';
 					this.showFlag = true;
-					this.$store.commit('hxx/SET_HOUSEHOLDID','');
+					this.$store.commit('hxx/SET_HOUSEHOLDID', '');
 				} else {
 					this.$message({
 						message: '请选择地块',
@@ -307,7 +249,7 @@
 		}
 	}
 
-	
+
 	.cardMain {
 		border: 1px solid $white;
 		min-height: 200px;

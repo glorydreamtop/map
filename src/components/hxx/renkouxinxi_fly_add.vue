@@ -10,7 +10,7 @@
 							</el-form-item>
 							<el-form-item label="性别:" prop="XB">
 								<el-select v-model="ruleForm.XB" filterable placeholder="请选择性别" :disabled="dialogType=='look'?true:false" clearable>
-									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.xingbie"></el-option>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.ucode" v-for="item in optionData.xingbie"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="出生年月:" prop="CSNY">
@@ -19,30 +19,33 @@
 							</el-form-item>
 							<el-form-item label="文化程度:" prop="WHCD">
 								<el-select v-model="ruleForm.WHCD" filterable placeholder="请选择文化程度" :disabled="dialogType=='look'?true:false" clearable>
-									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.wenhuachengdu"></el-option>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.ucode" v-for="item in optionData.wenhuachengdu"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="户籍性质:" prop="HKXZ">
 								<el-select v-model="ruleForm.HKXZ" filterable placeholder="请选择户籍性质" :disabled="dialogType=='look'?true:false" clearable>
-									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.hujixingzhi"></el-option>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.ucode" v-for="item in optionData.hujixingzhi"></el-option>
 								</el-select>
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
 							<el-form-item label="与户主关系:" prop="YHZGX">
 								<el-select v-model="ruleForm.YHZGX" filterable placeholder="请选择与户主关系" :disabled="dialogType=='look'?true:false" clearable>
-									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.huzhuguanxi"></el-option>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.ucode" v-for="item in optionData.huzhuguanxi"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="民族:" prop="MZ">
-								<el-input v-model="ruleForm.MZ" :disabled="dialogType=='look'?true:false"></el-input>
+								<!-- <el-input v-model="ruleForm.MZ" :disabled="dialogType=='look'?true:false"></el-input> -->
+								<el-select v-model="ruleForm.MZ" filterable placeholder="请选择民族" :disabled="dialogType=='look'?true:false" clearable>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.ucode" v-for="item in optionData.minzu"></el-option>
+								</el-select>
 							</el-form-item>
 							<el-form-item label="身份证号码:" prop="SFZH">
 								<el-input v-model="ruleForm.SFZH" :disabled="dialogType=='look'?true:false"></el-input>
 							</el-form-item>
 							<el-form-item label="从事职业:" prop="CSZY">
 								<el-select v-model="ruleForm.CSZY" filterable placeholder="请选择从事职业" :disabled="dialogType=='look'?true:false" clearable>
-									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.congshizhiye"></el-option>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.ucode" v-for="item in optionData.congshizhiye"></el-option>
 								</el-select>
 								
 							</el-form-item>
