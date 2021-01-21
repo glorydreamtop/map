@@ -86,7 +86,7 @@ export default {
         };
         // 创建promise
         const createP = async element => {
-          await GetDocumentByDocNo({ docid: element.no });
+          const res = await GetDocumentByDocNo({ docid: element.no });
           return { url: res[0].url, no: element.no };
         };
         // 创建并发数组

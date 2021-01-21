@@ -31,6 +31,9 @@ import selector from '@/components/rewrite-eleUI/selector'
 export default {
   name: "formTitle",
   inject: ["KEYNO", "ADD", "TOPINDEX"],
+  props:{
+    currentType:String
+  },
   data() {
     return {
       comName:"elInput",
@@ -75,7 +78,7 @@ export default {
         this.formProps.forEach(item => {
           item.task && item.task()
           item.type = item.type || 'elInput'
-          this.rules[item.value] = { required: item.required };
+          this.rules[item.value] = { required: item.required,message: `请填写${item.title}` };
         });
       },
       immediate: true
@@ -86,13 +89,6 @@ export default {
     if (!this.add) {
       this.$nextTick(() => {
         const e = this.form;
-        // this.area = e.VillageGroupDESC
-        // this.area = [
-        //   { name: e.CountyDESC, id: e.County },
-        //   { name: e.TownDESC, id: e.Town },
-        //   { name: e.VillageDESC, id: e.Village },
-        //   { name: e.VillageGroupDESC, id: e.VillageGroup }
-        // ];
         const cascader = this.$refs.cascader;
         cascader.presentText = e.VillageGroupDESC;
       });
@@ -135,7 +131,7 @@ export default {
             if (this.add) {
               let res = await AddNCZXSS_BASE({
                 ProjectNo: this.projectNo,
-                TypeName: "农专项设施基础信息",
+                TypeName: this.currentType,
                 JsonStr: JSON.stringify(form)
               });
               let keyNo = res[0].Keyno;

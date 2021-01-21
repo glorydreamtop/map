@@ -1,4 +1,6 @@
 import Dialog from "element-ui/packages/dialog/src/component.vue";
+Dialog.props.closeOnClickModal.default = false;
+
 export default {
   extends: Dialog,
   name: "ElDialog",

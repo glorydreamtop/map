@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button icon="al-icon-tianjia" @click="postItem(true)"></el-button>
-    <zx ref="zx" @update="getList" />
+    <zx ref="zx" :currentType="currentType" @update="getList" />
     <el-table class="margin-top-l" :data="tableData" v-loading="loading">
       <el-table-column
         v-for="item in tableProps"
