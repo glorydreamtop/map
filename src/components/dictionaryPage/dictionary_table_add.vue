@@ -33,7 +33,7 @@
 	import {
 		mapGetters
 	} from 'vuex'
-	import { GetDict,AddDictItem,EditDictItem} from '@/api'
+	import { GetDict,AddDictItem,EditDictItem,GetDictItemsByUcode} from '@/api'
 	
 	export default {
 		name: 'jbqk_table1_add_two',
@@ -106,10 +106,11 @@
 			},
 			GetDictInit(){//项目级层初始化
 				var data = {
-					BaseType: this.BaseType,
+					ucode: this.dialogForm.ucode,
+					level:0
 				};
-				GetDict(data).then((res) => {	
-					console.log(res);
+				GetDictItemsByUcode(data).then((res) => {	
+					console.log(res,'qingqiu');
 					var newData=res;
 					// var newData=this.setList(res,this.dialogTable);
 					this.postionArry=newData;
