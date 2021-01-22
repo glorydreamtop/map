@@ -81,14 +81,14 @@
 		components: {},
 		props: ['dialogType', 'dialogForm','dialogTable','dialogFormTree'],
 		mounted: function() {
-            console.log(this.dialogForm,this.dialogType,'kan');
+            console.log(this.dialogForm,this.dialogType,this.dialogFormTree,'kan');
 			if (this.dialogType == 'tableedit' || this.dialogType == 'tablelook') {	
 				this.ruleForm=this.dialogForm;		
 				if(this.dialogType == 'tablelook'){
 					this.disabled = true;
 				}	
 			}else{
-				 console.log(this.dialogFormTree,'add');
+				 // console.log(this.dialogFormTree,'add');
 				this.project1=this.dialogFormTree.id;
 				this.ruleForm.id=this.dialogFormTree.id;
 			}
@@ -105,8 +105,9 @@
 				console.log(itemData)//获得当前节点，
 			},
 			GetDictInit(){//项目级层初始化
+			// console.log(this.dialogForm.ucode)
 				var data = {
-					ucode: this.dialogForm.ucode,
+					ucode: this.dialogFormTree.ucode,
 					level:0
 				};
 				GetDictItemsByUcode(data).then((res) => {	
