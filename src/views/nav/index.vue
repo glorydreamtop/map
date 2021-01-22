@@ -142,7 +142,7 @@ export default {
     }
   },
   mounted() {
-    this.$evnetBus.$on("selectStage", () => {
+    this.$eventBus.$on("selectStage", () => {
       this.currentCompoent = 'stageSelector'
       this.showDialog = true;
     });

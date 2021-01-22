@@ -2,9 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import './plugins/element.js'
-import { evnetBus, sendMessage } from '@/utils/eventBus'
+import { eventBus, sendMessage } from '@/utils/eventBus'
 
-Vue.prototype.$eventBus = evnetBus;
+Vue.prototype.$eventBus = eventBus;
 Vue.prototype.$sendMessage = sendMessage;
 
 Vue.config.productionTip = false

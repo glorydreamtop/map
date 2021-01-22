@@ -20,6 +20,11 @@
         <gyqy />
       </el-collapse-item>
     </el-collapse>
+    <div class="testBox">
+      <el-input v-model="test.eventName" placeholder="事件名" />
+      <el-input type="textarea" v-model="test.params" placeholder="参数内容" />
+      <el-button @click="submit">测试通信</el-button>
+    </div>
     <!-- <div v-if="dialogType == 'open_jbqkTbale1'||dialogType == 'open_jbqkTbale2'||dialogType == 'open_jbqkTbale3'||dialogType == 'open_jbqkTbale4'"> -->
   </div>
 </template>
@@ -45,14 +50,28 @@ export default {
   },
   data() {
     return {
-      activeName:""
+      activeName:"",
+      test:{
+        eventName:'',
+        params:""
+      }
     };
   },
 
   created() {},
   mounted() {},
   methods: {
-    check() {}
+    submit() {
+      console.log(this.test.params);
+      console.log((typeof this.test.params));
+      
+      const test = {
+         params: JSON.parse(this.test.params),
+         eventName:this.test.eventName
+      }
+     
+      this.$sendMessage(this.test)
+    }
   }
 };
 </script>
@@ -66,15 +85,13 @@ export default {
   width: 20vw;
 }
 
-// ::v-deep .el-tabs__item {
-//   width: 50%;
-// }
-
-// ::v-deep .el-tabs__nav {
-//   width: 100%;
-//   display: flex;
-//   justify-content: space-between;
-// }
+.testBox{
+  position: absolute;
+  bottom: 120px;
+  [class*="el-"]{
+    margin-top: 20px;
+  }
+}
 
 .el-collapse {
   border-top: none;
