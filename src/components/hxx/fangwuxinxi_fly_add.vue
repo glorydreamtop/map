@@ -16,7 +16,7 @@
 							</el-form-item>
 							<el-form-item label="屋面材料:" prop="WMCL">
 								<el-select v-model="ruleForm.WMCL" filterable placeholder="请选择屋面材料" :disabled="dialogType=='look'?true:false" clearable>
-									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.wumiancailiao"></el-option>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.ucode" v-for="item in optionData.wumiancailiao"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="层高(m):" prop="CGM">
@@ -44,7 +44,7 @@
 							</el-form-item>
 							<el-form-item label="层数:" prop="CS">
 								<el-select v-model="ruleForm.CS" filterable placeholder="请选择层数" :disabled="dialogType=='look'?true:false" clearable>
-									<el-option :key="item.ucode" :label="item.uname" :value="item.uname" v-for="item in optionData.cengshu"></el-option>
+									<el-option :key="item.ucode" :label="item.uname" :value="item.ucode" v-for="item in optionData.cengshu"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="丈量尺寸(m):" prop="ZLCCMM">
