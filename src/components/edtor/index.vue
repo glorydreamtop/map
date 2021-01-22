@@ -19,7 +19,6 @@ export default {
   },
   mounted() {
     const editor = new wangEditor(`#richText`);
-    // 配置 onchange 回调函数，将数据同步到 vue 中
     editor.config.onchange = newHtml => {
       this.$emit("input", newHtml);
     };
@@ -39,6 +38,7 @@ export default {
     editor.config.showFullScreen = false
     // 创建编辑器
     editor.create();
+    editor.txt.html(this.value);
     this.editor = editor;
   },
   beforeDestroy() {

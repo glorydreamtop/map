@@ -151,7 +151,7 @@ export default {
         "宗教设施",
         "其他项目"
       ],
-      subList: [[], [], [], [], [], []], // 二级分类列表
+      subList: Array(8).fill([]), // 二级分类列表
       currentType: 0, // 当前选中二级分类id
       currentTotal: 0,
       loading1: false,
@@ -200,6 +200,9 @@ export default {
     // 获取二级分类列表
     async getTypeList(ClassifyName, force) {
       // force强制刷新
+      console.log(ClassifyName);
+      
+      if(this.classify === "")return
       const index = this.classifyNames.indexOf(ClassifyName);
       if ((this.subList[index].length > 0 && !force) || ClassifyName === "")
         return;
@@ -209,12 +212,10 @@ export default {
         CurrentPage: 1,
         PageSize: 200
       });
-      console.log(list);
       this.$set(this.subList, index, list);
     },
     // 选择地区
     selectArea(node) {
-      console.log(node);
       this.locationNo = node[node.length - 1];
     },
     // 新增或修改二级分类,add为true添加false修改

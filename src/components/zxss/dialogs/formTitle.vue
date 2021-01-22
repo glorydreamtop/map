@@ -86,6 +86,8 @@ export default {
   },
   components:{selector},
   mounted() {
+    console.log(this.$data);
+    
     if (!this.add) {
       this.$nextTick(() => {
         const e = this.form;

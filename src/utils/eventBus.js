@@ -1,5 +1,9 @@
 import Vue from 'vue'
 
-const eventBus = new Vue()
+export const eventBus = new Vue()
 
-export default eventBus
+export function sendMessage (
+    message = { eventName: "test", params: { name: "Alice", age: 21 } }
+){
+    document.getElementById("map").contentWindow.postMessage(message, appConfig.mapIp);
+}

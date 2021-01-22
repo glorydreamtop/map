@@ -2,7 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { deepClone } from '.'
-import evnetBus from './eventBus'
+import {evnetBus} from './eventBus'
 // appConfig是全局变量
 const baseIp = appConfig.baseIp
 // create an axios instance

@@ -1,11 +1,10 @@
-import { GetDictItemsByUcode } from '@/api'
+import { GetDictItemsByUcode,GetQuotaClassifyList } from '@/api'
 export const all = [
     [
         {
             title: "设施设备编号",
             value: "KeyNo",
-            props: {disabled: true},
-            required:true
+            props: {disabled: true}
         },
         {
             title: "设施设备名称",
@@ -15,6 +14,19 @@ export const all = [
         {
             title: "结构类型",
             value: "JGLX",
+            required:true,
+            type: "selector",
+            props: {
+                options: []
+            },
+            async task({Town}) {
+                const {list} = await GetQuotaClassifyList({ LocationId:Town,ClassifyName:'农村小型专项及农副业设施',CurrentPage:1,PageSize:200 })
+                this.props.options = list.map(item => ({ value: item.o_virtualitemdesc }))
+            }
+        },
+        {
+            title: "定额名称",
+            value: "DEMC",
             required:true
         },
         {

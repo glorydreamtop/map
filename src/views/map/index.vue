@@ -32,13 +32,6 @@ export default {
         this.$eventBus.$emit(params.eventName,params.params);
       };
       window.addEventListener("message", receive, false);
-    },
-    sendMessage(
-      message = { eventName: "test", params: { name: "Alice", age: 21 } }
-    ) {
-      document
-        .getElementById("map")
-        .contentWindow.postMessage(message, appConfig.mapIp);
     }
   }
 };

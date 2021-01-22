@@ -115,7 +115,6 @@ import dictionary from "@/components/dictionaryPage/dictionary_table";
 import zlgl from "@/components/zlgl";
 import bggl from "@/components/bggl";
 import desz from "@/components/desz";
-import evnetBus from "@/utils/eventBus";
 
 export default {
   name: "Nav",
@@ -143,7 +142,7 @@ export default {
     }
   },
   mounted() {
-    evnetBus.$on("selectStage", () => {
+    this.$evnetBus.$on("selectStage", () => {
       this.currentCompoent = 'stageSelector'
       this.showDialog = true;
     });

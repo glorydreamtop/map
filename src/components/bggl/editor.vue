@@ -2,7 +2,6 @@
   <div>
     <el-dialog
       :visible.sync="visible"
-      v-if="visible"
       :close-on-press-escape="false"
       width="70vw"
       :before-close="close"
@@ -26,27 +25,31 @@
         <el-button class="save" @click="submit">保存</el-button>
         <el-button class="save" @click="submit">导出</el-button>
       </div>
-      <editor id="zceditor" v-model="form.ReportContent"/>
+      <editor id="zceditor" v-model="form.ReportContent" />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { GetDict,AddReportManagement } from "@/api";
+import {
+  GetDictItemsByUcode,
+  AddReportManagement,
+  EditReportManagement
+} from "@/api";
 import { mapGetters } from "vuex";
-import editor from "@/components/edtor"
-import { deepClone } from '../../utils';
+import editor from "@/components/edtor";
+import { deepClone } from "../../utils";
 export default {
   name: "Bggl",
   data() {
     return {
       visible: false,
-      add:false,
-      form:{
-        TitleName:'',
-        Importance:'',
-        ReportContent:'',
-        Customdate:''
+      add: false,
+      form: {
+        TitleName: "",
+        Importance: "",
+        ReportContent: "",
+        Customdate: ""
       },
       loading1: false,
       loading2: false,
@@ -57,37 +60,43 @@ export default {
   computed: {
     ...mapGetters(["projectNo"])
   },
-  components:{editor},
+  components: { editor },
   created() {
-    this.GetDict();
+    this.getDict();
   },
   methods: {
-    async GetDict() {
-      const list = await GetDict();
-      this.options = list[0].children[7].children.map(item => {
-        return {
-          label: item.uname,
-          value: item.ucode
-        };
-      });
+    async getDict() {
+      const list = await GetDictItemsByUcode({ ucode: 10110001 });
+      this.options = list.map(item => ({ value: item.uname }));
     },
     async submit() {
-      const form = deepClone(this.form)      
-      if(Object.values(form).includes("")){
-        this.$message.error('请检查必填项')
-        return
+      const form = deepClone(this.form);
+      if (Object.values(form).includes("")) {
+        this.$message.error("请检查必填项");
+        return;
       }
-      await AddReportManagement({ProjectNo:this.projectNo,JsonStr:JSON.stringify(form)})
-      this.close()
+      const id = form.id;
+      delete form.id;
+      if (this.add) {
+        await AddReportManagement({
+          ProjectNo: this.projectNo,
+          JsonStr: JSON.stringify(form)
+        });
+      } else {
+        await EditReportManagement({ id, JsonStr: JSON.stringify(form) });
+      }
+      this.clear();
+      this.visible = false;
     },
-    close(done){
-      Object.keys(this.form).forEach(key=>this.form[key]="")
-      this.$emit('update')
-      if(done)done()
+    clear(){
+      Object.keys(this.form).forEach(key => (this.form[key] = ""));      
+      this.$emit("update");
     },
-    downLoad() {
-
-    }
+    close(done) {
+      this.clear();
+      done();
+    },
+    downLoad() {}
   }
 };
 </script>
@@ -98,10 +107,10 @@ export default {
   width: 300px;
   margin-right: 20px;
 }
-.save{
+.save {
   margin-left: auto;
 }
-#zceditor{
+#zceditor {
   margin-top: 20px;
 }
 </style>

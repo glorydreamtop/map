@@ -39,7 +39,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import evnetBus from '@/utils/eventBus'
 export default {
   name: "Login",
   props: {},
@@ -78,7 +77,7 @@ export default {
         await this.$store.dispatch("user/login", this.loginForm);
         this.loading = false;
         let timer = setTimeout(()=>{
-          evnetBus.$emit("selectStage");
+          this.$evnetBus.$emit("selectStage");
           timer = null;
         },1000)
       } catch (error) {

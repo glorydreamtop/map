@@ -48,13 +48,13 @@
           :label="item.name"
         ></el-table-column>
       </el-table>
-      <editor ref="editor" />
+      <editor ref="editor" @update="getList" />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { AllUsers, GetDict, GetReportManagements } from "@/api";
+import { AllUsers, GetDictItemsByUcode, GetReportManagements } from "@/api";
 import { mapGetters } from "vuex";
 import editor from "./editor";
 export default {
@@ -69,13 +69,13 @@ export default {
     return {
       visible: false,
       pTitleName: "",
-      pUserId: 0,
+      pUserId: "",
       pImportance: "",
-      currentId: "",
+      currentFile: {},
       currentTotal: 5,
       currentPage: 1,
       dataList: [],
-      loading:false,
+      loading: false,
       members: [],
       options: [],
       tableProps: [
@@ -97,13 +97,11 @@ export default {
     showDialog: {
       handler(newVal) {
         this.visible = newVal;
-        newVal && this.getAllUsers() && this.GetDict() && this.getList();
+        newVal && this.getAllUsers() && this.getDict() && this.getList();
       },
       immediate: true
     }
   },
-  created() {},
-  mounted() {},
   methods: {
     async getAllUsers() {
       const list = await AllUsers();
@@ -114,16 +112,12 @@ export default {
         };
       });
     },
-    async GetDict() {
-      const list = await GetDict();
-      this.options = list[0].children[7].children.map(item => {
-        return {
-          label: item.uname,
-          value: item.ucode
-        };
-      });
+    async getDict() {
+      const list = await GetDictItemsByUcode({ ucode: 10110001 });
+      this.options = list.map(item => ({ value: item.uname }));
     },
     async getList() {
+      console.log('getData');
       const params = {
         ProjectNo: this.projectNo,
         pTitleName: this.pTitleName,
@@ -137,16 +131,28 @@ export default {
       this.currentTotal = total;
     },
     currentChange(e) {
-      console.log(e);
+      this.currentFile = e;
     },
     postItem(add) {
       this.$refs.editor.visible = true;
       this.$refs.editor.add = add;
+      if (!add) {
+        const currentFile = this.currentFile;
+        this.$refs.editor.form = {
+          id:currentFile.KeyNo,
+          TitleName: currentFile.TitleName,
+          Importance: currentFile.Importance,
+          ReportContent: currentFile.ReportContent,
+          Customdate: currentFile.Customdate
+        };
+      }
     },
     async downLoad() {
       this.loading = true;
       try {
-        const res = await ReportManagementExport({ id: this.currentId });
+        const res = await ReportManagementExport({
+          id: this.currentFile.KeyNo
+        });
         window.open(`${appConfig.baseIp}/${res[0].url}`);
       } catch (error) {
         console.log(error);
