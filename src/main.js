@@ -13,6 +13,3 @@ new Vue({
     store,
     render: h => h(App)
 }).$mount('#app')
-
-
-this.$sendMessage({ eventName: "test", params: { name: "Alice", age: 21 }})
