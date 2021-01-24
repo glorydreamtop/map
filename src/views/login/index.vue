@@ -77,7 +77,7 @@ export default {
         await this.$store.dispatch("user/login", this.loginForm);
         this.loading = false;
         let timer = setTimeout(()=>{
-          this.$evnetBus.$emit("selectStage");
+          this.$eventBus.$emit("selectStage");
           timer = null;
         },1000)
       } catch (error) {

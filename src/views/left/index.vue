@@ -20,11 +20,7 @@
         <gyqy />
       </el-collapse-item>
     </el-collapse>
-    <div class="testBox">
-      <el-input v-model="test.eventName" placeholder="事件名" />
-      <el-input type="textarea" v-model="test.params" placeholder="参数内容" />
-      <el-button @click="submit">测试通信</el-button>
-    </div>
+    <messager v-show="showDev" />
     <!-- <div v-if="dialogType == 'open_jbqkTbale1'||dialogType == 'open_jbqkTbale2'||dialogType == 'open_jbqkTbale3'||dialogType == 'open_jbqkTbale4'"> -->
   </div>
 </template>
@@ -36,6 +32,7 @@ import hxx from "@/components/hxx";
 import zxss from "@/components/zxss";
 import zxxm from "@/components/zxxm";
 import gyqy from "@/components/gyqy";
+import messager from "@/components/messager";
 
 export default {
   name: "Left",
@@ -46,32 +43,26 @@ export default {
     hxx,
     zxss,
     zxxm,
-    gyqy
+    gyqy,
+    messager
   },
   data() {
     return {
-      activeName:"",
-      test:{
-        eventName:'',
-        params:""
-      }
+      activeName: "",
+      showDev: false
     };
   },
-
-  created() {},
-  mounted() {},
-  methods: {
-    submit() {
-      console.log(this.test.params);
-      console.log((typeof this.test.params));
-      
-      const test = {
-         params: JSON.parse(this.test.params),
-         eventName:this.test.eventName
+  mounted() {
+    const _this = this;
+    const handler = function(e) { 
+      if (e.key === "1" && e.altKey) {
+        _this.showDev = !_this.showDev;
       }
-     
-      this.$sendMessage(this.test)
-    }
+    };
+    document.addEventListener("keyup",handler);
+    this.$on('hook:destroyed',()=>{
+      document.removeEventListener(handler)
+    })
   }
 };
 </script>
@@ -83,14 +74,6 @@ export default {
   top: 70px;
   bottom: 0;
   width: 20vw;
-}
-
-.testBox{
-  position: absolute;
-  bottom: 120px;
-  [class*="el-"]{
-    margin-top: 20px;
-  }
 }
 
 .el-collapse {

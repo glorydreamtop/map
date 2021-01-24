@@ -115,6 +115,7 @@ import dictionary from "@/components/dictionaryPage/dictionary_table";
 import zlgl from "@/components/zlgl";
 import bggl from "@/components/bggl";
 import desz from "@/components/desz";
+import tjxx from "@/components/tjxx";
 
 export default {
   name: "Nav",
@@ -131,6 +132,7 @@ export default {
     zlgl,
     desz,
     bggl,
+    tjxx,
 	  dictionary
   },
   watch:{

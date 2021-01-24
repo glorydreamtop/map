@@ -18,6 +18,7 @@
           v-model="form[item.value]"
           :placeholder="item.hide?'自动生成':'必填'"
           v-bind="item.props"
+          @change="item.callback"
         >
           <template v-if="item.unit" slot="append">{{item.unit}}</template>
         </component>
@@ -71,6 +72,7 @@ export default {
         this.formProps.forEach(item => {
           item.task && item.task();
           item.type = item.type || "elInput";
+          item.callback = item.callback || function callback(params) {}
           this.rules[item.value] = { required: item.required };
         });
       }
