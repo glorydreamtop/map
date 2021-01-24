@@ -20,7 +20,7 @@
         <template v-if="item.unit" slot="append">{{item.unit}}</template>
       </component>
     </el-form-item>
-    <el-button class="btn1" size="mini" type="primary" plain @click="create">{{`立即${add?"创建":"更新"}`}}</el-button>
+    <el-button class="btn1" size="mini" type="primary" @click="create">{{`立即${add?"创建":"更新"}`}}</el-button>
   </el-form>
 </template>
 <script>

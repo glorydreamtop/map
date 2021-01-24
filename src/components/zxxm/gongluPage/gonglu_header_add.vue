@@ -48,7 +48,7 @@
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
 								<span class="btn_foot">
-									<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
+									<el-button class="button-l" type="primary" @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
 								</span>
 							</div>
 						</div>
@@ -56,8 +56,8 @@
 					<el-collapse-item title="线路路段" name="2">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(0)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem(0)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem(0)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem(0)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem(0)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
@@ -77,8 +77,8 @@
 					<el-collapse-item title="桥涵" name="3">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(1)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem(1)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem(1)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem(1)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem(1)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="bianDian_tableData" highlight-current-row border style="width: 100%" class="margin-top-m"
 							 height="25vh" :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
 							 row-key="value" default-expand-all @row-click="rowClick">
@@ -96,8 +96,8 @@
 					<el-collapse-item title="房屋" name="4">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(2)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem(2)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem(2)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem(2)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem(2)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="jianZhu_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
@@ -113,8 +113,8 @@
 					<el-collapse-item title="附属物" name="5">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(3)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem(3)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem(3)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem(3)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem(3)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="jianZhu_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
@@ -129,8 +129,8 @@
 					<el-collapse-item title="其他建筑物" name="6">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(4)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem(4)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem(4)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem(4)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem(4)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="jianZhu_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
@@ -146,8 +146,8 @@
 					<el-collapse-item title="零星果木" name="7">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(5)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem(5)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem(5)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem(5)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem(5)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="jianZhu_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">

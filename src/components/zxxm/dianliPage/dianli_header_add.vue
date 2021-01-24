@@ -69,7 +69,7 @@
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
 								<span class="btn_foot">
-									<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
+									<el-button class="button-l" type="primary" @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
 								</span>
 							</div>
 						</div>
@@ -77,8 +77,8 @@
 					<el-collapse-item title="输电线路" :name="2" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('sdxl',0)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('sdxl',0)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('sdxl',0)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('sdxl',0)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('sdxl',0)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData0" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							:tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
@@ -97,8 +97,8 @@
 					<el-collapse-item title="变电设施" :name="3" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('bdss',1)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('bdss',1)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('bdss',1)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('bdss',1)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('bdss',1)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData1" highlight-current-row border style="width: 100%" class="margin-top-m"
 							 height="25vh"  :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
 							 row-key="value" default-expand-all @row-click="rowClick">
@@ -115,8 +115,8 @@
 					<el-collapse-item title="主要设备" :name="4" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('zysb',2)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('zysb',2)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('zysb',2)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('zysb',2)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('zysb',2)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData2" highlight-current-row border style="width: 100%" class="margin-top-m"
 							 height="25vh"  :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
 							 row-key="value" default-expand-all @row-click="rowClick">
@@ -133,8 +133,8 @@
 					<el-collapse-item title="建筑物建构物" :name="5" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('jzw',3)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('jzw',3)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('jzw',3)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('jzw',3)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('jzw',3)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData3" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							  :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">

@@ -44,7 +44,7 @@
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
 								<span class="btn_foot">
-									<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
+									<el-button class="button-l" type="primary" @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
 								</span>
 							</div>
 						</div>
@@ -52,8 +52,8 @@
 					<el-collapse-item title="铁路路段" name="2" >
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('tlld',0)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('tlld',0)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('tlld',0)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('tlld',0)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('tlld',0)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
@@ -72,8 +72,8 @@
 					<el-collapse-item title="铁路房屋" name="3" >
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('tlfw',1)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('tlfw',1)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('tlfw',1)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('tlfw',1)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('tlfw',1)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
@@ -93,8 +93,8 @@
 			        <el-collapse-item title="铁路设施设备" name="4" >
 			        	<div class="formeBody">
 			        		<el-button size="mini" @click="addTableItem('tlsssb',2)" icon="al-icon-tianjia"></el-button>
-			        		<el-button title="修改" @click="editTableItem('tlsssb',2)" size="mini" icon="al-icon-xiugai" plain></el-button>
-			        		<el-button title="删除" @click="delTableItem('tlsssb',2)" size="mini" icon="al-icon-shanchu" plain></el-button>
+			        		<el-button title="修改" @click="editTableItem('tlsssb',2)" size="mini" icon="al-icon-xiugai" ></el-button>
+			        		<el-button title="删除" @click="delTableItem('tlsssb',2)" size="mini" icon="al-icon-shanchu" ></el-button>
 			        		<el-table :data="bianDian_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 			        		 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 			        		 default-expand-all @row-click="rowClick">
@@ -112,8 +112,8 @@
 					<el-collapse-item title="铁路其他建筑物、构筑物" name="5" >
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('jzw',3)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('jzw',3)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('jzw',3)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('jzw',3)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('jzw',3)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="bianDian_tableData" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">

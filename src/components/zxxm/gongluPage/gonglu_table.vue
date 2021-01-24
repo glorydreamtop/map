@@ -1,7 +1,7 @@
 <template>
 	<div class="tableMain">
 		<div class="header_table_title">
-			<el-button icon="al-icon-tianjia" @click="addClick()" plain> </el-button>
+			<el-button icon="al-icon-tianjia" @click="addClick()" plainl-button>
 		</div>
 		<div class="body_table_mian">
 			<el-table v-loading="tableLoad"  :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">

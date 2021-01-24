@@ -13,7 +13,7 @@
 					
 				</el-form>
                 <div class="margin-top-l text-center " v-show="dialogType!='look'">
-                		<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
+                		<el-button class="button-l" type="primary" @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
                 </div>
 			</div>
 			

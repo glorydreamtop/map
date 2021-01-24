@@ -58,7 +58,7 @@
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
 								<span class="btn_foot">
-									<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
+									<el-button class="button-l" type="primary" @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
 								</span>
 							</div>
 						</div>
@@ -66,8 +66,8 @@
 					<el-collapse-item title="电信线路" name="2" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('dxxl',0)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('dxxl',0)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('dxxl',0)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('dxxl',0)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('dxxl',0)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData0" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							 :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
@@ -86,8 +86,8 @@
 					<el-collapse-item title="电信通信站" name="3" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('txz',1)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('txz',1)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('txz',1)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('txz',1)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('txz',1)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData1" highlight-current-row border style="width: 100%" class="margin-top-m" height="25vh"
 							  :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
@@ -107,8 +107,8 @@
 					<el-collapse-item title="电信附属设备" name="4" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem('fssb',2)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem('fssb',2)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem('fssb',2)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem('fssb',2)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem('fssb',2)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData2" highlight-current-row border style="width: 100%" class="margin-top-m"
 							 height="25vh" :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
 							 row-key="value" default-expand-all @row-click="rowClick">

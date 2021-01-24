@@ -80,15 +80,15 @@
 						</el-form>
 						<div class="dialog_foot margin-top-l" v-show="dialogType!='look'&&!disabled">
 							<span class="btn_foot">
-								<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
+								<el-button class="button-l" type="primary" @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
 							</span>
 						</div>
 					</el-collapse-item>
 					<el-collapse-item title="基础设施调查表" name="2" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(1)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem(1)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem(1)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem(1)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem(1)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" @row-click="rowClick"
 							 :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value">
 								<el-table-column prop="value" label="编号" width="150" align="center"></el-table-column>
@@ -102,8 +102,8 @@
 					<el-collapse-item title="防洪(其他)设施调查表" name="3" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem(2)" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem(2)" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem(2)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem(2)" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem(2)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData_else" highlight-current-row border style="width: 100%" @row-click="rowClick"
 							 class="margin-top-m" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value">
 								<el-table-column prop="value" label="编号" width="150" align="center"></el-table-column>
