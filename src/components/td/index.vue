@@ -217,7 +217,7 @@
 
 			},
 			addClick() { //添加户信息
-				if (this.newparcelId) {
+				if (this.Locationno_parent) {
 					this.dialogForm = '';
 					this.dialogTitle = '添加土地信息';
 					this.dialogType = 'add';
@@ -225,7 +225,7 @@
 					this.$store.commit('hxx/SET_HOUSEHOLDID', '');
 				} else {
 					this.$message({
-						message: '请选择地块',
+						message: '请选择城市乡镇',
 						type: 'warning'
 					});
 				}
