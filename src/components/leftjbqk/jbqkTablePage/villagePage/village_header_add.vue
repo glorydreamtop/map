@@ -46,7 +46,7 @@
 							</el-form>
 							<div class="dialog_foot" v-show="dialogType!='look'&&!disabled">
 								<span class="btn_foot">
-									<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
+									<el-button class="button-l" type="primary"  @click="submitForm('ruleForm')" :loading="submitLoad">{{submitLoad===false?'提交':'提交中'}}</el-button>
 								</span>
 							</div>
 						</div>
@@ -54,16 +54,16 @@
 					<el-collapse-item title="表数据信息" name="2" v-if="KeyNo">
 						<div class="formeBody">
 							<el-button size="mini" @click="addTableItem" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editTableItem" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delTableItem" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editTableItem" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delTableItem" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableItemData" highlight-current-row border style="width: 100%" class="margin-top-m" height="35vh"
 							 :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value"
 							 default-expand-all @row-click="rowClick">
-								<el-table-column prop="value" label="编号" width="180" align="left"></el-table-column>
+								<el-table-column prop="value" label="编号" width="250" align="left"></el-table-column>
 								<el-table-column prop="label" label="项目" align="center"></el-table-column>
-								<el-table-column prop="Unit" label="单位" align="center"></el-table-column>
-								<el-table-column prop="AttrNum" label="数量" align="center"></el-table-column>
-								<el-table-column prop="Remarks" label="备注" align="center"></el-table-column>
+								<el-table-column prop="Unit" label="单位" align="center" width="100"></el-table-column>
+								<el-table-column prop="AttrNum" label="数量" align="center" width="100"></el-table-column>
+								<!-- <el-table-column prop="Remarks" label="备注" align="center"></el-table-column> -->
 							</el-table>
 						</div>
 					</el-collapse-item>

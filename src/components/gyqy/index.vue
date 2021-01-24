@@ -7,9 +7,9 @@
 				</el-input>
 			</div>
 			<div class="margin-top-m">
-				<el-button icon="al-icon-tianjia" @click="addClick()" size="mini" plain title="添加工业信息"> </el-button>
-				<el-button title="修改工业信息" @click="editClick()" size="mini" icon="al-icon-xiugai" plain></el-button>
-				<el-button title="删除工业信息" @click="delClick()" size="mini" icon="al-icon-shanchu" plain></el-button>
+				<el-button icon="al-icon-tianjia" @click="addClick()" size="mini" title="添加工业信息"> </el-button>
+				<el-button title="修改工业信息" @click="editClick()" size="mini" icon="al-icon-xiugai" ></el-button>
+				<el-button title="删除工业信息" @click="delClick()" size="mini" icon="al-icon-shanchu" ></el-button>
 			</div>
 			<div>
 				<div class="margin-top-m cardMain" v-if="HouseholdData.length!=0">

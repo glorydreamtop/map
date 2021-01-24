@@ -1,8 +1,8 @@
 <template>
-	<el-dialog :visible.sync="visible" :close-on-press-escape="false" width="70vw" v-loading="loadingtable" title="字典设置"
+	<el-dialog :visible.sync="visible" :close-on-press-escape="false" width="70vw" v-loading="loadingtable" title="地块设置"
 	 custom-class="dictionary_dialog" @close="$emit('update:showDialog', false)" center>
 		<el-row :gutter="20">
-			<el-col :xs="8" :sm="8" :md="7" :lg="6" :xl="5">
+			<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 				<div class="treeMain">
 					<div class="header_table_title">
 						<el-button size="mini" @click="addClick('tree')" icon="al-icon-tianjia"></el-button>
@@ -16,34 +16,16 @@
 					</div>
 					<div class="body_tree_mian">
 						<el-tree :data="treeData" node-key='id'  ref="tree" :filter-node-method="filterNode" :props="defaultProps" highlight-current	
-						 @node-click="handleNodeClick" :default-expanded-keys="treeExpandData"></el-tree>
+						 @node-click="handleNodeClick" :default-expanded-keys="treeExpandData" default-expand-all	></el-tree>
 					</div>
 				</div>
 			</el-col>
-			<el-col :xs="16" :sm="16" :md="17" :lg="18" :xl="19">
-				<div class="tableMain">
-					<div class="header_table_title">
-						<el-button size="mini" @click="addClick('table')" icon="al-icon-tianjia"></el-button>
-						<el-button title="修改" @click="editClick('table')" size="mini" icon="al-icon-xiugai" ></el-button>
-						<el-button title="删除" @click="delClick('table')" size="mini" icon="al-icon-shanchu" ></el-button>
-					</div>
-					<div class="body_table_mian">
-						<el-table v-loading="tableLoad" element-loading-text="客官请稍后" element-loading-spinner="el-icon-loading" class="fixTable49"
-						 element-loading-background="#022333" :data="tableData" row-key="id" :tree-props="{ children: 'children' }"
-						 highlight-current-row border style="width: 100%" height="55vh" @row-click="rowClick">
-							<el-table-column prop="uname" label="项目名称" align="left"></el-table-column>
-							<el-table-column prop="ucode" label="编码" align="center" width="130"></el-table-column>
-							<el-table-column prop="unit" label="单位" align="center " width="100"></el-table-column>
-							<el-table-column prop="remarks" label="描述" align="center"></el-table-column>
-						</el-table>
-					</div>
-				</div>
-			</el-col>
+			
 			<div>
 				<el-dialog :title="dialogTitle" :append-to-body="true" @close="closeDialog" :visible.sync="showFlag" v-model="showFlag"
 				 class="newStyleDialog " center :custom-class="flyType + '_add_dialog'">
 					<treeAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_tree" v-if="showFlag && flyType == 'tree'"></treeAdd>
-					<tableAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_table" :dialog-form-tree="dialogForm_tree" v-if="showFlag && flyType == 'table'"></tableAdd>
+					<!-- <tableAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_table" :dialog-form-tree="dialogForm_tree" v-if="showFlag && flyType == 'table'"></tableAdd> -->
 				</el-dialog>
 			</div>
 		</el-row>
@@ -57,16 +39,17 @@
 	import {
 		GetDict,
 		DelDict,
-		GetDictItems
+		GetDictItems,
+		GetEntitiesTree
 	} from '@/api';
-	import treeAdd from '@/components/dictionaryPage/dictionary_tree_add';
-	import tableAdd from '@/components/dictionaryPage/dictionary_table_add';
+	import treeAdd from '@/components/landSetPage/landSet_tree_add';
+	// import tableAdd from '@/components/dictionaryPage/dictionary_table_add';
 	export default {
 		name: 'jbqlTable_home',
 		props: {},
 		components: {
 			treeAdd,
-			tableAdd
+			// tableAdd
 		},
 		computed: {
 			...mapGetters(['projectNo', 'BaseType'])
@@ -93,7 +76,8 @@
 				tableLoad: false,
 				defaultProps: {
 					children: 'children',
-					label: 'uname'
+					label: 'desc',
+					value:"no"
 				},
 				treeActive:'',
 			};
@@ -134,7 +118,7 @@
 			},
 			treeInit() {
 				var self=this;
-				GetDict().then((res) => {
+				GetEntitiesTree({ProjectNo:this.projectNo}).then((res) => {
 						console.log(res)
 						// this.tableLoad=false;
 						self.treeData = res;

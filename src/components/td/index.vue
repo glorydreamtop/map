@@ -13,10 +13,10 @@
 			</div>
 
 			<div class="margin-top-m" v-if="Locationno">
-				<el-button icon="al-icon-hutianjia" @click="addClick()" size="mini" plain title="添加户信息"> </el-button>
-				<el-button title="修改户信息" @click="editClick()" size="mini" icon="al-icon-huxiugai" plain></el-button>
-				<el-button title="删除户信息" @click="delClick()" size="mini" icon="al-icon-shanchu" plain></el-button>
-				<el-button title="关联地块" size="mini" icon="el-icon-paperclip" plain></el-button>
+				<el-button icon="al-icon-hutianjia" @click="addClick()" size="mini" title="添加户信息"> </el-button>
+				<el-button title="修改户信息" @click="editClick()" size="mini" icon="al-icon-huxiugai" ></el-button>
+				<el-button title="删除户信息" @click="delClick()" size="mini" icon="al-icon-shanchu" ></el-button>
+				<el-button title="关联地块" size="mini" icon="el-icon-paperclip" ></el-button>
 			</div>
 			<div>
 				<div class="margin-top-m cardMain" v-if="parcelData.length!=0">
@@ -217,7 +217,7 @@
 
 			},
 			addClick() { //添加户信息
-				if (this.newparcelId) {
+				if (this.Locationno_parent) {
 					this.dialogForm = '';
 					this.dialogTitle = '添加土地信息';
 					this.dialogType = 'add';
@@ -225,7 +225,7 @@
 					this.$store.commit('hxx/SET_HOUSEHOLDID', '');
 				} else {
 					this.$message({
-						message: '请选择地块',
+						message: '请选择城市乡镇',
 						type: 'warning'
 					});
 				}

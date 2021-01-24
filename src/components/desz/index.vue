@@ -70,15 +70,13 @@
                   title="更新"
                   icon="al-icon-xiugai"
                   type="warning"
-                  plain
-                  @click="postItem(false, scope.row)"
+                  plain              @click="postItem(false, scope.row)"
                 ></el-button>
                 <el-button
                   title="删除"
                   icon="al-icon-shanchu"
                   type="danger"
-                  plain
-                  @click="delItem(scope.row.KeyNo)"
+                  plain              @click="delItem(scope.row.KeyNo)"
                 ></el-button>
               </template>
             </el-table-column>

@@ -5,57 +5,57 @@
 			<div class="reyuan_form">
 				<el-collapse v-model="activeFormIndex">
 					<el-collapse-item title="户信息调查" name="1">
-						
-						<el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
-							<el-col :span="8">
-								<el-form-item label="工程类型:" prop="GCLX">
-									<el-select v-model="ruleForm.GCLX" filterable placeholder="请选择调查表类型" :disabled="disabled">
-										<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
-										<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
-										<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item label="户主姓名:" prop="HZ">
-									<el-input v-model="ruleForm.HZ" :disabled="disabled"></el-input>
-								</el-form-item>
-							</el-col>
-						    <el-col :span="8">
-						    	<el-form-item label="高程范围1:">
-						    		<el-input v-model="ruleForm.GCFW1" :disabled="disabled"></el-input>
-						    	</el-form-item>
-								<el-form-item label="调查人:" v-if="dialogType=='edit'">
-									<el-input v-model="ruleForm.DCRY" :disabled="dialogType=='edit'?'disabled':''"></el-input>
-								</el-form-item>
-						    </el-col>
-							<el-col :span="8">
-								<el-form-item label="高程范围2:">
-									<el-input v-model="ruleForm.GCFW2" :disabled="disabled"></el-input>
-								</el-form-item>
-								<el-form-item label="调查时间:" v-if="dialogType=='edit'">
-									<el-input v-model="ruleForm.DCSJ" :disabled="dialogType=='edit'?'disabled':''"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="24">
-								<el-form-item label="家庭住址:" prop="XXDZ">
-									<el-input v-model="ruleForm.XXDZ" :disabled="disabled"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="24">
-								<el-form-item label="备注:">
-									<el-input v-model="ruleForm.BZ" :rows="6" type="textarea" :disabled="disabled"></el-input>
-								</el-form-item>
-							</el-col>
+
+						<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+							<el-row :gutter="20">
+								<el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
+									<el-form-item label="工程类型:" prop="GCLX">
+										<el-select v-model="ruleForm.GCLX" filterable placeholder="请选择调查表类型" :disabled="disabled">
+											<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
+											<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
+											<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
+										</el-select>
+									</el-form-item>
+									<el-form-item label="调查人:" v-if="dialogType=='edit'">
+										<el-input v-model="ruleForm.DCRY" :disabled="dialogType=='edit'?'disabled':''"></el-input>
+									</el-form-item>
+									<el-form-item label="家庭住址:" prop="XXDZ">
+										<el-input v-model="ruleForm.XXDZ" :disabled="disabled"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
+									<el-form-item label="户主姓名:" prop="HZ">
+										<el-input v-model="ruleForm.HZ" :disabled="disabled"></el-input>
+									</el-form-item>
+									<el-form-item label="高程范围2:">
+										<el-input v-model="ruleForm.GCFW2" :disabled="disabled"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
+									<el-form-item label="高程范围1:">
+										<el-input v-model="ruleForm.GCFW1" :disabled="disabled"></el-input>
+									</el-form-item>
+									<el-form-item label="调查时间:" v-if="dialogType=='edit'">
+										<el-input v-model="ruleForm.DCSJ" :disabled="dialogType=='edit'?'disabled':''"></el-input>
+									</el-form-item>
+								</el-col>	
+                                <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                                	<el-form-item label="备注:">
+                                		<el-input v-model="ruleForm.BZ" :rows="6" type="textarea" :disabled="disabled"></el-input>
+                                	</el-form-item>
+                                </el-col>
+							</el-row>
 						</el-form>
 
 						<div class="margin-top-l text-center " v-show="!disabled">
-							<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
+							<el-button class="button-l" type="primary" @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
 						</div>
 					</el-collapse-item>
 					<el-collapse-item title="人口信息" name="2" v-if="householdId">
 						<div class="formeBody">
 							<el-button size="mini" @click="addItem('renkouxinxiFlyAdd','添加人口信息调查')" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" size="mini" @click="editItem('renkouxinxiFlyAdd','修改人口信息调查')" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" size="mini" @click="delItem(2)" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" size="mini" @click="editItem('renkouxinxiFlyAdd','修改人口信息调查')" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" size="mini" @click="delItem(2)" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData0" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="RKBH" label="编号" align="center"></el-table-column>
 								<el-table-column prop="XM" label="姓名" width="180" align="center"></el-table-column>
@@ -71,8 +71,8 @@
 					<el-collapse-item title="房屋信息" name="3" v-if="householdId">
 						<div class="formeBody">
 							<el-button size="mini" @click="addItem('fangwuxinxiFlyAdd','添加房屋信息调查')" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" size="mini" @click="editItem('fangwuxinxiFlyAdd','修改房屋信息调查')" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" size="mini" @click="delItem(3)" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" size="mini" @click="editItem('fangwuxinxiFlyAdd','修改房屋信息调查')" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" size="mini" @click="delItem(3)" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData1" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="FWBH" label="编号" align="center"></el-table-column>
 								<el-table-column prop="FWMC" label="房屋名称" width="180" align="center"></el-table-column>
@@ -92,8 +92,8 @@
 					<el-collapse-item title="附属物信息" name="4" v-if="householdId">
 						<div class="formeBody">
 							<el-button size="mini" @click="addItem('fushuwuFlyAdd','添加附属物信息')" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" size="mini" @click="editItem('fushuwuFlyAdd','修改附属物信息')" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" size="mini" @click="delItem(4)" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" size="mini" @click="editItem('fushuwuFlyAdd','修改附属物信息')" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" size="mini" @click="delItem(4)" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData2" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="FSWBH" label="编号" align="center"></el-table-column>
 								<el-table-column prop="FWWMC" label="附属物名称	" width="180" align="center"></el-table-column>
@@ -113,8 +113,8 @@
 					<el-collapse-item title="零星果木" name="5" v-if="householdId">
 						<div class="formeBody">
 							<el-button size="mini" @click="addItem('lingxingguomuFlyAdd','添加零星果木')" icon="al-icon-tianjia"></el-button>
-							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd','修改零星果木')" size="mini" icon="al-icon-xiugai" plain></el-button>
-							<el-button title="删除" @click="delItem(5)" size="mini" icon="al-icon-shanchu" plain></el-button>
+							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd','修改零星果木')" size="mini" icon="al-icon-xiugai" ></el-button>
+							<el-button title="删除" @click="delItem(5)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="GMBH" label="编号" align="center"></el-table-column>
 								<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>
@@ -249,7 +249,7 @@
 							}
 						} else {
 							var url = EditHousehold;
-							var  newData=JSON.parse(JSON.stringify(self.ruleForm));
+							var newData = JSON.parse(JSON.stringify(self.ruleForm));
 							delete newData.DCSJ;
 							delete newData.DCRY;
 							var data = {

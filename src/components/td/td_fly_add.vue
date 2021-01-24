@@ -6,19 +6,16 @@
 					<el-form-item label="地块名称:">
 						<el-input v-model="ruleForm.UNAME" :disabled="dialogType=='look'?true:false" ></el-input>
 					</el-form-item>
-					<el-form-item label="土地性质:" prop="Natureofland">
-						<el-select v-model="ruleForm.Natureofland" filterable placeholder="请选择土地性质" >
-							<el-option key="1" label="水库淹没区" value="水库淹没区"></el-option>
-							<el-option key="2" label="水库影响区" value="水库影响区"></el-option>
-							<el-option key="3" label="枢纽工程建设区" value="枢纽工程建设区"></el-option>
-						</el-select>
+					<el-form-item label="土地性质:" prop="landType">
+						<el-cascader  v-model="ruleForm.landType" placeholder="开始定位" :options="landTypeData" ref="sysCascader" @change="handleChange($event)" :props="prop"
+						 filterable style="width: 100%;"></el-cascader>
 					</el-form-item>
 					<el-form-item label="绘制数据:" prop="Polygon">
 						<el-input v-model="ruleForm.Polygon" :disabled="dialogType=='look'?true:false" ></el-input>
 					</el-form-item>
 				</el-form>
 				<div class="margin-top-l text-center " v-show="dialogType!='look'">
-					<el-button class="button-l" type="primary" plain @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
+					<el-button class="button-l" type="primary" @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
 				</div>
 			</div>
 
@@ -29,7 +26,8 @@
 <script>
 	import {
 		AddHousehold,
-		EditHousehold
+		EditHousehold,
+		GetDictItemsByUcode
 	} from '@/api';
 	import {
 		mapGetters
@@ -37,22 +35,28 @@
 	export default {
 		name: 'huxinxidiaocha_fly_add',
 		computed: {
-			...mapGetters(['projectNo', 'parcelId'])
+			...mapGetters(['Locationno', 'parcelId'])
 		},
 		data: function() {
 			return {
 				ruleForm: {
 					stationName: '',
 				},
+				landTypeData:[],
 				loading: false,
 				disabled: false,
 				rules: { //约定的验证规则
-					stationName: [{
+					landType: [{
 						required: true,
-						message: '请填写名称',
-						trigger: 'blur'
+						message: '请选择土地性质',
+						trigger: 'change'
 					}, ],
 
+				},
+				prop: {
+					checkStrictly: true,
+					label: 'uname',
+					value: 'ucode',
 				},
 
 			}
@@ -72,12 +76,49 @@
 				this.disabled = true;
 				this.ruleForm = JSON.parse(JSON.stringify(this.dialogForm));
 			}
+			this.landTypeInit('1004',1);//土地地块分类
+			setInterval(function() {
+				document.querySelectorAll(".el-cascader-node__label").forEach(el => {
+					el.onclick = function() {
+						if (this.previousElementSibling) this.previousElementSibling.click();
+					};
+				});
+			}, 1000);
 
 		},
 
 		methods: {
-			change_tableType(data) { //选择表类型
-
+			handleChange(event) {
+				let pathvalue = this.$refs.sysCascader.getCheckedNodes()[0];
+				console.log(pathvalue);
+				if(pathvalue.level==1){
+					this.$set(this.ruleForm,'Natureofland',pathvalue.value);
+				}
+				if(pathvalue.level==2){
+					this.$set(this.ruleForm,'Classify1',pathvalue.value);
+				}
+				if(pathvalue.level==3){
+					this.$set(this.ruleForm,'Classify2',pathvalue.value);
+				}
+				if(pathvalue.level==4){
+					this.$set(this.ruleForm,'Classify3',pathvalue.value);
+				}
+                console.log(this.ruleForm)
+			},
+			landTypeInit(ucode){
+				
+				GetDictItemsByUcode({
+					ucode: ucode,
+					level:0
+				}).then((res) => {
+					this.landTypeData=res;
+					console.log(res)
+					
+				
+				}).catch((res) => {
+					console.log(res);
+				})
+				
 			},
 			submitForm(formName) { //表单提交按钮
 				var self = this;
@@ -96,8 +137,7 @@
 						} else {
 							var url = AddHousehold;
 							var data = {
-								ProjectNo: self.projectNo,
-								id: self.parcelId,
+								Locationno: self.Locationno,
 								JsonStr: JSON.stringify(self.ruleForm)
 							}
 						}
@@ -114,11 +154,11 @@
 						}).catch((res) => {
 							console.log(res)
 							self.loading = false;
-							this.$message({
-								message: '操作失败，请确定后提交',
-								type: 'error',
-								center: true
-							})
+							// this.$message({
+							// 	message: '操作失败，请确定后提交',
+							// 	type: 'error',
+							// 	center: true
+							// })
 						})
 					} else {
 
