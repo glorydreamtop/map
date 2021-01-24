@@ -47,7 +47,6 @@
         <div class="datalist margin-left-l">
           <el-button
             title="添加"
-            size="small"
             class="al-icon-tianjia margin-bottom-m"
             @click="postItem(true)"
           />

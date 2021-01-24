@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="value1" :placeholder="placeholder" @change="$emit('input',value1)">
+  <el-select v-model="value1" :placeholder="placeholder" @change="handleChange">
     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
   </el-select>
 </template>
@@ -36,6 +36,16 @@ export default {
         this.value1 = newVal;
       },
       immediate: true
+    }
+  },
+  methods: {
+    handleChange() {
+      const v = this.options.find(item => {
+        return item.value === this.value1;
+      });
+      const label = v.label||v.value;
+      this.$emit("input", label);
+      this.$emit("change", label);
     }
   }
 };

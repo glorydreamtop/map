@@ -25,7 +25,7 @@
         <el-button class="save" @click="submit">保存</el-button>
         <el-button class="save" @click="submit">导出</el-button>
       </div>
-      <editor id="zceditor" v-model="form.ReportContent" />
+      <editor v-if="visible" ref="zceditor" id="zceditor" v-model="form.ReportContent" />
     </el-dialog>
   </div>
 </template>
@@ -89,7 +89,7 @@ export default {
       this.visible = false;
     },
     clear(){
-      Object.keys(this.form).forEach(key => (this.form[key] = ""));      
+      Object.keys(this.form).forEach(key => (this.form[key] = ""));   
       this.$emit("update");
     },
     close(done) {

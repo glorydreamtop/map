@@ -20,23 +20,29 @@
         <template v-if="item.unit" slot="append">{{item.unit}}</template>
       </component>
     </el-form-item>
-    <el-button class="btn1" size="mini" type="primary" @click="create">{{`立即${add?"创建":"更新"}`}}</el-button>
+    <el-button
+      class="btn1"
+      size="mini"
+      type="primary"
+      plain
+      @click="create"
+    >{{`立即${add?"创建":"更新"}`}}</el-button>
   </el-form>
 </template>
 <script>
 import { AddNCZXSS_BASE, GetLocations, EditNCZXSS_BASE } from "@/api";
 import { mapGetters } from "vuex";
 import { deepClone } from "@/utils";
-import selector from '@/components/rewrite-eleUI/selector'
+import selector from "@/components/rewrite-eleUI/selector";
 export default {
   name: "formTitle",
   inject: ["KEYNO", "ADD", "TOPINDEX"],
-  props:{
-    currentType:String
+  props: {
+    currentType: String
   },
   data() {
     return {
-      comName:"elInput",
+      comName: "elInput",
       area: "",
       form: {},
       formProps: [], // 表单内容
@@ -73,26 +79,28 @@ export default {
   watch: {
     topIndex: {
       async handler(newVal) {
-        const {all} = await import("../json/formProps.js");
+        const { all } = await import("../json/formProps.js");
         this.formProps = all[newVal];
         this.formProps.forEach(item => {
-          item.task && item.task()
-          item.type = item.type || 'elInput'
-          this.rules[item.value] = { required: item.required,message: `请填写${item.title}` };
+          item.task && item.task();
+          item.type = item.type || "elInput";
+          this.rules[item.value] = {
+            required: item.required,
+            message: `请填写${item.title}`
+          };
         });
       },
       immediate: true
     }
   },
-  components:{selector},
+  components: { selector },
   mounted() {
-    console.log(this.$data);
-    
     if (!this.add) {
       this.$nextTick(() => {
         const e = this.form;
         const cascader = this.$refs.cascader;
         cascader.presentText = e.VillageGroupDESC;
+        this.$store.commit("zxss/SET_TOWN", e.Town);
       });
     }
   },
@@ -105,7 +113,6 @@ export default {
       });
     },
     selectArea(e) {
-      console.log(e);
       const locations = {
         County: e[0].id,
         CountyDESC: e[0].name,
@@ -117,14 +124,16 @@ export default {
         VillageGroupDESC: e[3].name
       };
       this.form = Object.assign(this.form, locations);
+      console.log(e[1]);
+      this.$store.commit("zxss/SET_TOWN", e[1].id);
     },
     // 创建基本信息
     create() {
       let form = deepClone(this.form);
-      for(let key in form){
+      for (let key in form) {
         // 非数字、字符串类型转换
-        if(form[key] instanceof Date){
-          form[key] = new Date(form[key]).toLocaleDateString()
+        if (form[key] instanceof Date) {
+          form[key] = new Date(form[key]).toLocaleDateString();
         }
       }
       this.$refs.form1.validate(async valid => {

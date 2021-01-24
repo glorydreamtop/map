@@ -29,7 +29,6 @@
       <el-button
         class="margin-top-l text-light"
         :loading="loading"
-        size="mini"
         @click="login"
         >登录</el-button
       >
@@ -77,7 +76,7 @@ export default {
         await this.$store.dispatch("user/login", this.loginForm);
         this.loading = false;
         let timer = setTimeout(()=>{
-          this.$evnetBus.$emit("selectStage");
+          this.$eventBus.$emit("selectStage");
           timer = null;
         },1000)
       } catch (error) {

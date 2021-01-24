@@ -1,19 +1,19 @@
 <template>
-  <div>
-    <el-dialog
-      :visible.sync="visible"
-      v-if="visible"
-      :close-on-press-escape="false"
-      width="70vw"
-      append-to-body
-      v-loading="loading"
-      element-loading-text="文件转码中..."
-      title="报告管理"
-      @close="$emit('update:showDialog', false)"
-    >
+  <el-dialog
+    :visible.sync="visible"
+    v-if="visible"
+    :close-on-press-escape="false"
+    width="70vw"
+    append-to-body
+    v-loading="loading"
+    element-loading-text="文件转码中..."
+    title="报告管理"
+    @close="$emit('update:showDialog', false)"
+  >
+    <div class="content">
       <div class="flex">
-        <el-input placeholder="标题" v-model="pTitleName"></el-input>
-        <el-select placeholder="请选择人员" v-model="pUserId">
+        <el-input placeholder="标题" clearable v-model="pTitleName"></el-input>
+        <el-select placeholder="请选择人员" v-model="pUserId" clearable>
           <el-option
             v-for="item in members"
             :key="item.value"
@@ -21,7 +21,7 @@
             :value="item.value"
           ></el-option>
         </el-select>
-        <el-select placeholder="请选择" v-model="pImportance">
+        <el-select placeholder="请选择" clearable v-model="pImportance">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -33,6 +33,7 @@
         <el-button icon="al-icon-tianjia" @click="postItem(true)"></el-button>
         <el-button icon="al-icon-xiugai" @click="postItem(false)"></el-button>
         <el-button icon="al-icon-xiazai" @click="downLoad"></el-button>
+        <el-button @click="downLoad">模板管理</el-button>
       </div>
       <el-table
         :data="dataList"
@@ -46,11 +47,23 @@
           :key="item.value"
           :prop="item.value"
           :label="item.name"
-        ></el-table-column>
+          width="180px"
+        >
+        <!-- <template slot-scope="scope">
+                <more v-if="item.name==='内容'" :info="scope.row[item.value]" :title="item.name" />
+                <span v-else>{{scope.row[item.value]}}</span>
+              </template> -->
+        </el-table-column>
       </el-table>
+      <el-pagination
+            class="margin-top-l"
+            :total="currentTotal"
+            small
+            @current-change="pageChange"
+          ></el-pagination>
       <editor ref="editor" @update="getList" />
-    </el-dialog>
-  </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
@@ -81,7 +94,7 @@ export default {
       tableProps: [
         { name: "标题", value: "TitleName" },
         { name: "重要性", value: "Importance" },
-        { name: "内容", value: "ReportContent" },
+        // { name: "内容", value: "ReportContent" },
         { name: "报告时间", value: "Customdate" },
         { name: "人员姓名", value: "UserName" },
         { name: "建立时间", value: "Createdate" },
@@ -116,15 +129,18 @@ export default {
       const list = await GetDictItemsByUcode({ ucode: 10110001 });
       this.options = list.map(item => ({ value: item.uname }));
     },
+    pageChange(e){
+      this.currentChange = e;
+      this.getList();
+    },
     async getList() {
-      console.log('getData');
       const params = {
         ProjectNo: this.projectNo,
         pTitleName: this.pTitleName,
         pImportance: this.pImportance,
         pUserId: this.pUserId,
         CurrentPage: this.currentPage,
-        PageSize: 5
+        PageSize: 8
       };
       const { total, list } = await GetReportManagements(params);
       this.dataList = list;
@@ -139,12 +155,13 @@ export default {
       if (!add) {
         const currentFile = this.currentFile;
         this.$refs.editor.form = {
-          id:currentFile.KeyNo,
+          id: currentFile.KeyNo,
           TitleName: currentFile.TitleName,
           Importance: currentFile.Importance,
           ReportContent: currentFile.ReportContent,
           Customdate: currentFile.Customdate
         };
+        
       }
     },
     async downLoad() {
@@ -164,6 +181,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.content {
+  max-height: 800px;
+  min-height: 600px;
+  overflow: auto;
+  .el-table{
+    max-height:600px;
+  }
+}
 .el-input,
 .el-select {
   width: 200px;

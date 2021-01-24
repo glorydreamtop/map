@@ -8,7 +8,6 @@ Vue.prototype.$eventBus = eventBus;
 Vue.prototype.$sendMessage = sendMessage;
 
 Vue.config.productionTip = false
-
 new Vue({
     store,
     render: h => h(App)

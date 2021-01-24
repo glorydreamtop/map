@@ -8,16 +8,16 @@ const path = require('path');
 let spinner;
 
 const zipper = () => {
-    spinner = ora(chalk.green('正在生成部署压缩包...'));
+    spinner = ora(chalk.green('正在生成部署压缩包▶▶▶▶'));
     spinner.start();
     zip.sync.zip('./pc').compress().save('./pc.zip');
     spinner.stop();
-    console.log(chalk.green('已生成部署压缩包！'));
+    console.log(chalk.green('已生成部署压缩包✅'));
     const sourceFile = path.join(__dirname, 'pc.zip');
     const destPath = path.join(__dirname, "pc", 'pc.zip');
     fs.rename(sourceFile, destPath, err => {
         if (err) throw err;
-        console.log(chalk.green('已添加到部署目录！'));
+        console.log(chalk.green(`已添加到部署目录✅,发布时间：${new Date().toLocaleString()}`));
         publish(); // 发布
     });
 

@@ -9,7 +9,7 @@
   >
     <el-collapse ref="collapse" v-model="collapse" accordion>
       <el-collapse-item :title="currentType" name="1">
-        <form-title ref="formTitle" @success="createTitle" />
+        <form-title ref="formTitle" :currentType="currentType" @success="createTitle" />
       </el-collapse-item>
       <el-collapse-item
         v-for="(item,index) in types"

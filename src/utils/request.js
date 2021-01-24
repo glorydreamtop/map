@@ -2,7 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { deepClone } from '.'
-import {evnetBus} from './eventBus'
+import {eventBus} from './eventBus'
 // appConfig是全局变量
 const baseIp = appConfig.baseIp
 // create an axios instance
@@ -17,7 +17,7 @@ service.interceptors.request.use(
     config => {
         // console.log(config);
         if (config.data && Boolean(config.data.ProjectNo) && !(config.data.ProjectNo > 0)) {
-            evnetBus.$emit('selectStage')
+            eventBus.$emit('selectStage')
             return
         }
         // do something before request is sent
