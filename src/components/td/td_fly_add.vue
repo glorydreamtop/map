@@ -6,7 +6,7 @@
 					<el-form-item label="地块名称:">
 						<el-input v-model="ruleForm.UNAME" :disabled="dialogType=='look'?true:false" ></el-input>
 					</el-form-item>
-					<el-form-item label="土地性质:" prop="landType">
+					<el-form-item label="土地性质:">
 						<el-cascader  v-model="ruleForm.landType" placeholder="开始定位" :options="landTypeData" ref="sysCascader" @change="handleChange($event)" :props="prop"
 						 filterable style="width: 100%;"></el-cascader>
 					</el-form-item>
@@ -25,9 +25,9 @@
 
 <script>
 	import {
-		AddHousehold,
-		EditHousehold,
-		GetDictItemsByUcode
+		GetDictItemsByUcode,
+		AddParcel,
+		EditParcel,
 	} from '@/api';
 	import {
 		mapGetters
@@ -42,6 +42,7 @@
 				ruleForm: {
 					stationName: '',
 				},
+				landType:'',
 				landTypeData:[],
 				loading: false,
 				disabled: false,
@@ -71,10 +72,22 @@
 		components: {},
 		props: ['dialogType', 'dialogForm'],
 		mounted: function() {
-			console.log(this.dialogForm)
+			console.log(this.dialogForm,this.dialogType)
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.disabled = true;
 				this.ruleForm = JSON.parse(JSON.stringify(this.dialogForm));
+				if(this.ruleForm.Natureofland&&this.ruleForm.Classify1&&this.ruleForm.Classify2&&this.ruleForm.Classify3){
+					var landType=[this.ruleForm.Natureofland,this.ruleForm.Classify1,this.ruleForm.Classify2,this.ruleForm.Classify3];
+				}else if(this.ruleForm.Natureofland&&this.ruleForm.Classify1&&this.ruleForm.Classify2){
+					var landType=[this.ruleForm.Natureofland,this.ruleForm.Classify1,this.ruleForm.Classify2]
+				}else if(this.ruleForm.Natureofland&&this.ruleForm.Classify1){
+					var landType=[this.ruleForm.Natureofland,this.ruleForm.Classify1]
+				}else if(this.ruleForm.Natureofland){
+					var landType=[this.ruleForm.Natureofland]
+				}
+				
+				this.$set(this.ruleForm,'landType',landType);
+				console.log(this.ruleForm.landType,'看来')
 			}
 			this.landTypeInit('1004',1);//土地地块分类
 			setInterval(function() {
@@ -89,8 +102,12 @@
 
 		methods: {
 			handleChange(event) {
+				console.log(this.landType);
 				let pathvalue = this.$refs.sysCascader.getCheckedNodes()[0];
-				console.log(pathvalue);
+				this.$set(this.ruleForm,'Natureofland','');
+				this.$set(this.ruleForm,'Classify1','');
+				this.$set(this.ruleForm,'Classify2','');
+				this.$set(this.ruleForm,'Classify3','');
 				if(pathvalue.level==1){
 					this.$set(this.ruleForm,'Natureofland',pathvalue.value);
 				}
@@ -127,18 +144,19 @@
 					// alert(1);
 					var self = this;
 					if (valid) {
-
+                        var data=JSON.parse(JSON.stringify(self.ruleForm));
+						delete data.landType; 
 						if (self.dialogType == 'edit') {
-							var url = EditHousehold;
+							var url = EditParcel;
 							var data = {
 								id: self.dialogForm.KeyNo,
-								JsonStr: JSON.stringify(self.ruleForm)
+								JsonStr: JSON.stringify(data)
 							}
 						} else {
-							var url = AddHousehold;
+							var url = AddParcel;
 							var data = {
 								Locationno: self.Locationno,
-								JsonStr: JSON.stringify(self.ruleForm)
+								JsonStr: JSON.stringify(data)
 							}
 						}
 
