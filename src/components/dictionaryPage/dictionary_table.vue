@@ -5,9 +5,9 @@
 			<el-col :xs="8" :sm="8" :md="7" :lg="6" :xl="5">
 				<div class="treeMain">
 					<div class="header_table_title">
-						<el-button size="mini" @click="addClick('tree')" icon="al-icon-tianjia"></el-button>
-						<el-button title="修改" @click="editClick('tree')" size="mini" icon="al-icon-xiugai" ></el-button>
-						<el-button title="删除" @click="delClick('tree')" size="mini" icon="al-icon-shanchu" ></el-button>
+						<el-button @click="addClick('tree')" icon="al-icon-tianjia"></el-button>
+						<el-button title="修改" @click="editClick('tree')" icon="al-icon-xiugai" ></el-button>
+						<el-button title="删除" @click="delClick('tree')" icon="al-icon-shanchu" ></el-button>
 					</div>
 					<div style="margin-top: 15px;">
 						<el-input placeholder="请输入内容" v-model="lookFor" class="input-with-select" clearable @keyup.enter.native="lookFor_tree">
@@ -23,7 +23,7 @@
 			<el-col :xs="16" :sm="16" :md="17" :lg="18" :xl="19">
 				<div class="tableMain">
 					<div class="header_table_title">
-						<el-button size="mini" @click="addClick('table')" icon="al-icon-tianjia"></el-button>
+						<el-button @click="addClick('table')" icon="al-icon-tianjia"></el-button>
 						<el-button title="修改" @click="editClick('table')" size="mini" icon="al-icon-xiugai" ></el-button>
 						<el-button title="删除" @click="delClick('table')" size="mini" icon="al-icon-shanchu" ></el-button>
 					</div>

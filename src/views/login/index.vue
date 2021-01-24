@@ -29,7 +29,6 @@
       <el-button
         class="margin-top-l text-light"
         :loading="loading"
-        size="mini"
         @click="login"
         >登录</el-button
       >
