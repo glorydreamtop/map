@@ -59,9 +59,9 @@
 							<el-table :data="tableData0" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="RKBH" label="编号" align="center"></el-table-column>
 								<el-table-column prop="XM" label="姓名" width="180" align="center"></el-table-column>
-								<el-table-column prop="XB" label="性别" width="100" align="center"></el-table-column>
-								<el-table-column prop="MZ" label="民族" width="100" align="center"></el-table-column>
-								<el-table-column prop="YHZGX" label="与户主关系" width="130" align="center"></el-table-column>
+								<el-table-column prop="XB_name" label="性别" width="100" align="center"></el-table-column>
+								<el-table-column prop="MZ_name" label="民族" width="100" align="center"></el-table-column>
+								<el-table-column prop="YHZGX_name" label="与户主关系" width="130" align="center"></el-table-column>
 								<el-table-column prop="CSNY" label="出生年月" width="180" align="center"></el-table-column>
 								<el-table-column prop="HKSZD" label="户籍所在地" align="center"></el-table-column>
 								<el-table-column prop="SFZH" label="身份证号码" align="center"></el-table-column>
@@ -78,9 +78,9 @@
 								<el-table-column prop="FWMC" label="房屋名称" width="180" align="center"></el-table-column>
 								<el-table-column prop="JGLX_DESC" label="结构类型" width="100" align="center"></el-table-column>
 								<el-table-column prop="DEDM_DESC" label="定额名称" align="center"></el-table-column>
-								<el-table-column prop="WMCL" label="屋面材料" align="center"></el-table-column>
-								<el-table-column prop="CS" label="层数" width="90" align="center"></el-table-column>
-								<el-table-column prop="CGM	" label="层高(m)" width="90" align="center"></el-table-column>
+								<el-table-column prop="WMCL_name" label="屋面材料" align="center"></el-table-column>
+								<el-table-column prop="CS_name" label="层数" width="90" align="center"></el-table-column>
+								<el-table-column prop="CGM" label="层高(m)" width="90" align="center"></el-table-column>
 								<el-table-column prop="ZLCCMM" label="丈量尺寸(m×m)" width="90" align="center"></el-table-column>
 								<el-table-column prop="JZMJM2" label="建筑面积(㎡)" width="90" align="center"></el-table-column>
 								<el-table-column prop="DEDJ" label="定额单价	" width="100" align="center"></el-table-column>
@@ -99,7 +99,7 @@
 								<el-table-column prop="FWWMC" label="附属物名称	" width="180" align="center"></el-table-column>
 								<el-table-column prop="JGLX_DESC" label="结构类型" width="100" align="center"></el-table-column>
 								<el-table-column prop="FSWDEDM_DESC" label="附属物定额代码" align="center"></el-table-column>
-								<el-table-column prop="FSWJGCL" label="结构材料" align="center" width="110"></el-table-column>
+								<el-table-column prop="FSWJGCL_name" label="结构材料" align="center" width="110"></el-table-column>
 								<el-table-column prop="ZLCC" label="丈量尺寸(m×m)" width="140" align="center"></el-table-column>
 								<el-table-column prop="FSWGG" label="规格" width="110" align="center"></el-table-column>
 								<el-table-column prop="DW" label="单位" width="80" align="center"></el-table-column>
@@ -164,11 +164,14 @@
 	import huxinxidiaochaFlyAdd from '@/components/hxx/huxinxidiaocha_fly_add' //户信息调查添加
 	import lingxingguomuFlyAdd from '@/components/hxx/lingxingguomu_fly_add' //零星果木添加
 	import renkouxinxiFlyAdd from '@/components/hxx/renkouxinxi_fly_add' //零星果木添加
+	import {
+	  codeTable
+	} from '@/utils/codeTable.js'
 	import files from "@/components/files"
 	export default {
 		name: 'jbqk_table1_add_two',
 		computed: {
-			...mapGetters(['projectNo', 'parcelId', 'Locationno', 'householdId'])
+			...mapGetters(['projectNo', 'parcelId', 'Locationno', 'householdId','ucodeValue'])
 		},
 		components: {
 			fangwuxinxiFlyAdd,
@@ -181,6 +184,7 @@
 		data() {
 			return {
 				ruleForm: {},
+				codeData:[],
 				disabled: false,
 				dialogTitle: '', //弹出框标题
 				dialogForm_two: "", //弹出框表单
@@ -207,12 +211,8 @@
 
 			}
 		},
-		dialogType: {
-			handler: function(val, oldval) {
-				this.dialogType = val;
-				this.init();
-			},
-			deep: true //
+		created() {
+				// codeTable('1005');
 		},
 		props: ['dialogType', 'dialogForm'],
 		mounted: function() {
@@ -227,12 +227,20 @@
 					this.getHousehold_SubsInit(3); //零星果木初始化
 				}
 			}
+			
 			console.log(this.householdId)
-			// this.GetHouseholdsInit(); //户信息数据
-
+			// setTimeout(function(){ alert("Hello"); }, 3000);
+          this.codeTableInit();
 		},
 
 		methods: {
+			async codeTableInit() {
+			  try {
+			    await this.$store.dispatch("info/ucodeValue_method", {ucode: '1005'});
+			  } catch (error) {
+				  console.log(error)
+			  }
+			},
 			submitForm(formName) { //表单提交按钮
 				var self = this;
 				// self.loading = true;
@@ -299,13 +307,37 @@
 					PageSize: 1000
 				};
 				getHousehold_Subs(data).then((res) => {
-						// console.log(res, typeArry[index])
+						var newData=res.list;
+						// console.log(this.ucodeValue,'code 列表')
+						for(var i in this.ucodeValue){
+							for(var j in newData){
+								if(index==0&&newData[j].YHZGX==this.ucodeValue[i].ucode){
+									newData[j].YHZGX_name=this.ucodeValue[i].uname;	
+								}
+								if(index==0&&newData[j].XB==this.ucodeValue[i].ucode){
+									newData[j].XB_name=this.ucodeValue[i].uname;	
+								}
+								if(index==0&&newData[j].MZ==this.ucodeValue[i].ucode){
+									newData[j].MZ_name=this.ucodeValue[i].uname;	
+								}
+								if(index==1&&newData[j].WMCL==this.ucodeValue[i].ucode){
+									newData[j].WMCL_name=this.ucodeValue[i].uname;
+								}
+								if(index==1&&newData[j].CS==this.ucodeValue[i].ucode){
+									newData[j].CS_name=this.ucodeValue[i].uname;	
+								}
+								if(index==2&&newData[j].FSWJGCL==this.ucodeValue[i].ucode){
+									newData[j].FSWJGCL_name=this.ucodeValue[i].uname;
+									
+								}
+							}
+							
+						}
 						this[`tableData${index}`] = res.list;
 
 					})
 					.catch((error) => {
 						this[`tableData${index}`] = [];
-						// console.log( this[`tableData${index}`] )
 					})
 
 			},

@@ -8,8 +8,7 @@
 			</div>
 			<div class="margin-top-m" v-if="Locationno">
 				<el-select v-model="newparcelId" placeholder="请选中块信息" @change="parcelChange" style="width: 100%;">
-					<el-option v-for="item in parcelData" :key="item.KeyNo" :label="item.UNAME" :value="item.KeyNo">
-					</el-option>
+					<el-option v-for="item in parcelData" :key="item.KeyNo" :label="item.UNAME" :value="item.KeyNo"></el-option>
 				</el-select>
 			</div>
 			<div class="margin-top-m" >
@@ -59,7 +58,8 @@
 		GetLocations,
 		GetHouseholds,
 		GetParcels,
-		DelHousehold
+		DelHousehold,
+		GetEntitiesTree
 	} from '@/api';
 	export default {
 		name: 'Hxx',
@@ -85,16 +85,17 @@
 				dialogType: '', //弹出框操作类型
 				Locationno_parent: 0,
 				prop: {
-					lazy: true,
+					// lazy: true,
 					checkStrictly: true,
-
-					lazyLoad: this.lazyLoad
+                    label: 'desc',
+                    value: 'no',
+					// lazyLoad: this.lazyLoad
 				},
 			}
 		},
 		created() {},
 		mounted() {
-			// this.GetLocationInit(); //初始化地区
+			this.GetLocationInit(); //初始化地区
             //select手动点击lable 获取值
             setInterval(function() {
             	document.querySelectorAll(".el-cascader-node__label").forEach(el => {
@@ -105,40 +106,6 @@
             }, 1000);
 		},
 		methods: {
-			lazyLoad(node, resolve) {
-				var self = this;
-				// console.log(node, resolve)
-				// setTimeout(() => {
-				if (node.level < 4) {
-					var data = {
-						ProjectNo: self.projectNo,
-						Locationno: node.value ? node.value : 0
-					};
-					GetLocations(data).then(res => {
-							// console.log(res,'看这里');
-							var newLosation = [];
-							for (var i in res) {
-								newLosation.push({
-									value: res[i].o_locationno,
-									label: res[i].o_locationdesc,
-									leaf: node.level >= 3
-								})
-							}
-							// console.log(newLosation)
-							// 通过调用resolve将子节点数据返回，通知组件数据加载完成
-							resolve(newLosation);
-						})
-						.catch(err => {
-							console.log(err);
-						});
-				} else {
-					resolve([]);
-					console.log('zou2131')
-					return;
-				}
-				// }, 1000);
-
-			},
 			rowClick(index, item) {
 				console.log(this.buttonIndex)
 				this.buttonIndex = index;
@@ -207,12 +174,11 @@
 			GetLocationInit() {
 				var data = {
 					ProjectNo: this.projectNo,
-					Locationno: this.Locationno_parent
 				};
-				GetLocations(data).then((res) => {
+				GetEntitiesTree(data).then((res) => {
 						this.locationData = res;
-						console.log(res)
-
+						console.log(res, '看这里')
+			
 					})
 					.catch((error) => {
 						self.tableData = [];

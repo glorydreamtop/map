@@ -150,7 +150,6 @@
 			GetLocationInit() {
 				var data = {
 					ProjectNo: this.projectNo,
-					// Locationno: this.Locationno_parent
 				};
 				GetEntitiesTree(data).then((res) => {
 						this.locationData = res;
