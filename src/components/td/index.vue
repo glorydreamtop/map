@@ -24,7 +24,7 @@
 						<div class="leftMain" :class="buttonIndex===index?'activeRow':''" @click="rowClick(index,item)">
 							<div class="item flex-col align-center">
 								<i class="al-icon-yonghu text-light"></i>
-								<span>{{item.UNAME}}</span>
+								<span :title="item.UNAME">{{item.UNAME}}</span>
 							</div>
 
 						</div>
@@ -232,10 +232,11 @@
 
 			},
 			closeDialog() { //关闭弹出框
-
+               this.tableListInit();
 			},
 			showStudescode(data) { //监听弹出框是关还是闭
-
+              this.showFlag=data;  
+		      this.tableListInit();
 			},
 		}
 	}
