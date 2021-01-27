@@ -23,7 +23,7 @@
           ></el-option>
         </el-select>
         <el-button class="save" @click="submit">保存</el-button>
-        <el-button class="save" @click="submit">导出</el-button>
+        <el-button class="save" @click="downLoad">导出</el-button>
       </div>
       <editor v-if="visible" ref="zceditor" id="zceditor" v-model="form.ReportContent" />
     </el-dialog>
@@ -34,7 +34,8 @@
 import {
   GetDictItemsByUcode,
   AddReportManagement,
-  EditReportManagement
+  EditReportManagement,
+  ReportManagementExport
 } from "@/api";
 import { mapGetters } from "vuex";
 import editor from "@/components/edtor";
@@ -96,7 +97,9 @@ export default {
       this.clear();
       done();
     },
-    downLoad() {}
+    async downLoad() {
+      const res = await ReportManagementExport()
+    }
   }
 };
 </script>

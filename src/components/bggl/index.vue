@@ -49,10 +49,6 @@
           :label="item.name"
           width="180px"
         >
-        <!-- <template slot-scope="scope">
-                <more v-if="item.name==='内容'" :info="scope.row[item.value]" :title="item.name" />
-                <span v-else>{{scope.row[item.value]}}</span>
-              </template> -->
         </el-table-column>
       </el-table>
       <el-pagination
