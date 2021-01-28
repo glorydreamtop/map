@@ -6,7 +6,7 @@
       width="70vw"
       :before-close="close"
       append-to-body
-      v-loading="loading2"
+      v-loading="loading"
       element-loading-text="文件转码中..."
       title="报告编辑"
       @close="$emit('update:showDialog', false)"
@@ -46,15 +46,14 @@ export default {
     return {
       visible: false,
       add: false,
+      currentId:'',
       form: {
         TitleName: "",
         Importance: "",
         ReportContent: "",
         Customdate: ""
       },
-      loading1: false,
-      loading2: false,
-      loading3: false,
+      loading: false,
       options: []
     };
   },
@@ -76,15 +75,13 @@ export default {
         this.$message.error("请检查必填项");
         return;
       }
-      const id = form.id;
-      delete form.id;
       if (this.add) {
-        await AddReportManagement({
+        this.currentId = (await AddReportManagement({
           ProjectNo: this.projectNo,
           JsonStr: JSON.stringify(form)
-        });
+        }))[0].Keyno;
       } else {
-        await EditReportManagement({ id, JsonStr: JSON.stringify(form) });
+        await EditReportManagement({ id:this.currentId, JsonStr: JSON.stringify(form) });
       }
       this.clear();
       this.visible = false;
@@ -98,7 +95,16 @@ export default {
       done();
     },
     async downLoad() {
-      const res = await ReportManagementExport()
+      this.loading = true;
+      try {
+        const res = await ReportManagementExport({
+          id: this.currentId
+        });
+        window.open(`${appConfig.baseIp}/${res[0].url}`);
+      } catch (error) {
+        console.log(error);
+      }
+      this.loading = false;
     }
   }
 };

@@ -32,8 +32,7 @@
         <el-button icon="el-icon-search" @click="getList"></el-button>
         <el-button icon="al-icon-tianjia" @click="postItem(true)"></el-button>
         <el-button icon="al-icon-xiugai" @click="postItem(false)"></el-button>
-        <el-button icon="al-icon-xiazai" @click="downLoad"></el-button>
-        <el-button @click="downLoad">模板管理</el-button>
+        <el-button >模板管理</el-button>
       </div>
       <el-table
         :data="dataList"
@@ -151,26 +150,13 @@ export default {
       if (!add) {
         const currentFile = this.currentFile;
         this.$refs.editor.form = {
-          id: currentFile.KeyNo,
           TitleName: currentFile.TitleName,
           Importance: currentFile.Importance,
           ReportContent: currentFile.ReportContent,
           Customdate: currentFile.Customdate
         };
-        
+        this.$refs.editor.currentId = currentFile.KeyNo
       }
-    },
-    async downLoad() {
-      this.loading = true;
-      try {
-        const res = await ReportManagementExport({
-          id: this.currentFile.KeyNo
-        });
-        window.open(`${appConfig.baseIp}/${res[0].url}`);
-      } catch (error) {
-        console.log(error);
-      }
-      this.loading = false;
     }
   }
 };
