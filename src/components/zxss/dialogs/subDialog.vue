@@ -72,6 +72,7 @@ export default {
         this.formProps.forEach(item => {
           item.task && item.task();
           item.type = item.type || "elInput";
+          item.formValue = this.form[item.value] || '';
           item.callback = item.callback || function callback(params) {}
           this.rules[item.value] = { required: item.required };
         });

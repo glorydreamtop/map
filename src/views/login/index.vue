@@ -39,6 +39,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { getList } from "@/utils/code2text";
+import { Loading } from 'element-ui';
 export default {
   name: "Login",
   props: {},
@@ -57,10 +58,16 @@ export default {
   },
   watch: {
     token: {
-      handler(newVal) {
+      async handler(newVal) {
         this.show = !Boolean(newVal);
         if (newVal) {
-          getList();
+          let loadingInstance = Loading.service({ fullscreen: true,text:'数据字典本地化中...' });
+          try {
+            await getList();
+          } catch (error) {
+            console.log(error);
+          }
+          loadingInstance.close();
         }
       },
       immediate: true,

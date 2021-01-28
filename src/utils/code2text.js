@@ -1,29 +1,41 @@
 import { GetDict, GetDictItems } from '@/api';
+import { Message } from 'element-ui';
 window.appDataDict = new Map();
 
 export async function getList() {
-    const list = await GetDict();
-    tree2map(list, getItems);
-    return 'success';
+    try {
+        const list = await GetDict();
+        await tree2map(list, true);
+        Message.success('数据字典本地化成功')
+        return 'success';
+    } catch (error) {
+        console.log(error);
+        Message.error('数据字典本地化失败，请刷新页面')
+    }
+
 }
 
-const tree2map = (array, cb) => {
-    const flat = (array) => {
-        array.forEach(item => {
+const tree2map = async (array, deep = false) => {
+    const plist = [];
+    const flat = (array)=>{
+        for (let i = 0; i < array.length; i++) {
+            const item = array[i];
             appDataDict.set(item.ucode, item.uname)
             if (item.children) {
                 flat(item.children)
-            } else if (cb) {
-                cb(item.id)
+            } else if (deep) {
+                plist.push(getItems(item.id));
             }
-        })
+        }
     }
     flat(array);
+    await Promise.all(plist);
+    return 'success';
 }
 
 async function getItems(id) {
     const list = await GetDictItems({ id });
-    tree2map(list);
+    await tree2map(list,false);
     return 'success';
 }
 

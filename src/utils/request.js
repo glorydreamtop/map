@@ -93,8 +93,7 @@ service.interceptors.response.use(
     },
     error => {
         const response = error.response
-        console.log(response);
-
+        console.log(response.request.requestURL);
         if (response.status === 401) {
             if (/login/i.test(response.request.requestURL)) {
                 return Promise.reject(new Error('Login Error'))

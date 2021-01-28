@@ -138,9 +138,10 @@ export const all = [
             props: {
                 options: []
             },
-            callback(v) {
+            callback:function(v) {
                 const i = all[2][2].props.options.find(item => { return item.label === v })
                 eventBus.$emit('getDEMC', i.value)
+                console.log(this);
             },
             async task() {
                 const { list } = await GetQuotaClassifyList({ LocationId: store.state.zxss.town, ClassifyName: '农村小型专项及农副业设施', CurrentPage: 1, PageSize: 200 })
@@ -158,14 +159,26 @@ export const all = [
             task() {
                 eventBus.$once('getDEMC', async (v) => {
                     const { list } = await GetQuotaItemList({ Virtualitemno: v, CurrentPage: 1, PageSize: 200 })
-                    this.props.options = list.map(item => ({ value: item.UNAME }))
+                    this.props.options = list.map(item => ({ value: item.UNAME,other:item.Unit }))
                 })
+            },
+            callback(v){
+                const i = all[2][3].props.options.find(item => { return item.value === v })
+                eventBus.$emit('setDEMC',i.other)
             }
         },
         {
             title: "单位",
             value: "YDXZ",
-            required: true
+            required: true,
+            props: { disabled: true },
+            formValue:'',
+            task(){
+                eventBus.$on('setDEMC',async(e)=>{
+                    this.formValue = e;
+                    console.log(this.formValue);
+                })
+            }
         },
         {
             title: "数量",
