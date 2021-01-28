@@ -38,6 +38,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { getList } from "@/utils/code2text";
 export default {
   name: "Login",
   props: {},
@@ -58,6 +59,9 @@ export default {
     token: {
       handler(newVal) {
         this.show = !Boolean(newVal);
+        if (newVal) {
+          getList();
+        }
       },
       immediate: true,
     },
@@ -75,10 +79,10 @@ export default {
         this.loading = true;
         await this.$store.dispatch("user/login", this.loginForm);
         this.loading = false;
-        let timer = setTimeout(()=>{
+        let timer = setTimeout(() => {
           this.$eventBus.$emit("selectStage");
           timer = null;
-        },1000)
+        }, 1000);
       } catch (error) {
         this.loading = false;
         this.$message.error("用户名/密码 错误");

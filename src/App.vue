@@ -69,6 +69,7 @@ export default {
       "85vw";
     document.querySelector(".left").parentElement.parentElement.style.right =
       "80vw";
+    
   },
   methods: {
     closeDrawer_left() {

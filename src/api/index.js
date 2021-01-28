@@ -313,11 +313,10 @@ export function DeleteQuotaItem(data) {
     })
 }
 // 获取数据字典树结构 GetDict
-export function GetDict(data) {
+export function GetDict() {
     return request({
         url: `${baseReflect}GetDict`,
-        method: 'post',
-        data
+        method: 'post'
     })
 }
 // 添加数据字典项(左侧树节点) AddDict

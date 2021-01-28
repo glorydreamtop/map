@@ -59,9 +59,21 @@
 							<el-table :data="tableData0" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
 								<el-table-column prop="RKBH" label="编号" align="center"></el-table-column>
 								<el-table-column prop="XM" label="姓名" width="180" align="center"></el-table-column>
-								<el-table-column prop="XB_name" label="性别" width="100" align="center"></el-table-column>
-								<el-table-column prop="MZ_name" label="民族" width="100" align="center"></el-table-column>
-								<el-table-column prop="YHZGX_name" label="与户主关系" width="130" align="center"></el-table-column>
+								<el-table-column prop="XB_name" label="性别" width="100" align="center">
+									<template slot-scope="scope">
+										<span>{{scope.row.XB | c2t}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column prop="MZ_name" label="民族" width="100" align="center">
+									<template slot-scope="scope">
+										<span>{{scope.row.MZ | c2t}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column prop="YHZGX_name" label="与户主关系" width="130" align="center">
+									<template slot-scope="scope">
+										<span>{{scope.row.YHZGX | c2t}}</span>
+									</template>
+								</el-table-column>
 								<el-table-column prop="CSNY" label="出生年月" width="180" align="center"></el-table-column>
 								<el-table-column prop="HKSZD" label="户籍所在地" align="center"></el-table-column>
 								<el-table-column prop="SFZH" label="身份证号码" align="center"></el-table-column>
@@ -164,9 +176,6 @@
 	import huxinxidiaochaFlyAdd from '@/components/hxx/huxinxidiaocha_fly_add' //户信息调查添加
 	import lingxingguomuFlyAdd from '@/components/hxx/lingxingguomu_fly_add' //零星果木添加
 	import renkouxinxiFlyAdd from '@/components/hxx/renkouxinxi_fly_add' //零星果木添加
-	import {
-	  codeTable
-	} from '@/utils/codeTable.js'
 	import files from "@/components/files"
 	export default {
 		name: 'jbqk_table1_add_two',
@@ -230,7 +239,7 @@
 			
 			console.log(this.householdId)
 			// setTimeout(function(){ alert("Hello"); }, 3000);
-          this.codeTableInit();
+        //   this.codeTableInit();
 		},
 
 		methods: {

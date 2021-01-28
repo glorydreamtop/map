@@ -3,10 +3,12 @@ import App from './App.vue'
 import store from './store'
 import './plugins/element.js'
 import { eventBus, sendMessage } from '@/utils/eventBus'
+import {c2t} from '@/utils/code2text'
 
 Vue.prototype.$eventBus = eventBus;
 Vue.prototype.$sendMessage = sendMessage;
-
+Vue.filter('c2t',c2t)
+// console.log(c2t('100500010001'));
 Vue.config.productionTip = false
 new Vue({
     store,

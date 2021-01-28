@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie'
-
 const TokenKey = 'Admin-Token'
 const StageKey = 'Stage'
 
 export function getToken() {
-    return Cookies.get(TokenKey)
+    const token = Cookies.get(TokenKey)
+    return token;
 }
 
 export function setToken(token) {

@@ -17,6 +17,7 @@
         "echarts": "^5.0.1",
         "element-ui": "^2.4.5",
         "hard-source-webpack-plugin": "^0.13.1",
+        "idb-keyval": "^5.0.2",
         "js-cookie": "^2.2.1",
         "plop": "^2.7.4",
         "sass": "1.26.2",
