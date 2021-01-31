@@ -1,6 +1,16 @@
 <template>
-  <el-select v-model="value1" :placeholder="placeholder" @change="handleChange">
-    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+  <el-select
+    v-model="value1"
+    :placeholder="placeholder"
+    ref="select"
+    @change="handleChange"
+  >
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+    ></el-option>
   </el-select>
 </template>
 
@@ -12,22 +22,23 @@ export default {
       type: [String, Number],
       default() {
         return "";
-      }
+      },
     },
+    text:String,
     placeholder: {
       type: String,
-      default: "请选择"
+      default: "请选择",
     },
     options: {
       type: Array,
       default() {
         return [];
-      }
-    }
+      },
+    },
   },
   data() {
     return {
-      value1: ""
+      value1: "",
     };
   },
   watch: {
@@ -35,18 +46,23 @@ export default {
       handler(newVal) {
         this.value1 = newVal;
       },
-      immediate: true
+      immediate: true,
+    },
+    text:{
+      handler(newVal){
+        if(!newVal)return
+        this.$nextTick(()=>{
+          this.$refs.select.selectedLabel = newVal;
+        })
+      },
+      immediate:true
     }
   },
   methods: {
     handleChange() {
-      const v = this.options.find(item => {
-        return item.value === this.value1;
-      });
-      const label = v.label||v.value;
-      this.$emit("input", label);
-      this.$emit("change", label);
-    }
-  }
+      this.$emit("input", this.value1);
+      this.$emit("change", this.value1);
+    },
+  },
 };
 </script>

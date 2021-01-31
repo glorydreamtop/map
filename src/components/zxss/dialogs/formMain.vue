@@ -9,13 +9,13 @@
     <el-table :data="tableData" border highlight-current-row @current-change="handleCurrentChange">
       <el-table-column
         v-for="item in tableProps"
-        :prop="item.value"
+        :prop="item.textValue||item.value"
         :label="item.title"
         :key="item.value"
       >
         <template slot-scope="scope">
           <more v-if="item.value==='BZ'" :info="scope.row[item.value]" :title="item.title" />
-          <span v-else>{{scope.row[item.value]}}</span>
+          <span v-else>{{scope.row[item.textValue||item.value]}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -83,16 +83,25 @@ export default {
       this.currentTotal = total;
     },
     handleCurrentChange(e) {
+      if(!e)return
       this.subId = parseInt(e.KeyNo);
       this.subForm = e;
     },
     postItem(add) {
       this.$refs.sub.add = add;
+      if(!add&&this.subId===0){
+        this.$message.warning('请选择一个待编辑条目')
+        return
+      }
       this.$refs.sub.dialogVisible = true;
       this.$refs.sub.id = this.subId;
       this.$refs.sub.form = this.subForm;
     },
     async delItem() {
+      if(this.subId===0){
+        this.$message.warning('请选择一个待删除条目')
+        return
+      }
       try {
         await DelNCZXSS_SUB({ id: this.subId });
         this.$message.success("删除成功");

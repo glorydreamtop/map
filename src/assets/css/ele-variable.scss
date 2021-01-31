@@ -130,7 +130,7 @@ $--font-path: "~element-ui/lib/theme-chalk/fonts";
   border: none;
 }
 
-.el-button--default{
+.el-button--default,.el-button--primary{
   padding:4px 14px;
   [class^="al-icon"],[class^="el-icon"]{
     font-size: 30px;

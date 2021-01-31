@@ -35,6 +35,7 @@
 import { AddNCZXSS_SUB, EditNCZXSS_SUB } from "@/api";
 import { deepClone } from "@/utils";
 import selector from "@/components/rewrite-eleUI/selector";
+import { eventBus } from '../utils';
 export default {
   inject: ["KEYNO"],
   props: {
@@ -66,15 +67,21 @@ export default {
   watch: {
     dialogVisible: {
       async handler(newVal) {
-        if (!newVal) return;
+        if (!newVal) {
+          eventBus.$off();
+          return
+        }
         const { all } = await import("../json/subTableProps.js");
-        this.formProps = all[this.idx];
-        this.formProps.forEach(item => {
-          item.task && item.task();
+        const formProps = all[this.idx];
+        this.formProps = formProps.map(item => {
+          item.task && item.task(this.form);
           item.type = item.type || "elInput";
-          item.formValue = this.form[item.value] || '';
           item.callback = item.callback || function callback(params) {}
           this.rules[item.value] = { required: item.required };
+          if(item.textValue){
+            item.props.text = this.form[item.textValue]
+          }
+          return item;
         });
       }
     },

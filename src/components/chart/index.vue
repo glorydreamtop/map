@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div style="width: 300px;height:300px;" :id="id"></div>
+    <div :style="{width: width,height:height}" :id="id"></div>
   </div>
 </template>
 
 <script>
 import * as echarts from "echarts";
+import "echarts/extension/bmap/bmap";
 export default {
   name: "Chart",
   props: {
@@ -13,6 +14,14 @@ export default {
       type: String,
       required: true,
       default: "chart1",
+    },
+    width:{
+      type:String,
+      default:'220px'
+    },
+    height:{
+      type:String,
+      default:'220px'
     },
     options:{
       type:Object,
