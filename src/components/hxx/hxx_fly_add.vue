@@ -90,7 +90,11 @@
 								<el-table-column prop="FWMC" label="房屋名称" width="180" align="center"></el-table-column>
 								<el-table-column prop="JGLX_DESC" label="结构类型" width="100" align="center"></el-table-column>
 								<el-table-column prop="DEDM_DESC" label="定额名称" align="center"></el-table-column>
-								<el-table-column prop="WMCL_name" label="屋面材料" align="center"></el-table-column>
+								<el-table-column prop="WMCL_name" label="屋面材料" align="center">
+									<template slot-scope="scope">
+										<span>{{scope.row.WMCL | c2t}}</span>
+									</template>
+								</el-table-column>
 								<el-table-column prop="CS_name" label="层数" width="90" align="center"></el-table-column>
 								<el-table-column prop="CGM" label="层高(m)" width="90" align="center"></el-table-column>
 								<el-table-column prop="ZLCCMM" label="丈量尺寸(m×m)" width="90" align="center"></el-table-column>
@@ -111,7 +115,11 @@
 								<el-table-column prop="FWWMC" label="附属物名称	" width="180" align="center"></el-table-column>
 								<el-table-column prop="JGLX_DESC" label="结构类型" width="100" align="center"></el-table-column>
 								<el-table-column prop="FSWDEDM_DESC" label="附属物定额代码" align="center"></el-table-column>
-								<el-table-column prop="FSWJGCL_name" label="结构材料" align="center" width="110"></el-table-column>
+								<el-table-column prop="FSWJGCL_name" label="结构材料" align="center" width="110">
+									<template slot-scope="scope">
+										<span>{{scope.row.FSWJGCL | c2t}}</span>
+									</template>
+								</el-table-column>
 								<el-table-column prop="ZLCC" label="丈量尺寸(m×m)" width="140" align="center"></el-table-column>
 								<el-table-column prop="FSWGG" label="规格" width="110" align="center"></el-table-column>
 								<el-table-column prop="DW" label="单位" width="80" align="center"></el-table-column>
@@ -317,32 +325,33 @@
 				};
 				getHousehold_Subs(data).then((res) => {
 						var newData=res.list;
+						this[`tableData${index}`] = newData;
 						// console.log(this.ucodeValue,'code 列表')
-						for(var i in this.ucodeValue){
-							for(var j in newData){
-								if(index==0&&newData[j].YHZGX==this.ucodeValue[i].ucode){
-									newData[j].YHZGX_name=this.ucodeValue[i].uname;	
-								}
-								if(index==0&&newData[j].XB==this.ucodeValue[i].ucode){
-									newData[j].XB_name=this.ucodeValue[i].uname;	
-								}
-								if(index==0&&newData[j].MZ==this.ucodeValue[i].ucode){
-									newData[j].MZ_name=this.ucodeValue[i].uname;	
-								}
-								if(index==1&&newData[j].WMCL==this.ucodeValue[i].ucode){
-									newData[j].WMCL_name=this.ucodeValue[i].uname;
-								}
-								if(index==1&&newData[j].CS==this.ucodeValue[i].ucode){
-									newData[j].CS_name=this.ucodeValue[i].uname;	
-								}
-								if(index==2&&newData[j].FSWJGCL==this.ucodeValue[i].ucode){
-									newData[j].FSWJGCL_name=this.ucodeValue[i].uname;
+						// for(var i in this.ucodeValue){
+						// 	for(var j in newData){
+						// 		if(index==0&&newData[j].YHZGX==this.ucodeValue[i].ucode){
+						// 			newData[j].YHZGX_name=this.ucodeValue[i].uname;	
+						// 		}
+						// 		if(index==0&&newData[j].XB==this.ucodeValue[i].ucode){
+						// 			newData[j].XB_name=this.ucodeValue[i].uname;	
+						// 		}
+						// 		if(index==0&&newData[j].MZ==this.ucodeValue[i].ucode){
+						// 			newData[j].MZ_name=this.ucodeValue[i].uname;	
+						// 		}
+						// 		if(index==1&&newData[j].WMCL==this.ucodeValue[i].ucode){
+						// 			newData[j].WMCL_name=this.ucodeValue[i].uname;
+						// 		}
+						// 		if(index==1&&newData[j].CS==this.ucodeValue[i].ucode){
+						// 			newData[j].CS_name=this.ucodeValue[i].uname;	
+						// 		}
+						// 		if(index==2&&newData[j].FSWJGCL==this.ucodeValue[i].ucode){
+						// 			newData[j].FSWJGCL_name=this.ucodeValue[i].uname;
 									
-								}
-							}
+						// 		}
+						// 	}
 							
-						}
-						this[`tableData${index}`] = res.list;
+						// }
+						
 
 					})
 					.catch((error) => {
