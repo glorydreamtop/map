@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="chart-bg">
     <div :style="{width: width,height:height}" :id="id"></div>
   </div>
 </template>
@@ -17,11 +17,11 @@ export default {
     },
     width:{
       type:String,
-      default:'220px'
+      default:'22vw'
     },
     height:{
       type:String,
-      default:'220px'
+      default:'30vh'
     },
     options:{
       type:Object,
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     init() {
-      this.chart = echarts.init(document.getElementById(this.id),'dark');
+      this.chart = echarts.init(document.getElementById(this.id));
       const chart = this.chart;
       chart.setOption(this.options);
     },
@@ -54,5 +54,8 @@ export default {
 .cavanas{
   width: 200px;
   height: 200px;
+}
+.chart-bg{
+  background-color: rgba($color: $primary, $alpha: 0.5);
 }
 </style>
