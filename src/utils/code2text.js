@@ -16,7 +16,7 @@ export async function getList() {
 }
 
 const tree2map = async (array, deep = false) => {
-    const plist = [];
+    const all = [];
     const flat = (array)=>{
         for (let i = 0; i < array.length; i++) {
             const item = array[i];
@@ -24,12 +24,12 @@ const tree2map = async (array, deep = false) => {
             if (item.children) {
                 flat(item.children)
             } else if (deep) {
-                plist.push(getItems(item.id));
+                all.push(getItems(item.id));
             }
         }
     }
     flat(array);
-    await Promise.all(plist);
+    await Promise.all(all);
     return 'success';
 }
 

@@ -32,7 +32,7 @@
         <el-button icon="el-icon-search" @click="getList"></el-button>
         <el-button icon="al-icon-tianjia" @click="postItem(true)"></el-button>
         <el-button icon="al-icon-xiugai" @click="postItem(false)"></el-button>
-        <el-button >模板管理</el-button>
+        <el-button @click="$refs.mbeditor.visible = true">模板管理</el-button>
       </div>
       <el-table
         :data="dataList"
@@ -57,6 +57,7 @@
             @current-change="pageChange"
           ></el-pagination>
       <editor ref="editor" @update="getList" />
+      <mbeditor ref="mbeditor" />
     </div>
   </el-dialog>
 </template>
@@ -65,6 +66,7 @@
 import { AllUsers, GetDictItemsByUcode, GetReportManagements } from "@/api";
 import { mapGetters } from "vuex";
 import editor from "./editor";
+import mbeditor from "./mbeditor";
 export default {
   name: "Bggl",
   props: {
@@ -97,7 +99,7 @@ export default {
       ]
     };
   },
-  components: { editor },
+  components: { editor ,mbeditor},
   computed: {
     ...mapGetters(["projectNo"])
   },
