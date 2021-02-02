@@ -123,7 +123,7 @@
 			parcelChange(data) {
 				console.log(data, '选中地块');
 				this.$store.commit("hxx/SET_PARCELID", data);
-				// console.log(this.parcelId)
+				// this.GetHouseholdsInit(); //户信息初始化
 			},
 			handleChange(event) {
 				let pathvalue = this.$refs.sysCascader.getCheckedNodes()[0];
@@ -155,7 +155,7 @@
 				var data = {
 					Locationno: this.Locationno_parent,
 					CurrentPage: 1,
-					PageSize: 10,
+					PageSize: 1000,
 					Name:this.Name,
 				};
 				GetHouseholds(data).then((res) => {
@@ -256,10 +256,10 @@
 
 			},
 			closeDialog() { //关闭弹出框
-
+              this.GetHouseholdsInit(); //户信息初始化
 			},
 			showStudescode(data) { //监听弹出框是关还是闭
-
+              this.GetHouseholdsInit(); //户信息初始化
 			},
 		}
 	}
