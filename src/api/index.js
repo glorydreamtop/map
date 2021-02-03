@@ -734,3 +734,36 @@ export function DelParcel(data) {
         data
     })
 }
+//根据区域id查找区域 GetLocationById
+export function GetLocationById(data) {
+    return request({
+        url: `${baseReflect}GetLocationById`,
+        method: 'post',
+        data
+    })
+}
+//添加区域下的组 AddLocation_Zu
+export function AddLocation_Zu(data) {
+    return request({
+        url: `${baseReflect}AddLocation_Zu`,
+        method: 'post',
+        data
+    })
+}
+//修改区域信息 EditLocation
+export function EditLocation(data) {
+    return request({
+        url: `${baseReflect}EditLocation`,
+        method: 'post',
+        data
+    })
+}
+
+//删除区域信息 DelLocation
+export function DelLocation(data) {
+    return request({
+        url: `${baseReflect}DelLocation`,
+        method: 'post',
+        data
+    })
+}

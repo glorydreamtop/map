@@ -24,7 +24,10 @@
 	min-width: 400px;
 	height: 40vh;
 }
-
+.landSet_dialog{
+	width: 45% !important;
+	min-width: 400px;
+}
 .dictionary_dialog {
 	width: 80% !important;
 	height: 75vh;

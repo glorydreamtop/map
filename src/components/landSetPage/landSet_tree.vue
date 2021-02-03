@@ -21,13 +21,10 @@
 				</div>
 			</el-col>
 			
-			<div>
 				<el-dialog :title="dialogTitle" :append-to-body="true" @close="closeDialog" :visible.sync="showFlag" v-model="showFlag"
-				 class="newStyleDialog " center :custom-class="flyType + '_add_dialog'">
-					<treeAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_tree" v-if="showFlag && flyType == 'tree'"></treeAdd>
-					<!-- <tableAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_table" :dialog-form-tree="dialogForm_tree" v-if="showFlag && flyType == 'table'"></tableAdd> -->
+				 class="newStyleDialog " center  custom-class="landSet_dialog">
+					<treeAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_tree" v-if="showFlag"></treeAdd>
 				</el-dialog>
-			</div>
 		</el-row>
 	</el-dialog>
 </template>
@@ -40,7 +37,8 @@
 		GetDict,
 		DelDict,
 		GetDictItems,
-		GetEntitiesTree
+		GetEntitiesTree,
+		DelLocation
 	} from '@/api';
 	import treeAdd from '@/components/landSetPage/landSet_tree_add';
 	// import tableAdd from '@/components/dictionaryPage/dictionary_table_add';
@@ -135,52 +133,18 @@
 						console.log(error)
 					})
 			},
-			
-			tableInit() {
-				var data = {
-					id: this.dialogForm_tree.id,
-				};
-				this.tableLoad = true;
-				GetDictItems(data)
-					.then(res => {
-						console.log(res,'表格');
-						this.tableLoad = false;
-						this.tableData = res;
-						// this.total = res.total;
-					})
-					.catch(error => {
-						this.tableData = [];
-						this.tableLoad = false;
-						console.log(error);
-					});
-			},
-			handleNodeClick(data) {
+			handleNodeClick(data,node) {
 				//点击树形
-				console.log(data,'点击树形')
+				data.level=node.level;
 				this.dialogForm_tree = data;
+				console.log(data,node,'点击树形')
 				this.treeActive=data;
-				this.tableInit(); //表格初始化
-			},
-			rowClick(row) {
-				//单击表格一行
-				// console.log(row)
-				this.dialogForm_table = row;
-			},
-			handleSizeChange(val) {
-				//每页#条
-				this.formeData.PageSize = val;
-				this.tableInit();
-			},
-			handleCurrentChange(val) {
-				//当前第几页
-				this.formeData.CurrentPage = val;
-				this.tableInit();
 			},
 			lookClick(type) {
 				//查看
 				this.flyType = type;
 				this.dialogForm = '';
-				this.dialogTitle = '查看' + (type == 'tree' ? '项目树' : '数据项');
+				this.dialogTitle = '查看' ;
 				this.dialogType = type + 'look';
 				this.showFlag = true;
 			},
@@ -196,8 +160,11 @@
 							type: 'warning'
 						})
 						.then(() => {
-							DelDict({
-									id: self[`dialogForm_${type}`].id
+							if(this[`dialogForm_${type}`].level==6){
+								var url=DelLocation;
+							}
+							url({
+									id: self[`dialogForm_${type}`].no
 								})
 								.then(res => {
 									self.$message({
@@ -207,7 +174,6 @@
 									});
                                     self[`dialogForm_${type}`]='';
 									self.treeInit();
-									self.tableInit();
 								})
 								.catch(res => {
 									console.log(res);
@@ -231,7 +197,7 @@
 				console.log(this[`dialogForm_${type}`])
 				if (this[`dialogForm_${type}`]) {
 					this.flyType = type;
-					this.dialogTitle = '修改' + (type == 'tree' ? '项目树' : '数据项');
+					this.dialogTitle = '修改' ;
 					this.dialogType = type + 'edit';
 					this.showFlag = true;
 				} else {
@@ -246,22 +212,28 @@
 			},
 			addClick(type) {
 				//添加
+				if(this[`dialogForm_${type}`].level==6){
+					this.$message({
+						message: '此节点不能在添加',
+						type: 'error',
+						center: true
+					})
+					return;
+				}
+				// console.log(this[`dialogForm_${type}`])
 				this.flyType = type;
-				this[`dialogForm_${type}`] = '';
-				this.dialogTitle = '添加' + (type == 'tree' ? '项目树' : '数据项');
+				this.dialogTitle = '添加';
 				this.dialogType = type + 'add';
 				this.showFlag = true;
 			},
 			closeDialog() {
 				//关闭弹出框
 				this.treeInit();
-				this.tableInit();
 			},
 			showStudescode(data) {
 				//监听弹出框是关还是闭
 				console.log(data,'监听是关闭还是打开')
 				this.showFlag = data;
-				this.tableInit();
 				this.treeInit();
 			}
 		}

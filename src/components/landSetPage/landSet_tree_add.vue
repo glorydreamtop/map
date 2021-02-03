@@ -2,13 +2,13 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form label-position="top" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-					<el-form-item label="父节点名称:">
-						<el-cascader placeholder="请选择父节点" v-model="project1" filterable clearable ref="cascaderAddr" :options="postionArry"
+				<el-form  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+					<el-form-item label="节点名称:" v-if="this.dialogForm.level<5">
+						<el-cascader placeholder="请选择节点" v-model="project1" filterable clearable ref="cascaderAddr" :options="postionArry"
 						 :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
 					</el-form-item>
-					<el-form-item label="分类名称:">
-						<el-input v-model="ruleForm.dicdesc" :disabled="dialogType=='look'?true:false"></el-input>
+					<el-form-item label="村委小组:" v-if="this.dialogForm.level==6||this.dialogForm.level==5">
+						<el-input v-model="ruleForm.desc" :disabled="dialogType=='look'?true:false"></el-input>
 					</el-form-item>
 				</el-form>
 				<div class="margin-top-l text-center " v-show="dialogType!='look'">
@@ -26,9 +26,10 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		AddDict,
-		GetDict,
-		EditDict
+		AddLocation_Zu,
+		EditLocation,
+		EditDict,
+		GetDictItemsByUcode
 	} from '@/api'
 
 	export default {
@@ -39,9 +40,6 @@
 		data: function() {
 			return {
 				ruleForm: {
-					dicdesc: '',
-					Remarks: '',
-					id: '',
 				},
 				project1: '',
 				postionArry: [],
@@ -64,7 +62,7 @@
 					children: 'children',
 					label: 'uname',
 					value: 'id',
-					checkStrictly: true
+					multiple: true 
 
 				}
 
@@ -83,16 +81,20 @@
 		components: {},
 		props: ['dialogType', 'dialogForm', 'dialogTable'],
 		mounted: function() {
-			console.log(this.dialogForm, this.dialogType);
-			this.GetDictInit(); //项目层级化
+			console.log(this.dialogForm, this.dialogType,'看这里');
+			this.GetLocationByIdInit(); //项目层级化
+			
 			if (this.dialogType == 'treeedit' || this.dialogType == 'treelook') {
-				this.ruleForm.id = this.dialogForm.id;
-				this.ruleForm.dicdesc = this.dialogForm.uname;
-				this.project1 = this.dialogForm.id;
+				// this.ruleForm.id=this.dialogForm.no;
+				this.$set(this.ruleForm,'id',this.dialogForm.no);
+				this.$set(this.ruleForm,'desc',this.dialogForm.desc)
+				// this.ruleForm.desc=this.dialogForm.desc;
 				if (this.dialogType == 'look') {
 					this.disabled = true;
 				}
 
+			}else{
+				this.ruleForm.id=this.dialogForm.no;
 			}
 			//select手动点击lable 获取值
 			setInterval(function() {
@@ -108,15 +110,28 @@
 		methods: {
 
 			postionChange(data) {
+				
 				var itemData = this.$refs["cascaderAddr"].getCheckedNodes();
 				console.log(itemData) //获得当前节点，
-				this.ruleForm.id = itemData[0].value
+				var newData=[];
+				for(var i in itemData){
+					if(itemData[i].parent){
+						var parent=JSON.parse(JSON.stringify(itemData[i].parent.data)) ;
+						parent.children=[];
+						parent.children.push(itemData[i].data)
+						newData.push(parent)
+					}else{
+						newData.push(itemData[i].data)
+					}
+				}
+				console.log(newData,'看这里')
+				// this.ruleForm.id = itemData[0].value
 
 			},
-			GetDictInit() { //项目级层初始化
-				GetDict().then((res) => {
+			GetLocationByIdInit() { //项目级层初始化
+				GetDictItemsByUcode({ucode:this.dialogForm.name}).then((res) => {
 						var newData = res;
-						console.log(res);
+						console.log(res,'树形');
 						// var newData=this.setList(res,this.dialogTable);
 						this.postionArry = newData;
 
@@ -134,10 +149,10 @@
 
 						if (self.dialogType == 'treeedit') {
 							var data = this.ruleForm;
-							var url = EditDict;
+							var url = EditLocation;
 						} else {
 							var data = this.ruleForm;
-							var url = AddDict;
+							var url = AddLocation_Zu;
 						}
 						url(data).then((res) => {
 							this.submitLoad = false;
@@ -165,7 +180,7 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 28vh;
+		/* height: 28vh; */
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;
