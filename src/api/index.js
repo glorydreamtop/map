@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { getToken } from '@/utils/cookie';
 
 const baseReflect = '/ReflectInvoke/Invoke?assebleUrlEn=GDYZCBusiness.dll&classUrlEn=GDYZCBusiness.HCProject.Project&functionUrlEn='
-// 登录
+    // 登录
 export function login(user, pwd) {
     const str = btoa(`${user}:${pwd}`);
     return request({
@@ -140,6 +140,31 @@ export function GetFolders(data) {
         data
     })
 }
+// 添加目录 AddFolder
+export function AddFolder(data) {
+    return request({
+        url: `${baseReflect}AddFolder`,
+        method: 'post',
+        data
+    })
+}
+
+// 修改目录 EditFolder
+export function EditFolder(data) {
+    return request({
+        url: `${baseReflect}EditFolder`,
+        method: 'post',
+        data
+    })
+}
+// 删除目录 DelFolder
+export function DelFolder(data) {
+    return request({
+        url: `${baseReflect}DelFolder`,
+        method: 'post',
+        data
+    })
+}
 
 // 获取目录下文件 GetDocsByFolderId
 export function GetDocsByFolderId(data) {
@@ -149,6 +174,7 @@ export function GetDocsByFolderId(data) {
         data
     })
 }
+
 
 // 获取文件地址 GetDocumentByDocNo
 export function GetDocumentByDocNo(data) {

@@ -103,6 +103,10 @@
             <i class="el-icon-s-management"></i>
             <span @click="show('landSet')">地块设置</span>
           </el-dropdown-item>
+          <el-dropdown-item>
+            <i class="el-icon-s-management"></i>
+            <span @click="show('mlgl')">目录管理</span>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <div class="admin text-l border-left padding-left-l">
@@ -123,6 +127,7 @@ import zlgl from "@/components/zlgl";
 import bggl from "@/components/bggl";
 import desz from "@/components/desz";
 import tjxx from "@/components/tjxx";
+import mlgl from "@/components/mlgl/index.vue";
 export default {
   name: "Nav",
   props: {},
@@ -141,6 +146,7 @@ export default {
     bggl,
     dictionary,
     landSet,
+    mlgl
   },
   watch: {
     showDialog: {
