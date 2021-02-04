@@ -767,3 +767,10 @@ export function DelLocation(data) {
         data
     })
 }
+export function AddLocationsByDicts(data) {
+    return request({
+        url: `${baseReflect}AddLocationsByDicts`,
+        method: 'post',
+        data
+    })
+}
