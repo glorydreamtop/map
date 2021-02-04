@@ -146,8 +146,7 @@ export default {
     currentChange(e) {
       this.currentFile = e;
     },
-    postItem(add) {
-      this.$refs.editor.visible = true;
+    async postItem(add) {
       this.$refs.editor.add = add;
       if (!add) {
         const currentFile = this.currentFile;
@@ -158,7 +157,19 @@ export default {
           Customdate: currentFile.Customdate
         };
         this.$refs.editor.currentId = currentFile.KeyNo
+      }else{
+        const params = {
+            ProjectNo: this.projectNo,
+            pTitleName: "模板报告",
+            pImportance: "非常重要",
+            pUserId: "",
+            CurrentPage: 1,
+            PageSize: 1,
+          };
+          const { list } = await GetReportManagements(params);
+          this.$refs.editor.form.ReportContent = list[0].ReportContent
       }
+      this.$refs.editor.visible = true;
     }
   }
 };

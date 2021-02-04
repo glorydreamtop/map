@@ -86,9 +86,9 @@
 			console.log(this.dialogForm, this.dialogType);
 			this.GetFoldersInit(); //项目层级化
 			if (this.dialogType == 'treeedit' || this.dialogType == 'treelook') {
-				this.ruleForm.id = this.dialogForm.id;
+				this.ruleForm.no = this.dialogForm.no;
 				this.ruleForm.desc = this.dialogForm.desc;
-				this.project1 = this.dialogForm.id;
+				this.project1 = this.dialogForm.no;
 				if (this.dialogType == 'look') {
 					this.disabled = true;
 				}
