@@ -1,13 +1,13 @@
 <template>
-	<el-dialog :visible.sync="visible" :close-on-press-escape="false" width="70vw" v-loading="loadingtable" title="地块设置"
-	 custom-class="dictionary_dialog" @close="$emit('update:showDialog', false)" center>
+	<el-dialog :visible.sync="visible" :close-on-press-escape="false" v-loading="loadingtable" title="地块设置" custom-class="landSet_dialog"
+	 @close="$emit('update:showDialog', false)" center>
 		<el-row :gutter="20">
 			<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 				<div class="treeMain">
 					<div class="header_table_title">
 						<el-button size="mini" @click="addClick('tree')" icon="al-icon-tianjia"></el-button>
-						<el-button title="修改" @click="editClick('tree')" size="mini" icon="al-icon-xiugai" ></el-button>
-						<el-button title="删除" @click="delClick('tree')" size="mini" icon="al-icon-shanchu" ></el-button>
+						<el-button title="修改" @click="editClick('tree')" size="mini" icon="al-icon-xiugai"></el-button>
+						<el-button title="删除" @click="delClick('tree')" size="mini" icon="al-icon-shanchu"></el-button>
 					</div>
 					<div style="margin-top: 15px;">
 						<el-input placeholder="请输入内容" v-model="lookFor" class="input-with-select" clearable @keyup.enter.native="lookFor_tree">
@@ -15,16 +15,16 @@
 						</el-input>
 					</div>
 					<div class="body_tree_mian">
-						<el-tree :data="treeData" node-key='id'  ref="tree" :filter-node-method="filterNode" :props="defaultProps" highlight-current	
-						 @node-click="handleNodeClick" :default-expanded-keys="treeExpandData" default-expand-all	></el-tree>
+						<el-tree :data="treeData" node-key='id' ref="tree" :filter-node-method="filterNode" :props="defaultProps"
+						 highlight-current @node-click="handleNodeClick" :default-expanded-keys="treeExpandData" default-expand-all></el-tree>
 					</div>
 				</div>
 			</el-col>
-			
-				<el-dialog :title="dialogTitle" :append-to-body="true" @close="closeDialog" :visible.sync="showFlag" v-model="showFlag"
-				 class="newStyleDialog " center  custom-class="landSet_dialog">
-					<treeAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_tree" v-if="showFlag"></treeAdd>
-				</el-dialog>
+
+			<el-dialog :title="dialogTitle" :append-to-body="true" @close="closeDialog" :visible.sync="showFlag" v-model="showFlag"
+			 class="newStyleDialog " center custom-class="landSet_dialog">
+				<treeAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm_tree" v-if="showFlag"></treeAdd>
+			</el-dialog>
 		</el-row>
 	</el-dialog>
 </template>
@@ -55,11 +55,11 @@
 		data() {
 			return {
 				lookFor: '',
-				treeExpandData:[], //自己定义的用于接收tree树id的数组
+				treeExpandData: [], //自己定义的用于接收tree树id的数组
 				tableData: [],
 				treeData: [],
 				dialogTitle: '', //弹出框标题
-				dialogForm_tree: '', //弹出框表单
+				dialogForm_tree: {}, //弹出框表单
 				dialogForm_table: '', //弹出框表单
 				showFlag: false, //弹出框显隐状态
 				visible: true,
@@ -75,21 +75,21 @@
 				defaultProps: {
 					children: 'children',
 					label: 'desc',
-					value:"no"
+					value: "no"
 				},
-				treeActive:'',
+				treeActive: '',
 			};
 		},
 		created() {},
 		mounted() {
 			// this.tableInit(); //表格初始化
-			this.$nextTick(function(){
+			this.$nextTick(function() {
 				this.treeInit(); //树形初始化
 			})
-			
+
 		},
 		methods: {
-			lookFor_tree() {		
+			lookFor_tree() {
 				this.$refs.tree.filter(this.lookFor);
 			},
 			filterNode(value, data, node) { //树形过滤筛选
@@ -106,7 +106,7 @@
 				return result
 			},
 			getReturnNode(node, _array, value) {
-				let isPass = node.data && node.data.uname && node.data.uname.indexOf(value) !== -1
+				let isPass = node.data && node.data.desc && node.data.desc.indexOf(value) !== -1
 				isPass ? _array.push(isPass) : ''
 				this.index++
 				// console.log(this.index)
@@ -115,16 +115,18 @@
 				}
 			},
 			treeInit() {
-				var self=this;
-				GetEntitiesTree({ProjectNo:this.projectNo}).then((res) => {
+				var self = this;
+				GetEntitiesTree({
+						ProjectNo: this.projectNo
+					}).then((res) => {
 						console.log(res)
 						// this.tableLoad=false;
 						self.treeData = res;
-						
+
 						self.$nextTick(function() {
 							// console.log(this.dialogForm_tree)
-						  self.$refs.tree.setCurrentKey(self.dialogForm_tree.id?self.dialogForm_tree.id:res[0].id);
-						  self.treeExpandData=[self.dialogForm_tree.id?self.dialogForm_tree.id:res[0].id];
+							self.$refs.tree.setCurrentKey(self.dialogForm_tree.id ? self.dialogForm_tree.id : res[0].id);
+							self.treeExpandData = [self.dialogForm_tree.id ? self.dialogForm_tree.id : res[0].id];
 						})
 					})
 					.catch((error) => {
@@ -133,23 +135,23 @@
 						console.log(error)
 					})
 			},
-			handleNodeClick(data,node) {
+			handleNodeClick(data, node) {
 				//点击树形
-				data.level=node.level;
+				data.level = node.level;
 				this.dialogForm_tree = data;
-				console.log(data,node,'点击树形')
-				this.treeActive=data;
+				console.log(data, node, '点击树形')
+				this.treeActive = data;
 			},
 			lookClick(type) {
 				//查看
 				this.flyType = type;
 				this.dialogForm = '';
-				this.dialogTitle = '查看' ;
+				this.dialogTitle = '查看';
 				this.dialogType = type + 'look';
 				this.showFlag = true;
 			},
 			delClick(type) {
-				
+
 				if (this[`dialogForm_${type}`]) {
 					console.log(this[`dialogForm_${type}`])
 					var self = this;
@@ -160,10 +162,10 @@
 							type: 'warning'
 						})
 						.then(() => {
-							if(this[`dialogForm_${type}`].level==6){
-								var url=DelLocation;
-							}
-							url({
+							// if(this[`dialogForm_${type}`].level==6){
+							// 	var url=DelLocation;
+							// }
+							DelLocation({
 									id: self[`dialogForm_${type}`].no
 								})
 								.then(res => {
@@ -172,7 +174,7 @@
 										type: 'success',
 										center: true
 									});
-                                    self[`dialogForm_${type}`]='';
+									self[`dialogForm_${type}`] = '';
 									self.treeInit();
 								})
 								.catch(res => {
@@ -194,10 +196,17 @@
 
 			},
 			editClick(type) {
-				console.log(this[`dialogForm_${type}`])
-				if (this[`dialogForm_${type}`]) {
+				if (this.dialogForm_tree.level) {
+					if (this.dialogForm_tree.level < 6) {
+						this.$message({
+							message: '此节点不能在修改',
+							type: 'error',
+							center: true
+						})
+						return;
+					}
 					this.flyType = type;
-					this.dialogTitle = '修改' ;
+					this.dialogTitle = '修改';
 					this.dialogType = type + 'edit';
 					this.showFlag = true;
 				} else {
@@ -212,19 +221,38 @@
 			},
 			addClick(type) {
 				//添加
-				if(this[`dialogForm_${type}`].level==6){
+				if (this.dialogForm_tree.level) {
+					if (this.dialogForm_tree.level == 6) {
+						this.$message({
+							message: '此节点不能在添加',
+							type: 'error',
+							center: true
+						})
+						return;
+					}
+					if(this.dialogForm_tree.level ==1){
+						var index=this.dialogForm_tree.name.lastIndexOf("\_");
+						this.dialogForm_tree.name1=this.dialogForm_tree.name;
+						this.dialogForm_tree.name=this.dialogForm_tree.name.substring(index+1,this.dialogForm_tree.name.length);
+						// this.$set(this.dialogForm_tree, 'name', '100000000000');
+						
+					}
+					// if (!this.dialogForm_tree.name) {
+					// 	this.$set(this.dialogForm_tree, 'name', '100000000000');
+					// 	this.$set(this.dialogForm_tree, 'level', 0)
+					// }
+					console.log(this.dialogForm_tree,123)
+					this.flyType = type;
+					this.dialogTitle = '添加';
+					this.dialogType = type + 'add';
+					this.showFlag = true;
+				} else {
 					this.$message({
-						message: '此节点不能在添加',
+						message: '请选择要添加的节点',
 						type: 'error',
 						center: true
 					})
-					return;
 				}
-				// console.log(this[`dialogForm_${type}`])
-				this.flyType = type;
-				this.dialogTitle = '添加';
-				this.dialogType = type + 'add';
-				this.showFlag = true;
 			},
 			closeDialog() {
 				//关闭弹出框
@@ -232,7 +260,7 @@
 			},
 			showStudescode(data) {
 				//监听弹出框是关还是闭
-				console.log(data,'监听是关闭还是打开')
+				console.log(data, '监听是关闭还是打开')
 				this.showFlag = data;
 				this.treeInit();
 			}

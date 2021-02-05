@@ -2,7 +2,7 @@
 	<div id="element_add">
 		<div class="element_main">
 			<div class="reyuan_form">
-				<el-form  :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 					<el-form-item label="节点名称:" v-if="this.dialogForm.level<5">
 						<el-cascader placeholder="请选择节点" v-model="project1" filterable clearable ref="cascaderAddr" :options="postionArry"
 						 :props="defaultProps" style="width: 100%;" @change="postionChange"></el-cascader>
@@ -29,7 +29,8 @@
 		AddLocation_Zu,
 		EditLocation,
 		EditDict,
-		GetDictItemsByUcode
+		GetDictItemsByUcode,
+		AddLocationsByDicts
 	} from '@/api'
 
 	export default {
@@ -40,6 +41,7 @@
 		data: function() {
 			return {
 				ruleForm: {
+					JsonStr: [],
 				},
 				project1: '',
 				postionArry: [],
@@ -62,7 +64,7 @@
 					children: 'children',
 					label: 'uname',
 					value: 'id',
-					multiple: true 
+					multiple: true
 
 				}
 
@@ -81,20 +83,20 @@
 		components: {},
 		props: ['dialogType', 'dialogForm', 'dialogTable'],
 		mounted: function() {
-			console.log(this.dialogForm, this.dialogType,'看这里');
+			console.log(this.dialogForm, this.dialogType, '看这里');
 			this.GetLocationByIdInit(); //项目层级化
-			
+
 			if (this.dialogType == 'treeedit' || this.dialogType == 'treelook') {
 				// this.ruleForm.id=this.dialogForm.no;
-				this.$set(this.ruleForm,'id',this.dialogForm.no);
-				this.$set(this.ruleForm,'desc',this.dialogForm.desc)
+				this.$set(this.ruleForm, 'id', this.dialogForm.no);
+				this.$set(this.ruleForm, 'desc', this.dialogForm.desc)
 				// this.ruleForm.desc=this.dialogForm.desc;
 				if (this.dialogType == 'look') {
 					this.disabled = true;
 				}
 
-			}else{
-				this.ruleForm.id=this.dialogForm.no;
+			} else {
+				this.ruleForm.id = this.dialogForm.no ? this.dialogForm.no : '';
 			}
 			//select手动点击lable 获取值
 			setInterval(function() {
@@ -110,28 +112,54 @@
 		methods: {
 
 			postionChange(data) {
-				
+
 				var itemData = this.$refs["cascaderAddr"].getCheckedNodes();
-				console.log(itemData) //获得当前节点，
-				var newData=[];
-				for(var i in itemData){
-					if(itemData[i].parent){
-						var parent=JSON.parse(JSON.stringify(itemData[i].parent.data)) ;
-						parent.children=[];
-						parent.children.push(itemData[i].data)
-						newData.push(parent)
-					}else{
-						newData.push(itemData[i].data)
+				console.log(itemData,data) //获得当前节点，
+				var newData = [];
+				for(var i=0;i<itemData.length;i++){
+					for(var j=0;j<itemData[i].pathNodes.length;j++){
+						var msg=JSON.parse(JSON.stringify(itemData[i].pathNodes[j].data)) ;
+						 msg.children=[];
+						 msg.children=itemData[i].pathNodes[j+1]?itemData[i].pathNodes[j+1].data:[];
+						 newData.push(msg);
+						 break;
+						
+						
 					}
 				}
-				console.log(newData,'看这里')
-				// this.ruleForm.id = itemData[0].value
+				// this.setTreeOptionInIt(itemData);
+
+
+				console.log(newData, '看这里')
+				this.ruleForm.JsonStr = JSON.stringify(newData);
+
+			},
+			setTreeOptionInIt(data) {
+				//没有父节点的数据
+				// let level = '';
+				// let demo = [];
+				// let num = -1;
+				// for (let key of data) {
+				// 	for (let item in key) {
+				// 		console.log(key)
+				// 		if (level != key.parent) {
+				// 			level = key.parent;
+				// 			num++;
+				// 			demo[num] = {};
+				// 		}
+				// 		item != 'parent' ? (demo[num][item] = key[item]) : '';
+				// 	}
+				// }
+				console.log(data);
+				
 
 			},
 			GetLocationByIdInit() { //项目级层初始化
-				GetDictItemsByUcode({ucode:this.dialogForm.name}).then((res) => {
+				GetDictItemsByUcode({
+						ucode: this.dialogForm.name
+					}).then((res) => {
 						var newData = res;
-						console.log(res,'树形');
+						console.log(res, '树形');
 						// var newData=this.setList(res,this.dialogTable);
 						this.postionArry = newData;
 
@@ -149,10 +177,20 @@
 
 						if (self.dialogType == 'treeedit') {
 							var data = this.ruleForm;
-							var url = EditLocation;
+							if(this.dialogForm.level>4){
+								var url = EditLocation;
+							}else{
+								
+							}
+							
 						} else {
 							var data = this.ruleForm;
 							var url = AddLocation_Zu;
+							if(this.dialogForm.level>4){
+								
+							}else{
+								var url =AddLocationsByDicts
+							}
 						}
 						url(data).then((res) => {
 							this.submitLoad = false;
