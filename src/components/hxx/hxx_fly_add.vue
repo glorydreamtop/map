@@ -269,7 +269,7 @@
 							var url = AddHousehold;
 							var data = {
 								ProjectNo: self.projectNo,
-								id: self.parcelId,
+								id: self.Locationno,
 								JsonStr: JSON.stringify(self.ruleForm)
 							}
 						} else {

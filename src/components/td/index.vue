@@ -184,7 +184,7 @@
 				var self = this;
 				if (self.dialogForm) {
 					console.log(self.dialogForm);
-					this.$sendMessage({ eventName: "ParcelBind", params: { Name: "Parcel", ParcelId: self.dialogForm.KeyNo }})
+					this.$sendMessage({ eventName: "ParcelBind", params: {ParcelId: self.dialogForm.KeyNo }})
 					
 				} else {
 					this.$message({

@@ -6,11 +6,11 @@
 				<el-cascader placeholder="开始定位" :options="locationData" ref="sysCascader" @change="handleChange($event)" :props="prop"
 				 filterable style="width: 100%;"></el-cascader>
 			</div>
-			<div class="margin-top-m" v-if="Locationno">
+			<!-- <div class="margin-top-m" v-if="Locationno">
 				<el-select v-model="newparcelId" placeholder="请选中块信息" @change="parcelChange" style="width: 100%;">
 					<el-option v-for="item in parcelData" :key="item.KeyNo" :label="item.UNAME" :value="item.KeyNo"></el-option>
 				</el-select>
-			</div>
+			</div> -->
 			<div class="margin-top-m" >
 				<el-input v-model="Name" placeholder="请搜索户信息" clearable>
 					<el-button slot="append" icon="el-icon-search" @click="lookSearch"></el-button>
@@ -21,7 +21,7 @@
 				<el-button icon="al-icon-hutianjia" @click="addClick()" size="mini" title="添加户信息"> </el-button>
 				<el-button title="修改户信息" @click="editClick()" size="mini" icon="al-icon-huxiugai" ></el-button>
 				<el-button title="删除户信息" @click="delClick()" size="mini" icon="al-icon-shanchu" ></el-button>
-				<el-button title="关联GIS"  size="mini" icon="el-icon-paperclip" ></el-button>
+				<el-button title="关联GIS" @click="linkClick()" size="mini" icon="el-icon-paperclip" ></el-button>
 			</div>
 			<div >
 				<div class="margin-top-m cardMain" v-if="HouseholdData.length!=0">
@@ -107,9 +107,10 @@
 		},
 		methods: {
 			rowClick(index, item) {
-				console.log(this.buttonIndex)
+				console.log(this.buttonIndex,item)
 				this.buttonIndex = index;
 				this.dialogForm = item;
+				this.$sendMessage({ eventName: "CenterAtHousehold", params: { id:item.KeyNo }})
 
 			},
 			enter(index) {
@@ -131,9 +132,6 @@
 				this.$store.commit("hxx/SET_LOCATIONNO", event[event.length - 1]);
 				this.GetHouseholdsInit(); //户信息初始化
 				this.GetParcelsInit();
-				console.log(event, pathvalue, this.Locationno)
-
-
 			},
 			GetParcelsInit() {
 				var data = {
@@ -150,6 +148,20 @@
 						this.parcelData = [];
 						console.log(error)
 					})
+			},
+			linkClick(){
+				var self = this;
+				if (self.dialogForm) {
+					console.log(self.dialogForm);
+					this.$sendMessage({ eventName: "HouseholdBind", params: {HouseholdId: self.dialogForm.KeyNo}}) 
+					
+				} else {
+					this.$message({
+						message: '请选择要绑定的户信息',
+						type: 'warning'
+					});
+				}
+				
 			},
 			GetHouseholdsInit() {
 				var data = {
@@ -241,18 +253,18 @@
 
 			},
 			addClick() { //添加户信息
-				if (this.newparcelId) {
+				// if (this.newparcelId) {
 					this.dialogForm = '';
 					this.dialogTitle = '添加户信息';
 					this.dialogType = 'add';
 					this.showFlag = true;
 					this.$store.commit('hxx/SET_HOUSEHOLDID','');
-				} else {
-					this.$message({
-						message: '请选择地块',
-						type: 'warning'
-					});
-				}
+				// } else {
+				// 	this.$message({
+				// 		message: '请选择地块',
+				// 		type: 'warning'
+				// 	});
+				// }
 
 			},
 			closeDialog() { //关闭弹出框
