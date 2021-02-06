@@ -8,7 +8,9 @@ export function getToken() {
 }
 
 export function setToken(token) {
-    return Cookies.set(TokenKey, token)
+    return Cookies.set(TokenKey, token,{
+        expires:60
+    })
 }
 
 export function removeToken() {
@@ -16,7 +18,9 @@ export function removeToken() {
 }
 
 export function setStage(stage) {
-    return Cookies.set(StageKey, stage)
+    return Cookies.set(StageKey, stage,{
+        expires:60
+    })
 }
 
 export function getStage() {
