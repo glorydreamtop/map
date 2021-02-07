@@ -77,7 +77,7 @@ export default {
           item.task && item.task(this.form);
           item.type = item.type || "elInput";
           item.callback = item.callback || function callback(params) {}
-          this.rules[item.value] = { required: item.required,message: `请填写${item.title}`,type:item.type||'string' };
+          this.rules[item.value] = { required: item.required,message: `请填写${item.title}`,};
           if(item.textValue){
             item.props.text = this.form[item.textValue]
           }
