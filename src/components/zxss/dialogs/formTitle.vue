@@ -50,14 +50,13 @@ export default {
       selectorList: {
         lazy: true,
         lazyLoad: async (node, resolve) => {
-          const { level } = node;
           if (node.value === undefined) {
             node.value = { id: 0 };
           }
           let nodes = (await this.getArea(node.value.id)).map(item => ({
             value: { id: item.o_locationno, name: item.o_locationdesc },
             label: item.o_locationdesc,
-            leaf: level > 2
+            leaf: !item.o_haschild
           }));
           resolve(nodes);
         }
@@ -120,8 +119,8 @@ export default {
         TownDESC: e[1].name,
         Village: e[2].id,
         VillageDESC: e[2].name,
-        VillageGroup: e[3].id,
-        VillageGroupDESC: e[3].name
+        VillageGroup: e[3]?e[3].id:undefined,
+        VillageGroupDESC: e[3]?e[3].name:undefined
       };
       this.form = Object.assign(this.form, locations);
       console.log(e[1]);

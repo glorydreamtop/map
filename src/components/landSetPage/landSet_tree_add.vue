@@ -32,7 +32,9 @@
 		GetDictItemsByUcode,
 		AddLocationsByDicts
 	} from '@/api'
-
+    import {
+      listToTree
+    } from '@/utils/treeUtil.js'
 	export default {
 		name: 'jbqk_table1_add_two',
 		computed: {
@@ -114,44 +116,16 @@
 			postionChange(data) {
 
 				var itemData = this.$refs["cascaderAddr"].getCheckedNodes();
-				console.log(itemData,data) //获得当前节点，
+				console.log(itemData) //获得当前节点，
 				var newData = [];
 				for(var i=0;i<itemData.length;i++){
-					for(var j=0;j<itemData[i].pathNodes.length;j++){
-						var msg=JSON.parse(JSON.stringify(itemData[i].pathNodes[j].data)) ;
-						 msg.children=[];
-						 msg.children=itemData[i].pathNodes[j+1]?itemData[i].pathNodes[j+1].data:[];
-						 newData.push(msg);
-						 break;
-						
-						
-					}
+					 var msg=JSON.parse(JSON.stringify(itemData[i].data));
+					 msg.children=null;
+					 newData.push(msg);
 				}
-				// this.setTreeOptionInIt(itemData);
-
-
-				console.log(newData, '看这里')
-				this.ruleForm.JsonStr = JSON.stringify(newData);
-
-			},
-			setTreeOptionInIt(data) {
-				//没有父节点的数据
-				// let level = '';
-				// let demo = [];
-				// let num = -1;
-				// for (let key of data) {
-				// 	for (let item in key) {
-				// 		console.log(key)
-				// 		if (level != key.parent) {
-				// 			level = key.parent;
-				// 			num++;
-				// 			demo[num] = {};
-				// 		}
-				// 		item != 'parent' ? (demo[num][item] = key[item]) : '';
-				// 	}
-				// }
-				console.log(data);
-				
+               var treeData = listToTree(newData, 'id', 'pid')
+				console.log(treeData, '树形')
+				this.ruleForm.JsonStr = JSON.stringify(treeData);
 
 			},
 			GetLocationByIdInit() { //项目级层初始化

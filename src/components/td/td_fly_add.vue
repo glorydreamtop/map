@@ -72,7 +72,7 @@
 		components: {},
 		props: ['dialogType', 'dialogForm'],
 		mounted: function() {
-			console.log(this.dialogForm,this.dialogType)
+			console.log(this.dialogForm,this.dialogType,this.Locationno)
 			if (this.dialogType == 'edit' || this.dialogType == 'look') {
 				this.disabled = true;
 				this.ruleForm = JSON.parse(JSON.stringify(this.dialogForm));
