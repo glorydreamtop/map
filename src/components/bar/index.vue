@@ -14,6 +14,10 @@ export default {
       src: require("@/assets/imgs/展开.png")
     };
   },
+  mounted() {
+	
+	
+  },
   methods: {
     drawer() {
       this.$emit("click");

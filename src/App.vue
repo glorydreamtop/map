@@ -59,19 +59,30 @@ export default {
     login,
     bar
   },
+  beforeDestroy() {
+    //组件销毁前需要解绑事件。否则会出现重复触发事件的问题
+   this.$eventBus.$off('ParcelId');
+  },
   mounted() {
-    this.$eventBus.$on("rightDrawer", params => {
-      this.$refs.rightBar.drawer();
-      console.log(params);
-    });
+    // this.$eventBus.$on("rightDrawer", params => {
+    //   this.$refs.rightBar.drawer();
+    //   console.log(params);
+    // });
+	this.$eventBus.$on("ParcelId", params => {
+		this.$refs.rightBar.drawer();
+		// this.rightDrawer=true;
+	});
     // 缩小左右抽屉的渲染范围，防止彼此覆盖
-    document.querySelector(".right").parentElement.parentElement.style.left =
-      "85vw";
-    document.querySelector(".left").parentElement.parentElement.style.right =
-      "80vw";
+    this.drawerInit();
     
   },
   methods: {
+	drawerInit(){
+		document.querySelector(".right").parentElement.parentElement.style.left =
+		  "85vw";
+		document.querySelector(".left").parentElement.parentElement.style.right =
+		  "80vw";
+	},
     closeDrawer_left() {
       this.leftDrawer = !this.leftDrawer;
     },

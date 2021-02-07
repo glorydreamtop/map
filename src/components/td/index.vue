@@ -13,10 +13,10 @@
 			</div>
 
 			<div class="margin-top-m" v-if="Locationno">
-				<el-button icon="al-icon-hutianjia" @click="addClick()" size="mini" title="添加户信息"> </el-button>
-				<el-button title="修改户信息" @click="editClick()" size="mini" icon="al-icon-huxiugai" ></el-button>
-				<el-button title="删除户信息" @click="delClick()" size="mini" icon="al-icon-shanchu" ></el-button>
-				<el-button title="关联地块" @click="linkClick()" size="mini" icon="el-icon-paperclip" ></el-button>
+				<el-button icon="al-icon-hutianjia" @click="addClick()"  title="添加户信息"> </el-button>
+				<el-button title="修改户信息" @click="editClick()"  icon="al-icon-huxiugai" ></el-button>
+				<el-button title="删除户信息" @click="delClick()"  icon="al-icon-shanchu" ></el-button>
+				<el-button title="关联地块" @click="linkClick()"  icon="el-icon-paperclip" ></el-button>
 			</div>
 			<div>
 				<div class="margin-top-m cardMain" v-if="parcelData.length!=0">
