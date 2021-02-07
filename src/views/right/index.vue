@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       activeTab: "second",
-      activeName: "",
+      activeName: ['2','3'],
       
     };
   },

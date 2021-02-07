@@ -774,3 +774,17 @@ export function AddLocationsByDicts(data) {
         data
     })
 }
+export function GetHouseholdsByParcelid(data) {
+    return request({
+        url: `${baseReflect}GetHouseholdsByParcelid`,
+        method: 'post',
+        data
+    })
+}
+export function GetParcelById(data) {
+    return request({
+        url: `${baseReflect}GetParcelById`,
+        method: 'post',
+        data
+    })
+}

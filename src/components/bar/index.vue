@@ -14,6 +14,23 @@ export default {
       src: require("@/assets/imgs/展开.png")
     };
   },
+  mounted() {
+	
+	this.$eventBus.$on("ParcelId", params => {
+		this.show =false;
+		this.src = require(`@/assets/imgs/${this.show ? "收起" : "展开"}.png`);
+		if (this.position == "left") {
+		  this.$el.style.transform = this.show
+		    ? "translateX(20vw)"
+		    : "translateX(0)";
+		} else if ("right") {
+		  this.$el.style.transform = this.show
+		    ? "translateX(-15vw) rotate(180deg)"
+		    : "translateX(0vw) rotate(180deg)";
+		}
+	});
+  	
+  },
   methods: {
     drawer() {
       this.$emit("click");

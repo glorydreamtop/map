@@ -10,9 +10,9 @@
 						<el-cascader  v-model="ruleForm.landType" placeholder="开始定位" :options="landTypeData" ref="sysCascader" @change="handleChange($event)" :props="prop"
 						 filterable style="width: 100%;"></el-cascader>
 					</el-form-item>
-					<el-form-item label="绘制数据:" prop="Polygon">
+					<!-- <el-form-item label="绘制数据:" prop="Polygon">
 						<el-input v-model="ruleForm.Polygon" :disabled="dialogType=='look'?true:false" ></el-input>
-					</el-form-item>
+					</el-form-item> -->
 				</el-form>
 				<div class="margin-top-l text-center " v-show="dialogType!='look'">
 					<el-button class="button-l" type="primary" @click="submitForm('ruleForm')" :loading="loading">{{loading===false?'提交':'提交中'}}</el-button>
