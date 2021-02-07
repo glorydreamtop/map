@@ -85,8 +85,8 @@
 		mounted: function() {
 			console.log(this.dialogForm, this.dialogType);
 			this.GetFoldersInit(); //项目层级化
-			if (this.dialogType == 'treeedit' || this.dialogType == 'treelook') {
-				this.ruleForm.no = this.dialogForm.no;
+			if (this.dialogType == 'treeedit' || this.dialogType == 'treelook'|| this.dialogType == 'treeadd') {
+				this.ruleForm.id = this.dialogForm.no;
 				this.ruleForm.desc = this.dialogForm.desc;
 				this.project1 = this.dialogForm.no;
 				if (this.dialogType == 'look') {

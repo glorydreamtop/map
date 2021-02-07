@@ -267,7 +267,7 @@
 				if(type==='table')return
 				//添加
 				this.flyType = type;
-				this[`dialogForm_${type}`] = '';
+				// this[`dialogForm_${type}`] = '';
 				this.dialogTitle = '添加' + (type == 'tree' ? '项目树' : '数据项');
 				this.dialogType = type + 'add';
 				this.showFlag = true;
