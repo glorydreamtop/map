@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<div class="margin-top-m cardMain">
-			<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="6" v-for="(item,index) in tableData">
+			<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" v-for="(item,index) in tableData">
 				<div class="leftMain" :class="buttonIndex===index?'activeRow':''" @click="rowClick(index,item)">
 					<div class="item flex-col align-center">
 						<i class="al-icon-zhuanyexiangmu text-light"></i>
-						<span>UNAME</span>
+						<span>{{item.UNAME}}</span>
 					</div>
 
 				</div>

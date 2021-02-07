@@ -70,7 +70,7 @@ export default {
     // });
 	this.$eventBus.$on("ParcelId", params => {
 		this.$refs.rightBar.drawer();
-		this.rightDrawer=true;
+		// this.rightDrawer=true;
 	});
     // 缩小左右抽屉的渲染范围，防止彼此覆盖
     this.drawerInit();
