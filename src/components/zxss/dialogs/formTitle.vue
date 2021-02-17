@@ -3,11 +3,11 @@
     <el-form-item label="选择地区">
       <el-cascader
         placeholder="选择地区"
+        :options="options"
         :show-all-levels="false"
         @change="selectArea"
         ref="cascader"
         :value="area"
-        :props="selectorList"
       ></el-cascader>
     </el-form-item>
     <el-form-item
@@ -16,21 +16,22 @@
       :label="item.title"
       :prop="item.value"
     >
-      <component :is="item.type" v-model="form[item.value]" placeholder="必填" v-bind="item.props">
-        <template v-if="item.unit" slot="append">{{item.unit}}</template>
+      <component
+        :is="item.type"
+        v-model="form[item.value]"
+        placeholder="必填"
+        v-bind="item.props"
+      >
+        <template v-if="item.unit" slot="append">{{ item.unit }}</template>
       </component>
     </el-form-item>
-    <el-button
-      class="btn1"
-      size="mini"
-      type="primary"
-      plain
-      @click="create"
-    >{{`立即${add?"创建":"更新"}`}}</el-button>
+    <el-button class="btn1" size="mini" type="primary" plain @click="create">{{
+      `立即${add ? "创建" : "更新"}`
+    }}</el-button>
   </el-form>
 </template>
 <script>
-import { AddNCZXSS_BASE, GetLocations, EditNCZXSS_BASE } from "@/api";
+import { AddNCZXSS_BASE, EditNCZXSS_BASE, GetEntitiesTree } from "@/api";
 import { mapGetters } from "vuex";
 import { deepClone } from "@/utils";
 import selector from "@/components/rewrite-eleUI/selector";
@@ -38,7 +39,7 @@ export default {
   name: "formTitle",
   inject: ["KEYNO", "ADD", "TOPINDEX"],
   props: {
-    currentType: String
+    currentType: String,
   },
   data() {
     return {
@@ -47,20 +48,7 @@ export default {
       form: {},
       formProps: [], // 表单内容
       rules: {}, // 表单验证规则
-      selectorList: {
-        lazy: true,
-        lazyLoad: async (node, resolve) => {
-          if (node.value === undefined) {
-            node.value = { id: 0 };
-          }
-          let nodes = (await this.getArea(node.value.id)).map(item => ({
-            value: { id: item.o_locationno, name: item.o_locationdesc },
-            label: item.o_locationdesc,
-            leaf: !item.o_haschild
-          }));
-          resolve(nodes);
-        }
-      }
+      options: [],
     };
   },
   computed: {
@@ -73,58 +61,73 @@ export default {
     },
     topIndex() {
       return this.TOPINDEX();
-    }
+    },
   },
   watch: {
     topIndex: {
       async handler(newVal) {
         const { all } = await import("../json/formProps.js");
         this.formProps = all[newVal];
-        this.formProps.forEach(item => {
+        this.formProps.forEach((item) => {
           item.task && item.task();
           item.type = item.type || "elInput";
           this.rules[item.value] = {
             required: item.required,
-            message: `请填写${item.title}`
+            message: `请填写${item.title}`,
           };
         });
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   components: { selector },
   mounted() {
+    this.getArea();
     if (!this.add) {
       this.$nextTick(() => {
         const e = this.form;
         const cascader = this.$refs.cascader;
         cascader.presentText = e.VillageGroupDESC;
+        this.area = e.VillageGroup;
         this.$store.commit("zxss/SET_TOWN", e.Town);
       });
     }
   },
   methods: {
     // 获取地区列表
-    async getArea(Locationno = 0) {
-      return await GetLocations({
+    async getArea() {
+      const res = await GetEntitiesTree({
         ProjectNo: this.projectNo,
-        Locationno
       });
+      const flat = (node) => {
+        return node.map((item) => {
+          return {
+            label: item.desc,
+            value: {
+              id: item.no,
+              name: item.desc,
+            },
+            children: item.children !== null ? flat(item.children) : null,
+          };
+        });
+      };
+      this.options = flat(res);
     },
     selectArea(e) {
+      const len = e.length;
       const locations = {
-        County: e[0].id,
-        CountyDESC: e[0].name,
-        Town: e[1].id,
-        TownDESC: e[1].name,
-        Village: e[2].id,
-        VillageDESC: e[2].name,
-        VillageGroup: e[3]?e[3].id:undefined,
-        VillageGroupDESC: e[3]?e[3].name:undefined
+        County: e[len-3].id,
+        CountyDESC: e[len-3].name,
+        Town: e[len-2].id,
+        TownDESC: e[len-2].name,
+        Village: e[len-1].id,
+        VillageDESC: e[len-1].name,
+        VillageGroup: e[len] ? e[len].id : undefined,
+        VillageGroupDESC: e[len] ? e[len].name : undefined,
       };
       this.form = Object.assign(this.form, locations);
       console.log(e[1]);
-      this.$store.commit("zxss/SET_TOWN", e[1].id);
+      this.$store.commit("zxss/SET_TOWN", e[len-2].id);
     },
     // 创建基本信息
     create() {
@@ -135,21 +138,21 @@ export default {
           form[key] = new Date(form[key]).toLocaleDateString();
         }
       }
-      this.$refs.form1.validate(async valid => {
+      this.$refs.form1.validate(async (valid) => {
         if (valid) {
           try {
             if (this.add) {
               let res = await AddNCZXSS_BASE({
                 ProjectNo: this.projectNo,
                 TypeName: this.currentType,
-                JsonStr: JSON.stringify(form)
+                JsonStr: JSON.stringify(form),
               });
               let keyNo = res[0].Keyno;
               this.$emit("success", keyNo);
             } else {
               await EditNCZXSS_BASE({
                 id: this.keyNo,
-                JsonStr: JSON.stringify(form)
+                JsonStr: JSON.stringify(form),
               });
               this.$emit("success");
             }
@@ -158,8 +161,8 @@ export default {
           }
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
