@@ -46,7 +46,8 @@
 							<el-button title="修改" size="mini" @click="editItem('renkouxinxiFlyAdd',2)" icon="al-icon-xiugai" ></el-button>
 							<el-button title="删除" size="mini" @click="delItem(2)" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData0" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick"> 
-								<el-table-column prop="RKBH" label="编号"  align="center"></el-table-column>
+								<!-- <el-table-column prop="RKBH" label="编号"  align="center"></el-table-column> -->
+								<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 								<el-table-column prop="XM" label="姓名" width="180" align="center"></el-table-column>
 								<el-table-column prop="XB" label="性别" width="100" align="center"></el-table-column>
 								<el-table-column prop="MZ" label="民族" width="100" align="center"></el-table-column>
@@ -63,7 +64,8 @@
 							<el-button title="修改" size="mini" @click="editItem('fangwuxinxiFlyAdd',3)" icon="al-icon-xiugai" ></el-button>
 							<el-button title="删除" size="mini" @click="delItem(3)" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData1" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
-								<el-table-column prop="FWBH" label="编号"  align="center"></el-table-column>
+								<!-- <el-table-column prop="FWBH" label="编号"  align="center"></el-table-column> -->
+								<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 								<el-table-column prop="FWMC" label="房屋名称" width="180" align="center"></el-table-column>
 								<el-table-column prop="JGLX_DESC" label="结构类型" width="100" align="center"></el-table-column>
 								<el-table-column prop="DEDM_DESC" label="定额名称"  align="center"></el-table-column>
@@ -84,7 +86,8 @@
 							<el-button title="修改" size="mini" @click="editItem('fushuwuFlyAdd',4)" icon="al-icon-xiugai" ></el-button>
 							<el-button title="删除" size="mini" @click="delItem(4)" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData2" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
-								<el-table-column prop="FSWBH" label="编号"  align="center"></el-table-column>
+								<!-- <el-table-column prop="FSWBH" label="编号"  align="center"></el-table-column> -->
+								<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 								<el-table-column prop="FWWMC" label="附属物名称	" width="180" align="center"></el-table-column>
 								<el-table-column prop="JGLX_DESC" label="结构类型" width="100" align="center"></el-table-column>
 								<el-table-column prop="FSWDEDM_DESC" label="附属物定额代码"  align="center"></el-table-column>
@@ -105,7 +108,8 @@
 							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd',5)" size="mini" icon="al-icon-xiugai" ></el-button>
 							<el-button title="删除" @click="delItem(5)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
-								<el-table-column prop="GMBH" label="编号"  align="center"></el-table-column>
+								<!-- <el-table-column prop="GMBH" label="编号"  align="center"></el-table-column> -->
+								<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 								<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>
 								<el-table-column prop="GMLB_DESC" label="类别" align="center"></el-table-column>
 								<el-table-column prop="DEDM_DESC" label="品种"  align="center"></el-table-column>
@@ -125,7 +129,8 @@
 				    		<el-button title="修改" @click="editItem('lingxingguomuFlyAdd',6)" size="mini" icon="al-icon-xiugai" ></el-button>
 				    		<el-button title="删除" @click="delItem(5)" size="mini" icon="al-icon-shanchu" ></el-button>
 				    		<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
-				    			<el-table-column prop="GMBH" label="编号"  align="center"></el-table-column>
+				    			<!-- <el-table-column prop="GMBH" label="编号"  align="center"></el-table-column> -->
+								<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 				    			<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>
 				    			<el-table-column prop="GMLB_DESC" label="类别" align="center"></el-table-column>
 				    			<el-table-column prop="DEDM_DESC" label="品种"  align="center"></el-table-column>
@@ -145,7 +150,8 @@
 							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd',7)" size="mini" icon="al-icon-xiugai" ></el-button>
 							<el-button title="删除" @click="delItem(5)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
-								<el-table-column prop="GMBH" label="编号"  align="center"></el-table-column>
+								<!-- <el-table-column prop="GMBH" label="编号"  align="center"></el-table-column> -->
+								<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 								<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>
 								<el-table-column prop="GMLB_DESC" label="类别" align="center"></el-table-column>
 								<el-table-column prop="DEDM_DESC" label="品种"  align="center"></el-table-column>
@@ -165,7 +171,8 @@
 							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd',8)" size="mini" icon="al-icon-xiugai" ></el-button>
 							<el-button title="删除" @click="delItem(5)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
-								<el-table-column prop="GMBH" label="编号"  align="center"></el-table-column>
+								<!-- <el-table-column prop="GMBH" label="编号"  align="center"></el-table-column> -->
+								<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 								<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>
 								<el-table-column prop="GMLB_DESC" label="类别" align="center"></el-table-column>
 								<el-table-column prop="DEDM_DESC" label="品种"  align="center"></el-table-column>
@@ -185,7 +192,8 @@
 							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd',9)" size="mini" icon="al-icon-xiugai" ></el-button>
 							<el-button title="删除" @click="delItem(5)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
-								<el-table-column prop="GMBH" label="编号"  align="center"></el-table-column>
+								<!-- <el-table-column prop="GMBH" label="编号"  align="center"></el-table-column> -->
+								<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 								<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>
 								<el-table-column prop="GMLB_DESC" label="类别" align="center"></el-table-column>
 								<el-table-column prop="DEDM_DESC" label="品种"  align="center"></el-table-column>
@@ -205,7 +213,8 @@
 							<el-button title="修改" @click="editItem('lingxingguomuFlyAdd',10)" size="mini" icon="al-icon-xiugai" ></el-button>
 							<el-button title="删除" @click="delItem(5)" size="mini" icon="al-icon-shanchu" ></el-button>
 							<el-table :data="tableData3" border highlight-current-row style="width: 100%" class="margin-top-m" @row-click="rowClick">
-								<el-table-column prop="GMBH" label="编号"  align="center"></el-table-column>
+								<!-- <el-table-column prop="GMBH" label="编号"  align="center"></el-table-column> -->
+								<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 								<el-table-column prop="GMMC" label="果木名称	" align="center"></el-table-column>
 								<el-table-column prop="GMLB_DESC" label="类别" align="center"></el-table-column>
 								<el-table-column prop="DEDM_DESC" label="品种"  align="center"></el-table-column>

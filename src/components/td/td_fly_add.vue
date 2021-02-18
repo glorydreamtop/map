@@ -192,7 +192,7 @@
 </script>
 <style scoped="scoped">
 	.reyuan_form {
-		height: 450px;
+		height: 20vh;
 		margin: 0%;
 		overflow-y: auto;
 		overflow-x: hidden;

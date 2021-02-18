@@ -5,7 +5,8 @@
 		</div>
 		<div class="body_table_mian">
 			<el-table v-loading="tableLoad"  :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">
-				<el-table-column prop="DXBH" label="编号" width="150" align="center"> </el-table-column>
+				<!-- <el-table-column prop="DXBH" label="编号" width="150" align="center"> </el-table-column> -->
+				<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 				<el-table-column prop="JCNY" label="建成年月" align="center"> </el-table-column>
 				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
 				<el-table-column  label="高程范围" align="center"> 
