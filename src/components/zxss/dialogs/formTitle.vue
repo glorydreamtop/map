@@ -71,10 +71,18 @@ export default {
         this.formProps.forEach((item) => {
           item.task && item.task();
           item.type = item.type || "elInput";
-          this.rules[item.value] = {
+          this.rules[item.value] = [{
             required: item.required,
             message: `请填写${item.title}`,
-          };
+            trigger:'blur',
+            validator:item.rule!==undefined?(r,v,callback)=>{
+              if(isNaN(Number(v))){
+                callback(new Error('请输入数字'))
+              }else{
+                callback()
+              }
+            }:undefined
+          }]
         });
       },
       immediate: true,

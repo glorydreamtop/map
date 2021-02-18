@@ -3,6 +3,7 @@
     :visible.sync="visible"
     :close-on-press-escape="false"
     width="70vw"
+    append-to-body
     v-loading="loading2"
     element-loading-text="文件转码中..."
     title="资料管理"
