@@ -3,9 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "build": "vue-cli-service build && node deploy.js",
+        "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
-        "deploy": "node deploy.js",
         "dev": "vue-cli-service serve",
         "new": "plop"
     },
