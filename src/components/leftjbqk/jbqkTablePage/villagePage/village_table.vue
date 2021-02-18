@@ -1,37 +1,38 @@
 <template>
 	<div class="tableMain">
 		<div class="header_table_title">
-			<el-button icon="al-icon-tianjia" @click="addClick()" ></el-button>
+			<el-button icon="al-icon-tianjia" @click="addClick()"></el-button>
 		</div>
 		<div class="body_table_mian">
-			<el-table v-loading="tableLoad"  :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%" height="50vh">
-				<el-table-column prop="SerialNumber" label="编号" width="150" align="center"> </el-table-column>
+			<el-table v-loading="tableLoad" :data="tableData" row-key="id" :tree-props="{children: 'children'}" border style="width: 100%"
+			 height="50vh">
+				<!-- <el-table-column prop="SerialNumber" label="编号" width="150" align="center"> </el-table-column> -->
+				<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 				<el-table-column prop="Createdate" label="申请时间" align="center"> </el-table-column>
 				<el-table-column prop="CountyDESC" label="区县" width="100" align="center"> </el-table-column>
 				<el-table-column prop="Region" label="工程类型" align="center"> </el-table-column>
 				<el-table-column prop="" label="状态" width="100" align="center"> </el-table-column>
 				<el-table-column prop="TownDESC" label="乡镇" width="100" align="center"> </el-table-column>
 				<el-table-column prop="VillageDESC" label="村委会" align="center"> </el-table-column>
-				<el-table-column prop="VillageGroupDESC" label="村委小组"  align="center"> </el-table-column>
+				<el-table-column prop="VillageGroupDESC" label="村委小组" align="center"> </el-table-column>
 				<el-table-column fixed="right" label="操作" width="300" align="center">
 					<template slot-scope="scope">
 						<el-button plain title="查看" icon="al-icon-yulan" type="primary" @click="lookClick(scope.row)"></el-button>
 						<el-button plain title="修改" icon="al-icon-xiugai" type="warning" @click="editClick(scope.row)"></el-button>
 						<el-button plain title="删除" icon="al-icon-shanchu" type="danger" @click="delClick(scope.row)"></el-button>
-						<el-button plain title="发起审批" icon="el-icon-s-check" type="success" ></el-button>
+						<el-button plain title="发起审批" icon="el-icon-s-check" type="success"></el-button>
 
 					</template>
 				</el-table-column>
 			</el-table>
 			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="formeData.CurrentPage"
-				  :page-size="formeData.PageSize"
-				  :total="total">
-		    </el-pagination>
+			 :page-size="formeData.PageSize" :total="total">
+			</el-pagination>
 		</div>
 		<div>
-			<el-dialog :title="dialogTitle"  :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
+			<el-dialog :title="dialogTitle" :append-to-body="true" @close='closeDialog' :visible.sync="showFlag" v-model="showFlag"
 			 class="newStyleDialog " custom-class="jbqk_add_table1_dialog">
-				<villageHeaderAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag" ></villageHeaderAdd>
+				<villageHeaderAdd :dialog-type="dialogType" v-on:showStudes="showStudescode" :dialog-form="dialogForm" v-if="showFlag"></villageHeaderAdd>
 			</el-dialog>
 		</div>
 	</div>
@@ -42,7 +43,8 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		GetAllBaseTablesBaseAttrs,DeleteBaseTable
+		GetAllBaseTablesBaseAttrs,
+		DeleteBaseTable
 	} from '@/api'
 	import villageHeaderAdd from './village_header_add' //农村基本情况调查表
 	export default {
@@ -52,7 +54,7 @@
 			villageHeaderAdd,
 		},
 		computed: {
-			...mapGetters(['projectNo','BaseType'])
+			...mapGetters(['projectNo', 'BaseType'])
 		},
 		data() {
 			return {
@@ -67,7 +69,7 @@
 					CurrentPage: 1,
 					PageSize: 6,
 				},
-				tableLoad:false,
+				tableLoad: false,
 
 
 			};
@@ -86,18 +88,18 @@
 					ProjectNo: this.projectNo,
 					...this.formeData
 				};
-				this.tableLoad=true;
+				this.tableLoad = true;
 				GetAllBaseTablesBaseAttrs(data).then((res) => {
-					console.log(res)
-					this.tableLoad=false;
-					this.tableData = res.list;
-					this.total = res.total;
-				})
-				.catch((error) => {
-					this.tableData = [];
-					this.tableLoad=false;
-					console.log(error)
-				})
+						console.log(res)
+						this.tableLoad = false;
+						this.tableData = res.list;
+						this.total = res.total;
+					})
+					.catch((error) => {
+						this.tableData = [];
+						this.tableLoad = false;
+						console.log(error)
+					})
 			},
 
 			handleSizeChange(val) { //每页#条
@@ -116,30 +118,32 @@
 
 			},
 			delClick(row) {
-				var self=this;
+				var self = this;
 				this.$confirm('此操作将永久删除, 是否继续?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					center: true,
 					type: 'warning'
 				}).then(() => {
-					DeleteBaseTable({id:row.KeyNo}).then((res) => {
+					DeleteBaseTable({
+						id: row.KeyNo
+					}).then((res) => {
 						console.log(res)
-							self.$message({
-								message: '操作成功',
-								type: 'success',
-								center: true
-							});
+						self.$message({
+							message: '操作成功',
+							type: 'success',
+							center: true
+						});
 
-							self.tableInit();
-					
+						self.tableInit();
+
 					}).catch((res) => {
 						console.log(res);
 					})
 
 
 				}).catch((res) => {
-					
+
 				})
 			},
 			editClick(row) { //修改

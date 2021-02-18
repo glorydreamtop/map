@@ -2,8 +2,9 @@
 	<div class="tableMain">
 		<el-button icon="al-icon-tianjia" @click="addClick()"></el-button>
 		<el-table :data="tableData" border v-loading="tableLoad" class="fixTable49" style="width: 100%" height="50vh">
-			<el-table-column prop="SerialNumber" label="编号" width="150" align="center">
-			</el-table-column>
+			<!-- <el-table-column prop="SerialNumber" label="编号" width="150" align="center">
+			</el-table-column> -->
+			<el-table-column type="index" label="序号" width="100" align="center"> </el-table-column>
 			<el-table-column prop="Createdate" label="申请时间" align="center">
 			</el-table-column>
 			<el-table-column prop="CountyDESC" label="区县" width="100" align="center">
