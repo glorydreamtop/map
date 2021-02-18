@@ -17,7 +17,7 @@ export default {
     },
     width:{
       type:String,
-      default:'22vw'
+      default:'20vw'
     },
     height:{
       type:String,
