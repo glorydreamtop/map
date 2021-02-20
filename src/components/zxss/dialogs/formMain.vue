@@ -7,6 +7,7 @@
     </div>
     <sub-dialog ref="sub" :idx="index" :title="type" @success="getList" />
     <el-table :data="tableData" border highlight-current-row @current-change="handleCurrentChange">
+      <el-table-column type="index" label="序号"></el-table-column>
       <el-table-column
         v-for="item in tableProps"
         :prop="item.textValue||item.value"
@@ -66,7 +67,7 @@ export default {
       "农村个体存货"
     ];
     this.index = types.indexOf(this.type);
-    this.tableProps = all[this.index];
+    this.tableProps = all[this.index].slice(1,all[this.index].length)
     if (this.keyNo > 0) {
       this.getList(1);
     }
